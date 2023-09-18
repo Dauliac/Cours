@@ -1,0 +1,22 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box_check_update = false
+  config.vm.provider "virtualbox" do |vb|
+     vb.linked_clone = true
+     vb.memory = "2048"
+     vb.cpus = "2"
+  end
+  config.vm.define "buildhost" do |hst|
+    hst.vm.hostname = "buildhost"
+    hst.vm.box = "bento/ubuntu-18.04"
+  end
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    apt-get install -q -y build-essential fakeroot dpkg-dev perl libssl-dev bc gnupg dirmngr libncurses-dev libelf-dev flex bison lsb-release rsync dwarves wget unzip
+    mkdir /opt/src
+    chmod o+w /opt/src/
+  SHELL
+end

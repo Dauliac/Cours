@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/7"
+  config.vm.box_check_update = false
+
+  config.vm.define "h1" do |host1|
+    host1.vm.network "private_network", ip: "192.168.56.10"
+    host1.vm.hostname="h1"
+    host1.vm.provision "file", source: "keepalived.conf1", destination: "/tmp/keepalived.conf"
+  end
+  config.vm.define "h2" do |host2|
+    host2.vm.network "private_network", ip: "192.168.56.11"
+    host2.vm.hostname="h2"
+    host2.vm.provision "file", source: "keepalived.conf2", destination: "/tmp/keepalived.conf"
+  end
+  config.vm.provision "shell", inline: <<-SHELL
+    yum -q -y install epel-release
+    yum -q -y install keepalived nginx
+    cp /etc/keepalived/keepalived.conf /etc/keepalived/keepalived.conf.orig
+    cp /tmp/keepalived.conf /etc/keepalived/keepalived.conf
+    systemctl enable keepalived
+    systemctl start keepalived
+    systemctl enable nginx
+    systemctl start nginx
+  SHELL
+end

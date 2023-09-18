@@ -1,0 +1,19 @@
+apiVersion: v1             # version de l'api
+kind: Pod                  # le type d'objet
+metadata:
+  name: tst-pod-nginx      # le nom du pod
+  labels:                  # des labels : clefs valeures
+    applicat: tst-pod-label-nginx  # clef "applicat"
+spec:                      # spécifications de l'objet
+  containers:              # les containers du pod
+  - image: nginx           # premier nginx 
+    name: tst-ct-nginx
+    ports:
+      - containerPort: 80  # port d'écoute du container
+        protocol: TCP
+  - image: busybox         # Un second busybox
+    name: busb
+    args:
+    - sleep
+    - "36000"
+

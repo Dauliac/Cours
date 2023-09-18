@@ -10,10 +10,6 @@ Les shell scripts, script en langage shell, sont présents dans presque tous les
 
 Comme tout programme, il devra être versionné et documenté.
 
-> Méthode de dev :
-Presque toutes les opérations unitaires d'un script shell peuvent être testées en ligne de commande.
-Ma méthode de dev : J'exécute pas à pas le script tout en le développant. J'utilise 2 terminaux, un dans lequel j'exécute les commandes, le second dans lequel j'écris le script.
-
 ### Le shebang
 
 Pour beaucoup de langage, le caractère `#` est utilisé pour mettre en commentaire tous les caractères qui le suivent.
@@ -122,8 +118,6 @@ $3 : 4
 
 ### variable de contrôle
 
-Déjà vue précédamment dans la gestion des processus
-
 * `$$` : le PID
 * `$PPID` : le parent PID
 * `$PWD` : le dossier courant
@@ -159,7 +153,7 @@ prompt$ IFS="
 
 Soit en utilisant la combinaison de touche '[ctrl]v' qui supprime la caractère spécicifque de la prochaine touch sur le clavier (tout comme le fait `\` pour une chaine de caractère)
 
-$ IFS=[ctrl]v[entrer][entrer]
+`$ IFS=[ctrl]v[entrer][entrer]`
 
 > Cette modification de l'environnement permet notamment à la boucle for de traiter des lignes plutot que des mots.
 
@@ -375,26 +369,32 @@ prompt$ expr \( $temps + $demijour \) / $count
 42
 ```
 
-### `((`
+### la commande `((`
 
-La commande (( )) est bien plus simple à être utilisée mais elle n'est pas disponible en sh "pure" :
+La commande (( )) est bien plus simple
 
-* Elle ne nécessite pas d'espace entre les arguments et l'utilisation du caractère d’échappement \
-* Elle permet d'assigner une valeur à une variable tout en effectuant l'opération
+* Elle ne nécessite ni d'espace entre les arguments ni l'utilisation du caractère d’échappement \
+* Elle permet d'assigner une valeur à une variable tout en effectuant une opération
 * Elle permet la substitution d'une opération arithmétique par son résultat
 
 Syntaxe :  
 
 Pour assigner le résultat de l'opération **OP** entre **val1** et **val2** dans la variable `var`
 
+`((var=val1OPval2))`
+
 ```bash
-((var=val1OPval2))
+((total=$val*$number))
+((quatrefois=$value*4))
 ```
 
 Pour utiliser le résultat de l'opération dans une ligne de commande  (ben oui il y a un `$` ce sera donc évalué)
 
+`$((val1OPval2))`
+
 ```bash
-$((val1OPval2))
+$ echo $((3*6))
+18
 ```
 
 Opérateurs :
@@ -448,9 +448,9 @@ prompt$ test "val" = "$var"
 prompt$
 ```
 
-Vous noterez l'utilisation des double cote `"` afin de forcer l'existance de la chaine de caractère `"$var"` dans le cas ou ar serait une variable vide
+> Vous noterez l'utilisation des double cote `"` afin de forcer l'existance de la chaine de caractère `"$var"` dans le cas ou ar serait une variable vide.
 
-Attention, les opérateurs de la commande test sur les numériques est litéral :
+**Attention**, les opérateurs de la commande test sur les **numériques** est **litéral** :
 
 * `num1 -eq num2` : **EQ**ual  
 * `num1 -ne num2` : **N**ot **E**qual  
@@ -459,12 +459,14 @@ Attention, les opérateurs de la commande test sur les numériques est litéral 
 * `num1 -gt num2` : **G**reater **T**han  
 * `num1 -ge num2` : **G**reater or **E**qual  
 
-Alors que les opérateur tests sur les chaines de caractères sont des symboles arithmétique
+Alors que les opérateur tests sur les **chaines** de caractères sont des **symboles arithmétique**
 
 * `STRING1 = STRING2`
 * `STRING1 != STRING2`
 
-> Probablement pour ne pas avoir à utiliser `<` ou `>` qui seront interprèté par le shell pour les redirections de flux
+> `test` est une commande dont le code retour indique si le test est vrai code retour 0 ou Faux code retour différent de 0.
+  Ainsi **toute commande est un test** qui retourne vrai s'il est s'est bien exécuté et faux dans le cas contraire
+  Aussi la commande `grep -q toto /chemin/fichier` est un test qui vérifie la présence de la chaine toto dans le fichier.
 
 #### Structure de controle sur les test : `if then elseif else`
 
@@ -483,6 +485,10 @@ fi
 ```
 
 On pourra toujours utiliser les [enchainemts conditionnel de commande](./processus.md#Enchainement\ conditionnel) `&&` et `||` vue sur la gestions des processus en ligne de commande.
+
+```bash
+grep -q toto $fichier && echo $fichier contien la chaine toto
+```
 
 ### Les boucles
 

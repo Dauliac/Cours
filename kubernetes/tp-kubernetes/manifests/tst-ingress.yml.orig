@@ -1,0 +1,79 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tst-pod-nginx-config
+data:
+  default.conf: |
+    server {
+        listen 80;
+        location / {
+            default_type text/plain;
+            expires -1;
+            return 200 'location / : $server_addr:$server_port\nServer name: $hostname\nDate: $time_local\nURI: $request_uri\nRequest ID: $request_id\n';
+        }
+        location /public/ {
+            default_type text/plain;
+            expires -1;
+            return 200 'location /public/ : $server_addr:$server_port\nServer name: $hostname\nDate: $time_local\nURI: $request_uri\nRequest ID: $request_id\n';
+        }
+    }
+---
+apiVersion: v1             # version de l'api
+kind: Pod                  # le type d'objet
+metadata:
+  name: tst-pod-nginx      # le nom du pod
+  labels:                  # des labels : clefs valeures
+    applicat: tst-pod-label-nginx  # clef "applicat"
+spec:                      # spécifications de l'objet
+  containers:              # les containers du pod
+  - image: nginx
+    name: tst-ct-nginx
+    ports:
+      - containerPort: 80
+        protocol: TCP
+    volumeMounts:
+      - name: nginx-configs
+        mountPath: /etc/nginx/conf.d
+  volumes:
+    - name: nginx-configs
+      configMap:
+        name: tst-pod-nginx-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: tst-svc-label-nginx
+  name: tst-svc-nginx
+spec:
+  ports:
+    - port: 1080
+      targetPort: 80
+  selector:
+    applicat: tst-pod-label-nginx
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tst-ingress-svc
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/rule-type: "PathPrefixStrip"
+spec:
+  defaultBackend:
+    service:
+      name: tst-svc-nginx
+      port:
+        number: 1080
+  rules:
+  - host: "tstingress.lab.local"
+    http:
+      paths:
+      - path: /public
+        pathType: Prefix
+        backend:
+          service:
+            name: tst-svc-nginx
+            port:
+              number: 1080

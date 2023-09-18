@@ -81,22 +81,49 @@ Expliquez les umask : 0027 / 027 / 022 / 007.
 
 Le umask est aussi une valeur utilisée dans les fichiers de configuration de service (exemple ftp) pour spécifier les droits sur les fichiérs créés par ce service.
 
-## Exemple
+## TD
 
-Exemple d'arborescence :
+### Back office
 
-```bash
-sudo tree -L 2 -dugp .
-.
-└── [drwxr-x--- applis   applis  ]  applications
-    ├── [drwxrwx--- applis   app1    ]  app1
-    ├── [drwxrwx--- applis   app2    ]  app2
-    ├── [drwxr-xr-x applis   applis  ]  common  
-    └── [drwxrwsr-x applis   applis  ]  share
-```
+Dans le cadre de la gestion d'un environement de production d'une application.
 
-* Seuls les membres du groupe applis ont un accès à l'arbo car aucun droits pour 'Other' sur le dossier
-* Chaque application dispose de son espace réservé, accèssible en écriture à tout compte membre du groupe lié à l'appli (rwx sur le groupe)
-* Un espace est commun et lisible par tout les comptes membres de applis
-* Un espace partagé sans protection des droits
-* L'utilisateur applis à tout les droits sur toute l'arbo, il peut alors être utilisé pour l'installation et les mise à jours.
+Utilisant une arborecence issue de la norme [FHS](../majeure/normes.md#fhs-ou-fsstnd) (bin, lib, var, )
+
+Aves deux groupes de traitements distincts disposant chacun d'un compte et d'un groupe :
+
+* La maintenance de la production : root root
+* la livraion de l'applicatif : delivery delivery
+* les traitements de l'application : appli appli
+
+Décrivez les droits (owner.groupe mode) pour :
+
+* la racine de l'application
+* les dossiers de la racine de l'application
+  * bin
+  * lib
+  * var
+  * var/data
+  * var/log
+  * var/upload
+  * etc
+* les fichiers de chacun de ces dossiers
+
+### Application Web
+
+Une application web dévelopée en php appli utilisant une organisation standard d'application web sous linux (racine dans /var/www/appli)
+
+Nous avons maintenant 3 groupes de traitement :
+
+* le serveur web : www-data.www-data
+* la livraison d'une nouvelle version : delivery.delivery
+* Un back office applicatif qui retraite des fichiers uploader : appli.appli
+
+Décrivez les droits (owner.groupe mode) pour :
+
+* la racine de l'application /var/www/appli
+* les dossiers de la racine de l'application
+  * src (le code php)
+  * media
+  * upload
+  * etc
+* les fichiers de chacun de ces dossiers

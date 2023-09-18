@@ -4,14 +4,14 @@ Le libre est une philosophie ouverte qui permet d'avoir une infrastructure hybri
 
 Le support et l'expérience de la communauté, ainsi que le respect des standards, permettent de garantir l'autonomie du SI dans le temps.
 
-## Présentation
+## Présentation du cours
 
 Les outils libres et opensource occupent désormais de fait une place prépondérante dans le monde de l'IT. En effet, avec le temps, le caractère libre des outils et logiciels est devenu un gage de qualité. Cette qualité des outils libres se manifeste à travers plusieurs aspects, parmi lesquels : la **sécurité** des outils et des processus, la **maturité** des solutions technologiques et la complète **transparence** sur le fonctionnement interne.
 Cette qualité accrue a permis notamment aux systèmes GNU/Linux de s'imposer de façon drastique chez les techniciens, en particulier dans les infrastructures.
 
 A l'heure où IBM rachête RedHat (3ieme plus gros rachat dans l'histoir de la tech) pour se sauver, où une petite société comme Docker a su se faire une place de choix au sein des écosystèmes Cloud ; mais aussi à l'heure où Microsoft et Google sont des acteurs majeurs du libres et de l'opensource, il est bon de s'intéresser à cette façon de créer et d'innover.
 
-L'offre technologique de l'écosystem "opensource" est gigantesque : systeme d'exploitation, solution d'infrastructure, briques logiciels, outils, langages, frameworks, modeles....   
+L'offre technologique de l'écosystem "opensource" est gigantesque : systeme d'exploitation, solution d'infrastructure, briques logiciels, outils, langages, frameworks, modeles....
 
 Cette majeure a pour objectif l'appréhension de l'open source dans sa globalité et des plateforme de service basées sur des outils libres, et de permettre le développement d'une expertise technique *via* l'étude théorique de certains procédés techniques et la mise en pratique de certaines technologies.
 
@@ -59,6 +59,6 @@ Une grille est définie pour chaque TP ce qui permet d'avoir une vision simple s
 
 De façon récurente des petits questionaires permettent d'évaluer le niveau de connaissance.
 
-### Présentation
+### Projet d'étude
 
-Le dernier jour par petit groupe vous presenterez votre projet d'étude de la ou les solutions qui vous motive le plus en ce moment, ce que vous parvenez à faire avec cette solution / technologie
+Le dernier jour par petit groupe vous presenterez votre [projet d'étude](./majeure/projet-etude.md) de la ou les solutions qui vous motive le plus en ce moment, ce que vous parvenez à faire avec cette solution / technologie

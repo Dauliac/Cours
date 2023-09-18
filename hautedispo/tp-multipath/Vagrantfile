@@ -1,0 +1,54 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/7"
+  config.vm.box_check_update = false
+
+  config.vm.define "h1" do |host1|
+    host1.vm.network "private_network", ip: "192.168.56.10"
+    host1.vm.network "private_network", ip: "192.168.33.10"
+    host1.vm.hostname="target"
+    host1.vm.provider "virtualbox" do |v|
+      file_to_disk = 'disk2.vdi'
+      unless File.exist?(file_to_disk)
+        v.customize ['createhd', '--filename', file_to_disk, '--size', 256]
+      end
+      v.customize ['storageattach', :id, '--storagectl', 'IDE', '--port', 1, '--device', 1, '--type', 'hdd', '--medium', file_to_disk]
+    end
+    host1.vm.provision "init", type: "shell", inline: <<-SHELL
+      yum -q -y install epel-release
+      yum -q -y --nogpgcheck install scsi-target-utils
+      setenforce 0
+      systemctl disable firewalld
+      systemctl stop firewalld
+      systemctl enable tgtd
+      cat /vagrant/targets-add.conf >> /etc/tgt/targets.conf
+      systemctl start tgtd
+      tgt-admin --show
+      echo "\\o/"
+    SHELL
+  end
+  config.vm.define "h2" do |host2|
+    host2.vm.network "private_network", ip: "192.168.56.11"
+    host2.vm.network "private_network", ip: "192.168.33.11"
+    host2.vm.hostname="initiator"
+    #host2.vm.provision "file", source: "keepalived.conf2", destination: "/tmp/keepalived.conf"
+    host2.vm.provision "init", type: "shell", inline: <<-SHELL
+      yum -q -y --nogpgcheck install iscsi-initiator-utils device-mapper-multipath
+      setenforce 0
+      systemctl disable firewalld
+      systemctl stop firewalld
+      cat /etc/iscsi/initiatorname.iscsi
+      iscsiadm -m discovery -t sendtargets -p 192.168.56.10
+      iscsiadm -m discovery -t sendtargets -p 192.168.33.10
+      iscsiadm -m node -T iqn.2019-11.local.lab.sto1:node1.target1 -p 192.168.33.10 -l
+      iscsiadm -m node -T iqn.2019-11.local.lab.sto1:node1.target1 -p 192.168.56.10 -l
+      systemctl enable multipathd
+      /sbin/mpathconf --enable
+      systemctl start multipathd
+      multipath -ll
+      echo "\\o/"
+    SHELL
+  end
+end

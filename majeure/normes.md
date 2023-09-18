@@ -32,7 +32,7 @@ C'est une extention à Linux
 [wikipedia:LSB](https://fr.wikipedia.org/wiki/Linux_Standard_Base)
 [wiki de la linux foundation LSB](https://wiki.linuxfoundation.org/lsb/start)
 
-## FHS / FSSTND
+## FHS ou FSSTND
 
 [*FileSystem Hierarchy STaNDard*](./arborescence.md) : norme de la hiérarchie des systèmes de fichiers.
 

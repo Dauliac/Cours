@@ -1,0 +1,65 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "debian/bullseye64"
+  config.vm.box_check_update = false
+
+  config.vm.define "target" do |host1|
+    host1.vm.network "private_network", ip: "192.168.56.10"
+    host1.vm.network "private_network", ip: "192.168.33.10"
+    host1.vm.hostname="target"
+    host1.vm.provider "virtualbox" do |v|
+      v.linked_clone = true
+      v.memory = 512
+      v.cpus = 1
+      v.check_guest_additions = false
+      file_to_disk = '.vagrant/disk2.vdi'
+      unless File.exist?(file_to_disk)
+        v.customize ['storagectl', :id, '--add', 'SCSI', '--bootable', 'off', '--name', 'ZZ']
+        v.customize ['createhd', '--filename', file_to_disk, '--size', 256]
+      end
+      v.customize ['storageattach', :id, '--storagectl', 'ZZ', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', file_to_disk]
+      file_to_disk3 = '.vagrant/disk3.vdi'
+      unless File.exist?(file_to_disk3)
+        v.customize ['createhd', '--filename', file_to_disk3, '--size', 256]
+      end
+      v.customize ['storageattach', :id, '--storagectl', 'ZZ', '--port', 2, '--device', 0, '--type', 'hdd', '--medium', file_to_disk3]
+    end
+    host1.vm.provision "target", type: "shell", run: "never", inline: <<-SHELL
+      apt-get update
+      apt-get -q -y install targetcli-fb chrony
+      cp /vagrant/files/saveconfig.json /etc/rtslib-fb-target/saveconfig.json
+      /usr/bin/targetctl restore
+      systemctl enable rtslib-fb-targetctl
+    SHELL
+  end
+  config.vm.define "initiator" do |host2|
+    host2.vm.network "private_network", ip: "192.168.56.11"
+    host2.vm.network "private_network", ip: "192.168.33.11"
+    host2.vm.hostname="initiator"
+    host2.vm.provider "virtualbox" do |v|
+      v.linked_clone = true
+      v.memory = 512
+      v.cpus = 1
+      v.check_guest_additions = false
+    end
+    host2.vm.provision "initiator", type: "shell", run: "never", inline: <<-SHELL
+      apt-get update
+      apt-get -q -y install open-iscsi multipath-tools chrony
+      grep -q 'iqn.2023-02.local.lab:theinitiator' /etc/iscsi/initiatorname.iscsi || sed -i 's/InitiatorName=.*/InitiatorName=iqn.2023-02.local.lab:theinitiator/' /etc/iscsi/initiatorname.iscsi
+      test -f /etc/iscsi/iscsid.conf.orig || cp /etc/iscsi/iscsid.conf /etc/iscsi/iscsid.conf.orig
+      iscsiadm -m discoverydb -t st -p 192.168.56.10:3260 --discover
+      iscsiadm -m discoverydb -t st -p 192.168.33.10:3260 --discover
+      cp /vagrant/files/iscsid.conf /etc/iscsi/iscsid.conf
+      systemctl restart iscsid open-iscsi
+      iscsiadm -m node -L all
+      cp /vagrant/files/multipath.conf /etc/multipath.conf
+      systemctl enable multipathd
+      systemctl restart multipathd
+      multipath -ll
+      iscsiadm --mode node -T iqn.2023-02.local.lab:thetarget -p 192.168.56.10:3260 -o update -n node.startup -v automatic
+      iscsiadm --mode node -T iqn.2023-02.local.lab:thetarget -p 192.168.33.10:3260 -o update -n node.startup -v automatic
+    SHELL
+  end
+end

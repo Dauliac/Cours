@@ -1,0 +1,44 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  creationTimestamp: null
+  name: default
+  namespace: metallb-system
+spec:
+  addresses:
+  - 192.168.33.10-192.168.33.10
+status: {}
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  creationTimestamp: null
+  name: realpool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 192.168.33.20-192.168.33.30
+status: {}
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  creationTimestamp: null
+  name: l2advertisement1
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - default
+status: {}
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  creationTimestamp: null
+  name: l2advertisement2
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - realpool
+status: {}
+---
