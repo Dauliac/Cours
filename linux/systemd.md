@@ -16,7 +16,7 @@
     - [Commande de gestion des spécifications *d'unités*](#commande-de-gestion-des-spécifications-dunités)
   - [Les *unités* de type *target*](#les-unités-de-type-target)
   - [*Unité* de type *service*](#unités-de-type-service)
-    - [gestion des cgroup et namespace](#gestion-des-cgroup-et-namespace)
+    - [autre fonctionalité sur les services](#autre-fonctionalité-sur-les-services)
   - [*Unité* conditionnant l'activation d'un *service*](#unités-conditionnant-lactivation-dun-service)
     - [*Unité* de type *socket*](#unité-de-type-socket)
     - [Unité de type *timer*](#unité-de-type-timer)
@@ -31,7 +31,7 @@
 
 `systemd` a pour principale fonction d'être le **processus init** des distributions GNU/Linux (init au sens POSIX); le processus de **PID 1**. Tout comme les autres versions d'init, au démarrage du système, il effectue les opérations d'initialisation du système comme démarrer les daemons ou monter les systèmes de fichier.
 
-Historiquement nous autres version d'init :
+Historiquement d'autres version d'init ont existé:
 
 - Init systemV ou BSD (historique UNIX)
 - GNU/dnd (init du projet GNU/hurd, il est peu utilisé)
@@ -40,10 +40,11 @@ Historiquement nous autres version d'init :
 - launchd (init utilisé sur MacOS, `systemd` s'en est beaucoup inspiré)
 - bien d'autres tentatives anecdotiques du processus init (pinit, finit, speedboot ... )
 
-Chacun de ces pocessus Init s'apuis sur des scripts (de démarrage ou d'arret des services et autre actions necessaire au système). Ces scripts effectuant souvant les mêmes opérations (chargement de variables d'environement, demarrage du service, sauvegarde du pid file, reload du service par kill du pidfile etc...) utilise une bibliothèque shell propre à chaque distribution.
-Systemd via la prise en charge de ces actions directement dans son fonctionnement permet d'unifier les distribution linux sur cet aspect. il n'y a plus à gerer un script de démarrage valable sous redhat/centOS/rocky et une sous Debian/ubuntu mais juste une unité systemd.
+Chacun de ces pocessus Init s'apuis sur des scripts (de démarrage ou d'arret des services et autre actions necessaire au système).
+Ces scripts effectuant souvant **les mêmes opérations** (chargement de variables d'environement, demarrage du service, sauvegarde du pid file, reload du service par kill du pidfile etc...) utilise des bibliothèques shell propre à chaque distribution.
+Systemd via la prise en charge de ces actions directement dans son fonctionnement permet d'**unifier les distributions linux** sur cet aspect. il n'y a plus à gerer un script de démarrage valable sous redhat/centOS/rocky et un sous Debian/ubuntu mais juste une unité systemd.
 
-Bref, `systemd` de part sa simplicité, sa complétude, sa modularité, et la **normalisation** qu'il propose est devenu la version contemporaine d'**init** de référence pour l'ensemble des distribution largement utilisée.
+Bref, `systemd` de part sa simplicité, sa complétude, sa modularité, et la **normalisation** qu'il propose est devenu la version contemporaine d'**init** de référence pour les distribution les plus largement utilisées.
 
 ### La controverse
 
@@ -52,7 +53,9 @@ Systemd a été trés controversé lors de son adoption sur les distributions GN
 - Keep It Simple
 - Faire une seule chose et la faire bien
 
-En contrepartie systemd apporte une standardisation des systemes linux en proposant une solution global de gestion du 'userspace' des system GNU/Linux
+En effet systemed est un bloc complet qui viens replacer plusieurs processus qui étaient auparavant optionnel et interchangeable (crond, incrond, inetd, xinetd, rsyslogd, syslog-ng)
+
+En contrepartie systemd apporte une standardisation en proposant une solution global et unifiée de gestion du 'userspace' des system GNU/Linux
 
 ### Rapidité du démarrage
 
@@ -63,12 +66,12 @@ Notamment, la résolution des dépendances entre les services est grandement acc
 - La création de l'ensemble des sockets de communication pour les daemons avant de lancer les daemons eux-mêmes.
 - L'attente de l'obtention du nom **D-Bus** pour passer au service suivant, plutôt que d'attendre la fin du démarrage complet du service.
 
-Un *service* n'attend plus la fin du démarrage des *services* dont il dépend car il dispose d'un accès en avance de phase de leurs socket et de leurs noms dbus.
+Pour démarrer, un *service* n'attend plus la fin du démarrage des *services* dont il dépend car il dispose d'un accès en avance de phase de leurs socket et de leurs noms dbus.
 
 La commande suivante fournie une analyse de la séquence du boot dans une image *(plot)* ou un résumé du chemin critique textuel :
 
 ```bash
-$ systemd-analyze plot > plot.svg
+root@bullseye:~# systemd-analyze plot > plot.svg
 root@bullseye:~# systemd-analyze critical-chain | cat
 The time when unit became active or started is printed after the "@" character.
 The time the unit took to start is printed after the "+" character.
@@ -92,20 +95,22 @@ graphical.target @3.467s
 ### Organisation plus souple
 
 `systemd` propose une organisation plus aboutie des services à démarrer aux boot.  
-Là ou systemV proposait au maximum 4 niveaux de démarrage (les niveaux 2 3 4 5), chacun modélisé par une liste de services à démarrer un par un, `systemd` propose une organisation arborescente de *targets* et d'*unités*. Chaque *target* intègre des *unités* à démarrer ou d'autres *targets* (pouvant à leur tour contenir des *unités*).
+Là ou systemV proposait au maximum 4 niveaux de services (les niveaux 1 2 3 4 5), chacun modélisé par une liste de services à démarrer un par un. `systemd` propose une organisation arborescente de *targets* et d'*unités*. Chaque *target* intègre des *unités* à démarrer ou d'autres *targets* (pouvant à leur tour contenir des *unités*).
 
-**Une *unité* correspond à une ou plusieurs ressources du système** : un *service*, une configuration comme un système de fichiers ou une config IP d'une carte réseau, l'activation d'un socket TCP, etc.
+> les niveau system V 0 et 6 définissent respectivement le systeme arrêté et le reboot. d'ou les commandes `init 0` et `init 6` pour arrêter ou rebooter le systeme.
 
-Une *target* est une *unité* spéciale regroupant les autres *unités* dans un niveau de service du système. L'ensemble des *unités* nécessairement activées pour atteindre ce niveau de service.
+**Une *unité* systemd est une unité de configuration du système** : un daemon démarré, l'accès à un système de fichiers ou une configuration réseaux, l'activation d'un socket TCP, des tache planifiées.
 
-En général, la *target* par défaut est `multi-user.target` ou `graphical.target` (système avec GUI).
+Une *target* est une *unité* spéciale regroupant les autres *unités* permetant de définir des point de synchronisation dans l'arbre des dépendances entre les services.
+
+La *target* par défaut est en générale `multi-user.target` ou `graphical.target` (système avec GUI) c'est la racine de l'arbre de dependances des unité, elle definie le **niveau de service** attendu par le systeme au boot et en fonctionnement normal.
 
 ### Complétude
 
 `systemd` offre de grandes possibilités de gestion du système en raison de :
 
-- son intégration avec [D-Bus](./definitions.md#dbus) et la publication d'API `systemd` qui y est faite
-- sa gestion intégrée des [cgroups](./definitions.md#cgroups) et des [namespaces](./definitions.md#namespaces)
+- son intégration avec D-Bus et la publication d'API `systemd` qui y est faite
+- sa gestion intégrée des cgroups et des namespaces
 
 ### Mais encore
 
@@ -116,8 +121,9 @@ Liste non-exhaustive :
 #### Daemons
 
 - `crond` : avec des *unités* de type `.timer`
-- `xinetd` : avec des *unités* de type `.socket`
-- la syslog (`rsyslogd`) : avec le daemon `journald`
+- `incrond` : avec les unité de type `.path`
+- `inetd` ou `xinetd` : avec des *unités* de type `.socket`
+- la syslog (`rsyslogd` ou sysog-ng) : avec le daemon `journald`
 
 #### Fichiers
 
@@ -213,7 +219,7 @@ Définir la *target* par défaut au démarrage du systeme :
 
 ## Configuration `systemd`
 
-La personalisation de fait  dans : `/etc/systemd/`.
+La personalisation se fait dans : `/etc/systemd/`.
 
 On y retrouve, la configuration des composants `system.conf`, `journald.conf`, `resolved.conf`, etc. Ces fichiers contiennent à chaque fois les valeurs par défaut commentées que nous pouvons alors dé-commenter et éditer.
 
@@ -230,7 +236,7 @@ root@bullseye:~# find /etc/systemd/ -name "*.conf"
 /etc/systemd/journald.conf
 ```
 
-il est a noter que leur configuration peu être ammendé lors des installation de paquet logiciel via le dépot de fichier dans :
+il est à noter que leur configuration peu être ammendé lors des installation de paquet logiciel via le dépot de fichier dans :
 
 ```bash
 /usr/lib/systemd/*.conf.d/
@@ -246,11 +252,14 @@ Aussi certaines configurations peuvent être modifiées pour certains namespace,
 
 ### Les *unités* et *targets*
 
-La sous-arborescence `/etc/systemd/system/` contient la définition effective des *targets* et *unités*. C'est la configuration courante proposée par l'éditeur de la distribution GNU/Linux et maintenue par l'adminsys.  
-Les *unités* et *targets* peuvent être redifinies ici, surchargées ou complémentées (*via* la création d'un dossier de même nom mais suffixé `.d`). Ils peuvent aussi n'être que des liens symboliques vers les définition connue (par `systemd`) des ces *unités* dans l'arborescence `/lib/systemd` ou `/usr/lib/systemd/system`.
+La sous-arborescence `/etc/systemd/system/` contient la définition courigé ou effective des *targets* et *unités*. C'est la configuration proposée par l'éditeur de la distribution GNU/Linux puis maintenue par l'adminsys.  
+Les *unités* et *targets* peuvent être redifinies ici, surchargées ou complémentées. Ils peuvent aussi n'être que des liens symboliques vers les définitiosn connues (par `systemd`) des ces *unités* dans l'arborescence `/lib/systemd` ou `/usr/lib/systemd/system`.
 
-Cette sous-arborescence définie les relation entres les *unités*.
-Les *unités* de type ***target*** seront représentées par des dossiers `xxxx.wants`. xxxx représentant le nom de l'unité. Exemple :
+La commande `systemctl daemon-reload` est utilisée après chaque modification des fichier des dossiers `/etc/systemd/system/`, `/lib/systemd` et `/usr/lib/systemd/system` pour qu'elle soit prise en compte par systemd.
+
+Cette sous-arborescence définie les relations effective entres les *unités* une fois activée.
+
+Les *unités* de type ***target*** seront ici représentées par des **dossiers** `xxxx.target.wants`. xxxx représentant le nom de l'unité. Exemple :
 
 ```bash
 root@bullseye:~# ls -al /etc/systemd/system/multi-user.target.wants
@@ -267,7 +276,7 @@ lrwxrwxrwx 1 root root   31 Jun 15 18:41 ssh.service -> /lib/systemd/system/ssh.
 lrwxrwxrwx 1 root root   47 Jun 15 18:41 unattended-upgrades.service -> /lib/systemd/system/unattended-upgrades.service
 ```
 
-celui-ci contenant les *unités* (en fait des liens vers ces unité) devant être démarrées avec cette '*unité* de type *target*.
+celui-ci contenant les *unités* (en fait des liens vers ces unité) devant être démarrées avec cette *unité* de type *target*.
 
 ```bash
 root@bullseye:~# ls -al /etc/systemd/system/
@@ -293,7 +302,7 @@ Nous retrouvons donc :
 
 - Des *unités* : des fichiers ou des liens symboliques vers les définition de ces *unités*
 - Des dossiers `$target$.target.wants/` contenant les *unités* (fichiers ou liens) qui constituent alors les *unités* de type *target*.
-- Des dossiers `$unit$.$unittype$.requires/` contenant des liens vers les *services* dont dépendent *l'unité*
+- Mais aussi d'éventuels dossiers `$unit$.$unittype$.requires/` contenant des liens vers les *services* dont dépendent *l'unité*
 
 Les *unités* connues par le système peuvent être :
 
@@ -301,10 +310,10 @@ Les *unités* connues par le système peuvent être :
 - **`disable`** : inexistant dans `/etc/systemd/system`, mais avec une définition dans `/lib/systemd/system` ou `/usr/lib/systemd/system`
 - **`masked`** : existant en tant que lien depuis `/etc/systemd/system` mais pointant vers `/dev/null` plutot que sa définition (interdit à l'activation)
 
-> il est aussi possible de créé des unité target avec des dépendance de type require via un dossier xxxxx.requires, l'unité ansi créé sera lié fortement lié aux unités requises.
+> il est donc possible de créé des unité target avec des dépendance de type require via un dossier xxxxx.requires, l'unité ansi créé sera lié fortement lié aux unités requises.
 >
 > - si l'unité target est démarré alors toutes les unité requises le seront aussi tout comme le .wants
-> - mais si l'une des unité requise échoue, l'unité taget qui la requière échoura aussi va cette demandance. (échouer au sens failled)
+> - mais si l'une des unité requise échoue, l'unité taget qui la requière échoura aussi via cette dépendance. (échouer au sens failled)
 
 ### Configuration génériques des unités
 
@@ -314,20 +323,21 @@ L'objectif de `systemd` est de maintenir leur état souhaité :
 
 - *Active* : pour démarré (donc l'*unité* est *enabled* ou *loaded*)
 - *Inactive* : si arrêté  (normal pour une *unité* *disabled* ou après un arrêt manuel)
-- *Failed* : si le démarrage de *l'unité* échoue ou s'il n'est pas possible dela maintenir dans l'état souhaité
+
+L'unité sera *Failed* si le démarrage de *l'unité* échoue ou s'il n'est pas possible de la maintenir dans l'état souhaité
 
 Il en existe plusieurs types :
 
-- `$unit$.target`,
-- `$unit$.service`,
-- `$unit$.socket`,
-- `$unit$.timer`,
-- `$unit$.device`,
-- `$unit$.mount`,
-- `$unit$.path`,
-- ...
+- $unit$.target,
+- $unit$.service,
+- $unit$.socket,
+- $unit$.timer,
+- $unit$.path,
+- et d'autres encore ($unit$.device, $unit$.slice, $unit$.scope, $unit$.mount, $unit$.automount, $unit$.swap)
 
 Elles sont définies au travers de fichiers type `.ini` :
+
+avec des **sections** et des **tokens**
 
 ```ini
 [section]
@@ -335,7 +345,7 @@ token = value
 othertoken = anothervalue
 ```
 
-On retrouve leur documentation dans les manuels associés.
+On retrouvera leur documentation dans les manuels associés.
 
 Pour les *unités* dans leur globalité :
 
@@ -347,8 +357,11 @@ Ou pour les *unités* de type $unittype$ :
 
 ```bash
 man systemd.unittype
+```
 
-# Par exemple
+Exemple
+
+```bash
 man systemd.service
 ```
 
@@ -373,11 +386,13 @@ Les principales sections des *unités* sont :
 - `[Service]` : la définition de la gestion d'un *service* (démarrage, arrêt, reload...)
 - `[Install]` : la définition de l'activation d'une *unité* (où elle se situe dans l'arborescence des unités configurées (`/etc/systemd/system`)
 
-> `[Path]`, `[Mount]`, `[Timer]`, `[Socket]` sont des sections dédidées aux unités de ces type.
+`[Path]`, `[Mount]`, `[Timer]`, `[Socket]` sont des sections dédidées aux unités de ces types.
 
 #### Les tokens de configuration des unités
 
-Il est possible de compter les tokens existants dans les différentes *unités* et de récupérer les plus utilisés. Cela nous permet d'identifier les plus utilisé :
+Ils sont spécialisé aux sections dans lesquels ils sont utilisé et permete de définir ou paramétrer une unité.
+
+Il y en a beaucoup :
 
 ```bash
 root@ubuntu-bionic:~# grep -r "=" /etc/systemd/system/ /usr/lib/systemd/ /lib/systemd/system/ | grep -v "^ +#" | cut -d: -f2 | cut -d= -f1 | sort | uniq -c | sort -g | tail -30
@@ -413,13 +428,13 @@ root@ubuntu-bionic:~# grep -r "=" /etc/systemd/system/ /usr/lib/systemd/ /lib/sy
     265 Description
 ```
 
-Pour la section **`[Unit]`** : la description de *l'unité* et la définition de ses dépendances et interdependances avec les autres *unités* : tous les tokens non liés au type spécifique *d'unité*
+Pour les sections **`[Unit]`** et **`[install]`**`: la description de *l'unité* et la définition de ses dépendances et interdependances avec les autres *unités*
 
 - `Description`,
 - `Documentation`,
-- `Requires` : les *unités* qu'il faut absolument démarrer pour démarrer celle-ci,
-- `Requisite` : les *unités* qui doivent déjà être démarrées afin de pouvoir démarrer celle-ci
-- `wants` : les *unité s*que l'on essaye de démarrer avec celle-ci
+- `Requires` : les *unités* qu'il **faut démarrer** pour démarrer celle-ci,
+- `Requisite` : les *unités* qui **doivent déjà** être démarrées afin de pouvoir démarrer celle-ci (elle sera failled sinon)
+- `wants` : les *unités* que l'on essaye de démarrer avec celle-ci
 - `Conflict` : la liste des *unités* en conflit avec celle-ci et qui seront donc stoppées
 - `Before`, `After` : les *unités* devant être démarrées avant ou après celle-ci
 - `DefaultDependencies`: `yes` par défaut et `no` sinon. Lorsque mis à `no`, ce token altère la gestion des dépendances. Exemple : une *unité* de type *target* démarre toutes les *unités* requises (`Requires`) ou souhaitées (`Wants`) sauf si elles sont elles-mêmes spécifiées avec le `defaultDepenencies` à `no`.
@@ -429,9 +444,9 @@ Pour la section **`[Install]`** : on définit ici comment cette *unité* sera ac
 - `WantedBy` : dans quel dossier `$target$.target/wants` cette *unité* doit être définie
 - `RequiredBy` : dans quel dossier `$unit$.$unittype$.requires` cette *unité* doit être définie
 - `Also` : quelles *unités* doivent être installées ou désinstallées en même temps que celle-ci
-- `Alias` : un second nom pour ce service sera défini dans `/etc/systemd/system` (un autre lien symbolique), le *service* sera alors activé sous ses deux noms
+- `Alias` : un second nom pour ce service sera défini dans `/etc/systemd/system` (un autre lien symbolique), le *service* sera alors activé sous ses deux noms (exemple mariadb et mysqld)
 
-Les autres sections sont attachées aux types *d'unité* et seront abordées plus bas, dans les sections dédiées à chaque type *d'unité*.
+Les autres sections sont attachées aux types *d'unité* et doivent donc être étudiée avec les autre type d'unités.
 
 #### Commande de gestion des spécifications *d'unités*
 
@@ -461,7 +476,24 @@ $ sudo systemctl edit docker.service
 $
 ```
 
-Cette commande créera un dossier drop-in `/etc/systemd/system/$name$.service.d/override.conf` permettant d'ajouter du contenu ou de surcharger les *unités* par défaut.
+> Cette commande créera un dossier drop-in `/etc/systemd/system/$name$.service.d/override.conf` permettant d'ajouter du contenu ou de surcharger les *unités* par défaut.
+
+Ou aussi voir ou modifier un token (de gestion des ressources):
+
+```bash
+root@bullseye:~# systemctl show nginx.service -p MemoryMax
+MemoryMax=infinity
+root@bullseye:~# sudo systemctl set-property nginx.service MemoryMax=1G
+root@bullseye:~# systemctl show nginx.service -p MemoryMax
+MemoryMax=1073741824
+root@bullseye:~# systemctl status nginx.service
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+    Drop-In: /etc/systemd/system.control/nginx.service.d
+             └─50-MemoryMax.conf
+```
+
+> systemctl set-property utilisé avec l'option *--runtime* permet dee modifier la valeure que pour le service actuelement en fonction et n'est pas inscrite dans un fichier drop-in de modification du service
 
 ### Les *unités* de type *target*
 
@@ -580,13 +612,13 @@ Les spécifcations nécessaires à l'exécution de celle-ci :
 - `EnvironmentFile` : idem mais les variables sont spécifiées dans un fichier
 - etc.
 
-#### Autre token notable
+#### autre fonctionnalité sur les services
 
-todo 
+- Gestion des cgroup et namespace
+- scope et slice
+- filtrage des syscall
 
-#### Gestion des cgroup et namespace
-
-todo 
+# TO COMPLETE
 
 ### *Unités* conditionnant l'activation d'un *service*
 

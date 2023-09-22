@@ -2,25 +2,20 @@
 
 ## Présentation de la majeure
 
-[Descriptif](./majeure/descriptif.md) du cours
-
-- [Open source vs logiciel libre](./majeure/logiciel-libre.md)
+- [Descriptif du cours](./majeure/descriptif.md)
+- [Syllabus](./majeure/syllabus.md)
 - [Projet d'etude](./majeure/projet-etude.md)
-- [Licences](./majeure/licences.md)
-
-## Contexte
-
-- Principes de [gestion d'une infrastructure](./majeure/gestion-infra-run.md)
-- La [maturité des systèmes d'informations](./majeure/maturite-SI.md)
+- [Open source et libre](./majeure/logiciel-libre.md)
+- [Les Licences open sources](./majeure/licences.md)
 
 ## Gnu/linux
 
 ### Rappels
 
+- [bases d'utilisation de Git](./linux/git.md)
 - [rappels GNU/linux](./linux/rappels-linux.md)
 - [Gestion des droits Posix](./linux/droits.md)
 - [Scripting bash](./linux/rappels-scripting-bash.md)
-- [bases d'utilisation de Git](./git.md)
 
 ### Approfondissement
 

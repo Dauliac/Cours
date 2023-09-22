@@ -38,7 +38,7 @@ Ceux-ci disposeronts donc de doubles allimentations, et une ou deux interfaces r
 
 > On retrouvera en particulier sur les système qui le nécessitent une interconnection pour les réseaux de managment et de sauvegarde, et deux interfaces pour les flux de production et le cas écheant de stockage.
 
-#### Les solutions de stockage
+### Les solutions de stockage
 
 Le SAN s'appuie sur le matériel suivant:
 
@@ -55,7 +55,7 @@ les baie de stockage réseaux(SAN) sont elles aussi propriétaires. Elle intègr
 
 > Le réseaux de stockage est en général indépendant du réseau de production et souvant doublé (2 switchs par baie)
 
-##### Principes de fonctionnement
+#### Principes de fonctionnement
 
 * Sur la baie, les disques sont regroupés en grappes (RAID 1-6 dp , ou un pool de stockage logique)
 * Des volumes de stockage logique (LUN) sont alors créé dans ces pool de stockage, présenté sur le réseaux SAN et rendu visible à certain servers identifié sur le réseau (Lun masking,le zonning FC,)
@@ -63,7 +63,7 @@ les baie de stockage réseaux(SAN) sont elles aussi propriétaires. Elle intègr
 
 > certaine carte HBA permettent de booter sur les disques distant, les serveurs ne disposent alors d'aucun disque interne. Cela permet de rendre les serveur comme des unité de calcul pure. La configuration les fait booter sur tel ou tel disque système.
 
-##### Principe de configuration
+#### Principe de configuration
 
 Afin de simplifier sa gestion, le pool de stockage est découper en unités de stockage de même taille, celle-ci sera l'unité d'alocation minimum.
 

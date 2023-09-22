@@ -1,18 +1,18 @@
 # Déploiements sur un cluster
 
-* [Préambules](#pr-ambules)
+* [Préambules](#préambules)
   * [kubectl](#kubectl)
   * [Les namespaces](#les-namespaces)
   * [Les objets connexes](#les-objets-connexes)
     * [Completion du pod](#completion-du-pod)
     * [Controleurs de pod](#controleurs-de-pod)
-* [Les déploiements](#les-d-ploiements)
+* [Les déploiements](#les-déploiements)
   * [Un pod](#un-pod)
   * [Un Service](#un-service)
   * [Une config map](#une-config-map)
   * [Un replica set](#un-replica-set)
-    * [Deploiement d'un replicaset](#deploiement-d-un-replicaset)
-    * [Manipulation du replica set](#manipulation-du-replica-set)
+    * [Deploiement d'un replicaset](#deploiement-dun-replicaset)
+    * [Manipulation du replica set](#manipulation-du-replicaset)
   * [Un deploiement](#un-deploiement)
 * [Conclusion](#conclusion)
 
