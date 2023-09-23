@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tst-pod-nginx-config
+data:
+  default.conf: |
+    server {
+        listen 80;
+
+        location / {
+            default_type text/plain;
+            expires -1;
+            return 200 'Server address: $server_addr:$server_port\nServer name: $hostname\nDate: $time_local\nURI: $request_uri\nRequest ID: $request_id\n';
+        }
+    }
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  labels:
+    run: tst-ct-nginx
+  name: tst-replicaset
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      applicat: tst-pod-label-nginx
+  template:
+    metadata:
+      labels:
+        applicat: tst-pod-label-nginx
+    spec:
+      containers:              # les containers du pod
+      - image: nginx
+        name: tst-ct-nginx
+        ports:
+          - containerPort: 80  # port d'écoute du container
+            protocol: TCP
+        volumeMounts:
+          - name: nginx-configs
+            mountPath: /etc/nginx/conf.d
+      volumes:
+        - name: nginx-configs
+          configMap:
+            name: tst-pod-nginx-config

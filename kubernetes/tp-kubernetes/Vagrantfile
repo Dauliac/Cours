@@ -1,0 +1,43 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ssh_pub_key = File.readlines("./id_rsa.pub").first.strip
+
+Vagrant.configure(2) do |config|
+  config.vm.provision "privkey", type: "file", source: "./id_rsa", destination: "/home/vagrant/.ssh/id_rsa"
+  config.vm.provision "access", type: "shell" do |cmd|
+    cmd.inline = <<-SHELL
+      grep -q "#{ssh_pub_key}" /home/vagrant/.ssh/authorized_keys || echo "#{ssh_pub_key}" >> /home/vagrant/.ssh/authorized_keys
+      chmod 600 /home/vagrant/.ssh/id_rsa
+    SHELL
+  end
+  config.vm.provision "install", type:"shell", path: "install.sh"
+  # Kubernetes Master Server
+  config.vm.define "master" do |master|
+    master.vm.box = "debian/bullseye64"
+    master.vm.hostname = "master.lab.local"
+    master.vm.network "private_network", ip: "192.168.33.100"
+    master.vm.provider "virtualbox" do |v|
+      v.name = "kubmaster"
+      v.linked_clone = true
+      v.memory = 3072
+      v.cpus = 2
+    end
+    master.vm.provision "shell", path: "master.sh"
+  end
+  # Kubernetes Worker Nodes
+  (1..2).each do |i|
+    config.vm.define "worker#{i}" do |worker|
+      worker.vm.box = "debian/bullseye64"
+      worker.vm.hostname = "worker#{i}.lab.local"
+      worker.vm.network "private_network", ip: "192.168.33.10#{i}"
+      worker.vm.provider "virtualbox" do |v|
+        v.linked_clone = true
+        v.name = "kubworker#{i}"
+        v.memory = 1024
+        v.cpus = 2
+      end
+      worker.vm.provision "shell", path: "worker.sh"
+    end
+  end
+end

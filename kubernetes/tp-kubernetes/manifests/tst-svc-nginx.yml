@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service                   # type d'objet
+metadata:
+  labels:                       # labels du service
+    name: tst-svc-label-nginx   #    clef = name
+  name: tst-svc-nginx           # le nom du service
+spec:                           # spécifications de l'objet
+  ports:                        # publication
+    - port: 1080                # sur le port 1080
+      targetPort: 80            # le port du container est 80
+  selector:                     # ICI on selectione le ou les pods
+    applicat: tst-pod-label-nginx   # à partir du label "applicat" que nous avons défini

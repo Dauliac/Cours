@@ -1,0 +1,27 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  init:
+    cmds:
+      - |
+        lefthook install
+    silent: true
+  build:system:
+    silent: true
+    cmds:
+      - |
+        marp system/README.md
+    sources:
+      - system/README.md
+    generates:
+      - system/README.html
+  build:
+    deps:
+      - build:system
+    silent: true
+    desc: Build all slides

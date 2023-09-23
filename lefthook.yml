@@ -1,0 +1,7 @@
+---
+
+pre-commit:
+  parallel: true
+  commands:
+    build:
+      run: task build
