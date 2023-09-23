@@ -16,7 +16,8 @@
     - [Commande de gestion des spécifications *d'unités*](#commande-de-gestion-des-spécifications-dunités)
   - [Les *unités* de type *target*](#les-unités-de-type-target)
   - [*Unité* de type *service*](#unités-de-type-service)
-    - [autre fonctionalité sur les services](#autre-fonctionalité-sur-les-services)
+    - [Gestion des cgroup](#gestion-des-cgroups)
+    - [Gestion des resources](#gestion-des-ressources)
   - [*Unité* conditionnant l'activation d'un *service*](#unités-conditionnant-lactivation-dun-service)
     - [*Unité* de type *socket*](#unité-de-type-socket)
     - [Unité de type *timer*](#unité-de-type-timer)
@@ -502,6 +503,22 @@ Sous `systemd`, une `target` remplace la notion de run level, il est défini :
 - par une *unité* spéciale `$target$.target` (sous `/lib/systemd/system`) définissant la `target` et ses dépendances
 - et si activé, un dossier `/etc/systemd/system/$target$.target.wants` contenant des liens vers les fichiers de définition des *unités* `systemd` constituant cette *target*
 
+On poura toutes les lister :
+
+```bash
+root@bullseye:~# systemctl list-unit-files -t target 
+UNIT FILE                     STATE    VENDOR PRESET
+basic.target                  static   -            
+blockdev@.target              static   -            
+bluetooth.target              static   -            
+boot-complete.target          static   -            
+cryptsetup-pre.target         static   -            
+cryptsetup.target             static   -            
+ctrl-alt-del.target           alias    -            
+default.target                alias    -            
+.../...
+```
+
 Exemple *d'unité* de type *target* :
 
 ```bash
@@ -553,6 +570,21 @@ Les scripts de démarrage historiques (non encore intégrés à `systemd`) exéc
 
 `systemd` a intégré ces actions et permet lors de l'intégration d'un produit dans une distribution de ne plus avoir à re-créer un script de démarrage.
 
+les unités service: 
+
+```bash
+root@bullseye:~# systemctl list-unit-files -t service
+UNIT FILE                              STATE           VENDOR PRESET
+apparmor.service                       enabled         enabled      
+apt-daily-upgrade.service              static          -            
+apt-daily.service                      static          -            
+autovt@.service                        alias           -            
+chrony-dnssrv@.service                 static          -            
+chrony.service                         enabled         enabled      
+chronyd.service                        alias           -            
+.../...
+```
+
 Exemple *d'unité* :
 
 ```bash
@@ -587,7 +619,7 @@ Dans la section **`[Service]`** de *l'unité* : on spécifie simplement le *serv
 Le type de *service* est défini *via* le token **`Type`** décrivant comment le processus va se comporter une fois allumé (utile pour le monitoring du service notamment) :
 
 - `**simple**` : un daemon (`sshd`)
-- `forking` : une grappe de processus (`httpd`)
+- `forking` : le processus lancé vas 'Forker' le daemon (`apachectl` pour httpd) il faudra préciser le token PIDFile= qui sera créé par le daemon forké pour permettre à systemed de le controler.
 - `dbus` : un daemon avec un nom D-Bus
 - `notify` : un daemon qui notifie la fin de son démarrage à `systemd`
 - `idle` : un daemon qui sera démarré à la fin du processus de démarrage complet de la *target* (au pire dans 5 secondes)
@@ -612,13 +644,88 @@ Les spécifcations nécessaires à l'exécution de celle-ci :
 - `EnvironmentFile` : idem mais les variables sont spécifiées dans un fichier
 - etc.
 
-#### autre fonctionnalité sur les services
+> on retrouvera dans la documentation toutes les options propre aux service <https://www.freedesktop.org/software/systemd/man/systemd.service.html> ou plus précisément au lancement d'un processus par systemd: <https://www.freedesktop.org/software/systemd/man/systemd.exec.html> ou a son arrêt: <https://www.freedesktop.org/software/systemd/man/systemd.kill.html>
+>
+> On notera pour le hardening de service :
+>
+> - NoNewPrivileges=true qui empèche les élévation de privilège
+> - SecureBits=keep-caps,no-setuid-fixup,noroot, et leur pendant -locked qui lists les flag securebit a ajouter sur le service, eux même permettant de limiter les changements sur les capabilities allouées aux threads des processus issue du service
+> - MemoryDenyWriteExecute=True qui empèche d'exécuter du code d'un mappig mémoire accessible en écriture
+> - SELinuxContext= et AppArmorProfile= qui permet de binder le service sur un contexte selinux ou sur un profile apparmor
+> - SystemCallFilter= permettant de limiter les appels system à un subset prédéfinie (man systemd.exec)
 
-- Gestion des cgroup et namespace
-- scope et slice
+#### Gestion des cgroups
+
+Par défaut systemd créé pour chaque service un cgroup sous system.slice
+
+la commande `systemd-cgls` permet de les lister
+
+```bash
+root@bullseye:~# systemd-cgls -u system.slice
+Unit system.slice (/system.slice):
+├─systemd-udevd.service 
+│ └─207 /lib/systemd/systemd-udevd
+├─cron.service 
+│ └─275 /usr/sbin/cron -f
+├─systemd-journald.service 
+│ └─186 /lib/systemd/systemd-journald
+├─unattended-upgrades.service 
+│ └─340 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+├─ssh.service 
+│ └─550 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+├─rsyslog.service 
+│ └─284 /usr/sbin/rsyslogd -n -iNONE
+├─chrony.service 
+│ ├─346 /usr/sbin/chronyd -F 1
+│ └─347 /usr/sbin/chronyd -F 1
+├─dbus.service 
+│ └─276 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+├─system-getty.slice 
+│ └─getty@tty1.service 
+│   └─341 /sbin/agetty -o -p -- \u --noclear tty1 linux
+├─ifup@eth0.service 
+│ └─315 /sbin/dhclient -4 -v -i -pf /run/dhclient.eth0.pid -lf /var/lib/dhcp/dhclient.eth0.leases -I -df /var/lib/dhcp/dhclient6>
+└─systemd-logind.service 
+  └─291 /lib/systemd/systemd-logind
+```
+
+si on précise dans notre unité.service un cgroup, ici custom_slice :
+
+```ini
+Slice=custom_slice.slice
+ProtectControlGroups=true
+```
+
+Notre service sera attaché à ce cgroup précisément nous permettant de regrouper plusieurs service au seins d'un même cgroupe.
+
+#### gestion des ressources
+
+via la surcharge des unité via un drop-in folder, il est possible d'intégrer des modification sur les unité et ainsi :
+
+un fichier : 00-slice.conf qui associé le service à un cgroup(slice)
+
+```ini
+[Service]
+Slice=custom_slice.slice
+```
+
+un autre fichier : 10-control-ressources.conf qui active l'accounting et définie des limitation :
+
+```ini
+MemoryAccounting=yes
+CPUAccounting=yes
+IOAccounting=yes
+IPAccounting=yes
+CPUShares=512 
+MemoryLimit=512M
+OOMPolicy=continue, stop or kill
+```
+
+> <https://www.freedesktop.org/software/systemd/man/systemd.resource-control.html>
+
+- Gestion namespace
+- scope
 - filtrage des syscall
-
-# TO COMPLETE
 
 ### *Unités* conditionnant l'activation d'un *service*
 
@@ -629,7 +736,30 @@ Pour rappel, `xinetd` est le super serveur sous GNU/Linux. Il lit un ensemble de
 
 Le daemon `systemd` propose le même type de solution.
 
-On garde la spécification de *service* mais le service n'est pas activé *(enabled)*.
+il en existe déjà  sur le systeme : 
+
+```bash
+root@bullseye:~# systemctl list-unit-files -t socket
+UNIT FILE                        STATE    VENDOR PRESET
+dbus.socket                      static   -            
+ssh.socket                       disabled enabled      
+syslog.socket                    static   -            
+systemd-fsckd.socket             static   -            
+systemd-initctl.socket           static   -            
+systemd-journald-audit.socket    static   -            
+systemd-journald-dev-log.socket  static   -            
+systemd-journald-varlink@.socket static   -            
+systemd-journald.socket          static   -            
+systemd-journald@.socket         static   -            
+systemd-networkd.socket          disabled enabled      
+systemd-rfkill.socket            static   -            
+systemd-udevd-control.socket     static   -   
+systemd-udevd-kernel.socket      static   -            
+
+14 unit files listed.
+```
+
+On garde une spécification de *service* mais le service n'est pas activé sur le système *(enabled)*.
 
 `/etc/systemd/system/helloworld.service` :
 
@@ -650,7 +780,7 @@ TimeoutStopSec=5
 WantedBy=default.target
 ```
 
-L'unité de type *socket* déclanchant le *service* :
+Une unité de type *socket* déclanchera le *service* :
 
 `/etc/systemd/system/helloworld.socket` :
 
@@ -687,18 +817,18 @@ Les *unités* de type *timer* offrent une alternative à cron.
 Les tokens de spécification *timer* utilisés :
 
 ```bash
-root@ubuntu-bionic:~# grep -o "^[a-z|A-Z]*=" /etc/systemd/system/*.wants/*.timer | cut -d: -f2 | cut -d= -f1 | sort | uniq -c | sort -n
-      1 After
-      1 ConditionKernelCommandLine
-      1 ConditionVirtualization
-      1 Documentation
-      2 AccuracySec
-      2 OnStartupSec
-      4 RandomizedDelaySec
-      5 Description
-      5 OnCalendar
-      5 Persistent
-      5 WantedBy
+root@bullseye:~# systemctl list-unit-files -t timer
+UNIT FILE                    STATE    VENDOR PRESET
+apt-daily-upgrade.timer      enabled  enabled      
+apt-daily.timer              enabled  enabled      
+chrony-dnssrv@.timer         disabled enabled      
+e2scrub_all.timer            enabled  enabled      
+fstrim.timer                 enabled  enabled      
+logrotate.timer              enabled  enabled      
+man-db.timer                 enabled  enabled      
+systemd-tmpfiles-clean.timer static   -            
+
+8 unit files listed.
 ```
 
 On étudiera les possibilités dans le `man` :
@@ -721,6 +851,7 @@ Description=script de backup
 [Service]
 Type=oneshot
 ExecStart=/opt/backup/backup.sh
+RemainAfterExit=True
 
 [Install]
 WantedBy=multi-user.target
@@ -766,11 +897,20 @@ Mon 2023-09-18 00:17:39 UTC 1 day 5h left n/a                         n/a    fst
 Pass --all to see loaded but inactive timers, too.
 ```
 
-le service sera alors lancé
+le service sera alors lancé automatiquement sur la planification définie.
 
 #### *Unité* de type *path*
 
-Cette *unité* permet de déclencher un *service* sur une modification de fichier !
+Cette *unité* permet de déclencher un *service* sur une modification de fichier.
+
+```bash
+root@bullseye:~# systemctl list-unit-files -t path
+UNIT FILE                         STATE  VENDOR PRESET
+systemd-ask-password-console.path static -            
+systemd-ask-password-wall.path    static -            
+
+2 unit files listed.
+```
 
 *Unité* `/etc/systemd/system/replicate.path` :
 

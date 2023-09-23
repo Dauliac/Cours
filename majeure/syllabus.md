@@ -91,14 +91,6 @@
   - limitation des ressource
   - slice/scope
 
-## Organisation de la gestion des systèmes
-
-- L'imposition ssh/sudo
-- Comment tracez les commandes
-- definir et surveiller la conformité
-- la bonne utilisation d'Ansible
-- les outils selinux || apparmor
-
 ## les Licences Open source
 
 - historique des brevet en france
