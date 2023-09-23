@@ -76,10 +76,9 @@
 - presentation/utilisation/confiuration
 - les unités et targets
 - les unité de type services
-  - Gestion des cgroup et namespace
-  - scope et slice
-  - filtrage des syscall
-- les unité deckanchant des services
+  - les Cgroup
+  - La gestion des ressources
+- les unité dechanchant des services
   - timer
   - path
   - socket
@@ -87,9 +86,6 @@
   - device
   - mount
   - swap
-- La gestion des ressources et limitation des services
-  - limitation des ressource
-  - slice/scope
 
 ## les Licences Open source
 

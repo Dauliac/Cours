@@ -14,17 +14,21 @@
     - [Les sections](#les-sections)
     - [Les tokens de configuration des unités](#les-tokens-de-configuration-des-unités)
     - [Commande de gestion des spécifications *d'unités*](#commande-de-gestion-des-spécifications-dunités)
-  - [Les *unités* de type *target*](#les-unités-de-type-target)
-  - [*Unité* de type *service*](#unités-de-type-service)
-    - [Gestion des cgroup](#gestion-des-cgroups)
-    - [Gestion des resources](#gestion-des-ressources)
-  - [*Unité* conditionnant l'activation d'un *service*](#unités-conditionnant-lactivation-dun-service)
-    - [*Unité* de type *socket*](#unité-de-type-socket)
-    - [Unité de type *timer*](#unité-de-type-timer)
-    - [*Unité* de type *path*](#unité-de-type-path)
-  - [unités système](#unités-système)
-    - [unité mount](#unité-mount)
-    - [unité device](#unité-device)
+- [Les *unités* de type *target*](#les-unités-de-type-target)
+- [*Unité* de type *service*](#unités-de-type-service)
+  - [Gestion des cgroup](#gestion-des-cgroups)
+  - [Gestion des resources](#gestion-des-ressources)
+- [*Unité* conditionnant l'activation d'un *service*](#unités-conditionnant-lactivation-dun-service)
+  - [*Unité* de type *socket*](#unité-de-type-socket)
+  - [Unité de type *timer*](#unité-de-type-timer)
+  - [*Unité* de type *path*](#unité-de-type-path)
+- [unités système](#unités-système)
+  - [unité device](#unité-device)
+  - [unité mount](#unité-mount)
+    - [unite automount](#unité-automount)
+  - [unite swap](#unité-swap)
+- [conclusion](#conclusion)
+
 
 ## Présentation
 
@@ -570,7 +574,7 @@ Les scripts de démarrage historiques (non encore intégrés à `systemd`) exéc
 
 `systemd` a intégré ces actions et permet lors de l'intégration d'un produit dans une distribution de ne plus avoir à re-créer un script de démarrage.
 
-les unités service: 
+les unités service:
 
 ```bash
 root@bullseye:~# systemctl list-unit-files -t service
@@ -736,7 +740,7 @@ Pour rappel, `xinetd` est le super serveur sous GNU/Linux. Il lit un ensemble de
 
 Le daemon `systemd` propose le même type de solution.
 
-il en existe déjà  sur le systeme : 
+Il en existe déjà sur le systeme:
 
 ```bash
 root@bullseye:~# systemctl list-unit-files -t socket
@@ -956,6 +960,102 @@ scp -i ~/.ssh/backup-id-rsa /opt/backup/database.dump backup@othersite.away.com:
 
 #### unité device
 
-#### unité swap
+Ces unité sont géré par le service `systemd-udevd.service` de systemd qui vas créé dynamiquement une unité de type device pour chaque device du noyau Linux (et annoté systemd, principalement les device réseaux et en mode block). Cela permet de disposer de relation de dépendance automatiquement entre les  autre unité  et les périphérique dont ils dépendent.
 
 #### unité mount
+
+Ces unités gèrent le montage des systèmes de fichier.
+
+Historiquement les systemes de fichier que nous administrons sont défini et maintenu dans /etc/fstab.
+Au boot ces définitions seront convertis dynamiquement en unité systemd par systemd-fstab-generator et donc disponible pour la gestion des dépendances entre les unité. Les systemes de fichiers montés à la vollée seront aussi controlée par systemd au montage.
+
+il est possible de créé ces unité à la vollé via la commande `systemd-mount`.
+
+Il reste possible de créé des fichier d'unité de type $mount$ statique en indiquant des valeurs au tokens dédiés à la section `[mount]` : `What=` et `Where=`, `Type=`, `Options=` ...   :
+
+```bash
+root@bullseye:~# systemctl list-unit-files -t mount
+UNIT FILE                     STATE     VENDOR PRESET
+-.mount                       generated -            
+dev-hugepages.mount           static    -            
+dev-mqueue.mount              static    -            
+proc-sys-fs-binfmt_misc.mount disabled  disabled     
+sys-fs-fuse-connections.mount static    -            
+sys-kernel-config.mount       static    -            
+sys-kernel-debug.mount        static    -            
+sys-kernel-tracing.mount      static    -            
+
+8 unit files listed.
+root@bullseye:~# systemctl status sys-kernel-config.mount
+● sys-kernel-config.mount - Kernel Configuration File System
+     Loaded: loaded (/proc/self/mountinfo; static)
+     Active: active (mounted) since Sat 2023-09-16 12:25:16 UTC; 2 days ago
+      Where: /sys/kernel/config
+       What: configfs
+       Docs: https://www.kernel.org/doc/Documentation/filesystems/configfs/configfs.txt
+             https://www.freedesktop.org/wiki/Software/systemd/APIFileSystems
+      Tasks: 0 (limit: 1114)
+     Memory: 8.0K
+        CPU: 2ms
+     CGroup: /sys-kernel-config.mount
+
+root@bullseye:~# mount | grep configfs
+configfs on /sys/kernel/config type configfs (rw,nosuid,nodev,noexec,relatime)
+```
+
+C'est ainsi que sont géré les points de montage spécifiques et necessaire au kernel.
+
+les unités de type mount disposent implicitement des dépendances :
+
+- Pour la gestion du démontage au shitdown :
+  - Before=unoumt.target
+  - Conflicts=umount.target
+- Pour le montage
+  - After=local-fs-pre.target
+  - Before=local-fs.target
+- Pour les points de montage resaux :
+  - After=remote-fs-pre.target, network.target, network-online.target
+  - Before=remote-fs.target
+
+> la documentation est plutot claire <https://www.freedesktop.org/software/systemd/man/systemd.mount.html>
+
+##### unité automount
+
+Il reste possible de ces automontage dans /etc/fstab. Nous avons maintenant aussi l'option de créer des fichiers unités permetant de définir un montage automatique à la vollée.
+
+Une section lui est dédiée `[automount]` et elle contiendra les token : `Where=`, `ExtraOptions=`, `DirectoryMode=`, `TimeoutIdleSec=`.
+
+#### unité swap
+
+Cette unité système gére les nameespace de mémoire virtuelle afin de la rendre disponible au kernel ou non dans la gestion de la mémoire du systeme
+
+```bash
+$ systemctl status swapfile.swap
+● swapfile.swap - /swapfile
+     Loaded: loaded (/etc/fstab; generated)
+     Active: active since Sat 2023-09-16 11:18:21 CEST; 6 days ago
+       What: /swapfile
+       Docs: man:fstab(5)
+             man:systemd-fstab-generator(8)
+      Tasks: 0 (limit: 9063)
+     Memory: 32.0K
+        CPU: 4ms
+     CGroup: /system.slice/swapfile.swap
+```
+
+Ici l'unité à été créé à la vollée via la définition de la swap à $l'ancienne$ dans /etc/fstab, l'unité retranscri l'activation de la swap définie dans /etc/fstab.
+
+Aussi ces unités disposent automatiquement des token définissant les dépendances par défaut permettant sont ordonancement : `BindsTo=` et `After=` l'unité device ou mount auquel il se réfère
+
+## Conclusion
+
+Avec ces cours nous avons pus voir les aspect principaux de systemd mais nous sommes loin d'avoir tout vue.
+
+nous retiendrons que dans un systeme autonome (sans interaction direct avec le systeme) systemd peu prendre en charge toute l'automatisation de la gestion du userspace :
+
+- ordonancement du boot
+- mise à disposition des ressources systemes
+- démarrage et maintenance des services
+- reprise sur erreur de certain services (Restart=on-failure, OnFailure=, OnSuccess=)
+
+Aussi sa maitrise nous offre des options nous permettant de controler le systéme et les applications qui y sont lancées. (gestion des ressource des cgroup, filtre sur les syscalls, context selinux, profile apparmor, etc...)
