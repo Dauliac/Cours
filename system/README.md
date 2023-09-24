@@ -45,7 +45,7 @@ footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com'
     ```
 ---
 
-![Cours-systems-Scheduler.drawio.svg](assets/Cours-systems-Scheduler.drawio.svg)
+![](assets/system-2.svg)
 
 # BIOS
 
@@ -175,11 +175,12 @@ sequenceDiagram
 
 ### Comment fait-on pour lancer plusieurs processus ?
 
-![Cours-systems-Scheduler.drawio.svg](assets/Cours-systems-Scheduler.drawio.svg)
+![](assets/system-2.svg)
+
 
 ### Ordonnanceur et temporisateur
 
-![Cours-systems-Scheduler 2.drawio.svg](assets/Cours-systems-Scheduler_2.drawio.svg)
+![](assets/system-3.svg)
 
 ---
 
@@ -212,7 +213,7 @@ C’est d’autant plus simple quand on connaît la liste de tout les processus 
 
 ## Les syscalls
 
-![Cours-systems-Syscalls.drawio.svg](assets/Cours-systems-Syscalls.drawio.svg)
+![](assets/system-1.svg)
 
 ---
 
@@ -293,7 +294,7 @@ La plupart des problèmes de sécurité dans la sécurité des logiciels viennen
 
 ---
 
-![Cours-systems-Processus.drawio.svg](assets/Cours-systems-Processus.drawio.svg)
+![](assets/system-4.svg)
 
 ---
 
@@ -334,7 +335,7 @@ La plupart des problèmes de sécurité dans la sécurité des logiciels viennen
 
 ## Processus states
 
-![Cours-systems-States.drawio.svg](assets/Cours-systems-States.drawio.svg)
+![](assets/system-5.svg)
 
 ## Pagination virtuelle
 
@@ -348,7 +349,7 @@ Le kernel est une première forme d’isolation
 
 ## Les machines virtuelles
 
-![Cours-systems-Machines virtuelles.drawio.svg](assets/Cours-systems-Machines_virtuelles.drawio.svg)
+![](assets/system-10.svg)
 
 ---
 
@@ -360,6 +361,10 @@ Le kernel est une première forme d’isolation
 
 ## Les containers 🐋
 
+![](assets/system-8.svg)
+
+---
+
 | Éléments | Description  |
 | --- | --- |
 | Dockefile | Fichier texte déclarant comment construire une image |
@@ -367,6 +372,40 @@ Le kernel est une première forme d’isolation
 | Registry | Depo permettant de versionner, partager, récupérer et télécharger les images. |
 | Runtime | Permet d’exécuter les containers (containerd) |
 | Frontend | Client permettant d’interagir avec ces éléments: docker, podman, kaniko. |
+
+### Dockerfile
+```Dockerfile
+FROM alpine
+
+COPY \
+    package.json package-lock.json \
+    /var/lib/app/
+RUN \
+    npm install \
+    npm run build
+COPY ./src /var/lib/app
+
+CMD npm run prod
+```
+
+---
+
+**Conseils:**
+- Utiliser [hadolint](https://github.com/hadolint/hadolint)
+- Utiliser [trivy](https://github.com/aquasecurity/trivy)
+- Faire des images avec un seul processus
+
+---
+
+| Avantages des Dockerfiles          | Inconvénients des Dockerfiles                  |
+|-----------------------------------|-----------------------------------------------|
+| 1. **Reproductibilité** : Les Dockerfiles permettent de définir de manière précise l'environnement d'une application, garantissant ainsi que l'application se comportera de la même manière partout où le conteneur Docker est exécuté. | 1. **Nature Impérative** : Les Dockerfiles sont impératifs, ce qui signifie que vous spécifiez les étapes de construction plutôt que de décrire l'état souhaité. Cela peut rendre difficile la compréhension de l'environnement cible. |
+| 2. **Isolation** : Les Dockerfiles permettent d'isoler une application et ses dépendances, ce qui évite les conflits entre les différentes applications s'exécutant sur la même machine hôte. | 2. **Maintenance** : Les Dockerfiles nécessitent une maintenance continue pour rester à jour avec les nouvelles versions des dépendances, ce qui peut devenir fastidieux. |
+| 3. **Gestion des Versions** : Les Dockerfiles peuvent être versionnés et gérés avec des systèmes de contrôle de version, ce qui facilite la gestion des modifications de configuration au fil du temps. | 3. **Taille du Conteneur** : Les Dockerfiles peuvent générer des images de conteneur volumineuses, car chaque instruction ajoute des couches au système de fichiers de l'image. Cela peut augmenter les temps de transfert et d'exécution. |
+| 4. **Reconstruction Rapide** : En utilisant un Dockerfile, vous pouvez rapidement reconstruire une image de conteneur en cas de besoin, ce qui facilite le déploiement continu. | 4. **Complexité Potentielle** : Les Dockerfiles peuvent devenir complexes, en particulier pour les applications multi-étapes ou avec de nombreuses dépendances. La gestion de cette complexité peut être difficile. |
+| 5. **Automatisation** : Les Dockerfiles peuvent être utilisés dans des pipelines CI/CD pour automatiser la construction et le déploiement de conteneurs, ce qui accélère les processus de développement et de déploiement. | 5. **Difficile à Déboguer** : Les erreurs dans un Dockerfile peuvent être difficiles à déboguer, car il peut être compliqué de déterminer où l'erreur s'est produite. |
+
+---
 
 ### Les containers et les syscalls
 
@@ -396,6 +435,10 @@ Le kernel est une première forme d’isolation
 
 ---
 
+![](assets/system-9.svg)
+
+---
+
 | Éléments | Description  |
 | --- | --- |
 | Code | Code à exécuter en tant que lambda |
@@ -420,31 +463,37 @@ Les lambdas c’est juste
 
 ---
 
-![Cours-systems-Lambda.drawio.png](assets/Cours-systems-Lambda.drawio.png)
-
 ### Web assembly 🤖
 
 - Compilation du code dans un language agnostique
 - Se débarrasser d’un maximum de composants: Plus d’interpréteur.
+- peut tourner en back ou en front
+
+https://webassembly.org/
+https://developer.mozilla.org/fr/docs/WebAssembly
 
 ## Comparaison 🆚
 
-![Cours-systems-Comparaison isolations.drawio.png](assets/Cours-systems-Comparaison_isolations.drawio.png)
+![](assets/system-7.svg)
 
 ## Résumé 🧠
 
 ---
 
-![Cours-systems-System.drawio.svg](assets/Cours-systems-System.drawio.svg)
+![](assets/system-0.svg)
 
 ---
 
-![Cours-systems-Isolations.drawio.png](assets/Cours-systems-Isolations.drawio.png)
+![](assets/system-6.svg)
 
 ## Conclusion
 
 ![Untitled](assets/Untitled%206.png)
+---
 
+![](assets/system-11.svg)
+
+---
 - Coût alternance perf, sécurité:
     - On fait de la performance en faisant des design permissifs et ouvert
     - Puis on regrette

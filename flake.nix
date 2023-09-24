@@ -28,6 +28,8 @@
                   lefthook
                   go-task
                   marp-cli
+                  typos
+                  drawio
                 ];
 
               devShellHook = ''

@@ -2,17 +2,55 @@
 
 version: '3'
 
-vars:
-  GREETING: Hello, World!
-
 tasks:
   init:
     cmds:
       - |
         lefthook install
     silent: true
+  build:diagrams:
+    internal: true
+    silent: true
+    requires:
+      vars:
+        - MODULE
+    vars:
+      ASSETS_DIR: "./{{.MODULE}}/assets"
+      DIAGRAM_FILE: "{{.MODULE}}/diagrams.drawio"
+      COUNT:
+        sh: grep -o "<diagram" "{{.DIAGRAM_FILE}}" | wc -l
+      RANGE: '{{.COUNT | int | until }}'
+    cmds:
+      - rm -rf {{.ASSETS_DIR}}/{{.MODULE}}-*.svg
+      - for: 
+          var: RANGE
+        cmd: |
+          drawio \
+            --format svg \
+            --export \
+            --embed-diagram \
+            --embed-svg-images \
+            --page-index {{.ITEM | trimPrefix "[" | trimSuffix "]" }} \
+            --output "{{.ASSETS_DIR}}/{{.MODULE}}-{{.ITEM | trimPrefix "[" | trimSuffix "]" }}.svg" "{{.DIAGRAM_FILE}}"
+      - |
+        sed \
+          -i \
+          's/Text is not SVG \- cannot display//g' \
+          {{.ASSETS_DIR}}/*.svg
+  build:system:diagrams:
+    silent: true
+    cmds:
+      - task: build:diagrams
+        vars:
+          MODULE: system
+    sources:
+      - system/diagrams.drawio
+    generates:
+      - system/assets/*.svg
   build:system:
     silent: true
+    deps:
+      - build:system:diagrams
     cmds:
       - |
         marp system/README.md

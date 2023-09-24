@@ -10,3 +10,10 @@ Comment exporter les fichiers markdowns en slides
 ```bash
  nix develop --impure
 ```
+
+## Usage
+
+Pour lancer le build des slides en continue, lancez la commande suivante:
+```bash
+task build -w
+```
