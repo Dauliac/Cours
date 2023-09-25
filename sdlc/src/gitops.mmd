@@ -1,0 +1,27 @@
+stateDiagram-v2
+    [*] --> Review
+    Review --> Staging
+    Staging --> Production
+	
+		state Review {
+        [*] --> linting_review
+				linting_review --> building_review
+				building_review --> deployment_review
+				deployment_review --> probing_review
+        probing_review --> [*]
+    }
+
+    state Staging {
+				[*] --> linting_staging
+				linting_staging --> building_staging
+				building_staging --> deployment_staging
+				deployment_staging --> probing_staging
+        probing_staging --> [*]
+    }
+    state Production {
+				[*] --> linting_production
+				linting_production --> building_production
+				building_production --> deployment_production
+				deployment_production --> probing_production
+        probing_production --> [*]
+    }
