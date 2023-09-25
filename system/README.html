@@ -189,24 +189,7 @@ NVRAM.</li>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21" data-header="Cours des systèmes" data-footer="Julien Dauliac -- ynov.casualty925@passfwd.com" data-paginate="true" data-heading-divider="3" data-marpit-pagination="21" data-marpit-pagination-total="77" style="--header:Cours des systèmes;--footer:Julien Dauliac -- ynov.casualty925@passfwd.com;--paginate:true;--heading-divider:3;">
 <header>Cours des systèmes</header>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-mermaid">sequenceDiagram
-    participant SEC as Security
-    participant PEI as Pre EFI Initialization
-    participant DXE as Driver Execution Environment
-    participant BDS as Boot Dev Select
-    participant TSL as Transient System Load
-    participant RT as RunTime
-
-    Note over SEC: Authentification\net contrôle d'intégrité
-    SEC-&gt;&gt;PEI: Initialisation de la carte mère, passage en mode protégé
-    PEI-&gt;&gt;DXE: Enregistrement des pilotes
-    Note over DXE: Dispatcher des demandes des applications EFI
-    DXE-&gt;&gt;BDS: Gestionnaire de démarrage (grub)
-    BDS-&gt;&gt;TSL: Chargement du système d'exploitation
-    Note over TSL: Clos des services EFI via ExitBootServices()
-    TSL-&gt;&gt;RT: Le système d'exploitation prend la main
-    Note over RT: Interaction via les variables EFI dans NVRAM
-</code></pre>
+<p><img src="assets/system-mermaid-bios.svg" alt="" /></p>
 <footer>Julien Dauliac -- <a href="mailto:ynov.casualty925@passfwd.com">ynov.casualty925@passfwd.com</a></footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" data-header="Cours des systèmes" data-footer="Julien Dauliac -- ynov.casualty925@passfwd.com" data-paginate="true" data-heading-divider="3" data-marpit-pagination="22" data-marpit-pagination-total="77" style="--header:Cours des systèmes;--footer:Julien Dauliac -- ynov.casualty925@passfwd.com;--paginate:true;--heading-divider:3;">

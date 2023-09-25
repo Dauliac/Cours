@@ -117,25 +117,8 @@ NVRAM.
 
 ---
 
-```mermaid
-sequenceDiagram
-    participant SEC as Security
-    participant PEI as Pre EFI Initialization
-    participant DXE as Driver Execution Environment
-    participant BDS as Boot Dev Select
-    participant TSL as Transient System Load
-    participant RT as RunTime
+![](assets/system-mermaid-bios.svg)
 
-    Note over SEC: Authentification\net contrôle d'intégrité
-    SEC->>PEI: Initialisation de la carte mère, passage en mode protégé
-    PEI->>DXE: Enregistrement des pilotes
-    Note over DXE: Dispatcher des demandes des applications EFI
-    DXE->>BDS: Gestionnaire de démarrage (grub)
-    BDS->>TSL: Chargement du système d'exploitation
-    Note over TSL: Clos des services EFI via ExitBootServices()
-    TSL->>RT: Le système d'exploitation prend la main
-    Note over RT: Interaction via les variables EFI dans NVRAM
-```
 
 ## Sécurité
 

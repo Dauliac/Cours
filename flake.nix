@@ -30,6 +30,7 @@
                   marp-cli
                   typos
                   drawio
+                  nodejs_18
                 ];
 
               devShellHook = ''
