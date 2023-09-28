@@ -10,16 +10,40 @@
 - Organisation des cours et des évaluations
   - le projet de fin de majeure
 
-## Le fonctionnement des systèmes
+## Les systèmes
 
-- du matériel au systeme d'exploitation
-- kernel space et gestion de la ram
-- pagination
-- gestion des syscall
-
-# TO COMPLETE ?
-
-- échange et discussions sur le projet
+- Introduction
+  - Objectifs
+  - C’est quoi un OS ?
+  - Un système simple pour commencer
+- BIOS
+  - les BIOS 
+  - Qu’est ce qu’un BIOS
+  - Sécurité
+  - Un bios open source
+- Kernel
+  - Résumé des composants du Noyau
+  - Scheduler
+    - Comment fait-on pour lancer plusieurs processus ?
+    - Ordonnanceur et temporisateur
+    - Algorithmes d’ordonnancements
+  - Les syscalls
+- Processus
+  - Premier processus
+  - Histoire de l’architecture de la RAM
+  - Le layout de la ram
+  - Sécurité de la ram
+  - Processus states
+  - Pagination virtuelle
+- Les nouvelles isolations
+  - Les machines virtuelles
+  - Les containers
+    - Les containers et les syscalls
+    - Les lambdas
+    - Web assembly
+  - Comparaison
+  - Résumé
+- Conclusion
 
 ## Rappels a propos des systeme linux
 
@@ -59,17 +83,6 @@
       - mise en place du module dm_multipath
     - tp lvm
       - utilisation de lvm afin de simplifier la gestion des volumes SAN
-
-## Cloisonnement des applicatifs
-
-- Init
-- Ram et les bug cpu
-- programation paralele
-- conteneurisation
-
-- du conteneur aux lambda
-
-# TO COMPLETE ?
 
 ## systemd
 

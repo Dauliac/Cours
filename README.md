@@ -19,14 +19,15 @@
 
 ### Approfondissement
 
+- [Les systèmes](./system/README.md)
 - [Configuration serveur physique](./linux/config-linux.md)
   - [tp compilation de driver](./linux//tp-config-linux/compile-driver/README.md)
   - [tp config réseaux](./linux/tp-config-linux/config-net/config-net-advanced.md)
-  - avec systemd [tp networkd](./linux/tp-config-linux/config-net/systemd-net.md)
   - [les schedulers d'I/O](./linux/tp-config-linux/config-stockage/scheduler-io.md)
   - [tp multipathing](./linux/tp-config-linux/config-stockage/iscsi-mutlipath.md)
   - [tp lvm](./linux/tp-config-linux/config-stockage/tp-lvm.md)
 - [systemd](./linux/systemd.md)
+  - [tp networkd](./linux/tp-config-linux/config-net/systemd-net.md)
 
 ## Kubernetes
 

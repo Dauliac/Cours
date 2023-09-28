@@ -1,34 +1,6 @@
 # systemd
 
-- [Présentation](#présentation)
-  - [Principe](#principe)
-  - [La controverse](#la-controverse)
-  - [Rapidité du démarrage](#rapidité-du-démarrage)
-  - [Organisation plus souple](#organisation-plus-souple)
-    - [Outils de gestion système propres à chaque distribution](#outils-de-gestion-système-propres-à-chaque-distribution)
-- [Utilisation](#utilisation)
-  - [`systemctl`](#systemctl)
-- [Configuration `systemd`](#configuration-systemd)
-  - [Les *unités* et *targets*](#les-unités-et-targets)
-  - [Configuration génériques des unités](#configuration-génériques-des-unités)
-    - [Les sections](#les-sections)
-    - [Les tokens de configuration des unités](#les-tokens-de-configuration-des-unités)
-    - [Commande de gestion des spécifications *d'unités*](#commande-de-gestion-des-spécifications-dunités)
-- [Les *unités* de type *target*](#les-unités-de-type-target)
-- [*Unité* de type *service*](#unités-de-type-service)
-  - [Gestion des cgroup](#gestion-des-cgroups)
-  - [Gestion des resources](#gestion-des-ressources)
-- [*Unité* conditionnant l'activation d'un *service*](#unités-conditionnant-lactivation-dun-service)
-  - [*Unité* de type *socket*](#unité-de-type-socket)
-  - [Unité de type *timer*](#unité-de-type-timer)
-  - [*Unité* de type *path*](#unité-de-type-path)
-- [unités système](#unités-système)
-  - [unité device](#unité-device)
-  - [unité mount](#unité-mount)
-    - [unite automount](#unité-automount)
-  - [unite swap](#unité-swap)
-- [conclusion](#conclusion)
-
+[TOC]
 
 ## Présentation
 
@@ -121,25 +93,22 @@ La *target* par défaut est en générale `multi-user.target` ou `graphical.targ
 
 `systemd` intègre aussi de façon modulaire d'autre composants des systèmes UNIX en les remplaçant par des solutions plus modernes et normalisées.
 
-Liste non-exhaustive :
-
-#### Daemons
+#### Daemons potentielement déprécies par systemd
 
 - `crond` : avec des *unités* de type `.timer`
 - `incrond` : avec les unité de type `.path`
 - `inetd` ou `xinetd` : avec des *unités* de type `.socket`
 - la syslog (`rsyslogd` ou sysog-ng) : avec le daemon `journald`
 
-#### Fichiers
+#### Fichiers protentielement dépréciés par systemd
 
 - inittab : avec les *unités* de type `.target`
 - le fichier `/etc/fstab` : avec des *unités* de type `.mount`
 
-### Outils de gestion système propres à chaque distribution
+#### Outils de gestion système propres à chaque distribution
 
-- script de gestion réseau et/ou le daemon `NetworkManager`
-- daemon `systemd-networkd`
-- les outil `systemd-resolved`, `hostnamectl`
+- script de gestion réseau et/ou le daemon `NetworkManager` avec le daemon `systemd-networkd`
+- les outils `systemd-resolved`, `hostnamectl`
 
 ## Utilisation
 
@@ -222,9 +191,33 @@ Définir la *target* par défaut au démarrage du systeme :
 # systemctl set-default multi-user.target  
 ```
 
+### Les autres composants de systemed
+
+#### La configuration réseaux
+
+L'unité systemd-networkd.service une fois active Permet la gestion de la configuration réseaux du systeme au travers : 
+
+- d'unité .network .link et .netdev
+- de la commande networkctl
+
+L'unité systemd-resolved.service offre la gestion de la résolution réolution dns du systeme.  
+
+l'utilisation de ces deux composant est traité dans le [tp networkd](./tp-systemd/systemd-net.md)
+
+#### les commande de configuration système
+
+- hostnamectl : permetant de connaitre ou de definir le hostname (il maintien notamment /etc/hostname)
+- timedatectl : Permetant de definir la date et l'heure system
+- bootctl : Permet de gérer des éléments de la configuration EFI et du boot loader EFI.
+- loginctl : Permet la gestion des sessions utilisateur (y compris graphique)
+- journalctl : outil de requete sur le la journalisation systeme. 
+- busctl : permet le contrôle de dbus
+
+### systemd-analyze
+
 ## Configuration `systemd`
 
-La personalisation se fait dans : `/etc/systemd/`.
+La 'personalisation' se fait dans : `/etc/systemd/`.
 
 On y retrouve, la configuration des composants `system.conf`, `journald.conf`, `resolved.conf`, etc. Ces fichiers contiennent à chaque fois les valeurs par défaut commentées que nous pouvons alors dé-commenter et éditer.
 
@@ -320,7 +313,7 @@ Les *unités* connues par le système peuvent être :
 > - si l'unité target est démarré alors toutes les unité requises le seront aussi tout comme le .wants
 > - mais si l'une des unité requise échoue, l'unité taget qui la requière échoura aussi via cette dépendance. (échouer au sens failled)
 
-### Configuration génériques des unités
+## Configuration des unités
 
 Les *unités* `systemd` sont donc des définitions de ressources système.
 
@@ -370,7 +363,7 @@ Exemple
 man systemd.service
 ```
 
-#### Les sections
+### Les sections
 
 En regardant dans l'ensemble des *unités* on peut retrouver les sections existantes :
 
@@ -393,7 +386,7 @@ Les principales sections des *unités* sont :
 
 `[Path]`, `[Mount]`, `[Timer]`, `[Socket]` sont des sections dédidées aux unités de ces types.
 
-#### Les tokens de configuration des unités
+### Les tokens de configuration des unités
 
 Ils sont spécialisé aux sections dans lesquels ils sont utilisé et permete de définir ou paramétrer une unité.
 
@@ -453,7 +446,7 @@ Pour la section **`[Install]`** : on définit ici comment cette *unité* sera ac
 
 Les autres sections sont attachées aux types *d'unité* et doivent donc être étudiée avec les autre type d'unités.
 
-#### Commande de gestion des spécifications *d'unités*
+### Commande de gestion des spécifications *d'unités*
 
 Voir une *unité* `systemd` :
 
@@ -1049,9 +1042,9 @@ Aussi ces unités disposent automatiquement des token définissant les dépendan
 
 ## Conclusion
 
-Avec ces cours nous avons pus voir les aspect principaux de systemd mais nous sommes loin d'avoir tout vue.
+Avec ces cours nous avons pus voir les aspects principaux de systemd mais nous sommes loin d'avoir tout vue.
 
-nous retiendrons que dans un systeme autonome (sans interaction direct avec le systeme) systemd peu prendre en charge toute l'automatisation de la gestion du userspace :
+Nous retiendrons que dans un systeme autonome (sans interaction direct avec le systeme) systemd peu prendre en charge toute l'automatisation de la gestion du userspace :
 
 - ordonancement du boot
 - mise à disposition des ressources systemes

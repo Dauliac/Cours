@@ -10,8 +10,6 @@ Pour la virtualisation/conteneurisation on pourra aussi utiliser des Bridges nou
 
 Cela nécessitera de charger des modules du moyau offrant ces fonctionalités et **un environnement réseaux compatible**.
 
-le [tp networkd](./systemd-net.md) vous permet de mettre ces éléments en place avec systemd-networkd.
-
 ## Vlan tagging
 
 Le kernel supporte la gestion des vlan via le module 8021q :
