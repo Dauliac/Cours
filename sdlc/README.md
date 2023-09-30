@@ -541,7 +541,30 @@ main "${@}"
 
 Un indispensable.
 
-En cas de besoin:
+---
+- En cas de trous de mémoire
+
+```bash
+tldr git commit
+
+  Commit files to the repository.
+  More information: <https://git-scm.com/docs/git-commit>.
+
+  Commit staged files to the repository with a message:
+
+      git commit --message "message"
+
+  Commit staged files with a message read from a file:
+
+      git commit --file path/to/commit_message_file
+...
+```
+
+[`tldr`](https://github.com/dbrgn/tealdeer)
+
+---
+
+En cas de besoin 🤮:
 
 - https://github.com/nirvdrum/svn2git
 
@@ -608,7 +631,7 @@ https://github.com/bytebase/bytebase
 https://github.com/lokalise/lokalise-cli-2-go
 
 
-### n8n et le NOCODE
+### n8n et le `#NOCODE`
 - open source
 - outil permettant décrire des automatisations graphiquement
 
@@ -629,7 +652,7 @@ https://n8n.io/
 - Facile à mettre en place
 - Attention à la sécurité 🔐
 
-# Bonnes pratiques à la con
+# Bonnes pratiques à la con 🤯
 
 - Dans vos scripts `shell` utilisez les flags en complet:
   `-h` *moins bien que* `--help`
