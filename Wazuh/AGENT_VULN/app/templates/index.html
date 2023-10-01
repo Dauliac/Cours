@@ -1,0 +1,21 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Flask SSTI Testing</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    </head>
+    <body>
+        <h1>Flask SSTI Testing</h1>
+        
+        <form method="POST">
+            <input type="text" name="input">
+            <input type="submit" value="Submit">
+        </form>
+        
+        {% if data %}
+        <h2>Raw Input:</h2>
+        <p>{{ data | safe }}</p>
+        {% endif %}
+    </body>
+</html>
