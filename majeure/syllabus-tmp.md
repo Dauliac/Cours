@@ -36,7 +36,7 @@
   - Pagination virtuelle
 - Les nouvelles isolations
   - Les machines virtuelles
-  - Les containers
+  - Les containers 🐋
     - Dockerfile
     - Les containers et les syscalls
     - Les lambdas
@@ -44,17 +44,18 @@
   - Comparaison
 - Conclusion
 
-## Rappels à propos des systeme linux
+## Rappels a propos des systeme linux
 
-- Le userspace (vs kernel)
+- le userspace (vs kernel)
   - bibliothèque et dépendances
   - package rpm apt, yum deb
   - Le principe d'une distribution
-- L'arborescence
+    - tp gestion des clefs gpg
+- l'arborescence
   - FSHS /var /lib /etc etc...
   - Rappels sur les droits posix
 - TD : definittion des droits linux
-  - Implication sur le projet
+- Implication sur le projet
   
 ## Configuration linux sur serveur physique
 
@@ -73,6 +74,7 @@
     - Le Bondig/lacp
     - Les vlan avec le module 802.1q
     - Le module bridge du noyau
+  - Les mêmes configuration avec networkd
   - Td Configuration stockage
     - les schedulers d'I/O
     - tp multi pathing
@@ -81,77 +83,21 @@
     - tp lvm
       - utilisation de lvm afin de simplifier la gestion des volumes SAN
 
-## Software delivery life cycle
-
-- Software delivery life cycle
-  - Objectif du module
-- Introduction à la CICD
-  - Définitions
-  - QQOQCCP
-  - 5 Pourquoi de la CICD
-  - Les entités
-- DEVOPS et CICD
-  - Le non fonctionnel
-  - KPIs
-- Architecture d’une CICD
-  - Géographie de la CICD
-  - Temporalité de la CICD
-  - Monorepo vs polyrepo
-  - Versiong flow
-- Méthodes
-  - Agilité
-  - Nommage
-  - Gitops
-  - Revue de code par les paires
-  - Releases management
-  - Release train
-    - RACI
-  - Votre rôle dans tout ça
-- shell
-  - Bases
-  - Bonnes pratiques shell
-  - Un exemple de script cool
-  - Stack de dev shell
-- Outillage
-- Bonnes pratiques
-
 ## systemd
 
-- Présentation
-  - Principe
-  - La controverse
-  - Rapidité du démarrage
-  - Organisation plus souple
-  - Complétude
-  - Mais encore
-    - Daemons potentielement déprécies par systemd
-    - Fichiers protentielement dépréciés par systemd
-    - Outils de gestion système propres à chaque distribution
-- Utilisation
-  - systemctl
-  - Les autres composants de systemd
-    - La configuration réseaux
-    - les commande de configuration système
-  - systemd-analyze
-- Configuration systemd
-- Configuration des unités
-  - Les sections
-  - Les tokens de configuration des unités
-  - Commande de gestion des spécifications d'unités
-  - Les unités de type target
-  - Unités de type service
-    - Gestion des cgroups
-    - Gestion des ressources
-  - Unités conditionnant l'activation d'un service
-    - Unité de type socket
-    - Unité de type timer
-    - Unité de type path
-  - unités système
-    - unité device
-    - unité mount
-    - unité automount
-    - unité swap
-- Conclusion
+- presentation/utilisation/confiuration
+- les unités et targets
+- les unité de type services
+  - les Cgroup
+  - La gestion des ressources
+- les unité dechanchant des services
+  - timer
+  - path
+  - socket
+- Les unités systèmes
+  - device
+  - mount
+  - swap
 
 ## les Licences Open source
 
@@ -161,7 +107,83 @@
 - Abus patent troll
 - L'histoire de la freebox
 - logiciel libre et money
-- licence BSL le debut de la merdification
+- BSL -> la merdification
+
+## Software delivery life cycle
+
+- Software delivery life cycle
+  - Objectif du module
+- Introduction à la CICD
+  - Définitions:
+    - Software delivery life cycle
+    - CI
+    - Supply chain
+    - CD
+  - QQOQCCP
+  - 5 Pourquoi de la CICD
+    - Stabilité
+    - Sécurité
+    - Aussi
+  - Les entités
+- DEVOPS et CICD
+  - Le non fonctionnel
+  - KPIs
+    - Mes KPIs prefs
+    - DORA metrics
+- Architecture d’une CICD
+  - Géographie de la CICD
+  - Temporalité de la CICD
+  - Monorepo vs polyrepo
+    - Polyrepo
+    - Monorepo
+    - Comment découper ?
+    - pour la CICD
+  - Versiong flow
+    - Gitlab flow
+    - Github flow
+    - Git flow
+- Méthodes
+  - Agilité
+  - Nommage
+  - Gitops
+  - Revue de code par les paires
+    - Merge request vs pull request
+    - Commentaires de merge request
+    - Environnement de review
+  - Releases
+    - Commits
+    - Versions
+    - Changelogs
+    - Releases
+  - Release train
+    - RACI
+  - Votre rôle dans tout ça
+- shell
+  - Bases
+  - Mes bonnes pratiques shell
+    - Les set
+    - Les variables
+    - Shebang
+    - Fonctions
+  - Un exemple de script cool
+    - Styleguide et bonnes documentations
+    - Ma stack de dev shell
+- Outils
+  - git
+  - git hooks
+  - gitlab-ci
+  - nix
+  - Renovate bot
+  - Semantic release
+  - Review dog
+  - Fuid attack Sast
+  - Aqua security - trivy
+  - Hors sujet (vraiment ?)
+    - Chromatic
+    - Bitebase
+    - Lokalise
+    - n8n et le NOCODE
+- Bonnes pratiques
 
 ## kubernetes
 

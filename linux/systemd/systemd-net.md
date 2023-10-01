@@ -5,7 +5,7 @@
     - [Environement de lab](#environement-de-lab)
   - [Commande networkctl](#commande-networkctl)
   - [Configuration réseau](#configuration-réseau)
-    - [Exemples de configuration :](#exemples-de-configuration-)
+    - [Exemples de configuration](#exemples-de-configuration)
   - [*Unités* *netdev*](#unités-netdev)
     - [Exemple de configuration bonding](#exemple-de-configuration-bonding)
     - [Exemple de configuration VLAN](#exemple-de-configuration-vlan)
@@ -19,17 +19,17 @@
 
 Comme pour les *unités* systèmes les *unités* réseau peuvent être définies dans `/lib`, `/run` et `/etc` :
 
-* `/lib/systemd/network`
-* `/run/systemd/network`
-* `/etc/systemd/network`
+- `/lib/systemd/network`
+- `/run/systemd/network`
+- `/etc/systemd/network`
 
 Les fichiers qui porte le même nom dans `/etc` prennent la précédence sur ceux de `/run` qui eux-mêmes surchargent ceux de `/lib`.
 
 Il y a trois types d'*unités* liées à ce daemon :
 
-* `unité.link` : pour les liens réseau physiques
-* `unité.netdev` : pour les devices virtuels
-* et enfin les `unité.network` : de configuration IP des interfaces
+- `unité.link` : pour les liens réseau physiques
+- `unité.netdev` : pour les devices virtuels
+- et enfin les `unité.network` : de configuration IP des interfaces
 
 La configuration réseau est définie dans les *unités* de type *network*. Nous retrouvons encore toute la documentation dans le `man` associé aux *unités* network, link et netdev :
 
@@ -45,15 +45,15 @@ $
 
 Les sections principales de ces *unités* sont :
 
-* `Match` : pour identifier si ce fichier s'applique, on définit des conditions, si elle sont remplies alors cette *unité* peut s'appliquer :
-  * exemple de token : `MACAddress`, `Host`, `name`(pour le nom de l'interface)
-* `Network` : pour la configuration ip
-  * exemple de token : `DHCP` (yes/no), `Address`, `Gateway`, `DNS`, `IPForward`
-* `Link` : pour paramétrer la couche liaison
-  * exemple de token : `MACAddress`, `MTUBytes`, `RequiredForOnline`(`yes` si ce lien est indispensable au *service*)
-* `Adsress` : Pour configurer une adresse IP (exemple :  une secondaire)
-* `Route` : pour la gestion des route
-* le paramétrage DHCP client sera effectué dans la section `DHCP` etc.
+- `Match` : pour identifier si ce fichier s'applique, on définit des conditions, si elle sont remplies alors cette *unité* peut s'appliquer :
+  - exemple de token : `MACAddress`, `Host`, `name`(pour le nom de l'interface)
+- `Network` : pour la configuration ip
+  - exemple de token : `DHCP` (yes/no), `Address`, `Gateway`, `DNS`, `IPForward`
+- `Link` : pour paramétrer la couche liaison
+  - exemple de token : `MACAddress`, `MTUBytes`, `RequiredForOnline`(`yes` si ce lien est indispensable au *service*)
+- `Adsress` : Pour configurer une adresse IP (exemple :  une secondaire)
+- `Route` : pour la gestion des route
+- le paramétrage DHCP client sera effectué dans la section `DHCP` etc.
 
 ### Environement de lab
 
@@ -121,7 +121,7 @@ IDX LINK TYPE     OPERATIONAL SETUP
 
 Afin d'utiliser systemd-network.
 
-- Nous supprimons la config des interface eth1 et eth2 effectiée par vagrant : 
+- Nous supprimons la config des interface eth1 et eth2 effectiée par vagrant :
 
 ```bash
 root@bullseye:~# ifdown eth1
@@ -166,7 +166,7 @@ IDX LINK TYPE     OPERATIONAL SETUP
   4 eth2 ether    off         unmanaged
 ```
 
-### Exemples de configuration : 
+### Exemples de configuration
 
 Une simple IP statique sur une interface : `/etc/systemd/network/eth1.network`
 
@@ -226,7 +226,7 @@ root@bullseye:~# man systemd.netdev
 
 On ajoute un device virtuel `bond1` de type `bonding` que l'on paramètre:
 
-* `/etc/systemd/network/10-bond1.netdev`:
+- `/etc/systemd/network/10-bond1.netdev`:
 
   ```ini
   [NetDev]
@@ -245,7 +245,7 @@ On ajoute un device virtuel `bond1` de type `bonding` que l'on paramètre:
 
 Pour lequel nous faison une configuration réseau:
 
-* `/etc/systemd/network/10-bond1.network`
+- `/etc/systemd/network/10-bond1.network`
   
   ```ini
   [Match]
@@ -260,7 +260,7 @@ Pour lequel nous faison une configuration réseau:
 
 Les interfaces physiques sont alors fixé sur l'interface bond1
 
-* `/etc/systemd/network/10-bond1-s8.network`:
+- `/etc/systemd/network/10-bond1-s8.network`:
   
   ```ini
   [Match]
@@ -271,7 +271,7 @@ Les interfaces physiques sont alors fixé sur l'interface bond1
   LinkLocalAddressing=no
   ```
 
-* `/etc/systemd/network/10-bond1-s9.network`:
+- `/etc/systemd/network/10-bond1-s9.network`:
   
   ```ini
   [Match]
@@ -290,7 +290,7 @@ On ajoute un device virtuel de type VLAN au dessus de l'interface virtuel `bond1
 
 On corrige le bonding défini précédement, afin de supprimer la config ip et d'y insérer un VLAN à la place:
 
-* `/etc/systemd/network/10-bond1.network`:
+- `/etc/systemd/network/10-bond1.network`:
   
   ```ini
   [Match]
@@ -304,7 +304,7 @@ On corrige le bonding défini précédement, afin de supprimer la config ip et d
 
 L'interface virtuelle VLAN sera alors aussi définie:
 
-* `/etc/systemd/network/10-vlanpub.netdev`:
+- `/etc/systemd/network/10-vlanpub.netdev`:
 
   ```ini
   [NetDev]
@@ -319,7 +319,7 @@ L'interface virtuelle VLAN sera alors aussi définie:
 
 On pourra alors effectuer une config IP sur ce VLAN:
 
-* `/etc/systemd/network/20-pub.network`:
+- `/etc/systemd/network/20-pub.network`:
   
   ```ini
   [Match]
@@ -349,9 +349,9 @@ IDX LINK             TYPE               OPERATIONAL SETUP
 
 Il existe plusieurs façons de gérer la configuration de la résolution DNS :
 
-* Utiliser un resolver distant (comme `8.8.8.8` ou sa box)
-* Utiliser un resolver distant, mais avec un cache local comme `dnsmaskd`
-* Ou disposer en local d'un resolver DNS. A chaque fois il faut configurer plusieurs object.
+- Utiliser un resolver distant (comme `8.8.8.8` ou sa box)
+- Utiliser un resolver distant, mais avec un cache local comme `dnsmaskd`
+- Ou disposer en local d'un resolver DNS. A chaque fois il faut configurer plusieurs object.
 
 `systemd` propose une solution qui gère les deux premières solutions simplement.
 
@@ -372,8 +372,8 @@ Dans le fichier `/etc/systemd/resolved.conf`
 
 On notera les tokens :
 
-* `DNS` : les serveurs de nom DNS de forward
-* `Cache` : si positionner à `yes` alors le cache est activé
-* `Domains` : la liste des domaines par défaut ç essayer lorsqu'on interroge un nom simple (sans domaine)
+- `DNS` : les serveurs de nom DNS de forward
+- `Cache` : si positionner à `yes` alors le cache est activé
+- `Domains` : la liste des domaines par défaut ç essayer lorsqu'on interroge un nom simple (sans domaine)
 
 > Notez que sur réception d'un signal kill SIGUSR2, `systemd-resolved` purge son cache de toute ses entrées, c'est assez pratique des fois.

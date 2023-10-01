@@ -44,7 +44,7 @@
   - Comparaison
 - Conclusion
 
-## Rappels à propos des systeme linux
+## Rappels a propos des systeme linux
 
 - Le userspace (vs kernel)
   - bibliothèque et dépendances
@@ -73,6 +73,7 @@
     - Le Bondig/lacp
     - Les vlan avec le module 802.1q
     - Le module bridge du noyau
+  - Les mêmes configuration avec networkd
   - Td Configuration stockage
     - les schedulers d'I/O
     - tp multi pathing
@@ -80,6 +81,32 @@
       - mise en place du module dm_multipath
     - tp lvm
       - utilisation de lvm afin de simplifier la gestion des volumes SAN
+
+## systemd
+
+- presentation/utilisation/confiuration
+- les unités et targets
+- les unité de type services
+  - les Cgroup
+  - La gestion des ressources
+- les unité dechanchant des services
+  - timer
+  - path
+  - socket
+- Les unités systèmes
+  - device
+  - mount
+  - swap
+
+## les Licences Open source
+
+- historique des brevet en france
+- logiciel et droit d'auteur
+- tentative de brevet logiciel (orange/free)
+- Abus patent troll
+- L'histoire de la freebox
+- logiciel libre et money
+- BSL -> la merdification
 
 ## Software delivery life cycle
 
@@ -114,54 +141,6 @@
   - Stack de dev shell
 - Outillage
 - Bonnes pratiques
-
-## systemd
-
-- Présentation
-  - Principe
-  - La controverse
-  - Rapidité du démarrage
-  - Organisation plus souple
-  - Complétude
-  - Mais encore
-    - Daemons potentielement déprécies par systemd
-    - Fichiers protentielement dépréciés par systemd
-    - Outils de gestion système propres à chaque distribution
-- Utilisation
-  - systemctl
-  - Les autres composants de systemd
-    - La configuration réseaux
-    - les commande de configuration système
-  - systemd-analyze
-- Configuration systemd
-- Configuration des unités
-  - Les sections
-  - Les tokens de configuration des unités
-  - Commande de gestion des spécifications d'unités
-  - Les unités de type target
-  - Unités de type service
-    - Gestion des cgroups
-    - Gestion des ressources
-  - Unités conditionnant l'activation d'un service
-    - Unité de type socket
-    - Unité de type timer
-    - Unité de type path
-  - unités système
-    - unité device
-    - unité mount
-    - unité automount
-    - unité swap
-- Conclusion
-
-## les Licences Open source
-
-- historique des brevet en france
-- logiciel et droit d'auteur
-- tentative de brevet logiciel (orange/free)
-- Abus patent troll
-- L'histoire de la freebox
-- logiciel libre et money
-- licence BSL le debut de la merdification
 
 ## kubernetes
 

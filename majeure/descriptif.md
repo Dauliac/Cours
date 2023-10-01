@@ -1,5 +1,7 @@
 # Informatique libre dans les infrastructures de services
 
+[toc]
+
 Le libre est une philosophie ouverte qui permet d'avoir une infrastructure hybride ou complètement auto-hébergée, et ce, à coût maîtrisé.
 
 Le support et l'expérience de la communauté, ainsi que le respect des standards, permettent de garantir l'autonomie du SI dans le temps.

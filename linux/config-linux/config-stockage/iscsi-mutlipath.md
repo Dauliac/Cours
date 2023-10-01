@@ -1,5 +1,9 @@
 # Multipathing
 
+[toc]
+
+## presentation
+
 le multipathing consiste en l'utilisation de plusieurs chemin réseaux SAN pour accèder au même périphérique de stockage afin de redonder l'accès à celui-ci.
 
 le driver linux dm_multipath (dm pour device mapper) ajoute une surcouche au driver de stockage afin de gérer cette redondance.

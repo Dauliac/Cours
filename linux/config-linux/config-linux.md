@@ -1,5 +1,9 @@
 # Configuration serveur linux
 
+[toc]
+
+## presentation
+
 Dans le cadre d'une infrastructure privée ou en tant que fournisseur cloud, suivant le besoin, il peut être necessaire de mettre en place des configurations spécifiques lié à la gestion du matériel et de l'environement.
 
 ## Context matériel et environemental
@@ -76,17 +80,17 @@ Afin de simplifier sa gestion, le pool de stockage est découper en unités de s
 
 ### Configuration/matrise du Kernel
 
-Comme indiqué dans le document [rappel-linux](./rappels-linux.md), le Kernel est au centre du système.
+Comme indiqué dans le document [rappel-linux](../rappels/rappels-linux.md), le Kernel est au centre du système.
 
 Dans le schéma ci dessou on retrouve les commandes principale permettant de consulter l'état des différente 'briques' du noyau linux
 
-![kernel-obs](../images/kernel-tools.drawio.png)
+![kernel-obs](../../images/kernel-tools.drawio.png)
 
 ### TP sur la pile réseau
 
-* [tp compilation de driver](./tp-config-linux/compile-driver/README.md)
-  * les pilotes de périphérique physiques et les paramètre de modules. Dans le document [rappel-linux](./rappels-linux.md#paramétrage-du-kernel) vous retrouverez des éléments pouvant vous aider.
-* [tp config réseaux](./tp-config-linux/config-net/config-net-advanced.md) et avec systemd [tp networkd](./tp-config-linux/config-net/systemd-net.md)
+* [tp compilation de driver](./compile-driver/README.md)
+  * les pilotes de périphérique physiques et les paramètre de modules. Dans le document [rappel-linux](../rappels/rappels-linux.md#paramétrage-du-kernel) vous retrouverez des éléments pouvant vous aider.
+* [tp config réseaux](./config-net/config-net-advanced.md)
   * Le Bondig/lacp : l'utilisation du module bonding et du standard 802.ab
   * Les vlan avec le module 802.1q
   * Le module bridge du noyau.
@@ -96,11 +100,11 @@ Dans le schéma ci dessou on retrouve les commandes principale permettant de con
 
 ### TP Configuration stockage
 
-* [les schedulers d'I/O](./tp-config-linux/config-stockage/scheduler-io.md)
-* [tp multi pathing](./tp-config-linux/config-stockage/iscsi-mutlipath.md)
+* [les schedulers d'I/O](./config-stockage/scheduler-io.md)
+* [tp multi pathing](./config-stockage/iscsi-mutlipath.md)
   * mise en oeuvre d'un mini san sur la base d'une debian et du serveur open-iscsi
   * mise en place du module dm_multipath et configuration de stockage SAN
-* [tp lvm](./tp-config-linux/config-stockage/tp-lvm.md)
+* [tp lvm](./config-stockage/tp-lvm.md)
   * utilisation de lvm afin de permettre une gestion des volumes SAN au niveau du système local.
 
 > Document un schema représentant la stack I/O du kernel <https://www.thomas-krenn.com/de/wikiDE/images/b/ba/Linux-storage-stack-diagram_v4.0.png>

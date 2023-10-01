@@ -1,5 +1,9 @@
 # Compilattion de drivers
 
+[toc]
+
+## Pourquoi
+
 Dans certaine situation, il peut être necessaire de compiler un driver par sois même.
 
 Le module pré-compilé n'est pas disponible en package pour la distribution ou celui founi ne réponds pas aux attentes (version, bug , instabilité etc...)

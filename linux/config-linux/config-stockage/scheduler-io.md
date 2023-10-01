@@ -1,5 +1,7 @@
 # Les schedulers d'i/o
 
+[toc]
+
 ## Présentation
 
 Les scheduleur I/O sont des modules du kernel dont l'objet est l'optimisation de la bande passante des I/O  sur les disques.

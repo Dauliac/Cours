@@ -1,9 +1,13 @@
 # Rappels GNU/Linux
 
+[toc]
+
+## presentation
+
 Linux est le noyau de système d'exploitation open source le plus utilisé : **GNU/Linux**.
 C'est un noyau Unix libre et exécutable sur les architectures x86 et x86_64 (entre autres) alors que les Unix étaient destinés aux ordinateurs professionels (powerPC, SPARCS, Z/system, etc...).
 
-Tout comme GNU, il se base sur les spécifications d'Unix : la norme [POSIX](./normes.md#posix)
+Tout comme GNU, il se base sur les spécifications d'Unix : la norme POSIX
 
 ## Quelques principes
 
@@ -15,7 +19,7 @@ Tout comme GNU, il se base sur les spécifications d'Unix : la norme [POSIX](./n
 
 ## Un système
 
-![system-unix](../images/system-unix.png)
+![system-unix](../../images/system-unix.png)
 
 On retrouve au dessus la couche matérielle :
 
@@ -67,7 +71,7 @@ Le kernel gére le matériel offre les api standard utilisé par les interfaces 
 
 Le kernel est un exécutable modulaire. certains module sont statique (intègré dans le noyau) d'autre sont dit dynamique : le noyau est capable de les charger en mémoire ou de les supprimer si non utilisé. Les drivers matériel sont chargé dynamiquement au boot lors de la découverte du matériel par le noyau.
 
-![kernel](../images/kernel.png)
+![kernel](../../images/kernel.png)
 
 Chaque composant réprésenté ci dessus est un ou un groupe de modules.
 

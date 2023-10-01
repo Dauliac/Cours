@@ -195,7 +195,7 @@ Définir la *target* par défaut au démarrage du systeme :
 
 #### La configuration réseaux
 
-L'unité systemd-networkd.service une fois active Permet la gestion de la configuration réseaux du systeme au travers : 
+L'unité systemd-networkd.service une fois active Permet la gestion de la configuration réseaux du systeme au travers :
 
 - d'unité .network .link et .netdev
 - de la commande networkctl
@@ -210,7 +210,7 @@ l'utilisation de ces deux composant est traité dans le [tp networkd](./tp-syste
 - timedatectl : Permetant de definir la date et l'heure system
 - bootctl : Permet de gérer des éléments de la configuration EFI et du boot loader EFI.
 - loginctl : Permet la gestion des sessions utilisateur (y compris graphique)
-- journalctl : outil de requete sur le la journalisation systeme. 
+- journalctl : outil de requete sur le la journalisation systeme.
 - busctl : permet le contrôle de dbus
 
 ### systemd-analyze

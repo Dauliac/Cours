@@ -4,6 +4,8 @@ Un bref rappel sur lvm, nous mettons en place un filesystème sur un volume logi
 
 En conclusion nous somme capable dans un environement SAN de migrer les données d'une application d'une baie de stockage vers une autre de façon totalement transparente pour l'application est ses utilisateurs.
 
+[toc]
+
 ## Présentation
 
 LVM pour *Logical Volume Manager* permet de définir des volumes logiques indépendants des volumes physiques. Il offre un grand nombre de fonctionalités sur la gestion des volumes (*mirroring*, *snapshot*, redimensionnement, etc.).

@@ -1,5 +1,7 @@
 # Le monde libre
 
+[toc]
+
 ## Principes fondateurs
 
 Les quatre libertés fondamentales des logiciels libres:

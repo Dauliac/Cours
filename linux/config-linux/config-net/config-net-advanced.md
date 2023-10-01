@@ -2,6 +2,8 @@
 
 Ce cours/tuto vous permet de mettre en place les configuration réseaux avancé sous linux
 
+[toc]
+
 ## Présentation
 
 En production sur des hosts physiques, on intègre en général du 802.1q (vlan tagging) sur du 802.ab (bonding) afin d'offrir de une redondence d'accès réseaux sur plusieurs vlan.
@@ -162,7 +164,7 @@ MASTER=bond0
 SLAVE=yes
 ```
 
-#### bonding Sous Debian
+#### Bonding Sous Debian
 
 Configuration de l'interface bond0 :
 
