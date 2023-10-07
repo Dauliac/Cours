@@ -255,7 +255,7 @@ Dans le Continuous Delivery, les versions sont prêtes à être déployées, mai
 ### ~~Git flow 💀~~
 
 - Branche de versions, branches de hotfix, cherry-pick
-- Celui la il est cancel
+- Celui là il est cancel
 - C’était historiquement une bonne pratique, mais il est cependant lourd et incompatible avec l’intégration continue.
 
 # Méthodes 📚
@@ -268,8 +268,8 @@ Dans le Continuous Delivery, les versions sont prêtes à être déployées, mai
 
 ## Nommage
 
-> *****Mal nommer un objet, c’est ajouter au malheur de ce monde.
-Albert Camus*****
+> Mal nommer un objet, c’est ajouter au malheur de ce monde.
+Albert Camus
 > 
 
 ---
