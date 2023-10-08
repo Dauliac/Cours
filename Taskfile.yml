@@ -1,5 +1,4 @@
-# https://taskfile.dev
-
+---
 version: '3'
 
 tasks:
@@ -119,9 +118,22 @@ tasks:
       - "{{.MODULE}}/README.md"
     generates:
       - "{{.MODULE}}/README.html"
+  build:licences:
+    silent: true
+    vars:
+      MODULE: licences
+    cmds:
+      - |
+        marp {{.MODULE}}/README.md
+    sources:
+      - "{{.MODULE}}/README.md"
+    generates:
+      - "{{.MODULE}}/README.html"
+
   build:
     deps:
       - build:system
       - build:sdlc
+      - build:licences
     silent: true
     desc: Build all slides
