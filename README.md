@@ -6,7 +6,6 @@
 - [Syllabus](./majeure/syllabus.md)
 - [Projet d'etude](./majeure/projet-etude.md)
 - [Open source et libre](./majeure/logiciel-libre.md)
-- [Les Licences open sources](./majeure/licences.md)
 
 ## Gnu/linux
 
@@ -17,24 +16,29 @@
 - [Gestion des droits Posix](./linux/droits.md)
 - [Scripting bash](./linux/rappels-scripting-bash.md)
 
-### Approfondissement
+### Approfondissement linux
 
 - [Les systèmes](./system/README.md)
-- [Configuration serveur physique](./linux/config-linux.md)
-  - [tp compilation de driver](./linux//tp-config-linux/compile-driver/README.md)
-  - [tp config réseaux](./linux/tp-config-linux/config-net/config-net-advanced.md)
-  - [les schedulers d'I/O](./linux/tp-config-linux/config-stockage/scheduler-io.md)
-  - [tp multipathing](./linux/tp-config-linux/config-stockage/iscsi-mutlipath.md)
-  - [tp lvm](./linux/tp-config-linux/config-stockage/tp-lvm.md)
-- [systemd](./linux/systemd.md)
-  - [tp networkd](./linux/tp-config-linux/config-net/systemd-net.md)
+- [Configuration serveur physique](./linux/config-linux/config-linux.md)
+  - [tp compilation de driver](./linux/config-linux/compile-driver/README.md)
+  - [tp config réseaux](./linux/config-linux/config-net/config-net-advanced.md)
+  - [les schedulers d'I/O](./linux/config-linux/config-stockage/scheduler-io.md)
+  - [tp multipathing](./linux/config-linux/config-stockage/iscsi-mutlipath.md)
+  - [tp lvm](./linux/config-linux/config-stockage/tp-lvm.md)
+- [systemd](./linux/systemd/systemd.md)
+  - [tp unité systemd](./linux/systemd/systemd-unit.md)
+  - [tp networkd](./linux/systemd/systemd-net.md)
+
+## Software Delivery Lifecycle
+
+- [Cours SDLC](./sdlc/README.md)
 
 ## Kubernetes
 
-## Présentation 
+## Présentation
 
 - [Le-cloud](./kubernetes/presentation-cloud.md)
-- [Présentaiton Kubernetes](./presentation-kube.md)
+- [Présentaiton Kubernetes](./kubernetes/presentation-kube.md)
 - [Construction d'un lab](./kubernetes/lab-kube.md)
 
 ### TP-cours
@@ -45,3 +49,7 @@
 - [Utilisation de helm](./kubernetes/kube-helm-monitoring.md) pour monitorer votre cluster
 - [Déploiement d'un Ingress](./kubernetes/kube-ingress.md)
 
+## Wasuh
+
+- [présentation Wazuh](./Wazuh/wazuh_cours.md)
+- [TP wazuh](./Wazuh/wazuh_tp.md)

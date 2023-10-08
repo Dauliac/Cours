@@ -243,6 +243,12 @@ On ajoute un device virtuel `bond1` de type `bonding` que l'on paramètre:
   
   Le `Mode=active-backup` et `FailoverMacPolicy=active` sont nécessaires sans paramétrage spécifique sur les switch (l'interface bond utilisera la mac active)
 
+  ```bash
+  # networkctl reload
+  # networkctl
+  .../...
+  ```
+
 Pour lequel nous faison une configuration réseau:
 
 - `/etc/systemd/network/10-bond1.network`
@@ -253,29 +259,29 @@ Pour lequel nous faison une configuration réseau:
   
   [Network]
   Address=192.168.56.12/24
-  BindCarrier=enp0s8 enp0s9
+  BindCarrier=eth1 eth2
   ```
 
   nous fixons le status up/down de bond1 à ce que l'une des deux interfaces soit up avec `BindCarrier`
 
 Les interfaces physiques sont alors fixé sur l'interface bond1
 
-- `/etc/systemd/network/10-bond1-s8.network`:
+- `/etc/systemd/network/10-bond1-eth1.network`:
   
   ```ini
   [Match]
-  Name=enp0s8
+  Name=eth1
   
   [Network]
   Bond=bond1
   LinkLocalAddressing=no
   ```
 
-- `/etc/systemd/network/10-bond1-s9.network`:
+- `/etc/systemd/network/10-bond1-eth2.network`:
   
   ```ini
   [Match]
-  Name=enp0s9
+  Name=eth2
   
   [Network]
   Bond=bond1
@@ -297,9 +303,14 @@ On corrige le bonding défini précédement, afin de supprimer la config ip et d
   Name=bond1
   
   [Network]
-  BindCarrier=enp0s8 enp0s9
+  BindCarrier=eth1 eth2
   VLAN=pub
+  VLAN=priv
   LinkLocalAddressing=no
+  LLDP=no
+  EmitLLDP=no
+  IPv6AcceptRA=no
+  IPv6SendRA=no
   ```
 
 L'interface virtuelle VLAN sera alors aussi définie:
@@ -309,7 +320,7 @@ L'interface virtuelle VLAN sera alors aussi définie:
   ```ini
   [NetDev]
   Name=pub
-  Kind=vlan
+  Type=vlan
   
   [VLAN]
   Id=18
@@ -326,22 +337,29 @@ On pourra alors effectuer une config IP sur ce VLAN:
   Name=pub
   
   [Network]
-  Address=192.168.56.12/24
+  Address=192.168.18.12/24
   ```
 
-Résultat d'une tel configuration :
+Résultat d'une telle configuration :
 
 ```bash
-root@ubuntu-bionic:~# systemctl restart systemd-networkd
-root@ubuntu-bionic:~# networkctl list
-IDX LINK             TYPE               OPERATIONAL SETUP
-  1 lo               loopback           carrier     unmanaged
-  2 enp0s3           ether              routable    configured
-  3 enp0s8           ether              carrier     configured
-  4 enp0s9           ether              carrier     configured
- 19 bond1            ether              carrier     configured
- 20 pub              ether              routable    configured
+root@bullseye:~# systemctl restart systemd-networkd
+
+root@bullseye:~# networkctl 
+IDX LINK  TYPE     OPERATIONAL SETUP
+  1 lo    loopback carrier     unmanaged
+  2 eth0  ether    routable    unmanaged
+  3 eth1  ether    routable    configured
+  4 eth2  ether    enslaved    configured
+  5 bond1 bond     carrier     configured
+  6 pub   vlan     routable    configured
+
+6 links listed.
 ```
+
+> Exo !
+> mettez en place un vlan 'priv' vlanid: 22 avec l'ip 192.168.22.12
+> vous presentez la mise en place tel que sur ce TP
 
 ## Gestion de la résolution DNS
 
@@ -372,8 +390,13 @@ Dans le fichier `/etc/systemd/resolved.conf`
 
 On notera les tokens :
 
-- `DNS` : les serveurs de nom DNS de forward
+- `DNS` : le serveurs de nom DNS de recursion de reference
+- `FallbackDNS` : les serveur ssecondaire en cas d'echec des premier
 - `Cache` : si positionner à `yes` alors le cache est activé
 - `Domains` : la liste des domaines par défaut ç essayer lorsqu'on interroge un nom simple (sans domaine)
 
-> Notez que sur réception d'un signal kill SIGUSR2, `systemd-resolved` purge son cache de toute ses entrées, c'est assez pratique des fois.
+Sur réception d'un signal kill SIGUSR2, `systemd-resolved` purge son cache de toute ses entrées, c'est très pratique.
+
+> Exo !
+> effectuez la configuration afin d'utiliser les dns de google en serveurs de référence et les serveurs Cloudflare en falback en activant le cache et en utilisant le domaine par défault lab.local
+> vous livrez le fichier de configuration et la sortie de `resolvctl`

@@ -93,6 +93,8 @@ La *target* par défaut est en générale `multi-user.target` ou `graphical.targ
 
 `systemd` intègre aussi de façon modulaire d'autre composants des systèmes UNIX en les remplaçant par des solutions plus modernes et normalisées.
 
+![systemd](https://lcom.static.linuxfound.org/images/stories/41373/Systemd-components.png)
+
 #### Daemons potentielement déprécies par systemd
 
 - `crond` : avec des *unités* de type `.timer`
@@ -191,7 +193,7 @@ Définir la *target* par défaut au démarrage du systeme :
 # systemctl set-default multi-user.target  
 ```
 
-### Les autres composants de systemed
+### Les autres composants de systemd
 
 #### La configuration réseaux
 
@@ -686,10 +688,10 @@ Unit system.slice (/system.slice):
   └─291 /lib/systemd/systemd-logind
 ```
 
-si on précise dans notre unité.service un cgroup, ici custom_slice :
+Si on précise dans notre unité.service une branche de cgroup (un slice), ici customslice :
 
 ```ini
-Slice=custom_slice.slice
+Slice=customslice.slice
 ProtectControlGroups=true
 ```
 
@@ -697,13 +699,13 @@ Notre service sera attaché à ce cgroup précisément nous permettant de regrou
 
 #### gestion des ressources
 
-via la surcharge des unité via un drop-in folder, il est possible d'intégrer des modification sur les unité et ainsi :
+via la surcharge des unité par exemple via un drop-in folder, il est possible d'intégrer des modification sur les unité et ainsi :
 
 un fichier : 00-slice.conf qui associé le service à un cgroup(slice)
 
 ```ini
 [Service]
-Slice=custom_slice.slice
+Slice=customslice.slice
 ```
 
 un autre fichier : 10-control-ressources.conf qui active l'accounting et définie des limitation :
@@ -713,16 +715,13 @@ MemoryAccounting=yes
 CPUAccounting=yes
 IOAccounting=yes
 IPAccounting=yes
-CPUShares=512 
-MemoryLimit=512M
+CPUWeight=512
+CPUQuota=50% 
+MemoryMax=512M
 OOMPolicy=continue, stop or kill
 ```
 
 > <https://www.freedesktop.org/software/systemd/man/systemd.resource-control.html>
-
-- Gestion namespace
-- scope
-- filtrage des syscall
 
 ### *Unités* conditionnant l'activation d'un *service*
 
