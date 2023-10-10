@@ -6,6 +6,7 @@
 - [Syllabus](./majeure/syllabus.md)
 - [Projet d'etude](./majeure/projet-etude.md)
 - [Open source et libre](./majeure/logiciel-libre.md)
+- [Les licences](./licences/README.md)
 
 ## Gnu/linux
 
@@ -49,7 +50,7 @@
 - [Utilisation de helm](./kubernetes/kube-helm-monitoring.md) pour monitorer votre cluster
 - [Déploiement d'un Ingress](./kubernetes/kube-ingress.md)
 
-## Wasuh
+## Wazuh
 
 - [présentation Wazuh](./Wazuh/wazuh_cours.md)
 - [TP wazuh](./Wazuh/wazuh_tp.md)
