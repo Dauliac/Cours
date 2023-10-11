@@ -56,13 +56,13 @@ sur windows utilisez WSLv2
   > Cependant, nix fonctionne parfaitement sur mac et représente une meilleur alternative à `homebrew` pour installer
   > vos outils de développement.
 1.  ajouter le bloc de code suivant dans votre `zshrc` ou `bashrc`
-   ```bash
+    ```bash
     export DIRENV_WARN_TIMEOUT=40s
     export DIRENV_LOG_FORMAT=""
     eval "$(direnv hook ${SHELL/*\//})"
-   ```
-   Vous pouvez éditer le fichier avec `nano` par example:
-   ```bash
+    ```
+    Vous pouvez éditer le fichier avec `nano` par example:
+    ```bash
     # si vous utilisez bash
     nano ~/.bashrc
     # si vous utilisez zsh
@@ -70,12 +70,12 @@ sur windows utilisez WSLv2
     ```
 1. Relancez votre terminal pour mettre à jour le shell.
 1. Nous allons maintenant récupérer le projet du tp (vous vous souvenez votre version fork):
-  ```bash
-  # git clone git@gitlab.com:<CHANGEME>/opensource.git
-  # par exemple pour moi:
-  git clone git@gitlab.com:Dauliac/opensource.git
-  cd opensource/system/tp
-  ```
+    ```bash
+    # git clone git@gitlab.com:<CHANGEME>/opensource.git
+    # par exemple pour moi:
+    git clone git@gitlab.com:Dauliac/opensource.git
+    cd opensource/system/tp
+    ```
   - Vous devriez maintenant voir `direnv` qui s’excite et vous demande de l'autoriser à faire des trucs:
       ```
       direnv: error /home/dauliac/ghq/gitlab.com/alsim/opensource/sy
