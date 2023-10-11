@@ -380,7 +380,7 @@ CMD npm run prod
 
 ---
 
-| Avantages des Dockerfiles          | Inconvénients des Dockerfiles                  |
+| Avantages des `Dockerfiles`          | Inconvénients des `Dockerfiles`                  |
 |-----------------------------------|-----------------------------------------------|
 | 1. **Reproductibilité** : Les Dockerfiles permettent de définir de manière précise l'environnement d'une application, garantissant ainsi que l'application se comportera de la même manière partout où le conteneur Docker est exécuté. | 1. **Nature Impérative** : Les Dockerfiles sont impératifs, ce qui signifie que vous spécifiez les étapes de construction plutôt que de décrire l'état souhaité. Cela peut rendre difficile la compréhension de l'environnement cible. |
 | 2. **Isolation** : Les Dockerfiles permettent d'isoler une application et ses dépendances, ce qui évite les conflits entre les différentes applications s'exécutant sur la même machine hôte. | 2. **Maintenance** : Les Dockerfiles nécessitent une maintenance continue pour rester à jour avec les nouvelles versions des dépendances, ce qui peut devenir fastidieux. |
@@ -392,7 +392,7 @@ CMD npm run prod
 
 ### Les containers et les syscalls
 
-> Les containers font reposer leurs fonctionnement sur une suite de syscall.
+> Les containers font reposer leurs fonctionnement sur une suite de `syscall`.
 > 
 
 | Appel Système | Description |
@@ -484,3 +484,4 @@ https://developer.mozilla.org/fr/docs/WebAssembly
     - Puis on ajoute une couche de sécurité au dessus
     - Puis on smash nos erreurs et on fait un nouveau standard
     - Puis, MARKETING 🏁
+    - Et on boucle
