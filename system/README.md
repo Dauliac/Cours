@@ -15,7 +15,7 @@ footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com'
 
 ## Objectifs
 - Comprendre le processus de démarrage d'un système, de l'initialisation du BIOS à l'exécution du noyau.
-- Avoir des bases sur les architectures des système d'exploitation
+- Avoir des bases sur les architectures des système d'exploitation.
 - Explorer les différentes formes d'isolation, notamment les machines virtuelles, les conteneurs et les lambdas, et comprendre leurs avantages et inconvénients.
 
 
@@ -169,7 +169,7 @@ NVRAM.
 
 - Ordonnanceur: algorithme basé qui utilise un circuit temporisateur pour partagé l’accès aux cœurs.
 - Le kernel interrompt le processus.
-- Le temps de laisser la parole a tout les processus on appelle cela une **epoch**.
+- Le temps de laisser la parole à tout les processus on appelle cela une **epoch**.
 - Pour fonctionner l’ordonnanceur utilise des **interruptions système**
 
 ### Algorithmes d’ordonnancements
@@ -227,6 +227,8 @@ C’est d’autant plus simple quand on connaît la liste de tout les processus 
 
 Quiz: Quel est le premier processus qui est généralement lancé sur linux ?
 
+---
+
 ```bash
 ps -aux | grep init
 root           1  0.0  0.0 166896 11700 ?        Ss   10:19   0:01 /sbin/init splash
@@ -248,7 +250,7 @@ lrwxrwxrwx 20 root 10 août  18:37 /sbin/init -> /lib/systemd/systemd
     - Simple à manipuler pour les programmeurs mais moins puissant pour les ordinateurs.
 - Architecture Princeton
     - D'abord mis en œuvre dans l'ENIAC (1946).
-    - Permet le code auto-modifiant et l'entrelacement de programme et de données.
+    - Permet de coder en auto-modifiant et l'entrelacement de programme et de données.
     - Difficile à manipuler pour les programmeurs mais plus puissant pour les ordinateurs.
 
 ### Et maintenant
