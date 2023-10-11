@@ -2,18 +2,18 @@
 
 ## Compte gitlab.com et correction 
 Ce TP est à finir chez vous et sera noté en fonction de la qualité du travail rendu.
-Un raport est à rendre dans ce dossier au format markdown et doit se nommer: `RENDU.md`
+Un rapport est à rendre dans ce dossier au format markdown et doit se nommer: `RENDU.md`
 
 Correction:
-1. Créer un compte sur gitlab.com si vous n'en avez pas déjà un.
-1. Forkez [ce projet](https://gitlab.com/alsim/opensource) dans votre compte gitlab.com
+1. Créer un compte sur [gitlab.com](https://gitlab.com) si vous n'en avez pas déjà un.
+1. Forkez [ce projet](https://gitlab.com/alsim/opensource) dans votre compte [gitlab.com](https://gitlab.com)
   1. ![fork](assets/fork.png)
   1. ![fork](assets/fork-2.png)
 1. Faites vos commits sur votre fork sur la branche git `main`.
    Une fois terminé, ouvrez une merge request vers le projet original:
   1. ![fork](assets/fork-3.png)
   1. ![fork](assets/fork-4.png)
-1. Vous vouvez commencer le TP sur votre projet fork ! Pour le reste je me débrouille.
+1. Vous pouvez commencer le TP sur votre projet fork ! Pour le reste je me débrouille.
 
 > Pour vos commits, je vous invite à utiliser [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/).
 
@@ -23,7 +23,7 @@ Correction:
 - C'est également une distribution linux nixos
 - Mais également un langage de programmation fonctionnel
 
-Nous allons l'utiliser vous faire installer les différents packets nécéssaires à la réalisation de ce TP.
+Nous allons l'utiliser vous faire installer les différents packets nécessaires à la réalisation de ce TP.
 
 En fonction de votre pc, je vous conseil d'utiliser les système suivants pour vos TPs:
 - Linux (Debian/Ubuntu de préférence)
@@ -35,7 +35,7 @@ sur windows utilisez WSLv2
 
 1. Installez nix en suivant la documentation:https://nixos.org/download.html
 1. Relancez votre terminal pour recharger le shell
-1. `nix` est dévelopé avec beaucoup de prudence, il propose en version expérimentale, une suite d'outil
+1. `nix` est développé avec beaucoup de prudence, il propose en version expérimentale, une suite d'outil
    modernes et stable pour le développement: les `flake`. Nous allons les activer:
    ```bash
    mkdir -p ~/.config/nix/
@@ -76,7 +76,7 @@ sur windows utilisez WSLv2
   git clone git@gitlab.com:Dauliac/opensource.git
   cd opensource/system/tp
   ```
-  - Vous devriez maitenant voir `direnv` qui s'exite et vous demande de l'autoriser à faire des trucs:
+  - Vous devriez maintenant voir `direnv` qui s’excite et vous demande de l'autoriser à faire des trucs:
       ```
       direnv: error /home/dauliac/ghq/gitlab.com/alsim/opensource/sy
     stem/tp/.envrc is blocked. Run `direnv allow` to approve its c
@@ -90,7 +90,7 @@ sur windows utilisez WSLv2
 
 ### Questions
 - Donnez moi une explication de ce que sont les [flake nix](https://nixos.wiki/wiki/Flakes)
-- Jettez un oeil au fichier flake, et ajouter son contenu dans le rapport en commentant son contenu (n'en faites pas trop non plus):
+- Jetez un œil au fichier flake, et ajouter son contenu dans le rapport en commentant son contenu (n'en faites pas trop non plus):
   ```bash
   cat flake.nix
   ```
@@ -136,7 +136,7 @@ Nous utiliserons `podman` dans notre cas car ne nécessite pas de daemon et c'é
 Historiquement, les containers étaient build à partir de `Dockerfile`, c'est un fichier qui décrit comment construire un container.
 Cependant dans notre tp nous allons utiliser un nouveau nom plus moderne et agnostique: `Containerfile`.
 
-Ouvez votre IDE pref et nous allons créer un `Containerfile`:
+Ouvrez votre IDE pref et nous allons créer un `Containerfile`:
 ```Dockerfile
 FROM docker.io/alpine:latest
 
@@ -162,8 +162,8 @@ podman build -t tldr .
 En cas d'erreur suivante
 
 
-Cette commande vient de créer une image docker, il s'agit d'une archive contenent l'image système de notre container.
-Elle sont publiables, et directement éxécutable sur des machines supportant les containers:
+Cette commande vient de créer une image docker, il s'agit d'une archive contenant l'image système de notre container.
+Elle sont publiables, et directement exécutable sur des machines supportant les containers:
 ```bash
 podman run tldr podman
 ```
@@ -183,15 +183,15 @@ Vous commenterez ce que vous avez fait dans le rapport.
 Il existe de nombreux outils pour analyser la qualité et la sécurité de vos containers.
 Utilisions les !
 
-Hadolint, est un linter qui vient vérifier statiquement votre `Containerfile`. [Sa documentation se trouve ici](https://github.com/hadolint/hadolint/wiki):
+`hadolints`, est un linter qui vient vérifier statiquement votre `Containerfile`. [Sa documentation se trouve ici](https://github.com/hadolint/hadolint/wiki):
 ```bash
 hadolint Containerfile
 ```
-Faites les correctifs nécéssaires sur votre `Containerfile`.
+Faites les correctifs nécessaires sur votre `Containerfile`.
 
-Trivy est un outil qui vient scanner votre image docker pour trouver des vulnérabilités connues.
+`trivy` est un outil qui vient scanner votre image docker pour trouver des vulnérabilités connues.
 Pour le tp, nous allons l'installer dans le container que nous venons de créer.
-Cependant ce n'est pas une pratique que je recommande, je conseil plutot d'installer trivy dans votre environement de dev/CICD (avec `nix` par exemple)
+Cependant ce n'est pas une pratique que je recommande, je conseil plutôt d'installer `trivy` dans votre environment de dev/CICD (avec `nix` par exemple)
 
 Ajoutez triy dans votre `Containerfile`:
 ```Dockerfile
@@ -199,12 +199,12 @@ RUN apk add curl \
     && curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin \
     && trivy --insecure filesystem --exit-code 1 --no-progress /
 ```
-Et rebuildez votre image.
+Et reconstruisez votre image.
 
-Essayez de configurer trivy de sorte qu'il ne vous donne pas de faux positifs,
+Essayez de configurer `trivy` de sorte qu'il ne vous donne pas de faux positifs,
 et qu'il n'affiche plus les failles impossibles à fixer.
 
-[La documentation de trivy](https://aquasecurity.github.io/trivy/v0.45/docs/scanner/vulnerability/#severity-selection)
+[La documentation de `trivy`](https://aquasecurity.github.io/trivy/v0.45/docs/scanner/vulnerability/#severity-selection)
 
 Trivy permet également de scanner vos projets, essayez le:
 ```bash
@@ -218,7 +218,7 @@ podman run tldr hadolint
 ```
 
 ### Mini cours
-Les constructions de container fonctionnent en layer, en couche qui viennent s'empiller.
+Les constructions de container fonctionnent en layer, en couche qui viennent s’empiler.
 Cela permet de réutiliser des morceaux de build entre image, ou de faire du cache et d'accélérer le build.
 ```Dockerfile
 +-----------------------------------------------------+
@@ -262,7 +262,7 @@ Cela permet de réutiliser des morceaux de build entre image, ou de faire du cac
 +-----------------------------------------------------+
 ```
 
-Cependant, celà peut faire gonfler la taille de vos images.
+Cependant, cela peut faire gonfler la taille de vos images.
 Limiter le nombre d'instructions `RUN` est une bonne pratique pour accélérer le build de vos containers.
 
 Proposer moi une seconde version de votre `Containerfile` ou vous réduisez le nombre d'instructions `RUN` à une instruction.
@@ -286,7 +286,7 @@ Nix offre une approche qui permet de construire des systèmes, et donc des conta
 nix.dev est un blogue qui explicite les usages de nix.
 [Ici la section expliquant comment build des containers en utilisant les `flakes`:](https://nix.dev/tutorials/nixos/building-and-running-docker-images)
 
-Éditez le fichier `flake.nix` et ajouez y un nouvel output `container` (au meme niveau que `devShells`):
+Éditez le fichier `flake.nix` et ajoutez y un nouvel output `container` (au meme niveau que `devShells`):
 ```nix
 # Dans la section let, en dessous de tpPackages = [...];
 containerImage = pkgs.dockerTools.buildImage {
@@ -307,13 +307,13 @@ containerImage = pkgs.dockerTools.buildImage {
 packages.tp-container = containerImage;
 ```
 
-Comme on peut le voir, il n'y a pas besoin d'enchainer les commandes d'installation, mais juste de préciser leur nom.
+Comme on peut le voir, il n'y a pas besoin d’enchaîner les commandes d'installation, mais juste de préciser leur nom.
 
 Construisez votre container avec la commande:
 ```bash
 nix build '.#tp-container'
 ```
-Notez l'appariation d'un nouveau dossier `result` contenant votre container.
+Notez l’apparition d'un nouveau dossier `result` contenant votre container.
 
 On peut le charger dans podman avec la commande:
 ```bash
@@ -332,7 +332,7 @@ Nous allons maintenant lancer notre container avec podman:
 podman run -it localhost/tldr-nix:v74l0dnfbkdq3x5yshqkh0956wiki5pw bash
 ```
 
-Essayez de lancer plusieurs binnaires habituels comme `ls` ou `mkdir` et constatez leur absence.
+Essayez de lancer plusieurs binaires habituels comme `ls` ou `mkdir` et constatez leur absence.
 
 En effet grace à la gestion explicite et déclarative des dépendances, nous n'héritons plus de la complexité et la multitude d'outils installés par défaut dans les distributions classiques et donc images docker.
 
@@ -361,7 +361,7 @@ Renseignez vous dessus et faites moi un court résumé dans votre rapport.
 
 ### Questions
 - Expliquez moi ce que sont les `namespaces`, et les `cgroups`.
-- Donnez moi les syscalls qui sont utilisé pour faire tourner les containers.
-- Nous avons utilisé comme source en début de TP un container `alpine`, expliquer en quoi il est intéréssant par rapport `debian` ou `ubuntu`.
-- Qu'est ce que `busl` dans la distribution alpine, en quoi est-ce intéréssant ?
-
+- Expliquez moi ce qu'est `containerd` ?
+- Donnez moi les `syscalls` qui sont utilisé pour faire tourner les containers.
+- Nous avons utilisé comme source en début de TP un container `alpine`, expliquer en quoi il est intéressant par rapport `debian` ou `ubuntu`.
+- Qu'est ce que `busl` dans la distribution alpine, en quoi est-ce intéressant ?
