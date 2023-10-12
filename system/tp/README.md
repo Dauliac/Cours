@@ -217,6 +217,19 @@ podman run tldr trivy
 podman run tldr hadolint
 ```
 
+Faites moi le un autre `Containerfile-debian` en utilisant `debian` comme base et installez y trivy.
+```Dockerfile
+FROM docker.io/debian:latest
+
+ENV \
+    PATH="/root/.cargo/bin:$PATH"
+
+RUN \
+# Je vais pas tout faire non plus héhé
+```
+Utilisez tldr ou d'autre moyens pour trouver comment le build.
+Comparer le nombre et le type de failles de sécurité par rapport à la version `alpine`.
+
 ### Mini cours
 Les constructions de container fonctionnent en layer, en couche qui viennent s’empiler.
 Cela permet de réutiliser des morceaux de build entre image, ou de faire du cache et d'accélérer le build.

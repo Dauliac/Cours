@@ -447,6 +447,16 @@ Les lambdas c’est juste
 | Uniquement déclaratif |  |
 
 ---
+- Les programmes pensés sous lambdas sont "cloud natives"
+- Attention à quand même faire de l'architecture logicielle
+
+---
+- Design patterns (fonctionnels ou orientés objets)
+- Principes SOLID
+- Clean architecture
+- Domain Driven Design
+
+---
 
 ### Web assembly 🤖
 
