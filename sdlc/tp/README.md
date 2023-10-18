@@ -4,7 +4,41 @@ cloner ce repo: [`nuclei`](https://github.com/projectdiscovery/nuclei)
 ```bash
 git clone git@github.com:projectdiscovery/nuclei.git
 cd nuclei
+# On va basculer sur le commit à partir duquel j'ai écrit le tp
+git checkout d051332d
 ```
+
+ajoutez le fichier [`0001-fix-patch.patch`](./0001-fix-patch.patch) dans le repo de nuclei et appliquez le:
+```bash
+git apply -v
+```
+
+En gros c'est que le repo à 2 problèmes:
+- un appel à une API trop lente
+- des tests unitaires qui ne passent pas et la suite du tp requiert que les tests passent.
+
+**Si ca marche vous pouvez passer à la section suivante.**
+
+Sinon, vous devriez apprendre à utiliser `git`, mais c'est pas l'objectif du tp, alors faites ca à la main:
+
+```bash
+rm -f \
+  v2/pkg/protocols/headless/engine/page_actions_test.go \
+  v2/internal/runner/runner_test.go \
+  v2/pkg/model/worflow_loader.go \
+  v2/pkg/protocols/headless/engine/page_actions_test.go
+```
+
+Il faudra aussi éditer ce fichier:
+```
+v2/internal/installer/versioncheck.go
+```
+
+Et changer la déclaration de `retryableHttpClient`
+```go
+var retryableHttpClient = retryablehttp.NewClient(retryablehttp.Options{HttpClient: updateutils.DefaultHttpClient, RetryMax: 2, RetryWaitMax: 10 * time.Second})
+```
+Il faudra aussi ajouter `"time"` aux imports.
 
 **Note:** `nuclei` est un outil connu de pentesting, il permet de faire des scans de sécurité sur des sites web.
 
@@ -266,7 +300,9 @@ nix run 'nixpkgs#podman' -- load -i result
 # On ne peut pas le lancer avec autre chose, il n'y a rien d'autre dans le container
 # le -v permet de monter un volume depuis la machine hote vers le container, nuclei à besoin de tmp
 # pour fonctionner.
-nix run 'nixpkgs#podman' -- run -it -v /tmp:/tmp localhost/tldr-nix:z4s1w56sg15m477mhhpjrq9pv65sf2wr nuclei
+
+# nix run 'nixpkgs#podman' -- run -it -v /tmp:/tmp localhost/tldr-nix:z4s1w56sg15m477mhhpjrq9pv65sf2wr nuclei
+nix run 'nixpkgs#podman' -- run -it -v /tmp:/tmp localhost/tldr-nix:<CHANGEZ MOI> nuclei
 ```
 
 ### Fmt
