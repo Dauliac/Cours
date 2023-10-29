@@ -114,7 +114,7 @@ kind: ValidatingWebhookConfiguration
 On l'applique sur le cluster
 
 ```bash
-$ kubectl apply -f curl -sL https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-native.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-native.yaml
 ...
 ```
 
@@ -123,6 +123,13 @@ $ kubectl apply -f curl -sL https://raw.githubusercontent.com/metallb/metallb/v0
 On applique la configuration suivante définissant deux IPAddressPool et L2Advertisement , tout deux objets de l'extension à l'api kubernetes pour metallb défini plus haut.
 
 ```bash
+manifests$ kubectl apply -f metallb-config.yml
+ipaddresspool.metallb.io/default created
+ipaddresspool.metallb.io/realpool created
+l2advertisement.metallb.io/l2advertisement1 created
+l2advertisement.metallb.io/l2advertisement2 created
+manifests$
+manifests$
 manifests$ cat metallb-config.yml
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool

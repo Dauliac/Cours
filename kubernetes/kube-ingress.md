@@ -28,104 +28,41 @@ root@master:~# helm show values traefik/traefik > traefik-values.yaml
 root@master:~# cp traefik-values.yaml traefik-values.orig
 root@master:~# vi traefik-values.yaml
 root@master:~# diff traefik-values.yaml traefik-values.orig
-176,177c176,177
+
+$ diff traefik-values.yaml traefik-values.orig
+214c214
 <     allowCrossNamespace: true
-<     allowExternalNameServices: true
 ---
 >     allowCrossNamespace: false
->     allowExternalNameServices: false
-181,184c181,182
-<     #namespaces: []
-<     namespaces:
-<       - "default"
-<       - "admin"
----
->     namespaces: []
->       # - "default"
-188c186
+216c216
 <     allowExternalNameServices: true
 ---
 >     allowExternalNameServices: false
-192,195c190,191
-<     #namespaces: []
+222,224c222,223
 <     namespaces:
 <       - "default"
 <       - "admin"
 ---
 >     namespaces: []
->       # - "default"
-198c194
-<       enabled: true
+>     # - "default"
+230c229
+<     allowExternalNameServices: true
 ---
->       enabled: false
-685,688c681
+>     allowExternalNameServices: false
+236,238c235,236
+<     namespaces:
+<       - "default"
+<       - "admin"
+---
+>     namespaces: []
+>     # - "default"
+742,745c740
 <   #annotations: {}
 <   annotations:
 <     metallb.universe.tf/address-pool: realpool
-<     metallb.universe.tf/loadBalancerIPs: 192.168.33.20
+<     metallb.universe.tf/loadBalancerIPs: 192.168.33.20 
 ---
 >   annotations: {}
-756c749
-<   enabled: true
----
->   enabled: false
-
-
-
-
-
-root@master:~# helm show values traefik/traefik > traefik-values.yaml
-root@master:~# cp traefik-values.yaml traefik-values.orig
-root@master:~# vi traefik-values.yaml 
-root@master:~# diff traefik-values.yaml traefik-values.orig 
-72,73c72,73
-<   enabled: true
-<   isDefaultClass: true
----
->   enabled: false
->   isDefaultClass: false
-120,121c120,121
-<     allowCrossNamespace: true
-<     allowExternalNameServices: true
----
->     allowCrossNamespace: false
->     allowExternalNameServices: false
-124,128c124
-<     #namespaces: []
-<     namespaces:
-<       - "default"
-<       - "admin"
-<     # IP used for Kubernetes Ingress endpoints
----
->     namespaces: []
-133c129
-<     allowExternalNameServices: true
----
->     allowExternalNameServices: false
-135,138c131,132
-<     #namespaces: []
-<     namespaces:
-<       - "default"
-<       - "admin"
----
->     namespaces: []
->       # - "default"
-141c135
-<       enabled: True
----
->       enabled: false
-362,365c356
-<   #annotations: {}
-<   annotations:
-<     metallb.universe.tf/address-pool: realpool
-<     metallb.universe.tf/loadBalancerIPs: 192.168.33.20
----
->   annotations: {}
-414c405
-<   enabled: True
----
->   enabled: false
-root@master:~# 
 ```
 
 Avec les anotation on choisi le pool et l'ip sur metallb

@@ -2,7 +2,6 @@
 test -f /root/kubeinstallmasterdone && echo "already installed"
 test -f /root/kubeinstallmasterdone && exit 0
 
-
 # init cluster
 kubeadm init --apiserver-advertise-address=192.168.33.100 --pod-network-cidr=10.42.0.0/16 >> /root/kubeinit.log 2>&1
 
@@ -16,6 +15,7 @@ chown -R vagrant:vagrant /home/vagrant/.kube
 curl -s -L "https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml" -o weavenet.yml
 kubectl apply -f weavenet.yml
 
+# create join token availiable for few hours
 kubeadm token create --print-join-command > /home/vagrant/joinkubecluster.sh
 chown vagrant:vagrant /home/vagrant/joinkubecluster.sh
 
@@ -28,7 +28,6 @@ EOF
 service nfs-kernel-server reload
 
 touch /root/kubeinstallmasterdone
-
 
 #ufw allow 6443/tcp
 #ufw allow 2379/tcp

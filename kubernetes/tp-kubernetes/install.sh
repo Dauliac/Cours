@@ -1,10 +1,16 @@
 #!/bin/bash
 
+containerdversion="1.6.16"
+kubestuffversion="1.23.17-00"
+#kubestuffversion="1.23.3-00"
+kubecniversion="1.1.1-00"
+#kubecniversion="0.8.7-00"
+
+
 # source local environement
 test -r /vagrant/.env || echo you should have defined .env file !!!
 test -r /vagrant/.env || exit 1
 test -r /vagrant/.env && . /vagrant/.env
-
 
 cat >>/etc/hosts<<EOF
 192.168.33.100 master.lab.local master
@@ -30,21 +36,17 @@ sudo modprobe overlay
 sudo modprobe br_netfilter
 
 # container runtime:
-#add-apt-repository -y ppa:projectatomic/ppa
-#apt-get update
-#apt-get install -qq -y containerd podman containers-common docker.io
 apt-get update
 apt-get -y install podman containerd
-
-# upgrade containerd
 systemctl stop containerd
+
+# upgrade containerd to $containerdversion
 mkdir /opt/src
 cd /opt/src
-wget https://github.com/containerd/containerd/releases/download/v1.6.16/containerd-1.6.16-linux-amd64.tar.gz > /dev/null 2>&1
-tar xf containerd-1.6.16-linux-amd64.tar.gz 
+wget https://github.com/containerd/containerd/releases/download/v${containerdversion}/containerd-${containerdversion}-linux-amd64.tar.gz > /dev/null 2>&1
+tar xf containerd-${containerdversion}-linux-amd64.tar.gz 
 cp bin/* /usr/bin/
 cd -
-systemctl start containerd
 
 cat <<EOF | sudo tee /etc/containers/registries.conf
 [registries.search]
@@ -97,32 +99,22 @@ runtime-endpoint: unix:///run/containerd/containerd.sock
 EOF
 
 systemctl enable containerd
-systemctl restart containerd
+systemctl start containerd
 
 
 # kube
-#apt-get install -qq -y apt-transport-https ca-certificates curl software-properties-common
-#curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-#cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
-#deb https://apt.kubernetes.io/ kubernetes-xenial main
-#EOF
-#apt-get install -qq -y kubelet kubeadm kubectl kubernetes-cni
-
 apt-get install -qq -y gnupg gnupg2 curl software-properties-common
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/cgoogle.gpg
 apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 apt-get update
-apt-get install -qq -y kubelet kubeadm kubectl kubernetes-cni
+apt-get install -qq -y kubelet=$kubestuffversion kubeadm=$kubestuffversion kubectl=$kubestuffversion kubernetes-cni=$kubecniversion
 
 cat <<EOF | sudo tee /etc/default/kubelet
 KUBELET_EXTRA_ARGS="--container-runtime remote --container-runtime-endpoint unix:///run/containerd/containerd.sock"
 EOF
 systemctl daemon-reload
-
 systemctl enable kubelet
-systemctl start kubelet
 
-#usermod -aG docker vagrant
 echo "export TERM=xterm" >> /home/vagrant/.bashrc
 
 line=`cat /vagrant/id_rsa.pub`

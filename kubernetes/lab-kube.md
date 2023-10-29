@@ -20,9 +20,9 @@
 
 Depuis le dossier tp-kubernetes lancer le Vagrantfile :
 
-créer le fichier .env à la racine de la forme : 
+créer le fichier .env à la racine de la forme :
 
-```
+```bash
 DockerUser=Rick
 DockerPassword=killmortykillhim
 export DockerUser
