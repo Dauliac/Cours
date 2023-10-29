@@ -8,6 +8,7 @@ tasks:
         lefthook install
         npm i
     silent: true
+    run: once
   build:mermaid:
     internal: true
     silent: true
@@ -97,6 +98,7 @@ tasks:
     vars:
       MODULE: system
     deps:
+      - init
       - build:{{.MODULE}}:diagrams
     cmds:
       - |
