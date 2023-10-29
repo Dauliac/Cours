@@ -50,6 +50,10 @@
 - [Utilisation de helm](./kubernetes/kube-helm-monitoring.md) pour monitorer votre cluster
 - [Déploiement d'un Ingress](./kubernetes/kube-ingress.md)
 
+## Gestion des configuration serveurs
+
+- [cours de gestion des configuration](./gestion-de-conf/README.md)
+
 ## Wazuh
 
 - [présentation Wazuh](./Wazuh/wazuh_cours.md)
