@@ -1,0 +1,10 @@
+---
+- name: test gitea role in the vagrant test env
+  hosts: all
+  become: yes
+
+  vars:
+    - debianreleaseinfochange: 'exists'
+
+  roles:
+    - gitea

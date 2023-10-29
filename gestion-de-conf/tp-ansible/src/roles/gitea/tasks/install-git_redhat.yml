@@ -1,0 +1,5 @@
+---
+- name : install git on redhat
+  ansible.builtin.yum:
+    name: git
+    state: present

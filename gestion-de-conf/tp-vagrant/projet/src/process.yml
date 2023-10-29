@@ -1,0 +1,6 @@
+apps:
+  - script   : /home/nodeapp/testapp.js
+    name     : 'testapp'
+    instances: 2
+    watch    : true
+    exec_mode: cluster

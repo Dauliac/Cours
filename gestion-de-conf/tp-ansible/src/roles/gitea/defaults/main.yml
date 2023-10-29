@@ -1,0 +1,4 @@
+---
+gitea_version: "1.15.3"
+gitea_vardir: "/var/lib/gitea"
+gitea_etcdir: "/etc/gitea"

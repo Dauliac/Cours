@@ -1,0 +1,11 @@
+[all:children]
+slaves
+masters
+
+[masters]
+master
+master2 var="in-hosts-file"
+
+[slaves]
+slave1
+slave2

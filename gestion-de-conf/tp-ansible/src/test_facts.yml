@@ -1,0 +1,15 @@
+- name: tests facts and vars
+  hosts: slaves
+  strategy: linear
+
+  tasks:
+  - name: show ansible_nodename vs inventory_hostname
+    debug:
+      msg: "{{ ansible_nodename }} {{ inventory_hostname }}"
+  - name: show facts dsitribution
+    debug:
+      msg: "{{ ansible_facts['distribution'] }}"
+  - name: show hostvars and magic vars ansible_play_hosts
+    debug:
+      msg: "{% for host in ansible_play_hosts %}{{ hostvars[host]['ansible_facts']['nodename'] }}:{{ hostvars[host]['var'] }} {% endfor %}"
+

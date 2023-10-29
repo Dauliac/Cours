@@ -1,0 +1,8 @@
+- name: tst playbook
+  gather_facts: false
+  hosts: all
+
+  tasks:
+    - name: debug
+      debug:
+        msg: "ok"

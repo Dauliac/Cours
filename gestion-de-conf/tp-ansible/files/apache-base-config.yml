@@ -1,0 +1,31 @@
+- name: apache base config
+  hosts: target
+  user: ansible
+  become: yes
+
+  vars:
+    http_port: 80
+    serveur_admin: webmaster@lab.local
+
+  tasks:
+  - name: ensure apache is up to date
+    yum:
+      name: httpd
+      state: latest
+  - name: write the apache config file
+    template:
+      src: templates/httpd.j2
+      dest: /etc/httpd/conf/httpd.conf
+      backup: yes
+    notify:
+    - restart apache
+  - name: ensure apache is running
+    service:
+      name: httpd
+      state: started
+
+  handlers:
+    - name: restart apache
+      service:
+        name: httpd
+        state: restarted

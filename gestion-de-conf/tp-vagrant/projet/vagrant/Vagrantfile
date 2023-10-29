@@ -1,0 +1,41 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+BASEIP = "192.168.56.3"
+BASEHOSTNAME = "web"
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos/7"
+  (1..1).each do |i| 
+    config.vm.define "#{BASEHOSTNAME}-#{i}" do |web| 
+      web.vm.hostname = "#{BASEHOSTNAME}-#{i}" 
+      web.vm.network "private_network", ip: "#{BASEIP}#{i}" 
+      web.vm.provision "init", 
+        type: "shell", 
+        preserve_order: true,
+        run: "once",
+        inline: <<-EOF
+          echo "#### runing initalisation of environement"
+          sudo /vagrant/task/init.sh
+        EOF
+      web.vm.provision "sources", type: "file", 
+        preserve_order: true,
+        source: "../src", 
+        destination: "/vagrant/"
+      web.vm.provision "build", type: "shell", 
+        preserve_order: true,
+        run: "always",
+        inline: <<-EOF
+          echo "#### runing build "
+          sudo sed -i 's/localhost/#{BASEIP}#{i}/g' /vagrant/src/testapp.js
+          echo "#### builded"
+        EOF
+      web.vm.provision "apply", type: "shell", 
+        preserve_order: true,
+        run: "always",
+        inline: <<-EOF
+          echo "#### applying version "
+          sudo /vagrant/task/apply.sh
+          echo "#### service restarted "
+        EOF
+    end
+  end
+end
