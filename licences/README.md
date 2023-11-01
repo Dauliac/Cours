@@ -14,6 +14,10 @@ footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com'
 
 ## Biens immatériels
 
+[allez 👮](https://www.youtube.com/watch?v=sODZLSHJm6Q&pp=ygUZbGUgcGlyYXRhZ2UgYydlc3QgZHUgdm9sIA%3D%3D)
+
+---
+
 - Intangibles, que l’on ne peut pas toucher.
 - Pas de concurrence sur les produits.
 
@@ -230,6 +234,7 @@ Le problème des algorithmes de recommandation:
 - etc...
 
 ---
+
 des outils:
 - Opaques
 - Non démocratiques
@@ -239,10 +244,10 @@ des outils:
 # Faire du cash
 
 - Il est possible de monter une entreprise open source, et possède meme plusieurs avantages:
-    - Soutiens psychologique de la communauté.
-    - Aides de la région
-    - Oblige à concevoir de meilleurs produits
-    - Facilités de recrutement
+  - Soutiens psychologique de la communauté.
+  - Aides de la région
+  - Oblige à concevoir de meilleurs produits
+  - Facilités de recrutement
 
 # Bibliographie
 
