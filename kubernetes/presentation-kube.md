@@ -24,79 +24,80 @@
 
 Kubernetes veux dire Timonier celui qui tiens la barre du bateau. C'est un **orchestrateur de conteneurs**.
 
-C'est une application dévelopé par google gérant l'exécution de ses milliards de containers. Cette application a été reversé à la communauté open-source (via le CNCF).
+C'est une application développée par google gérant l'exécution de ses milliards de containers. Cette application a été reversé à la communauté open-source (via le CNCF).
 
-Il offre une abstraction compléte de l'infrastructure matérielle qui execute les applications.
+Il offre une abstraction complète de l'infrastructure matérielle qui execute les applications.
 
-Nous allons définir des applications sous forme de groupe de containeurs, Kubernetes va assurer leur exécution et simplifier/standardiser leur gestion sur un groupe de serveur physique ou de VM. Ce tout en masquant la complexité de l'infrastructure technique mise en oeuvre.
+Nous allons définir des applications sous forme de groupes de conteneurs, Kubernetes va assurer leur exécution et simplifier/standardiser leur gestion sur un groupe de serveurs physiques ou de VM, tout en masquant la complexité de l'infrastructure technique mise en oeuvre.
 
-## Architecture de l'application kubernetes
+## Architecture de l'application Kubernetes
 
-Kubernete est une application Cloud-native donc avec une architecture microservice conteneurisé.
+Kubernetes est une application Cloud-native donc avec une architecture microservice conteneurisée.
 
-Pour s'exécuter kubernetes fonctionne sur cluster de machine physique (ou virtuelle)disposant d'un controleur de container : les **nodes**.
+Pour s'exécuter, Kubernetes fonctionne sur un cluster de machines physiques (ou virtuelles) disposant d'un contrôleur de conteneurs : les **nodes**.
 
 Les nodes peuvent avoir les rôles suivants :
 
-* master : c'est un noeud de controle du cluster, il supporte la charge de kubernetes lui même.
-* worker : C'est un noeud de ressources de calcule, il supportera la charge des applications déployées sur le cluster kubernetes
+* master : c'est un noeud de contrôle du cluster, il supporte la charge de Kubernetes lui-même.
+* worker : C'est un noeud de ressources de calcul, il supportera la charge des applications déployées sur le cluster Kubernetes
 
-Les utilisateurs interagissent avec le cluster au travers d'une interface cli `kubctl`.
+Les utilisateurs interagissent avec le cluster au travers d'une interface CLI `kubectl`.
 
 ![kube archi](../images/kube-archi.drawio.png)
 
 ### Rôle master
 
-Il execute Les services : `API serveur`, `etcd`, `scheduler` et `Controller-Manager`
+Il exécute les services : `API serveur`, `etcd`, `scheduler` et `Controller-Manager`
 
-L'**API serveur** expose l'API kubernetes et stocke ses données dans la base de donnée `etcd`.
+L'**API serveur** expose l'API kubernetes et stocke ses données dans la base de données `etcd`.
 
-La base **etcd** stocke les paire de clefs valeurs de l'api
+La base **etcd** stocke les paires de clés-valeurs de l'API.
 
-Le **scheduler** : Distribue les conteneurs à démarrer sur les worker en fonction de la charge de chacun des noeuds worker. Il démarre les application nouvelement définies dans la base `etcd`.
+Le **scheduler** : Distribue les conteneurs à démarrer sur les workers en fonction de la charge de chacun des noeuds workers. Il démarre les applications nouvelement définies dans la base `etcd`.
 
-Le **Controller-Manager** surveille l'état du cluster et des applications définies et remonte ces informations dans la base `etcd`. Il maintiens l'état attendu de ces application sur le cluster en assurant les fonctions suivantes :
+Le **Controller-Manager** surveille l'état du cluster et des applications définies et remonte ces informations dans la base `etcd`. Il maintient l'état attendu de ces applications sur le cluster en assurant les fonctions suivantes :
 
-* Nde controleur : surveille l'état des noeud et réagit en fonction de leur panne.
-* Replication Controller : maintiens le bon nombre de réplicats de conteneur et re-démarre les eventuels conteneur qui se sont arrêté de façon inatendue.
-* Endpoints Controller : maintiens les accès réseaux aux conteneur.
-* Service Account & Token Controllers : gestion des droits accès
-* Cloud-controller-manager : gestion de l'interface aux worker (quelque soit son type)
+* Node Controller : surveille l'état des noeud et réagit en fonction de leur panne.
+* Replication Controller : maintient le bon nombre de réplicats de conteneur et redémarre les éventuels conteneurs qui se sont arrêtés de façon inattendue.
+* Endpoints Controller : maintient les accès réseaux aux conteneurs.
+* Service Account & Token Controllers : gestion des droits d'accès.
+* Cloud-controller-manager : gestion de l'interface aux workers (quel que soit son type).
 
 ### Rôle worker
 
-Il execute Les services : `kubelet`, et `kube proxy`
+Il exécute les services : `kubelet`, et `kube proxy`
 
-**Kubelet** : Agent qui s'exécute sur chaque noeud worker du cluster. Il gère la communication avec le Master Il gère les conteneurs.
+**Kubelet** : Agent qui s'exécute sur chaque noeud worker du cluster. Il gère la communication avec le Master et les conteneurs.
 
-il assure les fonctions suivantes :
+Il assure les fonctions suivantes :
 
 * Reçoit les demandes de création de Pod
 * Monte les Volumes des Pods
 * Lance les conteneurs
 * Il rapporte l’état des conteneurs à l’API-Server
 
-**kube-proxy** : Agent qui maintiens les réseaux du cluster et permet l'accès réseaux aux conteneurs
+**kube-proxy** : Agent qui maintient les réseaux du cluster et permet l'accès réseau aux conteneurs
 
 ### Le client kubectl
 
-`kubectl` est un outil en ligne de commande gérant la communication avec l'api serveur du cluster kubernetes et nous permettant d'interagire avec lui.
+`kubectl` est un outil en ligne de commande gérant la communication avec l'API serveur du cluster Kubernetes et nous permettant d'interagir avec lui.
 
 ### La haute disponibilité
 
-Afin de garantir la haute disponibilité du cluster kubernetes ; afin que celui-ci garantisse la disponibilité des applications qu'il porte. Il nous faut definir la topoligie du cluster nous permettant de maintenir disponible le rôle **master** qui pilote les workers et un **nombre sufisant de worker** pour porter la charge des applications.
+Afin de garantir la haute disponibilité du cluster kubernetes ; afin que celui-ci garantisse la disponibilité des applications qu'il porte. Il nous faut définir la topologie du cluster nous permettant de maintenir disponible le rôle **master** qui pilote les workers et un **nombre suffisant de workers** pour porter la charge des applications.
 
 #### etcd
 
-Le service etcd est le service qui maintiens les données métier du cluster. c'est un service de stockage clefs valeurs distribué et hautement disponible. Il s'apuis sur l'algorythme de concensus distribué Raft qui est trés bien expliqué [ici](http://thesecretlivesofdata.com/raft/).
+Le service etcd est le service qui maintient les données métier du cluster. C'est un service de stockage clés-valeurs distribué et hautement disponible. Il s'appuie sur l'algorithme de consensus distribué Raft qui est très bien expliqué [ici](http://thesecretlivesofdata.com/raft/).
+
 
 Il nous faut donc un cluster etcd d'au moins 3 noeud.
 
-Si celui-ci est embarqué sur le role master nous déploie'rons alors 3 noeuds masters :
+Si celui-ci est embarqué sur le rôle master, nous déploierons alors 3 nœuds masters :
 
 ![from-kubernetes.io](../images/ha-topology-stacked-etcd.drawio.png)
 
-Il est bien sur aussi possible d'utiliser un cluster etcd externe :
+Il est bien sûr aussi possible d'utiliser un cluster etcd externe :
 
 ![also-from-kubernetes.io](../images/ha-topology-external-etcd.drawio.png)
 
@@ -104,36 +105,37 @@ Il est bien sur aussi possible d'utiliser un cluster etcd externe :
 
 Nous allons déployer un node master par zone hébergeant notre cluster, nous pourrons alors assumer la perte d'une zone sans Impact important sur nos services.
 
-Pour les worker, tout dépend de la charge et la redondance que nous devons offrir aux application hébergé. compton au début 2 par site.
+Pour les workers, tout dépend de la charge et la redondance que nous devons offrir aux applications hébergées. Comptons au début 2 par site.
 
 ![node-topology](../images/node-topology.drawio.png)
 
-#### Pour le Réseaux
+#### Pour le Réseau
 
-Kubernetes masque la complexité du réseaux dans son modèle et propose une vue logique avec un réseaux interne le `cluster network` et des les objets `services` qui permettent la publication des application.
+Kubernetes masque la complexité du réseau dans son modèle et propose une vue logique avec un réseau interne le `cluster network` et des objets `services` qui permettent la publication des applications.
 
 ![cluster-network](../images/kube-cluster-network.drawio.png)
 
-Cela necessite en interne une gestion de réseaux avancé et pour ce faire k8s s'apuis sur un plugin réseaux :
+Cela nécessite en interne une gestion de réseau avancée et pour ce faire, K8s s'appuie sur un plugin réseau :
 
-Par défaut, nous avons **Kubenet** le mode le plus basique qui s'apuis sur un bridge linux `cbr0` et deux veth une pour le hosts l'autre pour le conteneur (le pod en fait mais on en parle plus bas). Cela est trés basique et est utilisé pour du test pour un sigle node. Cela permet d'avoir un hébergement kubernetes local de test.
+Par défaut, nous avons **Kubenet** le mode le plus basique qui s'appuie sur un bridge Linux `cbr0` et deux veth, une pour le host, l'autre pour le conteneur (le pod en fait mais on en parle plus bas). Cela est très basique et est utilisé pour du test pour un single node. Cela permet d'avoir un hébergement Kubernetes local de test.
 
-Sinon avec un plugin **CNI** (Container Network Interface) plus évoluer sur notre cluster nous  disposons du réseaux virtuels interne permettant la communication entre nos containeurs (pods) quelque soit le noeud sur lequel ils s'exécutent. Il en existe un grand nombre dans le cas d'un cluster on premise on retiendra :
+Sinon avec un plugin **CNI** (Container Network Interface) plus évolué sur notre cluster, nous disposons du réseau virtuel interne permettant la communication entre nos conteneurs (pods) quel que soit le noeud sur lequel ils s'exécutent. Il en existe un grand nombre dans le cas d'un cluster on premise, on retiendra :
 
 * Flanel : Qui propose un vxlan ipv4 par cluster.
-* Calico : Qui propose plusieurs réseaux ipv4 ou ipv6 par cluster, il fonctionne en sapuyant sur un underlay à base de bgp et IPinIP
-* Cilium : Qui popose un sous-réseaux par noeud (niveau 3) en overlay vxlan ou en routage natif (l'underlay est complexe à gérer) il utilise le filtrage reseaux BPF(BerkleyPacketFilter) plus performant que iptables.
-* WeaveNet : Qui popose un sous-réseaux par noeud (niveau 3) ou un overlay vxlan.
+* Calico : Qui propose plusieurs réseaux ipv4 ou ipv6 par cluster, il fonctionne en s'appuyant sur un underlay à base de BGP et IPinIP
+* Cilium : Qui propose un sous-réseau par noeud (niveau 3) en overlay vxlan ou en routage natif (l'underlay est complexe à gérer), il utilise le filtrage réseau BPF (Berkley Packet Filter) plus performant que iptables.
+* WeaveNet : Qui propose un sous-réseau par noeud (niveau 3) ou un overlay vxlan.
 
-Chacun dispose d'avantages et d'inconvénients, il faudra les étudier avant de choisir celui qui sera déployé sur le cluster. Certains sont pret pour la prod d'autre moins. a voir, la [présentation dans la doc kubernbete](https://kubernetes.io/docs/concepts/cluster-administration/networking/)
+Chacun dispose d'avantages et d'inconvénients, il faudra les étudier avant de choisir celui qui sera déployé sur le cluster. Certains sont prêts pour la prod, d'autres moins. À voir, la [présentation dans la doc Kubernetes](https://kubernetes.io/docs/concepts/cluster-administration/networking/)
+
 
 ## Les objets kubernetes
 
-Kubernetes propose un modèle pour les objects que nous gérons lorsque nous déployons des applications.
+Kubernetes propose un modèle pour les objets que nous gérons lorsque nous déployons des applications.
 
-Pour chacun de ces objets nous auront une entrée dans la base etcd qui le représente et assure sa rémanence dans le cluster.
+Pour chacun de ces objets, nous aurons une entrée dans la base etcd qui le représente et assure sa rémanence dans le cluster.
 
-Afin de manipuler ces objets nous les décrirons en yaml.
+Afin de manipuler ces objets, nous les décrirons en yaml.
 
 Exemple :
 
@@ -147,69 +149,69 @@ spec:
   Key: Value
 ```
 
-On notera La version de l'api utilisée, le type d'objet defini, ses meta donnée pour l'identifié et ses sp&écification du type clef: valeur.
+On notera la version de l'API utilisée, le type d'objet défini, ses métadonnées pour l'identifier et ses spécifications du type clé: valeur.
 
 Ci dessous une présentation succinte des objets principaux a conaitre.
 
 ### Les objets globaux
 
-Ces objets sont visible sur l'ensemble du cluster physique quelques soit le namespace
+Ces objets sont visibles sur l'ensemble du cluster physique quel que soit le namespace
 
 * Le node: C'est un host du cluster
-* Le namespace : C'est un espace de nommage, c'est un cluster virtuel sur notre cluster physique. C'est une façon de regouper des objets logiquement (par equipe projet ou par environement ...)
+* Le namespace : C'est un espace de nommage, c'est un cluster virtuel sur notre cluster physique. C'est une façon de regouper des objets logiquement (par équipe projet ou par environnement ...)
 * Le volume persistant : c'est la définition d'un espace de stockage rémanent sur le cluster
 
 ### Le pod
 
-Le pod est un groupe de container (souvent un seul) vue comme une seule entité, un pod est associé à une et une seule adresse ip, les conteneurs qu'il contiens voient tous les mêmes volumes.
+Le pod est un groupe de conteneurs (souvent un seul) vu comme une seule entité, un pod est associé à une et une seule adresse IP, les conteneurs qu'il contient voient tous les mêmes volumes.
 
 #### Le cycle de vie du pod
 
-Le pod peu prendre tour a tour les status suivant :
+Le pod peu prendre tour à tour les statuts suivant :
 
-* **Pending** : Le Pod a été accepté par Kubernetes, il est soit en cours d'affectation sinon le pod est en train de  télécharger les images puis de créer les containers qu'il contiens.
+* **Pending** : Le Pod a été accepté par Kubernetes, il est soit en cours d'affectation sinon le pod est en train de télécharger les images puis de créer les conteneurs qu'il contient.
 * **Running** : Le pod a été affecté à un nœud et tous les conteneurs ont été créés. Au moins un est en cours d'exécution.
 * **Succeeded** : Tous les conteneurs du pod ont terminé avec succès (rc code 0) et ne seront pas redémarrés.
-* **Failed** : Tous les conteneurs d'un pod ont terminé, et au moins un conteneur a terminé en échec
-* **Unknown** : l'état du pod ne peut pas être obtenu
+* **Failed** : Tous les conteneurs d'un pod ont terminé, et au moins un conteneur a terminé en échec.
+* **Unknown** : l'état du pod ne peut pas être obtenu.
 
 #### Objets de controle du pod
 
-* Le `ReplicaSet` : Cet objet définie le fait qu'un pod doit être répliqué un certain nombre de fois.
-* Le `StatefulSet` : Cet objet lie un **pod**, un **ReplicatSet** ou un **Deployment** a un `volume` (conservant l'état du pod : stateful)
-* Le `Deployment` : Cet objet définie Comment le **ReplicatSet** doit être re-déployé
-* Le `DaemonSet` : Cet objet définie le fait qu'un pod doit exister sur chacuns (certains)des noeud du cluster
-* Le `Job` : **le job est une sorte de pod** qui effectue une tache puis s'arrête, Kubernetes ne s'assure pas que celui-ci fonctionne en permanence mais qu'il s'est exécuté avec succes
+* Le `ReplicaSet` : Cet objet définit le fait qu'un pod doit être répliqué un certain nombre de fois.
+* Le `StatefulSet` : Cet objet lie un **pod**, un **ReplicatSet** ou un **Deployment** à un `volume` (conservant l'état du pod : stateful).
+* Le `Deployment` : Cet objet définit comment le **ReplicatSet** doit être re-déployé.
+* Le `DaemonSet` : Cet objet définit le fait qu'un pod doit exister sur chacun (certains) des noeuds du cluster.
+* Le `Job` : **le job est une sorte de pod** qui effectue une tâche puis s'arrête, Kubernetes ne s'assure pas que celui-ci fonctionne en permanence mais qu'il s'est exécuté avec succès
 * Le `cronjob` : **le job est une sorte de pod** qui est planifié via une ligne de crontab mais dans kubernetes
 
 ![pod related objects](../images/pod-related-objects.drawio.png)
 
 ### Les objets réseau
 
-De base chaque pod dispose d'une adresse ip et éventuelement d'un nom dns. le pod est donc disponible sur le réseaux interne du cluster (pour d'autre pod par exemple) mais n'est pas accessible à l'utilisateur.
+De base chaque pod dispose d'une adresse IP et éventuellement d'un nom DNS. Le pod est donc disponible sur le réseau interne du cluster (pour d'autres pods par exemple) mais n'est pas accessible à l'utilisateur.
 
-L'accès aux application est défini par les objets `service` et `ingress`.
+L'accès aux applications est défini par les objets `service` et `ingress`.
 
 #### Le service
 
-Le service : le service est l'objet publiant le service réseaux fournie par une application (un groupe de pod)
+Le service : le service est l'objet publiant le service réseau fourni par une application (un groupe de pods)
 
-il peu être publier sur :
+Il peut être publié sur :
 
 * une `ClusterIP` une adresse IP interne accessible uniquement depuis l'intérieur du cluster Kubernetes.
-* un `NodePort` un port réseaux `<Node_IP>:<NodePort>` est réservé sur tous les Noeuds du cluster. Chaque noeud écoute sur ce port et redirige le traffic qui arrive vers le service concerné. Le service est alors accessible depuis l'extérieur du cluster.
-* un `LoadBalancer` conbfiguration évoluée qui, suivant la configuration d'un loadbalanceur sur votre cluster kubernetes ou chez votre opérateur cloud, va interagir avec l'api de celui-ci afin de répartir les connexions sur les pods qui portent le service.
+* un `NodePort` un port réseau `<Node_IP>:<NodePort>` est réservé sur tous les noeuds du cluster. Chaque noeud écoute sur ce port et redirige le trafic qui arrive vers le service concerné. Le service est alors accessible depuis l'extérieur du cluster.
+* un `LoadBalancer` configuration évoluée qui, suivant la configuration d'un loadbalanceur sur votre cluster Kubernetes ou chez votre opérateur cloud, va interagir avec l'API de celui-ci afin de répartir les connexions sur les pods qui portent le service.
 
 #### L'ingress
 
-Un Ingress est un objet évoluer permettant de définir des route d'accès en général en https (`https://<server-name>/<url-route>/`) aux services.
+Un Ingress est un objet évolué permettant de définir des route d'accès en général en https (`https://<server-name>/<url-route>/`) aux services.
 
-Il s'appuis sur un **IngressControler** qu'il faudra definir et déployer sur le cluster afin qu'il agisse comme un proxy offrant l'accès aux applications.
+Il s'appuis sur un **IngressController** qu'il faudra definir et déployer sur le cluster afin qu'il agisse comme un proxy offrant l'accès aux applications.
 
-Suivant l'IngressControler déployer il pourra offrie des fonctionalités suplémentaire tel la commande de certificat **let's encrypt** ou le maintiens des sessions sur le même pod etc...
+Suivant l'IngressController déployé, il pourra offrir des fonctionnalités supplémentaires telles que la commande de certificat **Let's Encrypt** ou le maintien des sessions sur le même pod, etc...
 
 ![kube-net-phys](../images/kube-net-logic.drawio.png)
 
 ## Conclusion
 
-Vous l'aurez compris il s'agit de revoir notre méthode d'intégration d'applications afin de coller au modele kubernetes. Toute la gestion de l'infrastrcuture d'exécution est masqué par le modèle et l'api kubernetes. Nous ne parlons plus que d'ingress, service, déployment, pod, container, volumes et plus jamais de VM, système, packages etc... car tout ceci est géré par les admins kubernetes.
+Vous l'aurez compris, il s'agit de revoir notre méthode d'intégration d'applications afin de coller au modèle Kubernetes. Toute la gestion de l'infrastructure d'exécution est masquée par le modèle et l'API Kubernetes. Nous ne parlons plus que d'ingress, service, déploiement, pod, conteneur, volumes et plus jamais de VM, système, packages, etc... car tout ceci est géré par les admins Kubernetes.

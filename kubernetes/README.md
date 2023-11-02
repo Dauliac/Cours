@@ -1,9 +1,9 @@
-# L'orchestration de conteneur avec Kubernetes
+# L'Orchestration de conteneur avec Kubernetes
 
 ## Préambule
 
 - [Le-cloud](./presentation-cloud.md)
-- [Présentaiton Kubernetes](./presentation-kube.md)
+- [Présentation Kubernetes](./presentation-kube.md)
 
 ## TP-cours
 
