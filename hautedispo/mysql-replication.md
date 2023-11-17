@@ -177,11 +177,11 @@ En cas d'arret de la réplication et après analyse de la situation :
 
 Simplement plusieurs slave sont mis en place derière le master.
 
-![replication](../images/mysql-replication-1.png)
+![replication](../../images/mysql-replication-1.png)
 
 Cette solution permet de distribuer les lectures sur les slaves tout en conservant les écritures sur le master. Bien sur l'application devra alors gérer plusieurs connexions et distribuer ses requêtes sur l'une ou l'autre de ses connexions. Enfin il existe des solutions du type "proxySQL" qui prend alors en charge ce dispatching (il s'apuis sur le mode read-only pour identifier les slaves).
 
-![replication2](../images/mysql-replication-2.png)
+![replication2](../../images/mysql-replication-2.png)
 
 ### Réplication chainée
 
@@ -194,7 +194,7 @@ relay-log        = slave-relay-bin
 
 L'ensemble des écriture traité par le slave sont alors re-transmisent à ses propres slaves.
 
-![replication3](../images/mysql-replication-3.png)
+![replication3](../../images/mysql-replication-3.png)
 
 En revanche, le délais de réplication est alors doublé.
 
@@ -210,7 +210,7 @@ Avec N le retard souhaité en seconde.
 
 Cette solution peu permettre de disposer d'une base consistante à moins 8h par exemple.
 
-![replication4](../images/mysql-replication-4.png)
+![replication4](../../images/mysql-replication-4.png)
 
 En scriptant un peu on poura aussi avec des stop slave / start slave disposer d'une base décalé à j-1 permetant ainsi de reconstruire un slave incohérent facilement à partir de cette base "froide" en reprenant ses données et sont statut de réplication.
 
@@ -218,7 +218,7 @@ En scriptant un peu on poura aussi avec des stop slave / start slave disposer d'
 
 Il est possible de faire une boucle de réplication le moteur du slave rejetant les écriture et ne relay provenant du même serveur id.
 
-![replication5](../images/mysql-replication-5.png)
+![replication5](../../images/mysql-replication-5.png)
 
 On modifira le comportement de mysql sur les insertions afin que les id auto-incrémentés ne se chevauche pas. Attention cette solution est plutot risqué car en cas de corruption de la réplication la reconstruction est complexe et destrcutive.
 
@@ -242,4 +242,4 @@ Il existe aussi des clusters plus évolués (galera, mysql cluster) mais leur mi
 
 On peu enfin imaginer créer un cluster de 2 masters qui se répliquent mutuelement avec une VIP keepalived assurant qu'un seul serveur soit utilisé en écriture à un instant donnée. cela réduit fortement les risques de corruption de la réplication.
 
-![replication6](../images/mysql-replication-6.png)
+![replication6](../../images/mysql-replication-6.png)
