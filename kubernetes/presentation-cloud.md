@@ -54,6 +54,7 @@ En vrai, les technologies de l'information sont en perpétuelles mutations. Devo
 On y arrive ? D'après les [prévisions du gartner](https://cloud-computing.developpez.com/actu/306758/Les-revenus-lies-a-la-gestion-des-conteneurs-connaitra-une-forte-croissance-atteignant-944-millions-de-dollars-en-2024-selon-une-prevision-de-Gartner/) :
 
 * 75% des organisations internationales devraient faire tourner des conteneurs d'ici 2022, contre seulement 30% en 2020
-* Mais seulement 15% des applications devraient être conteneurisées d'ici **2024**
+* Seulement 15% des applications devraient être conteneurisées d'ici **2024**
+* finalement le gartner ^predit que 90% des entreprise du G2000 devrais faire tourner des orchestrateur de containers
 
-Bon ben on y va doucement alors.
+Bon ben on y va doucement mais surement alors.

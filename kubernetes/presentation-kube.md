@@ -128,7 +128,6 @@ Sinon avec un plugin **CNI** (Container Network Interface) plus évolué sur not
 
 Chacun dispose d'avantages et d'inconvénients, il faudra les étudier avant de choisir celui qui sera déployé sur le cluster. Certains sont prêts pour la prod, d'autres moins. À voir, la [présentation dans la doc Kubernetes](https://kubernetes.io/docs/concepts/cluster-administration/networking/)
 
-
 ## Les objets kubernetes
 
 Kubernetes propose un modèle pour les objets que nous gérons lorsque nous déployons des applications.

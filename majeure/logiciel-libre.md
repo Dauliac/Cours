@@ -28,8 +28,8 @@ Hérité notament de la culture du monde Unix :
 
 La liberté d'usage permet aux solutions libres de se propager. Puis de part la multiplication de l'usage les solutions libres deviennent de fait reconnues comme fiables.
 
-Ce principe de liberté est inclu dans le design fonctionnel d'une solution libre.**Une solution libre bien conçue est un framework** ; le modèle fonctionnel est défini afin d'ouvrir un maximum de possibilités d'implémentations.
-Ainsi il est possible de faire une implémentation en fonction de son organisation, de ses processus métiers ou des classes d'objets fontionnels :
+Ce principe de liberté est inclu dans le design fonctionnel d'une solution libre.**Une solution libre bien conçue est un framework** ; le modèle fonctionnel est défini et l'implémentation est modulaire afin d'ouvrir un maximum de possibilités d'utilisations.
+Ainsi il est possible de parmetrer et implémenter la solution en fonction des besoins de son organisation, de ses processus métiers ou des classes d'objets fontionnels :
 
 - groupes : d'utilisateur, de ressources, d'accès
 - rôles : fonctions, ensemble de droits, Objectif fontionnel
@@ -80,7 +80,7 @@ A la vu de la réussite du monde du libre dans le domaine de l'informatique, ces
 
 ## L'opensource
 
-Les concepts de l'opensource sont inclus dans le concept du libre mais ont émergé plus tard. Ils se veulent être une forme non virale de collaboration car ils n'imposent aucune restriction à la redistribution des produits issus d'évolutions de produits opensource. En clair il est possible de ne pas donner l'accès au code source ajouté aux produits et donc de l'utiliser au sein d'un **logiciel privateur**.
+Les concepts de l'opensource sont inclus dans le concept du libre. Ils se veulent être une forme non virale de collaboration car ils n'imposent aucune restriction à la redistribution des produits issus d'évolutions de produits opensource. En clair il est possible de ne pas donner l'accès au code source ajouté aux produits et donc de l'utiliser au sein d'un **logiciel privateur**.
 
 Un logiciel libre est opensource et le restera, un logiciel open source peut ne pas être libre et les logiciels issus de ceux-ci pouvant sous certaines conditions ne pas être opensource.
 

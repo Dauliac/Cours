@@ -465,6 +465,7 @@ clusterrolebinding.rbac.authorization.k8s.io/admin-user created
 >
 > ```bash
 > $ kubectl -n kubernetes-dashboard create token admin-user
+> ...
 > ```
 
 ### Kubectl proxy
