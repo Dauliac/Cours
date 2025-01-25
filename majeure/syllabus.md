@@ -10,40 +10,6 @@
 - Organisation des cours et des évaluations
   - le projet de fin de majeure
 
-## Cours des systèmes
-
-- Introduction
-- Objectifs
-  - C’est quoi un OS ?
-    - Quelle est la proposition d’un OS:
-  - Un système simple pour commencer
-- BIOS
-  - Qu’est ce qu’un BIOS
-  - securite
-- Kernel
-  - Résumé des composants du Noyau
-  - Scheduler
-    - Comment fait-on pour lancer plusieurs processus ?
-    - Ordonnanceur et temporisateur
-    - Algorithmes d’ordonnancements
-  - Les syscalls
-- Processus
-  - Premier processus
-  - Histoire de l’architecture de la RAM
-  - Le layout de la ram
-  - Sécurité de la ram
-  - Processus states
-  - Pagination virtuelle
-- Les nouvelles isolations
-  - Les machines virtuelles
-  - Les containers
-    - Dockerfile
-    - Les containers et les syscalls
-    - Les lambdas
-    - Web assembly
-  - Comparaison
-- Conclusion
-
 ## Rappels à propos des systeme linux
 
 - Le userspace (vs kernel)
@@ -81,39 +47,30 @@
     - tp lvm
       - utilisation de lvm afin de simplifier la gestion des volumes SAN
 
-## Software delivery life cycle
+## L'outil Wazuh
 
-- Software delivery life cycle
-  - Objectif du module
-- Introduction à la CICD
-  - Définitions
-  - QQOQCCP
-  - 5 Pourquoi de la CICD
-  - Les entités
-- DEVOPS et CICD
-  - Le non fonctionnel
-  - KPIs
-- Architecture d’une CICD
-  - Géographie de la CICD
-  - Temporalité de la CICD
-  - Monorepo vs polyrepo
-  - Versiong flow
-- Méthodes
-  - Agilité
-  - Nommage
-  - Gitops
-  - Revue de code par les paires
-  - Releases management
-  - Release train
-    - RACI
-  - Votre rôle dans tout ça
-- shell
-  - Bases
-  - Bonnes pratiques shell
-  - Un exemple de script cool
-  - Stack de dev shell
-- Outillage
-- Bonnes pratiques
+- Introduction sur les moteur de recherche et d'analyse
+  - ELK
+  - OpenSearch
+- Wazuh
+  - Présentation
+- Composants
+  - L'indexer
+  - Le dashboard
+  - L'agent
+- TD: installation de wazuh
+- Les évènement de sécurité
+  - pre-decoding
+  - decoder
+  - rules
+- Gestion de l'intégrité
+- Gestion de la conformité
+- detection et réponse
+  - Vumnerabilité
+  - Mitre
+- Conformité aux obligations légales
+- gestion centralisé
+- TD: détection d'une attaque
 
 ## systemd
 
@@ -152,6 +109,40 @@
     - unité automount
     - unité swap
 - Conclusion
+
+## Software delivery life cycle
+
+- Software delivery life cycle
+  - Objectif du module
+- Introduction à la CICD
+  - Définitions
+  - QQOQCCP
+  - 5 Pourquoi de la CICD
+  - Les entités
+- DEVOPS et CICD
+  - Le non fonctionnel
+  - KPIs
+- Architecture d’une CICD
+  - Géographie de la CICD
+  - Temporalité de la CICD
+  - Monorepo vs polyrepo
+  - Versiong flow
+- Méthodes
+  - Agilité
+  - Nommage
+  - Gitops
+  - Revue de code par les paires
+  - Releases management
+  - Release train
+    - RACI
+  - Votre rôle dans tout ça
+- shell
+  - Bases
+  - Bonnes pratiques shell
+  - Un exemple de script cool
+  - Stack de dev shell
+- Outillage
+- Bonnes pratiques
 
 ## les Licences Open source
 
@@ -207,27 +198,3 @@
   - Déploiement d'un ingress controler
   - Deploiement d'un service avec un ingress
 
-## L'outil Wazuh
-
-- Introduction sur les moteur de recherche et d'analyse
-  - ELK
-  - OpenSearch
-- Wazuh
-  - Présentation
-- Composants
-  - L'indexer
-  - Le dashboard
-  - L'agent
-- TD: installation de wazuh
-- Les évènement de sécurité
-  - pre-decoding
-  - decoder
-  - rules
-- Gestion de l'intégrité
-- Gestion de la conformité
-- detection et réponse
-  - Vumnerabilité
-  - Mitre
-- Conformité aux obligations légales
-- gestion centralisé
-- TD: détection d'une attaque

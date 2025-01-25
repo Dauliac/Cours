@@ -12,14 +12,13 @@
 
 ### Rappels
 
-- [bases d'utilisation de Git](./linux/git.md)
-- [rappels GNU/linux](./linux/rappels-linux.md)
-- [Gestion des droits Posix](./linux/droits.md)
-- [Scripting bash](./linux/rappels-scripting-bash.md)
+- [bases d'utilisation de Git](./linux/rappels/git.md)
+- [rappels GNU/linux](./linux/rappels/rappels-linux.md)
+- [Gestion des droits Posix](./linux/rappels/droits.md)
+- [Scripting bash](./linux/rappels/rappels-scripting-bash.md)
 
 ### Approfondissement linux
 
-- [Les systèmes](./system/README.md)
 - [Configuration serveur physique](./linux/config-linux/config-linux.md)
   - [tp compilation de driver](./linux/config-linux/compile-driver/README.md)
   - [tp config réseaux](./linux/config-linux/config-net/config-net-advanced.md)
@@ -29,6 +28,11 @@
 - [systemd](./linux/systemd/systemd.md)
   - [tp unité systemd](./linux/systemd/systemd-unit.md)
   - [tp networkd](./linux/systemd/systemd-net.md)
+
+## Wazuh
+
+- [présentation Wazuh](./Wazuh/wazuh_cours.md)
+- [TP wazuh](./Wazuh/wazuh_tp.md)
 
 ## Software Delivery Lifecycle
 
@@ -54,7 +58,3 @@
 
 - [cours de gestion des configuration](./gestion-de-conf/README.md)
 
-## Wazuh
-
-- [présentation Wazuh](./Wazuh/wazuh_cours.md)
-- [TP wazuh](./Wazuh/wazuh_tp.md)
