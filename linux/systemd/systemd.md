@@ -48,7 +48,7 @@ Pour démarrer, un *service* n'attend plus la fin du démarrage des *services* d
 La commande suivante fournie une analyse de la séquence du boot dans une image *(plot)* ou un résumé du chemin critique textuel :
 
 ```bash
-root@bullseye:~# systemd-analyze plot > plot.svg
+root@bullseye:~# systemd-analyze plot > /vagrant/plot.svg
 root@bullseye:~# systemd-analyze critical-chain | cat
 The time when unit became active or started is printed after the "@" character.
 The time the unit took to start is printed after the "+" character.
@@ -204,7 +204,7 @@ L'unité systemd-networkd.service une fois active Permet la gestion de la config
 
 L'unité systemd-resolved.service offre la gestion de la résolution réolution dns du systeme.  
 
-l'utilisation de ces deux composant est traité dans le [tp networkd](./tp-systemd/systemd-net.md)
+l'utilisation de ces deux composant est traité dans le [tp networkd](../config-linux/config-net/systemd-net.md)
 
 #### les commande de configuration système
 
@@ -214,8 +214,7 @@ l'utilisation de ces deux composant est traité dans le [tp networkd](./tp-syste
 - loginctl : Permet la gestion des sessions utilisateur (y compris graphique)
 - journalctl : outil de requete sur le la journalisation systeme.
 - busctl : permet le contrôle de dbus
-
-### systemd-analyze
+- systemd-analyze : analyse le démarrage du system
 
 ## Configuration `systemd`
 
@@ -228,7 +227,7 @@ root@bullseye:~# find /etc/systemd/ -name "*.conf"
 /etc/systemd/timesyncd.conf
 /etc/systemd/system.conf
 /etc/systemd/pstore.conf
-/etc/systemd/resolved.conf
+/etc/systemd/resolved.conf/
 /etc/systemd/networkd.conf
 /etc/systemd/logind.conf
 /etc/systemd/sleep.conf

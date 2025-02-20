@@ -105,8 +105,9 @@ Vous l'installerez sous /opt/rsanchez/bin/myapp
 - ajoutez un fichier 10-ressources.conf dans le drop-in de l'unité summer avec :
 
   ```ini
+  [Service]
   CPUQuota=20%
-  MemoryLimit=220M
+  MemoryLimit=120M
   ```
 
   - vous redemarrez les service et regarderez les resultat des commandes  `systemd-cgls` et `systemd-cgtop`
