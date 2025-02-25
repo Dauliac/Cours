@@ -1,0 +1,22 @@
+journey
+    title Release train and automation factor
+    section Localhost development
+			Coding: 1: developer
+			Linting: 6: hook
+			Building: 6: hook
+			Commiting: 3: developer
+		section Review
+      Linting: 6: Pipeline
+      Building: 6: Pipeline
+      Deploying: 4: Pipeline
+			Probing: 4 : manager, quality team, product team
+    section Staging
+      Linting: 6: Pipeline
+      Building: 6: Pipeline
+      Deploying: 6: Pipeline
+			Probing: 3 : Ops, tech leads, quality team, product team
+    section Production
+		  Linting: 6: Pipeline
+      Building: 6: Pipeline
+      Deploying: 6: Pipeline
+			Probing: 3 : Ops, tech leads, manager, quality team

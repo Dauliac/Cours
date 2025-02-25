@@ -1,14 +1,22 @@
----
 version: '3'
-
 tasks:
   init:
     cmds:
       - |
         lefthook install
-        npm i
     silent: true
     run: once
+  watch:
+    desc: start local server with book on localhost:3000
+    cmds:
+      - mdbook serve
+  build:
+    desc: Build the project
+  build:mdbook:
+    internal: true
+    silent: true
+    cmds:
+      - mdbook build
   build:mermaid:
     internal: true
     silent: true
@@ -20,17 +28,16 @@ tasks:
       SOURCES_DIR: "./{{.MODULE}}/src"
       FILES:
         sh: find "{{.SOURCES_DIR}}" -type f -name '*.mmd'
-    env:
     cmds:
       - rm -rf {{.ASSETS_DIR}}/*-mermaid-*.svg
-      - for: 
+      - for:
           var: FILES
+        vars:
+          SVG_PATH: "{{.ASSETS_DIR}}/{{.MODULE}}-mermaid-{{.ITEM | base | trimSuffix '.mmd' }}.svg"
         cmd: |
-          export PATH="./node_modules/.bin:$PATH"
-          echo "{{.ASSETS_DIR}}/{{.MODULE}}-mermaid-{{.ITEM | base | trimSuffix ".mmd" }}.svg"
           mmdc \
             -i "{{.ITEM}}" \
-            -o "{{.ASSETS_DIR}}/{{.MODULE}}-mermaid-{{.ITEM | base | trimSuffix ".mmd" }}.svg"
+            -o "{{.SVG_PATH}}"
   build:drawio:
     internal: true
     silent: true
@@ -45,7 +52,7 @@ tasks:
       RANGE: '{{.COUNT | int | until }}'
     cmds:
       - rm -rf {{.ASSETS_DIR}}/{{.MODULE}}-drawio-*.svg
-      - for: 
+      - for:
           var: RANGE
         cmd: |
           drawio \
@@ -61,81 +68,3 @@ tasks:
           -i \
           's/Text is not SVG \- cannot display//g' \
           {{.ASSETS_DIR}}/*-drawio-*.svg
-  build:system:diagrams:
-    silent: true
-    vars:
-      MODULE: system
-    cmds:
-      - task: build:drawio
-        vars:
-          MODULE: "{{.MODULE}}"
-      - task: build:mermaid
-        vars:
-          MODULE: "{{.MODULE}}"
-    sources:
-      - "{{.MODULE}}/diagrams.drawio"
-      - "{{.MODULE}}/src/*.mmd"
-    generates:
-      - "{{.MODULE}}/assets/*.svg"
-  build:sdlc:diagrams:
-    silent: true
-    vars:
-      MODULE: sdlc
-    cmds:
-      - task: build:drawio
-        vars:
-          MODULE: "{{.MODULE}}"
-      - task: build:mermaid
-        vars:
-          MODULE: "{{.MODULE}}"
-    sources:
-      - "{{.MODULE}}/diagrams.drawio"
-      - "{{.MODULE}}/src/*.mmd"
-    generates:
-      - "{{.MODULE}}/assets/*.svg"
-  build:system:
-    silent: true
-    vars:
-      MODULE: system
-    deps:
-      - init
-      - build:{{.MODULE}}:diagrams
-    cmds:
-      - |
-        marp {{.MODULE}}/README.md
-    sources:
-      - "{{.MODULE}}/README.md"
-    generates:
-      - "{{.MODULE}}/README.html"
-  build:sdlc:
-    silent: true
-    vars:
-      MODULE: sdlc
-    deps:
-      - build:{{.MODULE}}:diagrams
-    cmds:
-      - |
-        marp {{.MODULE}}/README.md
-    sources:
-      - "{{.MODULE}}/README.md"
-    generates:
-      - "{{.MODULE}}/README.html"
-  build:licences:
-    silent: true
-    vars:
-      MODULE: licences
-    cmds:
-      - |
-        marp {{.MODULE}}/README.md
-    sources:
-      - "{{.MODULE}}/README.md"
-    generates:
-      - "{{.MODULE}}/README.html"
-
-  build:
-    deps:
-      - build:system
-      - build:sdlc
-      - build:licences
-    silent: true
-    desc: Build all slides

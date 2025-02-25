@@ -1,0 +1,17 @@
+graph TD
+  A[Création de la branche de fonctionnalité] --> B(Travail sur la branche)
+  B --> C(Commit des changements)
+  C --> D(Soumettre une merge request)
+  D --> E{Revue de code nécessaire ?}
+  E --> |Non| F(Discussion et ajustements)
+  E --> |Oui| G(Début de la revue de code)
+  G --> |Commentaires| F
+  F --> H{Modifications supplémentaires nécessaires ?}
+  H --> |Oui| B
+  H --> |Non| I(Acceptation finale)
+  I --> J(Fusion de la merge request)
+  J --> K(Tests de vérification)
+  K --> L{Tests réussis ?}
+  L --> |Oui| M(Livraison de la fonctionnalité)
+  L --> |Non| B
+  M --> N(Fermeture de la merge request)

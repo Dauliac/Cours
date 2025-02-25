@@ -1,0 +1,53 @@
+[book]
+authors = ["dauliac"]
+language = "en"
+multilingual = false
+src = "./src"
+title = "Cours \"opensource\""
+description = "."
+
+[output]
+
+[output.html]
+renderer = ["html"]
+
+additional-js = [
+"./docs/mermaid/mermaid.min.js",
+"./docs/mermaid/mermaid-init.js"
+]
+[output.linkcheck]
+renderer = ["html"]
+follow-web-links = true
+
+[output.markdown]
+
+[preprocessor]
+
+[preprocessor.cmdrun]
+command = "mdbook-cmdrun"
+
+[preprocessor.emojicodes]
+command = "mdbook-emojicodes"
+
+[preprocessor.footnote]
+renderer = ["html"]
+command = "mdbook-footnote"
+
+[preprocessor.index]
+renderer = ["html"]
+
+[preprocessor.katex]
+after = ["links"]
+command = "mdbook-katex"
+
+[preprocessor.links]
+renderer = ["html"]
+
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
+renderer = ["html"]
+
+[preprocessor.toc]
+command = "mdbook-toc"
+renderer = ["html"]
+marker = "* auto-gen TOC;\n{:toc}"

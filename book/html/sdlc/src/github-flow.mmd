@@ -1,0 +1,19 @@
+---
+title: Github flow
+---
+%%{init: { 'gitGraph': {'showBranches': true, 'showCommitLabel':true,'mainBranchName': 'develop'}} }%%
+gitGraph
+   commit id: "ONE"
+	 commit id: "TWO"
+   commit id: "THREE"
+	 branch staging
+   checkout develop
+   checkout staging
+   commit id: "ONE*"
+	 commit id: "TWO*"
+   commit id: "THREE*"
+	 branch main
+   checkout main
+   commit id: "ONE"
+	 commit id: "TWO'"
+   commit id: "THREE'"

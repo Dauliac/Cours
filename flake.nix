@@ -1,41 +1,28 @@
 {
-  description = "Open source courses";
-
+  description = "Cours Open Sources";
   inputs = {
-    nixpkgs = {
-      url = "github:NixOS/nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    valeMicrosoft = {
+      url = "github:errata-ai/Microsoft";
+      flake = false;
     };
-
-    flake-utils = {
-      url = "github:numtide/flake-utils";
+    valeWriteGood = {
+      url = "github:errata-ai/write-good";
+      flake = false;
+    };
+    valeJoblint = {
+      url = "github:errata-ai/Joblint";
+      flake = false;
     };
   };
-
-  outputs = inputs @ { self, ... }:
-    inputs.flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import inputs.nixpkgs {
-          inherit system;
-        };
-      in
-      {
-        devShells.default =
-          pkgs.mkShell
-            {
-
-              nativeBuildInputs = with pkgs;
-                [
-                  lefthook
-                  go-task
-                  marp-cli
-                  typos
-                  drawio
-                  nodejs_18
-                ];
-
-              devShellHook = ''
-                task init
-              '';
-            };
-      });
+  outputs =
+    inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } (_: {
+      systems = [ "x86_64-linux" ];
+      imports = [
+        ./nix
+      ];
+    });
 }

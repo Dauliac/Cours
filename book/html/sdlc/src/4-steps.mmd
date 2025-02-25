@@ -1,0 +1,14 @@
+flowchart TD
+    linting([Linting])
+    building([Building])
+    deployment([Deployment])
+    probing([Probing & Attestation])
+
+    linting --> building
+    building --> deployment
+    deployment --> probing
+
+    click linting href "#linting-phase" "Jump to the linting phase section"
+    click building href "#building-phase" "Jump to the building phase section"
+    click deployment href "#deployment-phase" "Jump to the deployment phase section"
+    click probing href "#probing-attestation-phase" "Jump to the probing & attestation phase section"

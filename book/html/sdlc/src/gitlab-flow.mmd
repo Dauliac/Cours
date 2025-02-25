@@ -1,0 +1,22 @@
+---
+title: Gitlab flow
+---
+%%{init: { 'gitGraph': {'showBranches': true, 'showCommitLabel':true,'mainBranchName': 'develop'}} }%%
+gitGraph
+   commit
+	 branch staging
+   checkout develop
+   checkout staging
+   commit
+	 branch main
+   checkout main
+	 commit
+   checkout develop
+   commit
+	 commit
+   commit
+   checkout staging
+   merge develop
+   commit id: "fix(hotfix): repair the DTO"
+   checkout main
+   merge staging

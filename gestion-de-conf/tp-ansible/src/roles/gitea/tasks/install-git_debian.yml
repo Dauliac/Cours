@@ -1,9 +1,0 @@
----
-- name: Allow release-info to change for APT repositories
-  command: apt-get update -y --allow-releaseinfo-change
-  when: debianreleaseinfochange is defined
-
-- name : install git on debian
-  ansible.builtin.apt:
-    name: git
-    state: present
