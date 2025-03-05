@@ -10,8 +10,12 @@ ______________________________________________________________________
 
 # License Course
 
+<!-- vale off -->
+
 - auto-gen TOC;
   {:toc}
+
+<!-- vale on -->
 
 ## Intangible Assets
 
@@ -19,7 +23,7 @@ ______________________________________________________________________
 
 ______________________________________________________________________
 
-- Intangibles, which cannot be touched.
+- Intangibles, which can't be touched.
 - No competition on products.
 
 ## Theft
@@ -33,7 +37,7 @@ Wiktionary
 
 >
 
-## Software Cannot Be Stolen
+## Software Can't be stolen
 
 - Software is an intangible asset.
 
@@ -83,7 +87,7 @@ Examples:
 
 ______________________________________________________________________
 
-- Discord does not sell user data.
+- Discord doesn't sell user data.
 - Discord dilutes its shares.
 
 ## Freemium
@@ -186,7 +190,7 @@ ______________________________________________________________________
 
 ______________________________________________________________________
 
-- Innovation does not come from large corporations.
+- Innovation doesn't come from large corporations.
 
 ______________________________________________________________________
 
@@ -257,6 +261,7 @@ The problem with recommendation algorithms:
 
 - Cambridge Analytica
 - QAnon
+- X
 - etc...
 
 ______________________________________________________________________
@@ -270,7 +275,7 @@ Tools that are:
 
 # Making Money
 
-- It is possible to build an open-source company, and it even has several advantages:
+- It's possible to build an open-source company, and it even has several advantages:
   - Psychological support from the community.
   - Regional support
   - Forces better product design

@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html" class="active">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Cours</li><li class="chapter-item expanded "><a href="sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction au SDLC</a></li><li class="chapter-item expanded "><a href="system/index.html"><strong aria-hidden="true">2.</strong> Introduction au Système d'exploitation</a></li><li class="chapter-item expanded "><a href="licences/index.html"><strong aria-hidden="true">3.</strong> Licences numériques</a></li><li class="chapter-item expanded "><a href="documentations/index.html"><strong aria-hidden="true">4.</strong> Documentation technique</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References (Outils, concepts clés et ressources)</li><li class="chapter-item expanded "><a href="sdlc/references/outils-gestion-projet.html"><strong aria-hidden="true">5.</strong> Outils de gestion de projet</a></li><li class="chapter-item expanded "><a href="sdlc/references/devops-pratiques.html"><strong aria-hidden="true">6.</strong> Bonnes pratiques DevOps</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Tutorials (TPs et mise en pratique)</li><li class="chapter-item expanded "><a href="sdlc/tps/packager-avec-nix/index.html"><strong aria-hidden="true">7.</strong> Packager avec nix</a></li><li class="chapter-item expanded "><a href="sdlc/tps/container-parfait-avec-nix/index.html"><strong aria-hidden="true">8.</strong> Construire un container parfait avec nix ?</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="nix/INSTALL.html"><strong aria-hidden="true">9.</strong> Install nix</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html" class="active">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="documentations/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">5.</strong> Packaging with nix</a></li><li class="chapter-item expanded "><a href="sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">6.</strong> Perfect container with nix ?</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="nix/INSTALL.html"><strong aria-hidden="true">7.</strong> Install nix</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -174,7 +174,74 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<hr />
+<!-- paginate: true -->
+<!-- colorPreset: sunset -->
 <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<!-- vale off -->
+<ul>
+<li><a href="#about-this-course">About this course</a></li>
+<li><a href="#evaluation--grading">Evaluation &amp; grading</a></li>
+<li><a href="#course-format">Course format</a></li>
+<li><a href="#core-topics">Core topics</a></li>
+<li><a href="#key-principles">Key principles</a></li>
+<li><a href="#expectations">Expectations</a></li>
+</ul>
+<!-- vale on -->
+<pre class="mermaid">mindmap
+  cours((Structure du cours))
+    Évaluation
+    Format
+    Sujets clés
+    Principes fondamentaux
+    Attentes des étudiants
+</pre>
+<h2 id="about-this-course"><a class="header" href="#about-this-course">About this course</a></h2>
+<p>Welcome! I'm <strong>Julien Dauliac</strong>, a Site Reliability Engineer (SRE), it's like <strong>DevOps</strong>. I have a background in <strong>software architecture</strong> and enjoy <strong>development</strong> in general. My favorite technologies include <strong>Nix</strong> , <strong>Kubernetes</strong> and <strong>Rust</strong>, and I take a strong stance in advocating for efficient and modern software practices.</p>
+<p>You can find my <strong>GitHub</strong> here: <a href="https://github.com/Dauliac">https://github.com/Dauliac</a></p>
+<p>My courses are structured but adaptable. I frequently adjust the content based on my mood, <strong>your questions</strong>, and the interests of the group. If a topic excites you, feel free to ask—I am happy to form smaller breakout groups to dive deeper.</p>
+<p>I am opinionated and <strong>proselytizing</strong> about good software practices.</p>
+<p>All course materials are available on GitHub: <a href="https://github.com/Dauliac/Cours">https://github.com/Dauliac/Cours</a></p>
+<p>My CV is also available here: <a href="https://github.com/Dauliac/resume">https://github.com/Dauliac/resume</a></p>
+<hr />
+<h2 id="evaluation--grading"><a class="header" href="#evaluation--grading">Evaluation &amp; grading</a></h2>
+<p>You will be graded on the <strong>project</strong> in collaboration with <strong>Alan</strong>, but based on <strong>different criteria</strong>:</p>
+<ol>
+<li><strong>Build System</strong></li>
+<li><strong>CI/CD</strong></li>
+<li><strong>Supply Chain Security</strong></li>
+</ol>
+<p>The further you progress, the <strong>better your grade</strong>.</p>
+<hr />
+<h2 id="course-format"><a class="header" href="#course-format">Course format</a></h2>
+<ul>
+<li><strong>Formal Lessons</strong>: Structured content that will be adapted as needed.</li>
+<li><strong>Interactive Sessions</strong>: Q&amp;A and real-world case studies.</li>
+<li><strong>Breakout Groups</strong>: If you have a particular interest, I can take smaller groups aside to dive deeper into specific topics.</li>
+<li><strong>Hands-on Practice</strong>: Practical work will be emphasized throughout the course.</li>
+</ul>
+<hr />
+<h2 id="core-topics"><a class="header" href="#core-topics">Core topics</a></h2>
+<ul>
+<li><strong>Software Delivery Life Cycle (SDLC)</strong>: Key methodologies and industry best practices.</li>
+<li><strong>Operating Systems</strong>: Understanding how systems work under the hood.</li>
+<li><strong>Licensing Models</strong>: Exploring software licenses and their implications.</li>
+<li><strong>Technical Documentation</strong>: Writing clear and effective documentation.</li>
+</ul>
+<hr />
+<h2 id="key-principles"><a class="header" href="#key-principles">Key principles</a></h2>
+<ul>
+<li><strong>Automation</strong>: Leveraging CI/CD and modern infrastructure tools.</li>
+<li><strong>Security</strong>: Ensuring a robust software supply chain.</li>
+<li><strong>Efficiency</strong>: Writing scalable and maintainable code.</li>
+<li><strong>Open Source</strong>: Advocating and contributing to open-source projects.</li>
+</ul>
+<hr />
+<h2 id="expectations"><a class="header" href="#expectations">Expectations</a></h2>
+<ul>
+<li><strong>Engagement</strong>: Participation in discussions and hands-on sessions.</li>
+<li><strong>Curiosity</strong>: Asking questions and exploring beyond the course content.</li>
+</ul>
 
                     </main>
 
@@ -199,22 +266,6 @@
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
@@ -232,6 +283,8 @@
         <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+        <script src=".mermaid/mermaid.min.js"></script>
+        <script src=".mermaid/mermaid-init.js"></script>
 
 
     </div>

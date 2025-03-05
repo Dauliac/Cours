@@ -1,13 +1,10 @@
-{
-  inputs,
-  config,
-  ...
-}:
+{ inputs, ... }:
 {
   imports = [
     inputs.treefmt-nix.flakeModule
     ./dev-shell.nix
     ./treefmt.nix
+    ./vale.nix
   ];
   perSystem =
     { system, ... }:

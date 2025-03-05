@@ -12,6 +12,8 @@ ______________________________________________________________________
 
 # Software Delivery Life Cycle
 
+<!-- vale off -->
+
 - [Module Objective](#module-objective)
 - [Introduction to CI/CD](#introduction-to-cicd)
   - [Definitions:](#definitions)
@@ -28,8 +30,8 @@ ______________________________________________________________________
   - [Entities](#entities)
 - [DEVOPS 💓 CICD](#devops--cicd)
   - [Non-functional aspects](#non-functional-aspects)
-  - [KPIs](#kpis)
-    - [My Favorite KPIs 🔑](#my-favorite-kpis-)
+  - [Keys performance indicators (KPI)](#keys-performance-indicators-kpi)
+    - [My Favorite KPI 🔑](#my-favorite-kpi-)
     - [DORA Metrics](#dora-metrics)
 - [CI/CD Architecture 🏗️](#cicd-architecture-)
   - [CI/CD Geography 🗺️](#cicd-geography-)
@@ -40,6 +42,8 @@ ______________________________________________________________________
     - [Monorepo](#monorepo)
     - [How to split?](#how-to-split)
     - [And for CI/CD](#and-for-cicd)
+
+<!-- vale on -->
 
 ## Module Objective
 
@@ -89,7 +93,7 @@ Code used to build software
 
 ______________________________________________________________________
 
-In Continuous Delivery, versions are ready to be deployed but are not deployed automatically.
+In Continuous Delivery, versions are ready to be deployed but aren't deployed automatically.
 
 ### A picture is worth a thousand words:
 
@@ -101,7 +105,7 @@ In Continuous Delivery, versions are ready to be deployed but are not deployed a
 | --- | --- |
 | Who | It involves developers, testers, and automated tools. |
 | Where | It can be used in any development environment. |
-| When | It is applied throughout the development cycle. |
+| When | It's applied throughout the development cycle. |
 | How | It automates compilation, testing, deployment, and feedback management. |
 | Why | It aims to improve quality, accelerate development, reduce errors, foster collaboration, and enable frequent deployments. |
 
@@ -148,7 +152,7 @@ In Continuous Delivery, versions are ready to be deployed but are not deployed a
 
 ![](./assets/test-familly.png)
 
-## KPIs
+## Keys performance indicators (KPI)
 
 > It doesn’t work, it’s too slow, it’s broken.
 
@@ -160,12 +164,12 @@ ______________________________________________________________________
 
 ______________________________________________________________________
 
-- Managers don’t always know what is best for non-functional aspects.
+- Managers don’t always know what's best for non-functional aspects.
 - An alternative to non-factual directives.
-- ⚠️ KPIs can become a tool for team pressure:
-  Facts are not goals.
+- ⚠️ KPI can become a tool for team pressure:
+  Data isn't facts, and facts aren't goals.
 
-### My Favorite KPIs 🔑
+### My Favorite KPI 🔑
 
 - Automation factor
 - Technical debt
@@ -200,24 +204,24 @@ ______________________________________________________________________
 
 ![width:900px](./assets/ci-cd-10000-feet.svg)
 
-[CI/CD — 10000ft flight height - The Standard Documentation](https://std.divnix.com/patterns/ci-cd-10000-feet.html)
+[CI/CD 10000ft flight height - The Standard Documentation](https://std.divnix.com/patterns/ci-cd-10000-feet.html)
 
 ### 4 Steps
 
-![height:600px](./assets/sdlc-mermaid-4-steps.svg)
+![height:400px](./assets/sdlc-mermaid-4-steps.svg)
 
 ______________________________________________________________________
 
 1. Linting:
-   The linting phase ensures that the codebase is in good shape. This may include checking formatting, style, and auto-generated code.
+   The linting phase ensures that the codebase is in good shape. This may include checking formatting, style, and auto generated code.
 
 ______________________________________________________________________
 
 2. Building:
    Builds should adhere to these properties:
-   - Idempotence
-   - Efficiency
-   - Speed
+   - idempotence
+   - efficiency
+   - speed
 
 ______________________________________________________________________
 
@@ -226,8 +230,8 @@ ______________________________________________________________________
 
      | Tool | Method | Description |
      | --- | --- | --- |
-     | Ansible | ⬇️ | Code and operations are sent to production from a client machine using SSH. |
-     | ArgoCD | ⬆️ | The ArgoCD server listens to your software forge to pull updates. |
+     | `ansible` | ⬇️ | Code and operations are sent to production from a client machine using SSH. |
+     | `fluxCD` | ⬆️ | The `fluxCD` server listens to your software forge to pull updates. |
 
 ______________________________________________________________________
 
@@ -264,8 +268,8 @@ ______________________________________________________________________
 
 - [Team topology](https://teamtopologies.com/)
   - Projects should mirror teams:
-    - If CI/CD is a shared responsibility ➡️ monorepo
-    - If each team has its own DevOps *(dev or ops)* ➡️ polyrepo
+    - If CI/CD is a shared responsibility ➡️  Monorepo
+    - If each team has its own DevOps *(developers or SRE, OPS)* ➡️  Polyrepo
 
 ### And for CI/CD
 

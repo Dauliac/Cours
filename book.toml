@@ -10,11 +10,11 @@ description = "."
 
 [output.html]
 renderer = ["html"]
-
 additional-js = [
-"./docs/mermaid/mermaid.min.js",
-"./docs/mermaid/mermaid-init.js"
+  ".mermaid/mermaid.min.js",
+  ".mermaid/mermaid-init.js"
 ]
+
 [output.linkcheck]
 renderer = ["html"]
 follow-web-links = true
@@ -42,6 +42,9 @@ command = "mdbook-katex"
 
 [preprocessor.links]
 renderer = ["html"]
+
+[preprocessor.local]
+command = "set -x; task build:pre --verbose --output prefixed"
 
 [preprocessor.mermaid]
 command = "mdbook-mermaid"

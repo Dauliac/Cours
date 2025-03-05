@@ -10,8 +10,12 @@ ______________________________________________________________________
 
 # Systems Course
 
+<!-- vale off -->
+
 - auto-gen TOC;
   {:toc}
+
+<!-- vale on -->
 
 # Introduction
 
@@ -21,7 +25,7 @@ ______________________________________________________________________
 - Gain foundational knowledge of operating system architectures.
 - Explore different forms of isolation, including virtual machines, containers, and lambdas, and understand their advantages and disadvantages.
 
-## What is an OS?
+## What's an OS?
 
 ### What does an OS offer?
 
@@ -52,7 +56,7 @@ ______________________________________________________________________
 
 - **Fun fact:** 🍎 The Mac startup sound comes from an illegal sample from The Beatles’ *Sgt. Pepper’s Lonely Hearts Club Band* album.
 
-## Hardcore BIOS
+## Hard BIOS
 
 ![width:200px](./assets/Untitled.png)
 ![width:200px](./assets/Untitled-1.png)
@@ -67,7 +71,7 @@ ______________________________________________________________________
 ![width:200px](./assets/Untitled-4.png)
 ![width:200px](./assets/Untitled-5.png)
 
-## What is a `BIOS`?
+## What's a `BIOS`?
 
 - The first instruction executed by the processor
 - Detects and initializes hardware:
@@ -91,7 +95,7 @@ ______________________________________________________________________
 
 ______________________________________________________________________
 
-- PEI (*Pre EFI Initialization*) for motherboard and chipset initialization. Switches processor to protected mode.
+- PEI (*Before EFI Initialization*) for motherboard and chipset initialization. Switches processor to protected mode.
 
 ______________________________________________________________________
 
@@ -99,7 +103,7 @@ ______________________________________________________________________
 
 ______________________________________________________________________
 
-- BDS (*Boot Dev Select*) for a boot manager like [GRUB](https://fr.wikipedia.org/wiki/GRand_Unified_Bootloader)
+- BDS (*Boot Device Select*) for a boot manager like [GRUB](https://fr.wikipedia.org/wiki/GRand_Unified_Bootloader)
 
 ______________________________________________________________________
 
@@ -115,7 +119,7 @@ ______________________________________________________________________
 
 ## Security
 
-> The BIOS is not our domain, but we must protect the foundations.
+> The BIOS isn't our domain, but we must protect the foundations.
 
 - Set a UEFI password
 - Enable Secure Boot:
@@ -148,7 +152,7 @@ ______________________________________________________________________
 
 ## Scheduler
 
-*What is it?*
+*What's it ?*
 
 ### How do we run multiple processes?
 

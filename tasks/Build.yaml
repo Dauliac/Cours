@@ -1,0 +1,90 @@
+version: '3'
+vars:
+  SOURCES_PATH: "./src"
+tasks:
+  default:
+    desc: Build the project
+    silent: true
+    run: "once"
+    deps:
+      - mermaid
+      - drawio
+    cmds:
+      - mdbook build
+  mermaid:
+    silent: true
+    internal: true
+    run: "once"
+    vars:
+      FILES:
+        sh: fd mmd {{.SOURCES_PATH}}
+    deps:
+      - for:
+          var: FILES
+        vars:
+          MERMAID_PATH: "{{.ITEM}}"
+          SOURCES_PATH: "./src"
+          FILE_NAME: '{{.ITEM  | base | trimSuffix ".mmd"}}.svg'
+          MODULE_NAME: "{{.ITEM  | dir | base}}"
+        task: mermaid-cli
+  mermaid-cli:
+    internal: true
+    silent: true
+    vars:
+      SVG_PATH: '{{joinPath .SOURCES_PATH .MODULE_NAME "assets" .FILE_NAME}}'
+    cmds:
+      - |
+        rm -rf "{{.SVG_PATH}}"
+        mmdc --quiet \
+          -i "{{.MERMAID_PATH}}" \
+          -o "{{.SVG_PATH}}"
+  drawio:
+    silent: true
+    run: "once"
+    vars:
+      FILES:
+        sh: fd .drawio --extension drawio {{.SOURCES_PATH}}
+    deps:
+      - for:
+          var: FILES
+        vars:
+          DIAGRAM_FILE: "{{.ITEM}}"
+          MODULE_NAME: "{{.ITEM | dir | base}}"
+          ASSETS_DIR: "{{.ITEM | dir}}/assets"
+          COUNT:
+            sh: grep -o "<diagram" "{{.ITEM}}" | wc -l
+        task: drawio-file
+    cmds:
+      - sed -i 's/Text is not SVG \- cannot display//g' {{.SOURCES_PATH}}/*/assets/*-drawio-*.svg
+  drawio-file:
+    silent: true
+    internal: true
+    vars:
+      RANGE: "{{.COUNT | int | until }}"
+    deps:
+      - for:
+          var: RANGE
+        vars:
+          RANGE: "{{.RANGE}}"
+          OUTPUT_PATH: '{{.ASSETS_DIR}}/{{.MODULE_NAME}}-drawio-{{.ITEM | trimPrefix "[" | trimSuffix "]" }}.svg'
+          PAGE_INDEX: '{{.ITEM | trimPrefix "[" | trimSuffix "]" }}'
+          DIAGRAM_FILE: "{{.DIAGRAM_FILE}}"
+        task: drawio-cli
+  drawio-cli:
+    silent: true
+    internal: true
+    vars:
+      OUTPUT_PATH: "{{.OUTPUT_PATH}}"
+      PAGE_INDEX: "{{.PAGE_INDEX}}"
+    cmds:
+      - mkdir -p "{{.OUTPUT_PATH | dir}}"
+      - rm -f "{{.OUTPUT_PATH}}"
+      - |
+        drawio \
+          --format svg \
+          --export \
+          --embed-diagram \
+          --embed-svg-images \
+          --page-index {{.PAGE_INDEX}} \
+          --output "{{.OUTPUT_PATH}}" \
+          "{{.DIAGRAM_FILE}}"

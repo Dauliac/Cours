@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction au Système d&#x27;exploitation - Cours &quot;opensource&quot;</title>
+        <title>OS - Cours &quot;opensource&quot;</title>
 
 
         <!-- Custom HTML head -->
@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Cours</li><li class="chapter-item expanded "><a href="../sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction au SDLC</a></li><li class="chapter-item expanded "><a href="../system/index.html" class="active"><strong aria-hidden="true">2.</strong> Introduction au Système d'exploitation</a></li><li class="chapter-item expanded "><a href="../licences/index.html"><strong aria-hidden="true">3.</strong> Licences numériques</a></li><li class="chapter-item expanded "><a href="../documentations/index.html"><strong aria-hidden="true">4.</strong> Documentation technique</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References (Outils, concepts clés et ressources)</li><li class="chapter-item expanded "><a href="../sdlc/references/outils-gestion-projet.html"><strong aria-hidden="true">5.</strong> Outils de gestion de projet</a></li><li class="chapter-item expanded "><a href="../sdlc/references/devops-pratiques.html"><strong aria-hidden="true">6.</strong> Bonnes pratiques DevOps</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Tutorials (TPs et mise en pratique)</li><li class="chapter-item expanded "><a href="../sdlc/tps/packager-avec-nix/index.html"><strong aria-hidden="true">7.</strong> Packager avec nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/container-parfait-avec-nix/index.html"><strong aria-hidden="true">8.</strong> Construire un container parfait avec nix ?</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../nix/INSTALL.html"><strong aria-hidden="true">9.</strong> Install nix</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../system/index.html" class="active"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../documentations/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">5.</strong> Packaging with nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">6.</strong> Perfect container with nix ?</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../nix/INSTALL.html"><strong aria-hidden="true">7.</strong> Install nix</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -180,11 +180,12 @@
 <!-- paginate: true -->
 <!-- colorPreset: sunset -->
 <h1 id="systems-course"><a class="header" href="#systems-course">Systems Course</a></h1>
+<!-- vale off -->
 <ul>
 <li><a href="#introduction">Introduction</a>
 <ul>
 <li><a href="#objectives">Objectives</a></li>
-<li><a href="#what-is-an-os">What is an OS?</a>
+<li><a href="#whats-an-os">What's an OS?</a>
 <ul>
 <li><a href="#what-does-an-os-offer">What does an OS offer?</a></li>
 </ul>
@@ -194,10 +195,10 @@
 </li>
 <li><a href="#bios">BIOS</a>
 <ul>
-<li><a href="#hardcore-bios">Hardcore BIOS</a></li>
+<li><a href="#hard-bios">Hard BIOS</a></li>
 <li><a href="#corporate-bios">Corporate BIOS</a></li>
 <li><a href="#casual-bios">Casual BIOS</a></li>
-<li><a href="#what-is-a-bios">What is a <code>BIOS</code>?</a>
+<li><a href="#whats-a-bios">What's a <code>BIOS</code>?</a>
 <ul>
 <li><a href="#a-language-misuse">A Language Misuse</a></li>
 <li><a href="#uefi-architecture">UEFI Architecture</a></li>
@@ -221,6 +222,7 @@
 </ul>
 </li>
 </ul>
+<!-- vale on -->
 <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <h2 id="objectives"><a class="header" href="#objectives">Objectives</a></h2>
 <ul>
@@ -228,7 +230,7 @@
 <li>Gain foundational knowledge of operating system architectures.</li>
 <li>Explore different forms of isolation, including virtual machines, containers, and lambdas, and understand their advantages and disadvantages.</li>
 </ul>
-<h2 id="what-is-an-os"><a class="header" href="#what-is-an-os">What is an OS?</a></h2>
+<h2 id="whats-an-os"><a class="header" href="#whats-an-os">What's an OS?</a></h2>
 <h3 id="what-does-an-os-offer"><a class="header" href="#what-does-an-os-offer">What does an OS offer?</a></h3>
 <ul>
 <li>Do I need one?
@@ -265,7 +267,7 @@
 <ul>
 <li><strong>Fun fact:</strong> 🍎 The Mac startup sound comes from an illegal sample from The Beatles’ <em>Sgt. Pepper’s Lonely Hearts Club Band</em> album.</li>
 </ul>
-<h2 id="hardcore-bios"><a class="header" href="#hardcore-bios">Hardcore BIOS</a></h2>
+<h2 id="hard-bios"><a class="header" href="#hard-bios">Hard BIOS</a></h2>
 <p><img src="./assets/Untitled.png" alt="width:200px" />
 <img src="./assets/Untitled-1.png" alt="width:200px" /></p>
 <h2 id="corporate-bios"><a class="header" href="#corporate-bios">Corporate BIOS</a></h2>
@@ -274,7 +276,7 @@
 <h2 id="casual-bios"><a class="header" href="#casual-bios">Casual BIOS</a></h2>
 <p><img src="./assets/Untitled-4.png" alt="width:200px" />
 <img src="./assets/Untitled-5.png" alt="width:200px" /></p>
-<h2 id="what-is-a-bios"><a class="header" href="#what-is-a-bios">What is a <code>BIOS</code>?</a></h2>
+<h2 id="whats-a-bios"><a class="header" href="#whats-a-bios">What's a <code>BIOS</code>?</a></h2>
 <ul>
 <li>The first instruction executed by the processor</li>
 <li>Detects and initializes hardware:
@@ -299,7 +301,7 @@
 </ul>
 <hr />
 <ul>
-<li>PEI (<em>Pre EFI Initialization</em>) for motherboard and chipset initialization. Switches processor to protected mode.</li>
+<li>PEI (<em>Before EFI Initialization</em>) for motherboard and chipset initialization. Switches processor to protected mode.</li>
 </ul>
 <hr />
 <ul>
@@ -307,7 +309,7 @@
 </ul>
 <hr />
 <ul>
-<li>BDS (<em>Boot Dev Select</em>) for a boot manager like <a href="https://fr.wikipedia.org/wiki/GRand_Unified_Bootloader">GRUB</a></li>
+<li>BDS (<em>Boot Device Select</em>) for a boot manager like <a href="https://fr.wikipedia.org/wiki/GRand_Unified_Bootloader">GRUB</a></li>
 </ul>
 <hr />
 <ul>
@@ -321,7 +323,7 @@
 <p><img src="./assets/system-mermaid-bios.svg" alt="" /></p>
 <h2 id="security"><a class="header" href="#security">Security</a></h2>
 <blockquote>
-<p>The BIOS is not our domain, but we must protect the foundations.</p>
+<p>The BIOS isn't our domain, but we must protect the foundations.</p>
 </blockquote>
 <ul>
 <li>Set a UEFI password</li>
@@ -353,7 +355,7 @@
 </tbody></table>
 </div>
 <h2 id="scheduler"><a class="header" href="#scheduler">Scheduler</a></h2>
-<p><em>What is it?</em></p>
+<p><em>What's it ?</em></p>
 <h3 id="how-do-we-run-multiple-processes"><a class="header" href="#how-do-we-run-multiple-processes">How do we run multiple processes?</a></h3>
 <p><img src="./assets/system-2.svg" alt="" /></p>
 <h3 id="scheduler-and-timer"><a class="header" href="#scheduler-and-timer">Scheduler and Timer</a></h3>
@@ -437,22 +439,6 @@ This is easier when you know all processes in advance.</p>
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
@@ -470,6 +456,8 @@ This is easier when you know all processes in advance.</p>
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
+        <script src="../.mermaid/mermaid.min.js"></script>
+        <script src="../.mermaid/mermaid-init.js"></script>
 
 
     </div>

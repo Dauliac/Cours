@@ -1,1 +1,0 @@
-# Container parfait avec nix

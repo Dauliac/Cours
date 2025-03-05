@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Cours</li><li class="chapter-item expanded "><a href="sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction au SDLC</a></li><li class="chapter-item expanded "><a href="system/index.html"><strong aria-hidden="true">2.</strong> Introduction au Système d'exploitation</a></li><li class="chapter-item expanded "><a href="licences/index.html"><strong aria-hidden="true">3.</strong> Licences numériques</a></li><li class="chapter-item expanded "><a href="documentations/index.html"><strong aria-hidden="true">4.</strong> Documentation technique</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References (Outils, concepts clés et ressources)</li><li class="chapter-item expanded "><a href="sdlc/references/outils-gestion-projet.html"><strong aria-hidden="true">5.</strong> Outils de gestion de projet</a></li><li class="chapter-item expanded "><a href="sdlc/references/devops-pratiques.html"><strong aria-hidden="true">6.</strong> Bonnes pratiques DevOps</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Tutorials (TPs et mise en pratique)</li><li class="chapter-item expanded "><a href="sdlc/tps/packager-avec-nix/index.html"><strong aria-hidden="true">7.</strong> Packager avec nix</a></li><li class="chapter-item expanded "><a href="sdlc/tps/container-parfait-avec-nix/index.html"><strong aria-hidden="true">8.</strong> Construire un container parfait avec nix ?</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="nix/INSTALL.html"><strong aria-hidden="true">9.</strong> Install nix</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="documentations/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">5.</strong> Packaging with nix</a></li><li class="chapter-item expanded "><a href="sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">6.</strong> Perfect container with nix ?</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="nix/INSTALL.html"><strong aria-hidden="true">7.</strong> Install nix</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -175,7 +175,74 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<hr />
+<!-- paginate: true -->
+<!-- colorPreset: sunset -->
 <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<!-- vale off -->
+<ul>
+<li><a href="index.html#about-this-course">About this course</a></li>
+<li><a href="index.html#evaluation--grading">Evaluation &amp; grading</a></li>
+<li><a href="index.html#course-format">Course format</a></li>
+<li><a href="index.html#core-topics">Core topics</a></li>
+<li><a href="index.html#key-principles">Key principles</a></li>
+<li><a href="index.html#expectations">Expectations</a></li>
+</ul>
+<!-- vale on -->
+<pre class="mermaid">mindmap
+  cours((Structure du cours))
+    Évaluation
+    Format
+    Sujets clés
+    Principes fondamentaux
+    Attentes des étudiants
+</pre>
+<h2 id="about-this-course"><a class="header" href="#about-this-course">About this course</a></h2>
+<p>Welcome! I'm <strong>Julien Dauliac</strong>, a Site Reliability Engineer (SRE), it's like <strong>DevOps</strong>. I have a background in <strong>software architecture</strong> and enjoy <strong>development</strong> in general. My favorite technologies include <strong>Nix</strong> , <strong>Kubernetes</strong> and <strong>Rust</strong>, and I take a strong stance in advocating for efficient and modern software practices.</p>
+<p>You can find my <strong>GitHub</strong> here: <a href="https://github.com/Dauliac">https://github.com/Dauliac</a></p>
+<p>My courses are structured but adaptable. I frequently adjust the content based on my mood, <strong>your questions</strong>, and the interests of the group. If a topic excites you, feel free to ask—I am happy to form smaller breakout groups to dive deeper.</p>
+<p>I am opinionated and <strong>proselytizing</strong> about good software practices.</p>
+<p>All course materials are available on GitHub: <a href="https://github.com/Dauliac/Cours">https://github.com/Dauliac/Cours</a></p>
+<p>My CV is also available here: <a href="https://github.com/Dauliac/resume">https://github.com/Dauliac/resume</a></p>
+<hr />
+<h2 id="evaluation--grading"><a class="header" href="#evaluation--grading">Evaluation &amp; grading</a></h2>
+<p>You will be graded on the <strong>project</strong> in collaboration with <strong>Alan</strong>, but based on <strong>different criteria</strong>:</p>
+<ol>
+<li><strong>Build System</strong></li>
+<li><strong>CI/CD</strong></li>
+<li><strong>Supply Chain Security</strong></li>
+</ol>
+<p>The further you progress, the <strong>better your grade</strong>.</p>
+<hr />
+<h2 id="course-format"><a class="header" href="#course-format">Course format</a></h2>
+<ul>
+<li><strong>Formal Lessons</strong>: Structured content that will be adapted as needed.</li>
+<li><strong>Interactive Sessions</strong>: Q&amp;A and real-world case studies.</li>
+<li><strong>Breakout Groups</strong>: If you have a particular interest, I can take smaller groups aside to dive deeper into specific topics.</li>
+<li><strong>Hands-on Practice</strong>: Practical work will be emphasized throughout the course.</li>
+</ul>
+<hr />
+<h2 id="core-topics"><a class="header" href="#core-topics">Core topics</a></h2>
+<ul>
+<li><strong>Software Delivery Life Cycle (SDLC)</strong>: Key methodologies and industry best practices.</li>
+<li><strong>Operating Systems</strong>: Understanding how systems work under the hood.</li>
+<li><strong>Licensing Models</strong>: Exploring software licenses and their implications.</li>
+<li><strong>Technical Documentation</strong>: Writing clear and effective documentation.</li>
+</ul>
+<hr />
+<h2 id="key-principles"><a class="header" href="#key-principles">Key principles</a></h2>
+<ul>
+<li><strong>Automation</strong>: Leveraging CI/CD and modern infrastructure tools.</li>
+<li><strong>Security</strong>: Ensuring a robust software supply chain.</li>
+<li><strong>Efficiency</strong>: Writing scalable and maintainable code.</li>
+<li><strong>Open Source</strong>: Advocating and contributing to open-source projects.</li>
+</ul>
+<hr />
+<h2 id="expectations"><a class="header" href="#expectations">Expectations</a></h2>
+<ul>
+<li><strong>Engagement</strong>: Participation in discussions and hands-on sessions.</li>
+<li><strong>Curiosity</strong>: Asking questions and exploring beyond the course content.</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <hr />
 <h2 id="header-software-delivery-life-cycle-course-footer-julien-dauliac----ynovcasualty925passfwdcom"><a class="header" href="#header-software-delivery-life-cycle-course-footer-julien-dauliac----ynovcasualty925passfwdcom">header: 'Software Delivery Life Cycle Course' footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com'</a></h2>
@@ -183,6 +250,7 @@
 <!-- paginate: true -->
 <!-- colorPreset: sunset -->
 <h1 id="software-delivery-life-cycle"><a class="header" href="#software-delivery-life-cycle">Software Delivery Life Cycle</a></h1>
+<!-- vale off -->
 <ul>
 <li><a href="sdlc/index.html#module-objective">Module Objective</a></li>
 <li><a href="sdlc/index.html#introduction-to-cicd">Introduction to CI/CD</a>
@@ -210,9 +278,9 @@
 <li><a href="sdlc/index.html#devops--cicd">DEVOPS 💓 CICD</a>
 <ul>
 <li><a href="sdlc/index.html#non-functional-aspects">Non-functional aspects</a></li>
-<li><a href="sdlc/index.html#kpis">KPIs</a>
+<li><a href="sdlc/index.html#keys-performance-indicators-kpi">Keys performance indicators (KPI)</a>
 <ul>
-<li><a href="sdlc/index.html#my-favorite-kpis-">My Favorite KPIs 🔑</a></li>
+<li><a href="sdlc/index.html#my-favorite-kpi-">My Favorite KPI 🔑</a></li>
 <li><a href="sdlc/index.html#dora-metrics">DORA Metrics</a></li>
 </ul>
 </li>
@@ -237,6 +305,7 @@
 </ul>
 </li>
 </ul>
+<!-- vale on -->
 <h2 id="module-objective"><a class="header" href="#module-objective">Module Objective</a></h2>
 <ul>
 <li>Cover software delivery life cycle methods</li>
@@ -276,14 +345,14 @@
 <li>Automation of deployment</li>
 </ul>
 <hr />
-<p>In Continuous Delivery, versions are ready to be deployed but are not deployed automatically.</p>
+<p>In Continuous Delivery, versions are ready to be deployed but aren't deployed automatically.</p>
 <h3 id="a-picture-is-worth-a-thousand-words"><a class="header" href="#a-picture-is-worth-a-thousand-words">A picture is worth a thousand words:</a></h3>
 <p><img src="sdlc/./assets/Untitled.png" alt="Untitled" /></p>
 <h2 id="qqoqccp"><a class="header" href="#qqoqccp">QQOQCCP</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>What</th><th>CI/CD is an approach for automating software development processes.</th></tr></thead><tbody>
 <tr><td>Who</td><td>It involves developers, testers, and automated tools.</td></tr>
 <tr><td>Where</td><td>It can be used in any development environment.</td></tr>
-<tr><td>When</td><td>It is applied throughout the development cycle.</td></tr>
+<tr><td>When</td><td>It's applied throughout the development cycle.</td></tr>
 <tr><td>How</td><td>It automates compilation, testing, deployment, and feedback management.</td></tr>
 <tr><td>Why</td><td>It aims to improve quality, accelerate development, reduce errors, foster collaboration, and enable frequent deployments.</td></tr>
 </tbody></table>
@@ -327,7 +396,7 @@
 <li>ISQTB</li>
 </ul>
 <p><img src="sdlc/./assets/test-familly.png" alt="" /></p>
-<h2 id="kpis"><a class="header" href="#kpis">KPIs</a></h2>
+<h2 id="keys-performance-indicators-kpi"><a class="header" href="#keys-performance-indicators-kpi">Keys performance indicators (KPI)</a></h2>
 <blockquote>
 <p>It doesn’t work, it’s too slow, it’s broken.</p>
 </blockquote>
@@ -336,12 +405,12 @@
 <p><a href="https://www.youtube.com/watch?v=bxDsQ6LlNDE">source</a></p>
 <hr />
 <ul>
-<li>Managers don’t always know what is best for non-functional aspects.</li>
+<li>Managers don’t always know what's best for non-functional aspects.</li>
 <li>An alternative to non-factual directives.</li>
-<li>⚠️ KPIs can become a tool for team pressure:
-Facts are not goals.</li>
+<li>⚠️ KPI can become a tool for team pressure:
+Data isn't facts, and facts aren't goals.</li>
 </ul>
-<h3 id="my-favorite-kpis-"><a class="header" href="#my-favorite-kpis-">My Favorite KPIs 🔑</a></h3>
+<h3 id="my-favorite-kpi-"><a class="header" href="#my-favorite-kpi-">My Favorite KPI 🔑</a></h3>
 <ul>
 <li>Automation factor</li>
 <li>Technical debt</li>
@@ -369,22 +438,22 @@ Facts are not goals.</li>
 <h2 id="cicd-timeline-"><a class="header" href="#cicd-timeline-">CI/CD Timeline 🕐</a></h2>
 <p><em>Software Development Life Cycle (SDLC)</em></p>
 <p><img src="sdlc/./assets/ci-cd-10000-feet.svg" alt="width:900px" /></p>
-<p><a href="https://std.divnix.com/patterns/ci-cd-10000-feet.html">CI/CD — 10000ft flight height - The Standard Documentation</a></p>
+<p><a href="https://std.divnix.com/patterns/ci-cd-10000-feet.html">CI/CD 10000ft flight height - The Standard Documentation</a></p>
 <h3 id="4-steps"><a class="header" href="#4-steps">4 Steps</a></h3>
-<p><img src="sdlc/./assets/sdlc-mermaid-4-steps.svg" alt="height:600px" /></p>
+<p><img src="sdlc/./assets/sdlc-mermaid-4-steps.svg" alt="height:400px" /></p>
 <hr />
 <ol>
 <li>Linting:
-The linting phase ensures that the codebase is in good shape. This may include checking formatting, style, and auto-generated code.</li>
+The linting phase ensures that the codebase is in good shape. This may include checking formatting, style, and auto generated code.</li>
 </ol>
 <hr />
 <ol start="2">
 <li>Building:
 Builds should adhere to these properties:
 <ul>
-<li>Idempotence</li>
-<li>Efficiency</li>
-<li>Speed</li>
+<li>idempotence</li>
+<li>efficiency</li>
+<li>speed</li>
 </ul>
 </li>
 </ol>
@@ -395,8 +464,8 @@ Builds should adhere to these properties:
 <li>
 <p><strong><a href="https://std.divnix.com/patterns/ci-cd-10000-feet.html#push-vs-pull-workflows">Push vs Pull Workflows</a>:</strong></p>
 <div class="table-wrapper"><table><thead><tr><th>Tool</th><th>Method</th><th>Description</th></tr></thead><tbody>
-<tr><td>Ansible</td><td>⬇️</td><td>Code and operations are sent to production from a client machine using SSH.</td></tr>
-<tr><td>ArgoCD</td><td>⬆️</td><td>The ArgoCD server listens to your software forge to pull updates.</td></tr>
+<tr><td><code>ansible</code></td><td>⬇️</td><td>Code and operations are sent to production from a client machine using SSH.</td></tr>
+<tr><td><code>fluxCD</code></td><td>⬆️</td><td>The <code>fluxCD</code> server listens to your software forge to pull updates.</td></tr>
 </tbody></table>
 </div></li>
 </ul>
@@ -451,8 +520,8 @@ Builds should adhere to these properties:
 <ul>
 <li>Projects should mirror teams:
 <ul>
-<li>If CI/CD is a shared responsibility ➡️ monorepo</li>
-<li>If each team has its own DevOps <em>(dev or ops)</em> ➡️ polyrepo</li>
+<li>If CI/CD is a shared responsibility ➡️  Monorepo</li>
+<li>If each team has its own DevOps <em>(developers or SRE, OPS)</em> ➡️  Polyrepo</li>
 </ul>
 </li>
 </ul>
@@ -471,11 +540,12 @@ Builds should adhere to these properties:
 <!-- paginate: true -->
 <!-- colorPreset: sunset -->
 <h1 id="systems-course"><a class="header" href="#systems-course">Systems Course</a></h1>
+<!-- vale off -->
 <ul>
 <li><a href="system/index.html#introduction">Introduction</a>
 <ul>
 <li><a href="system/index.html#objectives">Objectives</a></li>
-<li><a href="system/index.html#what-is-an-os">What is an OS?</a>
+<li><a href="system/index.html#whats-an-os">What's an OS?</a>
 <ul>
 <li><a href="system/index.html#what-does-an-os-offer">What does an OS offer?</a></li>
 </ul>
@@ -485,10 +555,10 @@ Builds should adhere to these properties:
 </li>
 <li><a href="system/index.html#bios">BIOS</a>
 <ul>
-<li><a href="system/index.html#hardcore-bios">Hardcore BIOS</a></li>
+<li><a href="system/index.html#hard-bios">Hard BIOS</a></li>
 <li><a href="system/index.html#corporate-bios">Corporate BIOS</a></li>
 <li><a href="system/index.html#casual-bios">Casual BIOS</a></li>
-<li><a href="system/index.html#what-is-a-bios">What is a <code>BIOS</code>?</a>
+<li><a href="system/index.html#whats-a-bios">What's a <code>BIOS</code>?</a>
 <ul>
 <li><a href="system/index.html#a-language-misuse">A Language Misuse</a></li>
 <li><a href="system/index.html#uefi-architecture">UEFI Architecture</a></li>
@@ -512,6 +582,7 @@ Builds should adhere to these properties:
 </ul>
 </li>
 </ul>
+<!-- vale on -->
 <h1 id="introduction-1"><a class="header" href="#introduction-1">Introduction</a></h1>
 <h2 id="objectives"><a class="header" href="#objectives">Objectives</a></h2>
 <ul>
@@ -519,7 +590,7 @@ Builds should adhere to these properties:
 <li>Gain foundational knowledge of operating system architectures.</li>
 <li>Explore different forms of isolation, including virtual machines, containers, and lambdas, and understand their advantages and disadvantages.</li>
 </ul>
-<h2 id="what-is-an-os"><a class="header" href="#what-is-an-os">What is an OS?</a></h2>
+<h2 id="whats-an-os"><a class="header" href="#whats-an-os">What's an OS?</a></h2>
 <h3 id="what-does-an-os-offer"><a class="header" href="#what-does-an-os-offer">What does an OS offer?</a></h3>
 <ul>
 <li>Do I need one?
@@ -556,7 +627,7 @@ Builds should adhere to these properties:
 <ul>
 <li><strong>Fun fact:</strong> 🍎 The Mac startup sound comes from an illegal sample from The Beatles’ <em>Sgt. Pepper’s Lonely Hearts Club Band</em> album.</li>
 </ul>
-<h2 id="hardcore-bios"><a class="header" href="#hardcore-bios">Hardcore BIOS</a></h2>
+<h2 id="hard-bios"><a class="header" href="#hard-bios">Hard BIOS</a></h2>
 <p><img src="system/./assets/Untitled.png" alt="width:200px" />
 <img src="system/./assets/Untitled-1.png" alt="width:200px" /></p>
 <h2 id="corporate-bios"><a class="header" href="#corporate-bios">Corporate BIOS</a></h2>
@@ -565,7 +636,7 @@ Builds should adhere to these properties:
 <h2 id="casual-bios"><a class="header" href="#casual-bios">Casual BIOS</a></h2>
 <p><img src="system/./assets/Untitled-4.png" alt="width:200px" />
 <img src="system/./assets/Untitled-5.png" alt="width:200px" /></p>
-<h2 id="what-is-a-bios"><a class="header" href="#what-is-a-bios">What is a <code>BIOS</code>?</a></h2>
+<h2 id="whats-a-bios"><a class="header" href="#whats-a-bios">What's a <code>BIOS</code>?</a></h2>
 <ul>
 <li>The first instruction executed by the processor</li>
 <li>Detects and initializes hardware:
@@ -590,7 +661,7 @@ Builds should adhere to these properties:
 </ul>
 <hr />
 <ul>
-<li>PEI (<em>Pre EFI Initialization</em>) for motherboard and chipset initialization. Switches processor to protected mode.</li>
+<li>PEI (<em>Before EFI Initialization</em>) for motherboard and chipset initialization. Switches processor to protected mode.</li>
 </ul>
 <hr />
 <ul>
@@ -598,7 +669,7 @@ Builds should adhere to these properties:
 </ul>
 <hr />
 <ul>
-<li>BDS (<em>Boot Dev Select</em>) for a boot manager like <a href="https://fr.wikipedia.org/wiki/GRand_Unified_Bootloader">GRUB</a></li>
+<li>BDS (<em>Boot Device Select</em>) for a boot manager like <a href="https://fr.wikipedia.org/wiki/GRand_Unified_Bootloader">GRUB</a></li>
 </ul>
 <hr />
 <ul>
@@ -612,7 +683,7 @@ Builds should adhere to these properties:
 <p><img src="system/./assets/system-mermaid-bios.svg" alt="" /></p>
 <h2 id="security-1"><a class="header" href="#security-1">Security</a></h2>
 <blockquote>
-<p>The BIOS is not our domain, but we must protect the foundations.</p>
+<p>The BIOS isn't our domain, but we must protect the foundations.</p>
 </blockquote>
 <ul>
 <li>Set a UEFI password</li>
@@ -644,7 +715,7 @@ Builds should adhere to these properties:
 </tbody></table>
 </div>
 <h2 id="scheduler"><a class="header" href="#scheduler">Scheduler</a></h2>
-<p><em>What is it?</em></p>
+<p><em>What's it ?</em></p>
 <h3 id="how-do-we-run-multiple-processes"><a class="header" href="#how-do-we-run-multiple-processes">How do we run multiple processes?</a></h3>
 <p><img src="system/./assets/system-2.svg" alt="" /></p>
 <h3 id="scheduler-and-timer"><a class="header" href="#scheduler-and-timer">Scheduler and Timer</a></h3>
@@ -705,10 +776,11 @@ This is easier when you know all processes in advance.</p>
 <!-- paginate: true -->
 <!-- colorPreset: sunset -->
 <h1 id="license-course"><a class="header" href="#license-course">License Course</a></h1>
+<!-- vale off -->
 <ul>
 <li><a href="licences/index.html#intangible-assets">Intangible Assets</a></li>
 <li><a href="licences/index.html#theft">Theft</a></li>
-<li><a href="licences/index.html#software-cannot-be-stolen">Software Cannot Be Stolen</a></li>
+<li><a href="licences/index.html#software-cant-be-stolen">Software Can't be stolen</a></li>
 <li><a href="licences/index.html#internet">Internet</a></li>
 <li><a href="licences/index.html#licenses-and-business-models">Licenses and Business Models</a>
 <ul>
@@ -750,11 +822,12 @@ This is easier when you know all processes in advance.</p>
 <li><a href="licences/index.html#making-money">Making Money</a></li>
 <li><a href="licences/index.html#bibliography">Bibliography</a></li>
 </ul>
+<!-- vale on -->
 <h2 id="intangible-assets"><a class="header" href="#intangible-assets">Intangible Assets</a></h2>
 <p><a href="https://www.youtube.com/watch?v=sODZLSHJm6Q&amp;pp=ygUZbGUgcGlyYXRhZ2UgYydlc3QgZHUgdm9sIA%3D%3D">go 👮</a></p>
 <hr />
 <ul>
-<li>Intangibles, which cannot be touched.</li>
+<li>Intangibles, which can't be touched.</li>
 <li>No competition on products.</li>
 </ul>
 <h2 id="theft"><a class="header" href="#theft">Theft</a></h2>
@@ -768,7 +841,7 @@ Penal Code <strong><a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGI
 <p>Wiktionary</p>
 <blockquote>
 </blockquote>
-<h2 id="software-cannot-be-stolen"><a class="header" href="#software-cannot-be-stolen">Software Cannot Be Stolen</a></h2>
+<h2 id="software-cant-be-stolen"><a class="header" href="#software-cant-be-stolen">Software Can't be stolen</a></h2>
 <ul>
 <li>Software is an intangible asset.</li>
 </ul>
@@ -829,7 +902,7 @@ Intellectual Property Code (<a href="https://www.legifrance.gouv.fr/affichCodeAr
 </ul>
 <hr />
 <ul>
-<li>Discord does not sell user data.</li>
+<li>Discord doesn't sell user data.</li>
 <li>Discord dilutes its shares.</li>
 </ul>
 <h2 id="freemium"><a class="header" href="#freemium">Freemium</a></h2>
@@ -937,7 +1010,7 @@ Intellectual Property Code (<a href="https://www.legifrance.gouv.fr/affichCodeAr
 </ul>
 <hr />
 <ul>
-<li>Innovation does not come from large corporations.</li>
+<li>Innovation doesn't come from large corporations.</li>
 </ul>
 <hr />
 <ul>
@@ -995,6 +1068,7 @@ Intellectual Property Code (<a href="https://www.legifrance.gouv.fr/affichCodeAr
 <ul>
 <li>Cambridge Analytica</li>
 <li>QAnon</li>
+<li>X</li>
 <li>etc...</li>
 </ul>
 <hr />
@@ -1007,7 +1081,7 @@ Intellectual Property Code (<a href="https://www.legifrance.gouv.fr/affichCodeAr
 </ul>
 <h1 id="making-money"><a class="header" href="#making-money">Making Money</a></h1>
 <ul>
-<li>It is possible to build an open-source company, and it even has several advantages:
+<li>It's possible to build an open-source company, and it even has several advantages:
 <ul>
 <li>Psychological support from the community.</li>
 <li>Regional support</li>
@@ -1034,18 +1108,13 @@ Intellectual Property Code (<a href="https://www.legifrance.gouv.fr/affichCodeAr
 </li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="cours-documentation-technique"><a class="header" href="#cours-documentation-technique">Cours documentation technique</a></h1>
+<h1 id="technical-documentation"><a class="header" href="#technical-documentation">Technical documentation</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="outils-de-gestion-de-projet"><a class="header" href="#outils-de-gestion-de-projet">Outils de gestion de projet</a></h1>
+<h1 id="packaging-with-nix"><a class="header" href="#packaging-with-nix">Packaging with nix</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="bonnes-pratiques-devops"><a class="header" href="#bonnes-pratiques-devops">Bonnes pratiques DevOps</a></h1>
+<h1 id="perfect-container-with-nix-"><a class="header" href="#perfect-container-with-nix-">Perfect container with nix ?</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="packager-avec-nix"><a class="header" href="#packager-avec-nix">Packager avec nix</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="container-parfait-avec-nix"><a class="header" href="#container-parfait-avec-nix">Container parfait avec nix</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="installer-nix"><a class="header" href="#installer-nix">Installer nix</a></h1>
-<p>https://github.com/DeterminateSystems/nix-installer</p>
+<h1 id="install-nix"><a class="header" href="#install-nix">Install nix</a></h1>
 
                     </main>
 
@@ -1064,22 +1133,6 @@ Intellectual Property Code (<a href="https://www.legifrance.gouv.fr/affichCodeAr
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
@@ -1097,6 +1150,8 @@ Intellectual Property Code (<a href="https://www.legifrance.gouv.fr/affichCodeAr
         <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
+        <script src=".mermaid/mermaid.min.js"></script>
+        <script src=".mermaid/mermaid-init.js"></script>
 
         <script>
         window.addEventListener('load', function() {

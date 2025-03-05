@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction au SDLC - Cours &quot;opensource&quot;</title>
+        <title>Introduction to SDLC - Cours &quot;opensource&quot;</title>
 
 
         <!-- Custom HTML head -->
@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Cours</li><li class="chapter-item expanded "><a href="../sdlc/index.html" class="active"><strong aria-hidden="true">1.</strong> Introduction au SDLC</a></li><li class="chapter-item expanded "><a href="../system/index.html"><strong aria-hidden="true">2.</strong> Introduction au Système d'exploitation</a></li><li class="chapter-item expanded "><a href="../licences/index.html"><strong aria-hidden="true">3.</strong> Licences numériques</a></li><li class="chapter-item expanded "><a href="../documentations/index.html"><strong aria-hidden="true">4.</strong> Documentation technique</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References (Outils, concepts clés et ressources)</li><li class="chapter-item expanded "><a href="../sdlc/references/outils-gestion-projet.html"><strong aria-hidden="true">5.</strong> Outils de gestion de projet</a></li><li class="chapter-item expanded "><a href="../sdlc/references/devops-pratiques.html"><strong aria-hidden="true">6.</strong> Bonnes pratiques DevOps</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Tutorials (TPs et mise en pratique)</li><li class="chapter-item expanded "><a href="../sdlc/tps/packager-avec-nix/index.html"><strong aria-hidden="true">7.</strong> Packager avec nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/container-parfait-avec-nix/index.html"><strong aria-hidden="true">8.</strong> Construire un container parfait avec nix ?</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../nix/INSTALL.html"><strong aria-hidden="true">9.</strong> Install nix</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../sdlc/index.html" class="active"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../documentations/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">5.</strong> Packaging with nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">6.</strong> Perfect container with nix ?</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../nix/INSTALL.html"><strong aria-hidden="true">7.</strong> Install nix</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -180,6 +180,7 @@
 <!-- paginate: true -->
 <!-- colorPreset: sunset -->
 <h1 id="software-delivery-life-cycle"><a class="header" href="#software-delivery-life-cycle">Software Delivery Life Cycle</a></h1>
+<!-- vale off -->
 <ul>
 <li><a href="#module-objective">Module Objective</a></li>
 <li><a href="#introduction-to-cicd">Introduction to CI/CD</a>
@@ -207,9 +208,9 @@
 <li><a href="#devops--cicd">DEVOPS 💓 CICD</a>
 <ul>
 <li><a href="#non-functional-aspects">Non-functional aspects</a></li>
-<li><a href="#kpis">KPIs</a>
+<li><a href="#keys-performance-indicators-kpi">Keys performance indicators (KPI)</a>
 <ul>
-<li><a href="#my-favorite-kpis-">My Favorite KPIs 🔑</a></li>
+<li><a href="#my-favorite-kpi-">My Favorite KPI 🔑</a></li>
 <li><a href="#dora-metrics">DORA Metrics</a></li>
 </ul>
 </li>
@@ -234,6 +235,7 @@
 </ul>
 </li>
 </ul>
+<!-- vale on -->
 <h2 id="module-objective"><a class="header" href="#module-objective">Module Objective</a></h2>
 <ul>
 <li>Cover software delivery life cycle methods</li>
@@ -273,14 +275,14 @@
 <li>Automation of deployment</li>
 </ul>
 <hr />
-<p>In Continuous Delivery, versions are ready to be deployed but are not deployed automatically.</p>
+<p>In Continuous Delivery, versions are ready to be deployed but aren't deployed automatically.</p>
 <h3 id="a-picture-is-worth-a-thousand-words"><a class="header" href="#a-picture-is-worth-a-thousand-words">A picture is worth a thousand words:</a></h3>
 <p><img src="./assets/Untitled.png" alt="Untitled" /></p>
 <h2 id="qqoqccp"><a class="header" href="#qqoqccp">QQOQCCP</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>What</th><th>CI/CD is an approach for automating software development processes.</th></tr></thead><tbody>
 <tr><td>Who</td><td>It involves developers, testers, and automated tools.</td></tr>
 <tr><td>Where</td><td>It can be used in any development environment.</td></tr>
-<tr><td>When</td><td>It is applied throughout the development cycle.</td></tr>
+<tr><td>When</td><td>It's applied throughout the development cycle.</td></tr>
 <tr><td>How</td><td>It automates compilation, testing, deployment, and feedback management.</td></tr>
 <tr><td>Why</td><td>It aims to improve quality, accelerate development, reduce errors, foster collaboration, and enable frequent deployments.</td></tr>
 </tbody></table>
@@ -324,7 +326,7 @@
 <li>ISQTB</li>
 </ul>
 <p><img src="./assets/test-familly.png" alt="" /></p>
-<h2 id="kpis"><a class="header" href="#kpis">KPIs</a></h2>
+<h2 id="keys-performance-indicators-kpi"><a class="header" href="#keys-performance-indicators-kpi">Keys performance indicators (KPI)</a></h2>
 <blockquote>
 <p>It doesn’t work, it’s too slow, it’s broken.</p>
 </blockquote>
@@ -333,12 +335,12 @@
 <p><a href="https://www.youtube.com/watch?v=bxDsQ6LlNDE">source</a></p>
 <hr />
 <ul>
-<li>Managers don’t always know what is best for non-functional aspects.</li>
+<li>Managers don’t always know what's best for non-functional aspects.</li>
 <li>An alternative to non-factual directives.</li>
-<li>⚠️ KPIs can become a tool for team pressure:
-Facts are not goals.</li>
+<li>⚠️ KPI can become a tool for team pressure:
+Data isn't facts, and facts aren't goals.</li>
 </ul>
-<h3 id="my-favorite-kpis-"><a class="header" href="#my-favorite-kpis-">My Favorite KPIs 🔑</a></h3>
+<h3 id="my-favorite-kpi-"><a class="header" href="#my-favorite-kpi-">My Favorite KPI 🔑</a></h3>
 <ul>
 <li>Automation factor</li>
 <li>Technical debt</li>
@@ -366,22 +368,22 @@ Facts are not goals.</li>
 <h2 id="cicd-timeline-"><a class="header" href="#cicd-timeline-">CI/CD Timeline 🕐</a></h2>
 <p><em>Software Development Life Cycle (SDLC)</em></p>
 <p><img src="./assets/ci-cd-10000-feet.svg" alt="width:900px" /></p>
-<p><a href="https://std.divnix.com/patterns/ci-cd-10000-feet.html">CI/CD — 10000ft flight height - The Standard Documentation</a></p>
+<p><a href="https://std.divnix.com/patterns/ci-cd-10000-feet.html">CI/CD 10000ft flight height - The Standard Documentation</a></p>
 <h3 id="4-steps"><a class="header" href="#4-steps">4 Steps</a></h3>
-<p><img src="./assets/sdlc-mermaid-4-steps.svg" alt="height:600px" /></p>
+<p><img src="./assets/sdlc-mermaid-4-steps.svg" alt="height:400px" /></p>
 <hr />
 <ol>
 <li>Linting:
-The linting phase ensures that the codebase is in good shape. This may include checking formatting, style, and auto-generated code.</li>
+The linting phase ensures that the codebase is in good shape. This may include checking formatting, style, and auto generated code.</li>
 </ol>
 <hr />
 <ol start="2">
 <li>Building:
 Builds should adhere to these properties:
 <ul>
-<li>Idempotence</li>
-<li>Efficiency</li>
-<li>Speed</li>
+<li>idempotence</li>
+<li>efficiency</li>
+<li>speed</li>
 </ul>
 </li>
 </ol>
@@ -392,8 +394,8 @@ Builds should adhere to these properties:
 <li>
 <p><strong><a href="https://std.divnix.com/patterns/ci-cd-10000-feet.html#push-vs-pull-workflows">Push vs Pull Workflows</a>:</strong></p>
 <div class="table-wrapper"><table><thead><tr><th>Tool</th><th>Method</th><th>Description</th></tr></thead><tbody>
-<tr><td>Ansible</td><td>⬇️</td><td>Code and operations are sent to production from a client machine using SSH.</td></tr>
-<tr><td>ArgoCD</td><td>⬆️</td><td>The ArgoCD server listens to your software forge to pull updates.</td></tr>
+<tr><td><code>ansible</code></td><td>⬇️</td><td>Code and operations are sent to production from a client machine using SSH.</td></tr>
+<tr><td><code>fluxCD</code></td><td>⬆️</td><td>The <code>fluxCD</code> server listens to your software forge to pull updates.</td></tr>
 </tbody></table>
 </div></li>
 </ul>
@@ -448,8 +450,8 @@ Builds should adhere to these properties:
 <ul>
 <li>Projects should mirror teams:
 <ul>
-<li>If CI/CD is a shared responsibility ➡️ monorepo</li>
-<li>If each team has its own DevOps <em>(dev or ops)</em> ➡️ polyrepo</li>
+<li>If CI/CD is a shared responsibility ➡️  Monorepo</li>
+<li>If each team has its own DevOps <em>(developers or SRE, OPS)</em> ➡️  Polyrepo</li>
 </ul>
 </li>
 </ul>
@@ -491,22 +493,6 @@ Builds should adhere to these properties:
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
@@ -524,6 +510,8 @@ Builds should adhere to these properties:
         <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
+        <script src="../.mermaid/mermaid.min.js"></script>
+        <script src="../.mermaid/mermaid-init.js"></script>
 
 
     </div>

@@ -1,4 +1,11 @@
 version: '3'
+includes:
+  build:
+    taskfile: ./tasks/Build.yaml
+    dir: .
+  lint:
+    taskfile: ./tasks/Lint.yaml
+    dir: .
 tasks:
   init:
     cmds:
@@ -7,64 +14,6 @@ tasks:
     silent: true
     run: once
   watch:
-    desc: start local server with book on localhost:3000
+    desc: Start local server with book on localhost:3000
     cmds:
       - mdbook serve
-  build:
-    desc: Build the project
-  build:mdbook:
-    internal: true
-    silent: true
-    cmds:
-      - mdbook build
-  build:mermaid:
-    internal: true
-    silent: true
-    requires:
-      vars:
-        - MODULE
-    vars:
-      ASSETS_DIR: "./{{.MODULE}}/assets"
-      SOURCES_DIR: "./{{.MODULE}}/src"
-      FILES:
-        sh: find "{{.SOURCES_DIR}}" -type f -name '*.mmd'
-    cmds:
-      - rm -rf {{.ASSETS_DIR}}/*-mermaid-*.svg
-      - for:
-          var: FILES
-        vars:
-          SVG_PATH: "{{.ASSETS_DIR}}/{{.MODULE}}-mermaid-{{.ITEM | base | trimSuffix '.mmd' }}.svg"
-        cmd: |
-          mmdc \
-            -i "{{.ITEM}}" \
-            -o "{{.SVG_PATH}}"
-  build:drawio:
-    internal: true
-    silent: true
-    requires:
-      vars:
-        - MODULE
-    vars:
-      ASSETS_DIR: "./{{.MODULE}}/assets"
-      DIAGRAM_FILE: "{{.MODULE}}/diagrams.drawio"
-      COUNT:
-        sh: grep -o "<diagram" "{{.DIAGRAM_FILE}}" | wc -l
-      RANGE: '{{.COUNT | int | until }}'
-    cmds:
-      - rm -rf {{.ASSETS_DIR}}/{{.MODULE}}-drawio-*.svg
-      - for:
-          var: RANGE
-        cmd: |
-          drawio \
-            --format svg \
-            --export \
-            --embed-diagram \
-            --embed-svg-images \
-            --page-index {{.ITEM | trimPrefix "[" | trimSuffix "]" }} \
-            --output "{{.ASSETS_DIR}}/{{.MODULE}}-drawio-{{.ITEM | trimPrefix "[" | trimSuffix "]" }}.svg" \
-            "{{.DIAGRAM_FILE}}"
-      - |
-        sed \
-          -i \
-          's/Text is not SVG \- cannot display//g' \
-          {{.ASSETS_DIR}}/*-drawio-*.svg

@@ -19,116 +19,85 @@ in
         valeStylesPath = mkOption {
           description = mdDoc "The path to the vale style";
           type = types.singleLineStr;
-          default = "./vale/styles";
+          default = "./.vale/";
         };
         valeMicrosoft = mkOption {
           description = mdDoc "The vale Microsoft style";
           type = types.package;
+
+          default = pkgs.runCommand "vale-microsoft-links" { } ''
+            ln -sf ${inputs.valeMicrosoft}/Microsoft $out
+          '';
         };
         valeJoblint = mkOption {
           description = mdDoc "The vale Joblint style";
           type = types.package;
+          default = pkgs.runCommand "vale-joblint-links" { } ''
+            ln -sf ${inputs.valeJoblint}/Joblint $out
+          '';
         };
         valeWriteGood = mkOption {
           description = mdDoc "The vale Write-Good style";
           type = types.package;
-        };
-        mdbookMermaidStyles = mkOption {
-          description = mdDoc "The mdbook mermaid style assets";
-          type = types.package;
+          default = pkgs.runCommand "vale-write-good-links" { } ''
+            ln -sf ${inputs.valeWriteGood}/write-good $out
+          '';
         };
         valeConfiguration = mkOption {
           description = mdDoc "The vale configuration file";
           type = types.package;
-        };
-        documentationShellHookScript = mkOption {
-          description = mdDoc "The shell hook to run in devShell";
+          default = pkgs.writeText ".vale.ini" ''
+            StylesPath = styles
+            MinAlertLevel = suggestion
+            MinAlertLevel = error
+            Packages = Microsoft, write-good, Joblint
+            StylesPath = "${config.valeStylesPath}"
+            Vocab = Courses
+            [./CHANGELOG.md]
+            BasedOnStyles = Vale
+            Vale.Spelling = NO
+            Vale.terms = NO
+            [src/**/*.md]
+            BasedOnStyles = Vale, Microsoft, write-good, Joblint
+            Microsoft.Accessibility = NO
+            [*.mermaid]
+            BasedOnStyles = Vale, write-good, Joblint
+          '';
         };
         docsPackages = mkOption {
           description = mdDoc "Packages used to generate the documentation";
           default = with pkgs; [
-            tagref
-            vale
-            tokei
+            drawio
             eza
-            vhs
             fd
-            mdformat
-            markdownlint-cli2
+            go-task
+            marp-cli
             mdbook
-            mdbook-toc
             mdbook-cmdrun
+            mdbook-d2
             mdbook-emojicodes
+            mdbook-epub
             mdbook-footnote
             mdbook-graphviz
             mdbook-katex
             mdbook-linkcheck
+            mdbook-man
             mdbook-mermaid
+            mdbook-open-on-gh
             mdbook-pdf
+            mdbook-plantuml
             mdbook-toc
+            mdformat
+            mermaid-cli
+            tagref
+            termbook
+            tokei
+            typos
+            vale
+            vhs
           ];
         };
       };
     }
   );
-  config.perSystem =
-    {
-      config,
-      pkgs,
-      ...
-    }:
-    {
-      valeMicrosoft = pkgs.runCommand "vale-microsoft-links" { } ''
-        ln -sf ${inputs.valeMicrosoft}/Microsoft $out
-      '';
-      valeJoblint = pkgs.runCommand "vale-joblint-links" { } ''
-        ln -sf ${inputs.valeJoblint}/Joblint $out
-      '';
-      valeWriteGood = pkgs.runCommand "vale-write-good-links" { } ''
-        ln -sf ${inputs.valeWriteGood}/write-good $out
-      '';
-      packages.mdbookMermaidStyles = pkgs.stdenv.mkDerivation {
-        name = "mdbook-mermaid-styles";
-        src = config.packages.mdbookConfiguration;
-        dontUnpack = true;
-        buildPhase = ''
-          ln -sf $src book.toml
-          ${pkgs.mdbook-mermaid}/bin/mdbook-mermaid install
-          mkdir -p $out
-          mv mermaid-init.js mermaid.min.js $out
-        '';
-      };
-      packages.valeConfiguration = pkgs.writeText ".vale.ini" ''
-        StylesPath = styles
-        MinAlertLevel = suggestion
-        Packages = Microsoft, write-good, Joblint
-        StylesPath = "${config.valeStylesPath}"
-        Vocab = Cours
-        [./CHANGELOG.md]
-        BasedOnStyles = Vale
-        Vale.Spelling = NO
-        Vale.terms = NO
-        [*.md]
-        BasedOnStyles = Vale, Microsoft, write-good, Joblint
-        Microsoft.Accessibility = NO
-        [*.mermaid]
-        BasedOnStyles = Vale, write-good, Joblint
-      '';
-      documentationShellHookScript = ''
-        export FLAKE_ROOT="$(git rev-parse --show-toplevel)"
-        rm -rf \
-          "$FLAKE_ROOT/${config.valeStylesPath}/Microsoft" \
-          "$FLAKE_ROOT/${config.valeStylesPath}/Joblint" \
-          "$FLAKE_ROOT/${config.valeStylesPath}/write-good" \
-          "$FLAKE_ROOT/${config.mdbookMermaidStylesPath}" \
-          "$FLAKE_ROOT/.vale.ini" \
-          "$FLAKE_ROOT/book.toml"
-        ln -s ${config.valeMicrosoft} "$FLAKE_ROOT/${config.valeStylesPath}/Microsoft"
-        ln -s ${config.valeJoblint} "$FLAKE_ROOT/${config.valeStylesPath}/Joblint"
-        ln -s ${config.valeWriteGood} "$FLAKE_ROOT/${config.valeStylesPath}/write-good"
-        ln -s ${config.packages.valeConfiguration} "$FLAKE_ROOT/.vale.ini"
-        ln -s ${config.packages.mdbookConfiguration} "$FLAKE_ROOT/book.toml"
-        ln -s ${config.packages.mdbookMermaidStyles} "$FLAKE_ROOT/${config.mdbookMermaidStylesPath}"
-      '';
-    };
 }

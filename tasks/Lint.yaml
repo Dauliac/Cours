@@ -1,0 +1,21 @@
+version: "3"
+vars:
+  MULTILINES_FILES:
+    sh: |
+      fd md ./src
+  FILES: '{{.MULTILINES_FILES | replace "\n" " "}}'
+tasks:
+  default:
+    silent: true
+    run: once
+    desc: Run linters
+    deps:
+      - lint:vale
+  lint:vale:
+    silent: true
+    internal: true
+    run: once
+    sources:
+      - "./**/*.md"
+    cmds:
+      - vale {{.FILES}} README.md

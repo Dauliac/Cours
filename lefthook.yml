@@ -2,4 +2,6 @@ pre-commit:
   parallel: true
   commands:
     build:
-      run: task build
+      run: task build --verbose --output prefixed
+    check:
+      run: nix flake check
