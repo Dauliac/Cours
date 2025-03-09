@@ -11,6 +11,8 @@ tasks:
       - drawio
     cmds:
       - mdbook build
+      - task: copy-assets
+      - task: slides
   mermaid:
     silent: true
     internal: true
@@ -23,9 +25,9 @@ tasks:
           var: FILES
         vars:
           MERMAID_PATH: "{{.ITEM}}"
-          SOURCES_PATH: "./src"
+          SOURCES_PATH: "{{.SOURCES_PATH}}"
           FILE_NAME: '{{.ITEM  | base | trimSuffix ".mmd"}}.svg'
-          MODULE_NAME: "{{.ITEM  | dir | base}}"
+          MODULE_NAME: "{{ if eq (.ITEM | dir | base) `src` }}{{``}}{{ else }}{{ .ITEM | dir | base }}{{ end }}"
         task: mermaid-cli
   mermaid-cli:
     internal: true
@@ -88,3 +90,30 @@ tasks:
           --page-index {{.PAGE_INDEX}} \
           --output "{{.OUTPUT_PATH}}" \
           "{{.DIAGRAM_FILE}}"
+  copy-assets:
+    silent: true
+    internal: true
+    vars:
+      ASSETS_DIRS:
+        sh: fd "^assets$" book/html/ -t d
+    deps:
+      - for:
+          var: ASSETS_DIRS
+        vars:
+          SRC: "{{.ITEM}}"
+          DEST: "{{.ITEM | replace `book/html` `book/markdown`}}"
+        task: copy-dir
+  copy-dir:
+    internal: true
+    silent: true
+    vars:
+      SRC: "{{.SRC}}"
+      DEST: "{{.DEST}}"
+    cmds:
+      - mkdir -p {{.DEST | replace `assets/` `` }}
+      - cp -r {{.SRC}} {{.DEST}}
+  slides:
+    internal: true
+    silent: true
+    cmds:
+      - marp book/markdown/

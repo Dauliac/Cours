@@ -1,0 +1,328 @@
+{
+"entries": [
+  {
+    "label": "EventStorming",
+    "quadrant": 0,
+    "ring": 1,
+    "moved": 0,
+    "link": "https://www.eventstorming.com/"
+  },
+  {
+    "label": "Team Topologies",
+    "quadrant": 0,
+    "ring": 1,
+    "moved": 0,
+    "link": "https://teamtopologies.com/"
+  },
+  {
+    "label": "ADR",
+    "quadrant": 0,
+    "ring": 0,
+    "moved": 0,
+    "link": "https://adr.github.io/"
+  },
+  {
+    "label": "Diátaxis",
+    "quadrant": 0,
+    "ring": 1,
+    "moved": 0,
+    "link": "https://diataxis.fr/"
+  },
+  {
+    "label": "Zettelkasten",
+    "quadrant": 0,
+    "ring": 2,
+    "moved": 0,
+    "link": "https://zettelkasten.de/"
+  },
+
+  // Outils
+  {
+    "label": "go-task",
+    "quadrant": 1,
+    "ring": 0,
+    "moved": 0,
+    "link": "https://taskfile.dev/"
+  },
+  {
+    "label": "treefmt",
+    "quadrant": 1,
+    "ring": 0,
+    "moved": 0,
+    "link": "https://github.com/numtide/treefmt"
+  },
+  {
+    "label": "lefthook",
+    "quadrant": 1,
+    "ring": 0,
+    "moved": 0,
+    "link": "https://evilmartians.com/chronicles/lefthook-succession-of-git-hooks"
+  },
+  {
+    "label": "Just",
+    "quadrant": 1,
+    "ring": 0,
+    "moved": 0,
+    "link": "https://github.com/casey/just"
+  },
+  {
+    "label": "Tech Radar",
+    "quadrant": 1,
+    "ring": 0,
+    "moved": 0,
+    "link": "https://www.thoughtworks.com/radar"
+  },
+  {
+    "label": "VHS",
+    "quadrant": 1,
+    "ring": 2,
+    "moved": 0,
+    "link": "https://github.com/charmbracelet/vhs"
+  },
+  {
+    "label": "mdBook",
+    "quadrant": 1,
+    "ring": 1,
+    "moved": 0,
+    "link": "https://rust-lang.github.io/mdBook/"
+  },
+  {
+    "label": "mdBook cmd-run",
+    "quadrant": 1,
+    "ring": 2,
+    "moved": 0,
+    "link": "https://github.com/rust-lang/mdBook/tree/master/book-example/src/command"
+  },
+  {
+    "label": "rustdoc",
+    "quadrant": 1,
+    "ring": 1,
+    "moved": 0,
+    "link": "https://doc.rust-lang.org/rustdoc/what-is-rustdoc.html"
+  },
+  {
+    "label": "Vale",
+    "quadrant": 1,
+    "ring": 1,
+    "moved": 0,
+    "link": "https://vale.sh/"
+  },
+  {
+    "label": "Doc Detective",
+    "quadrant": 1,
+    "ring": 2,
+    "moved": 0,
+    "link": "https://github.com/errata-ai/DocDetective"
+  },
+  {
+    "label": "mdformat",
+    "quadrant": 1,
+    "ring": 1,
+    "moved": 0,
+    "link": "https://mdformat.rtfd.io/"
+  },
+  {
+    "label": "GitHub Actions",
+    "quadrant": 1,
+    "ring": 0,
+    "moved": 0,
+    "link": "https://github.com/features/actions"
+  },
+  {
+    "label": "GitLab CI/CD",
+    "quadrant": 1,
+    "ring": 0,
+    "moved": 0,
+    "link": "https://docs.gitlab.com/ee/ci/"
+  },
+  {
+    "label": "CircleCI",
+    "quadrant": 1,
+    "ring": 1,
+    "moved": 0,
+    "link": "https://circleci.com/"
+  },
+  {
+    "label": "Jenkins",
+    "quadrant": 1,
+    "ring": 2,
+    "moved": 0,
+    "link": "https://www.jenkins.io/"
+  },
+  {
+    "label": "Travis CI",
+    "quadrant": 1,
+    "ring": 2,
+    "moved": 0,
+    "link": "https://travis-ci.org/"
+  },
+  {
+    "label": "Spinnaker",
+    "quadrant": 1,
+    "ring": 2,
+    "moved": 0,
+    "link": "https://www.spinnaker.io/"
+  },
+  {
+    "label": "Argo CD",
+    "quadrant": 1,
+    "ring": 1,
+    "moved": 0,
+    "link": "https://argo-cd.readthedocs.io/"
+  },
+  {
+    "label": "Drone CI",
+    "quadrant": 1,
+    "ring": 1,
+    "moved": 0,
+    "link": "https://drone.io/"
+  },
+  {
+    "label": "Tekton",
+    "quadrant": 1,
+    "ring": 1,
+    "moved": 0,
+    "link": "https://tekton.dev/"
+  },
+  {
+    "label": "Concourse CI",
+    "quadrant": 1,
+    "ring": 2,
+    "moved": 0,
+    "link": "https://concourse-ci.org/"
+  },
+  {
+    "label": "terraform-docs",
+    "quadrant": 1,
+    "ring": 1,
+    "moved": 0,
+    "link": "",
+  },
+  {
+      "label": "trivy",
+      "quadrant": 1,
+      "ring": 1,
+      "moved": 0,
+      "link": "https://aquasecurity.github.io/trivy/"
+    },
+    {
+      "label": "grype",
+      "quadrant": 1,
+      "ring": 1,
+      "moved": 0,
+      "link": "https://github.com/anchore/grype"
+    },
+    {
+      "label": "kubeconform",
+      "quadrant": 1,
+      "ring": 2,
+      "moved": 0,
+      "link": "https://github.com/yannh/kubeconform"
+    },
+    {
+      "label": "ansible-lint",
+      "quadrant": 1,
+      "ring": 2,
+      "moved": 0,
+      "link": "https://ansible-lint.readthedocs.io/"
+    },
+    {
+      "label": "ansible molecule",
+      "quadrant": 1,
+      "ring": 2,
+      "moved": 0,
+      "link": "https://molecule.readthedocs.io/"
+    },
+    {
+      "label": "dotenv-linter",
+      "quadrant": 1,
+      "ring": 2,
+      "moved": 0,
+      "link": "https://github.com/dotenv-linter/dotenv-linter"
+    },
+    {
+      "label": "reviewdog",
+      "quadrant": 1,
+      "ring": 2,
+      "moved": 0,
+      "link": "https://github.com/reviewdog/reviewdog"
+    },
+    {
+      "label": "convco",
+      "quadrant": 1,
+      "ring": 2,
+      "moved": 0,
+      "link": "https://github.com/convco/convco"
+    },
+    {
+      "label": "trufflehog",
+      "quadrant": 1,
+      "ring": 2,
+      "moved": 0,
+      "link": "https://github.com/trufflesecurity/trufflehog"
+    },
+    {
+      "label": "act",
+      "quadrant": 1,
+      "ring": 2,
+      "moved": 0,
+      "link": "https://github.com/nektos/act"
+    },
+    {
+      "label": "nix flake",
+      "quadrant": 1,
+      "ring": 1,
+      "moved": 0,
+      "link": "https://nixos.wiki/wiki/Flakes"
+    },
+    {
+      "label": "k3s",
+      "quadrant": 1,
+      "ring": 2,
+      "moved": 0,
+      "link": "https://k3s.io/"
+    },
+    {
+      "label": "vagrant",
+      "quadrant": 1,
+      "ring": 2,
+      "moved": 0,
+      "link": "https://www.vagrantup.com/"
+    },
+    {
+      "label": "Makefile",
+      "quadrant": 1,
+      "ring": 0,
+      "moved": 0,
+      "link": "https://www.gnu.org/software/make/manual/make.html"
+    },
+    {
+      "label": "Rust",
+      "quadrant": 2,
+      "ring": 0,
+      "moved": 0,
+      "link": "https://www.rust-lang.org/"
+    },
+    {
+      "label": "Go",
+      "quadrant": 2,
+      "ring": 0,
+      "moved": 0,
+      "link": "https://golang.org/"
+    },
+    {
+      "label": "Python",
+      "quadrant": 2,
+      "ring": 0,
+      "moved": 0,
+      "link": "https://www.python.org/"
+    },
+    {
+      "label": "Bash",
+      "quadrant": 2,
+      "ring": 0,
+      "moved": 0,
+      "link": "https://www.gnu.org/software/bash/"
+    }
+  ]
+}

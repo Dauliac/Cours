@@ -1,13 +1,5 @@
 ______________________________________________________________________
 
-## header: 'Software Delivery Life Cycle Course' footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com'
-
-<!-- headingDivider: 3 -->
-
-<!-- paginate: true -->
-
-<!-- colorPreset: sunset -->
-
 # Software Delivery Life Cycle
 
 <!-- vale off -->
@@ -17,7 +9,19 @@ ______________________________________________________________________
 
 <!-- vale on -->
 
+______________________________________________________________________
+
 ## Module Objective
+
+<!-- header: 'Software Delivery Life Cycle Course' -->
+
+<!-- footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com' -->
+
+<!-- headingDivider: 3 -->
+
+<!-- colorPreset: sunset -->
+
+<!-- paginate: true -->
 
 - Cover software delivery life cycle methods
 - Understand the importance of CI/CD
@@ -25,9 +29,7 @@ ______________________________________________________________________
 - Learn basic CI/CD architectures
 - Know how to code a basic CI/CD
 
-# Introduction to CI/CD
-
-## Definitions:
+## Definitions
 
 ### Software Delivery Life Cycle
 
@@ -35,7 +37,7 @@ SDLC (Software Development Life Cycle) is a process that enables the production 
 
 In French: Cycle de développement logiciel
 
-**Framework:**
+### Framework
 
 - Agile
 - DevOps
@@ -43,8 +45,6 @@ In French: Cycle de développement logiciel
 ### CI
 
 Continuous Integration (CI) involves regularly and automatically integrating developers' source code into a shared repository. Each code modification triggers automated tests to detect errors as early as possible.
-
-______________________________________________________________________
 
 - Test automation
 - Supply chain automation
@@ -60,18 +60,16 @@ Code used to build software
 
 ### CD
 
+In Continuous Delivery, versions are ready to be deployed but aren't deployed automatically.
+
 - Automation of delivery
 - Automation of deployment
-
-______________________________________________________________________
-
-In Continuous Delivery, versions are ready to be deployed but aren't deployed automatically.
 
 ### A picture is worth a thousand words:
 
 ![Untitled](./assets/Untitled.png)
 
-## QQOQCCP
+## 5W
 
 | What | CI/CD is an approach for automating software development processes. |
 | --- | --- |
@@ -80,21 +78,6 @@ In Continuous Delivery, versions are ready to be deployed but aren't deployed au
 | When | It's applied throughout the development cycle. |
 | How | It automates compilation, testing, deployment, and feedback management. |
 | Why | It aims to improve quality, accelerate development, reduce errors, foster collaboration, and enable frequent deployments. |
-
-## 5 Whys of CI/CD
-
-- Project management method that finds radical solutions to a problem.
-- CI/CD is a radical solution.
-
-### Stability
-
-**Problem: Deployments frequently fail in production.**
-
-1. Why do deployments fail in production?
-
-### Security
-
-**Problem: Too many security vulnerabilities in production.**
 
 ## Also
 
@@ -107,7 +90,9 @@ In Continuous Delivery, versions are ready to be deployed but aren't deployed au
 - Culture: DevOps
 - Agile management: Release train
 - Code: Software Development Life Cycle
-- Platform: Software forge (GitLab or others)
+- Platform:
+  - Software forge (GitLab or others)
+  - CD Platform
 - Craftsmanship: `Humans + Tools = 🤟`
 
 # DEVOPS 💓 CICD
@@ -209,6 +194,8 @@ ______________________________________________________________________
 
 4. **[Probing & Attestation Phase](https://std.divnix.com/patterns/ci-cd-10000-feet.html#probing--attestation-phase):**
 
+- Remote runner VS Inplace runner
+
 ## Monorepo vs Polyrepo
 
 - The organization of repositories is a crucial aspect of CI/CD.
@@ -247,5 +234,3 @@ ______________________________________________________________________
 
 - Monorepo for CI/CD:
   ![height:500px](./assets/sdlc-mermaid-monorepo.svg)
-
-______________________________________________________________________

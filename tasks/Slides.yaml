@@ -1,0 +1,12 @@
+version: '3'
+vars:
+  SOURCES_PATH: "./src"
+tasks:
+  default:
+    desc: Build the project slides
+    silent: true
+    run: "once"
+    cmds:
+      - rm -rf slides/
+      - mkdir -p slides
+      - marp --input-dir book/markdown/  --output slides

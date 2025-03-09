@@ -1,9 +1,5 @@
 ______________________________________________________________________
 
-<!-- paginate: true -->
-
-<!-- colorPreset: sunset -->
-
 # Introduction
 
 <!-- vale off -->
@@ -13,27 +9,49 @@ ______________________________________________________________________
 
 <!-- vale on -->
 
-```mermaid
-mindmap
-  cours((Structure du cours))
-    Évaluation
-    Format
-    Sujets clés
-    Principes fondamentaux
-    Attentes des étudiants
-```
+![height:500px](./assets/mindmap.svg)
 
 ## About this course
 
-Welcome! I'm **Julien Dauliac**, a Site Reliability Engineer (SRE), it's like **DevOps**. I have a background in **software architecture** and enjoy **development** in general. My favorite technologies include **Nix** , **Kubernetes** and **Rust**, and I take a strong stance in advocating for efficient and modern software practices.
+<!-- header: 'Introduction' -->
 
-You can find my **GitHub** here: [https://github.com/Dauliac](https://github.com/Dauliac)
+<!-- footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com' -->
 
-My courses are structured but adaptable. I frequently adjust the content based on my mood, **your questions**, and the interests of the group. If a topic excites you, feel free to ask—I am happy to form smaller breakout groups to dive deeper.
+<!-- headingDivider: 3 -->
+
+<!-- colorPreset: sunset -->
+
+<!-- paginate: true -->
+
+Welcome! I'm **Julien Dauliac**, a Site Reliability Engineer (SRE), it's like **DevOps**.
+
+I have a background in **software architecture** and enjoy **development** in general.
+
+______________________________________________________________________
+
+My favorite technologies include **Nix** , **Kubernetes** and **Rust**, and I take a strong stance in advocating for efficient and modern software practices.
+
+______________________________________________________________________
+
+______________________________________________________________________
+
+My courses are structured but adaptable.
+
+I frequently adjust the content based on my mood, **your questions**, and the interests of the group.
+
+If a topic excites you, feel free to ask.
+
+I am happy to form smaller breakout groups to dive deeper.
+
+______________________________________________________________________
 
 I am opinionated and **proselytizing** about good software practices.
 
+______________________________________________________________________
+
 All course materials are available on GitHub: [https://github.com/Dauliac/Cours](https://github.com/Dauliac/Cours)
+
+______________________________________________________________________
 
 My CV is also available here: [https://github.com/Dauliac/resume](https://github.com/Dauliac/resume)
 
@@ -41,15 +59,24 @@ ______________________________________________________________________
 
 ## Evaluation & grading
 
-You will be graded on the **project** in collaboration with **Alan**, but based on **different criteria**:
-
-1. **Build System**
-1. **CI/CD**
-1. **Supply Chain Security**
-
-The further you progress, the **better your grade**.
+You will be graded on the **project** in collaboration with **Alan**, but based on **differents criterias**:
 
 ______________________________________________________________________
+
+Fields:
+
+1. **Build System** `5pt`
+1. **CI/CD** or **test environment** `5pt`
+1. **Supply Chain Security** `5pt`
+1. **Project documentation** `5pt`
+
+______________________________________________________________________
+
+Scoring:
+
+1. **Code quality** `2pt`
+1. **It Works** `2pt`
+1. **Presentation** `1pt`
 
 ## Course format
 
@@ -58,8 +85,6 @@ ______________________________________________________________________
 - **Breakout Groups**: If you have a particular interest, I can take smaller groups aside to dive deeper into specific topics.
 - **Hands-on Practice**: Practical work will be emphasized throughout the course.
 
-______________________________________________________________________
-
 ## Core topics
 
 - **Software Delivery Life Cycle (SDLC)**: Key methodologies and industry best practices.
@@ -67,16 +92,12 @@ ______________________________________________________________________
 - **Licensing Models**: Exploring software licenses and their implications.
 - **Technical Documentation**: Writing clear and effective documentation.
 
-______________________________________________________________________
-
 ## Key principles
 
 - **Automation**: Leveraging CI/CD and modern infrastructure tools.
 - **Security**: Ensuring a robust software supply chain.
 - **Efficiency**: Writing scalable and maintainable code.
 - **Open Source**: Advocating and contributing to open-source projects.
-
-______________________________________________________________________
 
 ## Expectations
 

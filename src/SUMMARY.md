@@ -9,11 +9,13 @@ ______________________________________________________________________
 - [Introduction to SDLC](./sdlc/README.md)
 - [OS](./system/README.md)
 - [Licences](./licences/README.md)
-- [Technical documentation](./documentations/README.md)
+- [Technical documentation](./documentation/README.md)
 
 ______________________________________________________________________
 
 # References
+
+- [tech radar](./RADAR.md)
 
 ______________________________________________________________________
 
@@ -27,3 +29,5 @@ ______________________________________________________________________
 # How-To Guides
 
 - [Install `nix`](./nix/INSTALL.md)
+- [Install `comma`](./nix/COMMA.md)
+- [Get courses](./GET.md)

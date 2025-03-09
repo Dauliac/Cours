@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-
 ______________________________________________________________________
 
 ## header: 'Systems Course' footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com'

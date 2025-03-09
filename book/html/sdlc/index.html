@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../sdlc/index.html" class="active"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../documentations/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">5.</strong> Packaging with nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">6.</strong> Perfect container with nix ?</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../nix/INSTALL.html"><strong aria-hidden="true">7.</strong> Install nix</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../sdlc/index.html" class="active"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../documentation/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded "><a href="../RADAR.html"><strong aria-hidden="true">5.</strong> tech radar</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">6.</strong> Packaging with nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">7.</strong> Perfect container with nix ?</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../nix/INSTALL.html"><strong aria-hidden="true">8.</strong> Install nix</a></li><li class="chapter-item expanded "><a href="../nix/COMMA.html"><strong aria-hidden="true">9.</strong> Install comma</a></li><li class="chapter-item expanded "><a href="../GET.html"><strong aria-hidden="true">10.</strong> Get courses</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -173,38 +173,24 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<hr />
-<h2 id="header-software-delivery-life-cycle-course-footer-julien-dauliac----ynovcasualty925passfwdcom"><a class="header" href="#header-software-delivery-life-cycle-course-footer-julien-dauliac----ynovcasualty925passfwdcom">header: 'Software Delivery Life Cycle Course' footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com'</a></h2>
-<!-- headingDivider: 3 -->
-<!-- paginate: true -->
-<!-- colorPreset: sunset -->
+                        <hr />
 <h1 id="software-delivery-life-cycle"><a class="header" href="#software-delivery-life-cycle">Software Delivery Life Cycle</a></h1>
 <!-- vale off -->
 <ul>
 <li><a href="#module-objective">Module Objective</a></li>
-<li><a href="#introduction-to-cicd">Introduction to CI/CD</a>
-<ul>
-<li><a href="#definitions">Definitions:</a>
+<li><a href="#definitions">Definitions</a>
 <ul>
 <li><a href="#software-delivery-life-cycle">Software Delivery Life Cycle</a></li>
+<li><a href="#framework">Framework</a></li>
 <li><a href="#ci">CI</a></li>
 <li><a href="#supply-chain">Supply Chain</a></li>
 <li><a href="#cd">CD</a></li>
 <li><a href="#a-picture-is-worth-a-thousand-words">A picture is worth a thousand words:</a></li>
 </ul>
 </li>
-<li><a href="#qqoqccp">QQOQCCP</a></li>
-<li><a href="#5-whys-of-cicd">5 Whys of CI/CD</a>
-<ul>
-<li><a href="#stability">Stability</a></li>
-<li><a href="#security">Security</a></li>
-</ul>
-</li>
+<li><a href="#5w">5W</a></li>
 <li><a href="#also">Also</a></li>
 <li><a href="#entities">Entities</a></li>
-</ul>
-</li>
 <li><a href="#devops--cicd">DEVOPS 💓 CICD</a>
 <ul>
 <li><a href="#non-functional-aspects">Non-functional aspects</a></li>
@@ -236,7 +222,13 @@
 </li>
 </ul>
 <!-- vale on -->
+<hr />
 <h2 id="module-objective"><a class="header" href="#module-objective">Module Objective</a></h2>
+<!-- header: 'Software Delivery Life Cycle Course' -->
+<!-- footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com' -->
+<!-- headingDivider: 3 -->
+<!-- colorPreset: sunset -->
+<!-- paginate: true -->
 <ul>
 <li>Cover software delivery life cycle methods</li>
 <li>Understand the importance of CI/CD</li>
@@ -244,19 +236,17 @@
 <li>Learn basic CI/CD architectures</li>
 <li>Know how to code a basic CI/CD</li>
 </ul>
-<h1 id="introduction-to-cicd"><a class="header" href="#introduction-to-cicd">Introduction to CI/CD</a></h1>
-<h2 id="definitions"><a class="header" href="#definitions">Definitions:</a></h2>
+<h2 id="definitions"><a class="header" href="#definitions">Definitions</a></h2>
 <h3 id="software-delivery-life-cycle-1"><a class="header" href="#software-delivery-life-cycle-1">Software Delivery Life Cycle</a></h3>
 <p>SDLC (Software Development Life Cycle) is a process that enables the production of high-quality software at the lowest cost within the shortest time frame.</p>
 <p>In French: Cycle de développement logiciel</p>
-<p><strong>Framework:</strong></p>
+<h3 id="framework"><a class="header" href="#framework">Framework</a></h3>
 <ul>
 <li>Agile</li>
 <li>DevOps</li>
 </ul>
 <h3 id="ci"><a class="header" href="#ci">CI</a></h3>
 <p>Continuous Integration (CI) involves regularly and automatically integrating developers' source code into a shared repository. Each code modification triggers automated tests to detect errors as early as possible.</p>
-<hr />
 <ul>
 <li>Test automation</li>
 <li>Supply chain automation</li>
@@ -270,15 +260,14 @@
 <li><code>cmake</code>/<code>make</code></li>
 </ul>
 <h3 id="cd"><a class="header" href="#cd">CD</a></h3>
+<p>In Continuous Delivery, versions are ready to be deployed but aren't deployed automatically.</p>
 <ul>
 <li>Automation of delivery</li>
 <li>Automation of deployment</li>
 </ul>
-<hr />
-<p>In Continuous Delivery, versions are ready to be deployed but aren't deployed automatically.</p>
 <h3 id="a-picture-is-worth-a-thousand-words"><a class="header" href="#a-picture-is-worth-a-thousand-words">A picture is worth a thousand words:</a></h3>
 <p><img src="./assets/Untitled.png" alt="Untitled" /></p>
-<h2 id="qqoqccp"><a class="header" href="#qqoqccp">QQOQCCP</a></h2>
+<h2 id="5w"><a class="header" href="#5w">5W</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>What</th><th>CI/CD is an approach for automating software development processes.</th></tr></thead><tbody>
 <tr><td>Who</td><td>It involves developers, testers, and automated tools.</td></tr>
 <tr><td>Where</td><td>It can be used in any development environment.</td></tr>
@@ -287,18 +276,6 @@
 <tr><td>Why</td><td>It aims to improve quality, accelerate development, reduce errors, foster collaboration, and enable frequent deployments.</td></tr>
 </tbody></table>
 </div>
-<h2 id="5-whys-of-cicd"><a class="header" href="#5-whys-of-cicd">5 Whys of CI/CD</a></h2>
-<ul>
-<li>Project management method that finds radical solutions to a problem.</li>
-<li>CI/CD is a radical solution.</li>
-</ul>
-<h3 id="stability"><a class="header" href="#stability">Stability</a></h3>
-<p><strong>Problem: Deployments frequently fail in production.</strong></p>
-<ol>
-<li>Why do deployments fail in production?</li>
-</ol>
-<h3 id="security"><a class="header" href="#security">Security</a></h3>
-<p><strong>Problem: Too many security vulnerabilities in production.</strong></p>
 <h2 id="also"><a class="header" href="#also">Also</a></h2>
 <ul>
 <li>Automate labor: <code>#DEVOPS</code> 🌻</li>
@@ -310,7 +287,12 @@
 <li>Culture: DevOps</li>
 <li>Agile management: Release train</li>
 <li>Code: Software Development Life Cycle</li>
-<li>Platform: Software forge (GitLab or others)</li>
+<li>Platform:
+<ul>
+<li>Software forge (GitLab or others)</li>
+<li>CD Platform</li>
+</ul>
+</li>
 <li>Craftsmanship: <code>Humans + Tools = 🤟</code></li>
 </ul>
 <h1 id="devops--cicd"><a class="header" href="#devops--cicd">DEVOPS 💓 CICD</a></h1>
@@ -405,6 +387,9 @@ Builds should adhere to these properties:
 <ol start="4">
 <li><strong><a href="https://std.divnix.com/patterns/ci-cd-10000-feet.html#probing--attestation-phase">Probing &amp; Attestation Phase</a>:</strong></li>
 </ol>
+<ul>
+<li>Remote runner VS Inplace runner</li>
+</ul>
 <h2 id="monorepo-vs-polyrepo"><a class="header" href="#monorepo-vs-polyrepo">Monorepo vs Polyrepo</a></h2>
 <ul>
 <li>The organization of repositories is a crucial aspect of CI/CD.</li>
@@ -462,7 +447,6 @@ Builds should adhere to these properties:
 <li>Monorepo for CI/CD:
 <img src="./assets/sdlc-mermaid-monorepo.svg" alt="height:500px" /></li>
 </ul>
-<hr />
 
                     </main>
 

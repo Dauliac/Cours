@@ -76,6 +76,7 @@ in
             lefthook
             vhs
             aichat
+            mdzk
           ]
           ++ config.docsPackages;
         shellHook = ''

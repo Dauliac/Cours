@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../documentations/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">5.</strong> Packaging with nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">6.</strong> Perfect container with nix ?</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../nix/INSTALL.html" class="active"><strong aria-hidden="true">7.</strong> Install nix</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../documentation/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded "><a href="../RADAR.html"><strong aria-hidden="true">5.</strong> tech radar</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">6.</strong> Packaging with nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">7.</strong> Perfect container with nix ?</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../nix/INSTALL.html" class="active"><strong aria-hidden="true">8.</strong> Install nix</a></li><li class="chapter-item expanded "><a href="../nix/COMMA.html"><strong aria-hidden="true">9.</strong> Install comma</a></li><li class="chapter-item expanded "><a href="../GET.html"><strong aria-hidden="true">10.</strong> Get courses</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -173,8 +173,74 @@
 
                 <div id="content" class="content">
                     <main>
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="install-nix"><a class="header" href="#install-nix">Install nix</a></h1>
+                        <h1 id="how-to-install-nix"><a class="header" href="#how-to-install-nix">How to install <code>nix</code></a></h1>
+<p>This guide will walk you through installing Nix using the Determinate Nix Installer. The installation process is the same for macOS and Linux. However, Windows users must first set up the Windows Subsystem for Linux (WSL) before proceeding.</p>
+<h2 id="prerequisites-for-windows-users"><a class="header" href="#prerequisites-for-windows-users">Prerequisites for Windows Users</a></h2>
+<p>If you are on Windows, you need to install <strong>WSL (Windows Subsystem for Linux)</strong> before proceeding:</p>
+<ol>
+<li>
+<p><strong>Install WSL</strong>:</p>
+<ul>
+<li>Open <strong>PowerShell as Administrator</strong> and run:
+<pre><code class="language-powershell">wsl --install
+</code></pre>
+</li>
+<li>If prompted, restart your computer.</li>
+</ul>
+</li>
+<li>
+<p><strong>Install a Linux distribution</strong>:</p>
+<ul>
+<li>After enabling WSL, install a Linux distribution from the <strong>Microsoft Store</strong> (e.g., Ubuntu).</li>
+</ul>
+</li>
+<li>
+<p><strong>Launch the installed Linux distribution</strong> and proceed with the Nix installation below.</p>
+</li>
+</ol>
+<h2 id="installing-nix-macos-linux-and-wsl"><a class="header" href="#installing-nix-macos-linux-and-wsl">Installing Nix (macOS, Linux, and WSL)</a></h2>
+<ol>
+<li>
+<p><strong>Open a terminal</strong> (on macOS/Linux or inside WSL on Windows).</p>
+</li>
+<li>
+<p><strong>Download and run the installer script</strong>:</p>
+<pre><code class="language-bash">curl -L https://install.determinate.systems/nix | sh
+</code></pre>
+</li>
+<li>
+<p><strong>Follow the on-screen instructions</strong>: The script will guide you through the installation. You may need to enter your administrator password.</p>
+</li>
+<li>
+<p><strong>Enable Flakes and the Nix Command</strong>:</p>
+<p>Edit your Nix configuration file:</p>
+<pre><code class="language-bash">rm -rf ~/.config/nix/nix.conf
+mkdir -p ~/.config/nix
+echo 'experimental-features = nix-command flakes' &gt;&gt; ~/.config/nix/nix.conf
+</code></pre>
+</li>
+<li>
+<p><strong>Restart your terminal</strong> to apply the necessary configurations.</p>
+</li>
+</ol>
+<h2 id="verifying-the-installation"><a class="header" href="#verifying-the-installation">Verifying the Installation</a></h2>
+<p>To confirm that Nix has been installed correctly, run:</p>
+<pre><code class="language-bash">nix --version
+</code></pre>
+<p>If the installation was successful, this will display the installed version of Nix.</p>
+<p>You can install programs with:</p>
+<pre><code class="language-bash"># Search
+nix search nixpkgs &lt;package&gt;
+# Install
+nix profile install 'nixpkgs#git'
+</code></pre>
+<h2 id="additional-resources"><a class="header" href="#additional-resources">Additional Resources</a></h2>
+<ul>
+<li><a href="https://nixos.org/manual/nix/stable/">Nix Official Documentation</a></li>
+<li><a href="https://github.com/DeterminateSystems/nix-installer">Determinate Nix Installer GitHub Repository</a></li>
+<li><a href="https://learn.microsoft.com/fr-fr/windows/wsl/install">Microsoft WSL</a></li>
+</ul>
+<p>If you encounter any issues or have questions, refer to the official documentation or the GitHub repository for support.</p>
 
                     </main>
 
@@ -184,6 +250,9 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
+                            <a rel="next prefetch" href="../nix/COMMA.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -195,6 +264,9 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
+                    <a rel="next prefetch" href="../nix/COMMA.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
