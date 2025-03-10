@@ -1,0 +1,22 @@
+version: '3'
+tasks:
+  build:
+    # TODO: run it into lefthook
+    desc: Build your project
+    cmds:
+      - echo TODO
+  test:
+    # TODO: run it into lefthook
+    deps:
+      - build
+    desc: Test your project
+    cmds:
+      - echo TODO
+  docs:
+    # TODO: run it into lefthook
+    desc: Build project documentation
+    cmds:
+      - echo TODO
+  default:
+    cmds:
+      - task -l

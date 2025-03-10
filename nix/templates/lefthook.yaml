@@ -1,0 +1,8 @@
+# INFO: Documentation:
+#  http://lefthook.dev/
+pre-commit:
+  commands:
+    fmt:
+      tags: formatter
+      run: nix fmt
+      stage_fixed: true
