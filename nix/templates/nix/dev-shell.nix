@@ -1,5 +1,4 @@
-_:
-{
+_: {
   config.perSystem =
     {
       pkgs,
@@ -11,13 +10,13 @@ _:
         nativeBuildInputs = with pkgs; [
           go-task
           lefthook
-          vhs
           vale
           trufflehog
-          mdbook
           convco
-          reuse
           sops
+          # mdbook
+          # vhs
+          # reuse
           # TODO: add you project deps hereyou project deps here
         ];
         # INFO: That run when you come in the project

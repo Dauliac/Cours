@@ -31,3 +31,4 @@ ______________________________________________________________________
 - [Install `nix`](./nix/INSTALL.md)
 - [Install `comma`](./nix/COMMA.md)
 - [Get courses](./GET.md)
+- [Get template](./nix/TEMPLATE.md)
