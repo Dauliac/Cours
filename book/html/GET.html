@@ -173,7 +173,28 @@
 
                 <div id="content" class="content">
                     <main>
-                        
+                        <h1 id="get-courses"><a class="header" href="#get-courses">Get Courses</a></h1>
+<h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
+<ul>
+<li><a href="./nix/INSTALL.html">Nix is installed</a></li>
+</ul>
+<h2 id="get-the-project"><a class="header" href="#get-the-project">Get the Project</a></h2>
+<pre><code class="language-bash">git clone git@github.com:Dauliac/Cours.git
+cd Cours
+# Get path
+echo $PWD/book/html/index.html
+</code></pre>
+<h3 id="open-in-browser"><a class="header" href="#open-in-browser">Open in Browser</a></h3>
+<h4 id="on-linux--macos"><a class="header" href="#on-linux--macos">On Linux / macOS:</a></h4>
+<p>Open the file in your browser with:</p>
+<pre><code class="language-bash">xdg-open $PWD/book/html/index.html
+</code></pre>
+<h4 id="on-wsl-windows-subsystem-for-linux"><a class="header" href="#on-wsl-windows-subsystem-for-linux">On WSL (Windows Subsystem for Linux):</a></h4>
+<p>If you are using <strong>WSL</strong>, you need to open the file with a Windows browser:</p>
+<pre><code class="language-bash">explorer.exe `wslpath -w $PWD/book/html/index.html`
+</code></pre>
+<p>You can now view <strong>index.html</strong> directly in your browser.</p>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

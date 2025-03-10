@@ -35,8 +35,6 @@
     "moved": 0,
     "link": "https://zettelkasten.de/"
   },
-
-  // Outils
   {
     "label": "go-task",
     "quadrant": 1,
@@ -61,16 +59,9 @@
   {
     "label": "Just",
     "quadrant": 1,
-    "ring": 0,
+    "ring": 1,
     "moved": 0,
     "link": "https://github.com/casey/just"
-  },
-  {
-    "label": "Tech Radar",
-    "quadrant": 1,
-    "ring": 0,
-    "moved": 0,
-    "link": "https://www.thoughtworks.com/radar"
   },
   {
     "label": "VHS",
@@ -124,14 +115,14 @@
   {
     "label": "GitHub Actions",
     "quadrant": 1,
-    "ring": 0,
+    "ring": 1,
     "moved": 0,
     "link": "https://github.com/features/actions"
   },
   {
     "label": "GitLab CI/CD",
     "quadrant": 1,
-    "ring": 0,
+    "ring": 1,
     "moved": 0,
     "link": "https://docs.gitlab.com/ee/ci/"
   },
@@ -145,7 +136,7 @@
   {
     "label": "Jenkins",
     "quadrant": 1,
-    "ring": 2,
+    "ring": 3,
     "moved": 0,
     "link": "https://www.jenkins.io/"
   },
@@ -155,13 +146,6 @@
     "ring": 2,
     "moved": 0,
     "link": "https://travis-ci.org/"
-  },
-  {
-    "label": "Spinnaker",
-    "quadrant": 1,
-    "ring": 2,
-    "moved": 0,
-    "link": "https://www.spinnaker.io/"
   },
   {
     "label": "Argo CD",
@@ -183,13 +167,6 @@
     "ring": 1,
     "moved": 0,
     "link": "https://tekton.dev/"
-  },
-  {
-    "label": "Concourse CI",
-    "quadrant": 1,
-    "ring": 2,
-    "moved": 0,
-    "link": "https://concourse-ci.org/"
   },
   {
     "label": "terraform-docs",
@@ -229,7 +206,7 @@
     {
       "label": "ansible molecule",
       "quadrant": 1,
-      "ring": 2,
+      "ring": 0,
       "moved": 0,
       "link": "https://molecule.readthedocs.io/"
     },
@@ -271,28 +248,28 @@
     {
       "label": "nix flake",
       "quadrant": 1,
-      "ring": 1,
+      "ring": 0,
       "moved": 0,
       "link": "https://nixos.wiki/wiki/Flakes"
     },
     {
       "label": "k3s",
       "quadrant": 1,
-      "ring": 2,
+      "ring": 1,
       "moved": 0,
       "link": "https://k3s.io/"
     },
     {
       "label": "vagrant",
       "quadrant": 1,
-      "ring": 2,
+      "ring": 3,
       "moved": 0,
       "link": "https://www.vagrantup.com/"
     },
     {
       "label": "Makefile",
       "quadrant": 1,
-      "ring": 0,
+      "ring": 1,
       "moved": 0,
       "link": "https://www.gnu.org/software/make/manual/make.html"
     },
@@ -313,14 +290,14 @@
     {
       "label": "Python",
       "quadrant": 2,
-      "ring": 0,
+      "ring": 1,
       "moved": 0,
       "link": "https://www.python.org/"
     },
     {
       "label": "Bash",
       "quadrant": 2,
-      "ring": 0,
+      "ring": 1,
       "moved": 0,
       "link": "https://www.gnu.org/software/bash/"
     }

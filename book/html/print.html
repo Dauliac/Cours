@@ -1209,120 +1209,52 @@ Intellectual Property Code (<a href="https://www.legifrance.gouv.fr/affichCodeAr
 <li><a href="https://docs.mermaidchart.com/plugins/mermaid-chart-gpt">Mermaid Chart GPT</a>: Automatically generating diagrams</li>
 </ul>
 <hr />
-<div style="break-before: page; page-break-before: always;"></div><h1 id="tech-radar-open-source-courses"><a class="header" href="#tech-radar-open-source-courses">Tech radar open source courses</a></h1>
-<!-- Intégration des scripts nécessaires -->
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tech-radar-1"><a class="header" href="#tech-radar-1">Tech radar</a></h1>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://zalando.github.io/tech-radar/release/radar-0.11.js"></script>
-<!-- Conteneur pour le radar -->
 <p><svg id="radar"></svg></p>
-<!-- Script de configuration du radar -->
 <script>
-fetch('./assets/radar.json').then(function(response) {
-  return response.json();
-}).then(function(data) {
-  radar_visualization({
-    repo_url: "https://github.com/zalando/tech-radar",
-    title: "Zalando Tech Radar",
-    date: data.date,
-    quadrants: [
-      { name: "Languages" },
-      { name: "Infrastructure" },
-      { name: "Datastores" },
-      { name: "Data Management" },
-    ],
-    rings: [
-      { name: "ADOPT", color: "#5ba300" },
-      { name: "TRIAL", color: "#009eb0" },
-      { name: "ASSESS", color: "#c7ba00" },
-      { name: "HOLD", color: "#e09b96" },
-    ],
-    entries: data.entries
-  });
-}).catch(function(err) {
-  console.log('Error loading config.json', err);
+radar_visualization({
+  // title: "Tech Radar",
+  quadrants: [
+    { name: "Methods" },
+    { name: "Tools" },
+    { name: "Langages & Frameworks" },
+    { name: "Other" }
+  ],
+  rings: [
+    { name: "Poulet", color: "#5ba300" },
+    { name: "Good", color: "#009eb0" },
+    { name: "Meh", color: "#c7ba00" },
+    { name: "Nope", color: "#e09b96" }
+  ],
+  entries: [
+    { label: "EventStorming", quadrant: 0, ring: 1, moved: 0, link: "https://www.eventstorming.com/" },
+    { label: "Team Topologies", quadrant: 0, ring: 1, moved: 0, link: "https://teamtopologies.com/" },
+    { label: "ADR", quadrant: 0, ring: 0, moved: 0, link: "https://adr.github.io/" },
+    { label: "Diátaxis", quadrant: 0, ring: 1, moved: 0, link: "https://diataxis.fr/" },
+    { label: "Zettelkasten", quadrant: 0, ring: 2, moved: 0, link: "https://zettelkasten.de/" },
+    { label: "go-task", quadrant: 1, ring: 0, moved: 0, link: "https://taskfile.dev/" },
+    { label: "treefmt", quadrant: 1, ring: 0, moved: 0, link: "https://github.com/numtide/treefmt" },
+    { label: "lefthook", quadrant: 1, ring: 0, moved: 0, link: "https://evilmartians.com/chronicles/lefthook-succession-of-git-hooks" },
+    { label: "Just", quadrant: 1, ring: 1, moved: 0, link: "https://github.com/casey/just" },
+    { label: "VHS", quadrant: 1, ring: 2, moved: 0, link: "https://github.com/charmbracelet/vhs" },
+    { label: "mdBook", quadrant: 1, ring: 1, moved: 0, link: "https://rust-lang.github.io/mdBook/" },
+    { label: "GitHub Actions", quadrant: 1, ring: 1, moved: 0, link: "https://github.com/features/actions" },
+    { label: "GitLab CI/CD", quadrant: 1, ring: 1, moved: 0, link: "https://docs.gitlab.com/ee/ci/" },
+    { label: "CircleCI", quadrant: 1, ring: 1, moved: 0, link: "https://circleci.com/" },
+    { label: "Jenkins", quadrant: 1, ring: 3, moved: 0, link: "https://www.jenkins.io/" },
+    { label: "Travis CI", quadrant: 1, ring: 2, moved: 0, link: "https://travis-ci.org/" },
+    { label: "Argo CD", quadrant: 1, ring: 1, moved: 0, link: "https://argo-cd.readthedocs.io/" },
+    { label: "Drone CI", quadrant: 1, ring: 1, moved: 0, link: "https://drone.io/" },
+    { label: "Terraform-docs", quadrant: 1, ring: 1, moved: 0, link: "https://terraform-docs.io/" },
+    { label: "Rust", quadrant: 2, ring: 0, moved: 0, link: "https://www.rust-lang.org/" },
+    { label: "Go", quadrant: 2, ring: 0, moved: 0, link: "https://golang.org/" },
+    { label: "Python", quadrant: 2, ring: 1, moved: 0, link: "https://www.python.org/" },
+    { label: "Bash", quadrant: 2, ring: 1, moved: 0, link: "https://www.gnu.org/software/bash/" }
+  ]
 });
-</script>
-<p>radar_visualization({
-svg_id: "radar",
-// width: 1200,
-// height: 800,
-// colors: {
-//   background: "#fff",
-//   grid: "#bbb",
-//   inactive: "#ddd"
-// },
-title: "Courses Tech radar",
-quadrants: [
-{ name: "Techniques" },
-{ name: "Outils" },
-{ name: "Plateformes" },
-{ name: "Langages &amp; Frameworks" }
-],
-rings: [
-{ name: "Incredible", color: "#5ba300" },
-{ name: "Cool", color: "#009eb0" },
-{ name: "Why not", color: "#c7ba00" },
-{ name: "Nope", color: "#e09b96" }
-],
-entries: data.entries
-entries: [
-// Techniques
-{ label: "EventStorming", quadrant: 0, ring: 1, moved: 0 },
-{ label: "Team Topologies", quadrant: 0, ring: 1, moved: 0 },
-{ label: "CD Pull", quadrant: 0, ring: 2, moved: 0 },
-{ label: "CD Push", quadrant: 0, ring: 2, moved: 0 },
-{ label: "ADR", quadrant: 0, ring: 0, moved: 0 },
-{ label: "Diátaxis", quadrant: 0, ring: 1, moved: 0 },
-{ label: "Zettelkasten", quadrant: 0, ring: 2, moved: 0 },</p>
-<pre><code>// Outils
-{ label: "go-task", quadrant: 1, ring: 0, moved: 0 },
-{ label: "treefmt", quadrant: 1, ring: 0, moved: 0 },
-{ label: "lefthook", quadrant: 1, ring: 1, moved: 0 },
-{ label: "Just", quadrant: 1, ring: 0, moved: 0 },
-{ label: "Tech Radar", quadrant: 1, ring: 0, moved: 0 },
-{ label: "VHS", quadrant: 1, ring: 2, moved: 0 },
-{ label: "mdBook", quadrant: 1, ring: 1, moved: 0 },
-{ label: "mdBook cmd-run", quadrant: 1, ring: 2, moved: 0 },
-{ label: "rustdoc", quadrant: 1, ring: 1, moved: 0 },
-{ label: "Vale", quadrant: 1, ring: 1, moved: 0 },
-{ label: "Doc Detective", quadrant: 1, ring: 2, moved: 0 },
-{ label: "mdformat", quadrant: 1, ring: 1, moved: 0 },
-{ label: "GitHub Actions", quadrant: 1, ring: 0, moved: 0 },
-{ label: "GitLab CI/CD", quadrant: 1, ring: 0, moved: 0 },
-{ label: "CircleCI", quadrant: 1, ring: 1, moved: 0 },
-{ label: "Jenkins", quadrant: 1, ring: 2, moved: 0 },
-{ label: "Travis CI", quadrant: 1, ring: 2, moved: 0 },
-{ label: "Spinnaker", quadrant: 1, ring: 2, moved: 0 },
-{ label: "Argo CD", quadrant: 1, ring: 1, moved: 0 },
-{ label: "Drone CI", quadrant: 1, ring: 1, moved: 0 },
-{ label: "Tekton", quadrant: 1, ring: 1, moved: 0 },
-{ label: "Concourse CI", quadrant: 1, ring: 2, moved: 0 },
-{ label: "terraform-docs", quadrant: 1, ring: 1, moved: 0 },
-{ label: "trivy", quadrant: 1, ring: 1, moved: 0 },
-{ label: "grype", quadrant: 1, ring: 1, moved: 0 },
-{ label: "kubeconform", quadrant: 1, ring: 2, moved: 0 },
-{ label: "ansible-lint", quadrant: 1, ring: 2, moved: 0 },
-{ label: "ansible molecule", quadrant: 1, ring: 2, moved: 0 },
-{ label: "dotenv-linter", quadrant: 1, ring: 2, moved: 0 },
-{ label: "reviewdog", quadrant: 1, ring: 2, moved: 0 },
-{ label: "convco", quadrant: 1, ring: 2, moved: 0 },
-{ label: "trufflehog", quadrant: 1, ring: 2, moved: 0 },
-{ label: "act", quadrant: 1, ring: 2, moved: 0 },
-{ label: "nix flake", quadrant: 1, ring: 1, moved: 0 },
-{ label: "k3s", quadrant: 1, ring: 2, moved: 0 },
-{ label: "vagrant", quadrant: 1, ring: 2, moved: 0 },
-{ label: "Makefile", quadrant: 1, ring: 0, moved: 0 },
-
-// Langages &amp; Frameworks
-{ label: "Rust", quadrant: 2, ring: 0, moved: 0 },
-{ label: "Go", quadrant: 2, ring: 0, moved: 0 },
-{ label: "Python", quadrant: 2, ring: 0, moved: 0 },
-{ label: "Bash", quadrant: 2, ring: 0, moved: 0 }
-</code></pre>
-<p>]</p>
-<p>});
-</script></p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="packaging-with-nix"><a class="header" href="#packaging-with-nix">Packaging with nix</a></h1>
+</script><div style="break-before: page; page-break-before: always;"></div><h1 id="packaging-with-nix"><a class="header" href="#packaging-with-nix">Packaging with nix</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="perfect-container-with-nix-"><a class="header" href="#perfect-container-with-nix-">Perfect container with nix ?</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="how-to-install-nix"><a class="header" href="#how-to-install-nix">How to install <code>nix</code></a></h1>
 <p>This guide will walk you through installing Nix using the Determinate Nix Installer. The installation process is the same for macOS and Linux. However, Windows users must first set up the Windows Subsystem for Linux (WSL) before proceeding.</p>
@@ -1435,7 +1367,28 @@ nix search nixpkgs katana
 <li><a href="https://search.nixos.org/packages">Nixpkgs Package Listing</a></li>
 </ul>
 <p>If you encounter any issues or have questions, refer to the official GitHub repository or Nix documentation for support.</p>
-<div style="break-before: page; page-break-before: always;"></div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="get-courses"><a class="header" href="#get-courses">Get Courses</a></h1>
+<h2 id="prerequisites-1"><a class="header" href="#prerequisites-1">Prerequisites</a></h2>
+<ul>
+<li><a href="./nix/INSTALL.html">Nix is installed</a></li>
+</ul>
+<h2 id="get-the-project"><a class="header" href="#get-the-project">Get the Project</a></h2>
+<pre><code class="language-bash">git clone git@github.com:Dauliac/Cours.git
+cd Cours
+# Get path
+echo $PWD/book/html/index.html
+</code></pre>
+<h3 id="open-in-browser"><a class="header" href="#open-in-browser">Open in Browser</a></h3>
+<h4 id="on-linux--macos"><a class="header" href="#on-linux--macos">On Linux / macOS:</a></h4>
+<p>Open the file in your browser with:</p>
+<pre><code class="language-bash">xdg-open $PWD/book/html/index.html
+</code></pre>
+<h4 id="on-wsl-windows-subsystem-for-linux"><a class="header" href="#on-wsl-windows-subsystem-for-linux">On WSL (Windows Subsystem for Linux):</a></h4>
+<p>If you are using <strong>WSL</strong>, you need to open the file with a Windows browser:</p>
+<pre><code class="language-bash">explorer.exe `wslpath -w $PWD/book/html/index.html`
+</code></pre>
+<p>You can now view <strong>index.html</strong> directly in your browser.</p>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

@@ -39,9 +39,6 @@ renderer = ["html"]
 [preprocessor.links]
 renderer = ["html"]
 
-[preprocessor.local]
-command = "set -x; task build:pre --verbose --output prefixed"
-
 [preprocessor.mermaid]
 command = "mdbook-mermaid"
 renderer = ["html"]
