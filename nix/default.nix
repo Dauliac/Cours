@@ -5,6 +5,7 @@
     ./dev-shell.nix
     ./treefmt.nix
     ./vale.nix
+    ./templates.nix
   ];
   perSystem =
     { system, ... }:
