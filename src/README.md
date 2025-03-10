@@ -9,7 +9,7 @@ ______________________________________________________________________
 
 <!-- vale on -->
 
-![height:500px](./assets/mindmap.svg)
+## ![height:500px](./assets/mindmap.svg)
 
 ## About this course
 
@@ -33,8 +33,6 @@ My favorite technologies include **Nix** , **Kubernetes** and **Rust**, and I ta
 
 ______________________________________________________________________
 
-______________________________________________________________________
-
 My courses are structured but adaptable.
 
 I frequently adjust the content based on my mood, **your questions**, and the interests of the group.
@@ -54,8 +52,6 @@ All course materials are available on GitHub: [https://github.com/Dauliac/Cours]
 ______________________________________________________________________
 
 My CV is also available here: [https://github.com/Dauliac/resume](https://github.com/Dauliac/resume)
-
-______________________________________________________________________
 
 ## Evaluation & grading
 
