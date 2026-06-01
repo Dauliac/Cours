@@ -21,8 +21,9 @@ ______________________________________________________________________
 
 # Practicals
 
-- [Packaging with nix](./sdlc/tps/packaging-with-nix/README.md)
-- [Perfect container with nix ?](./sdlc/tps/perfect-container-with/README.md)
+- [TP 1: Packaging with Nix](./sdlc/tps/packaging-with-nix/README.md)
+- [TP 2: Building Containers - The Traditional Way](./sdlc/tps/perfect-container-with/README.md)
+- [TP 3: Perfect Containers with Nix](./sdlc/tps/perfect-container-with-nix/README.md)
 
 ______________________________________________________________________
 
