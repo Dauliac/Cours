@@ -103,11 +103,11 @@ In Continuous Delivery, versions are ready to be deployed but aren't deployed au
 ## Non-functional aspects
 
 - A specification: RFC ISO 25 010
-- ISQTB
+- ISTQB
 
-![](./assets/test-familly.png)
+![](./assets/test-family.png)
 
-## Keys performance indicators (KPI)
+## Key Performance Indicators (KPI)
 
 > It doesn’t work, it’s too slow, it’s broken.
 
@@ -168,7 +168,7 @@ ______________________________________________________________________
 ______________________________________________________________________
 
 1. Linting:
-   The linting phase ensures that the codebase is in good shape. This may include checking formatting, style, and auto generated code.
+   The linting phase ensures that the codebase is in good shape. This may include checking formatting, style, and auto-generated code.
 
 ______________________________________________________________________
 
@@ -215,9 +215,9 @@ ______________________________________________________________________
 - **Advantages:**
   1. Easier collaboration and code sharing.
   1. Centralized version and security management.
-  1. Possibility of frequent merge conflicts and complex dependencies.
+  1. Unified dependency management.
 - **Disadvantages:**
-  1. Frequent merge conflicts.
+  1. Frequent merge conflicts and complex dependencies.
   1. Errors in one project can impact the entire system.
   1. More complex management as it scales.
 

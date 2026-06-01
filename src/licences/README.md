@@ -1,6 +1,7 @@
 ______________________________________________________________________
 
-## header: 'License Course' footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com'
+<!-- header: 'License Course' -->
+<!-- footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com' -->
 
 <!-- headingDivider: 3 -->
 
@@ -35,7 +36,6 @@ ______________________________________________________________________
 
 Wiktionary
 
->
 
 ## Software Can't be stolen
 

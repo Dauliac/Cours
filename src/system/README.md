@@ -1,6 +1,7 @@
 ______________________________________________________________________
 
-## header: 'Systems Course' footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com'
+<!-- header: 'Systems Course' -->
+<!-- footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com' -->
 
 <!-- headingDivider: 3 -->
 
@@ -80,7 +81,7 @@ ______________________________________________________________________
 - Boots the operating system
 - Old term
 
-### A Language Misuse
+### A Common Misnomer
 
 - *Extensible Firmware Interface → INTEL*
 - **Unified Extensible Firmware Interface →** [AMD](https://fr.wikipedia.org/wiki/Advanced_Micro_Devices), [American Megatrends](https://fr.wikipedia.org/wiki/American_Megatrends), [Apple](https://fr.wikipedia.org/wiki/Apple), [ARM](<https://fr.wikipedia.org/wiki/ARM_(entreprise)>), [Dell](https://fr.wikipedia.org/wiki/Dell), [HP](https://fr.wikipedia.org/wiki/Hewlett-Packard), [Intel](https://fr.wikipedia.org/wiki/Intel), [IBM](https://fr.wikipedia.org/wiki/International_Business_Machines_Corporation), Insyde Software, [Microsoft](https://fr.wikipedia.org/wiki/Microsoft), and [Phoenix Technologies](https://fr.wikipedia.org/wiki/Phoenix_Technologies)
@@ -95,7 +96,7 @@ ______________________________________________________________________
 
 ______________________________________________________________________
 
-- PEI (*Before EFI Initialization*) for motherboard and chipset initialization. Switches processor to protected mode.
+- PEI (*Pre-EFI Initialization*) for motherboard and chipset initialization. Switches processor to protected mode.
 
 ______________________________________________________________________
 
@@ -152,7 +153,7 @@ ______________________________________________________________________
 
 ## Scheduler
 
-*What's it ?*
+*What is it?*
 
 ### How do we run multiple processes?
 

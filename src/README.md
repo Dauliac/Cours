@@ -29,7 +29,7 @@ I have a background in **software architecture** and enjoy **development** in ge
 
 ______________________________________________________________________
 
-My favorite technologies include **Nix** , **Kubernetes** and **Rust**, and I take a strong stance in advocating for efficient and modern software practices.
+My favorite technologies include **Nix**, **Kubernetes**, and **Rust**, and I take a strong stance in advocating for efficient and modern software practices.
 
 ______________________________________________________________________
 
@@ -55,7 +55,7 @@ My CV is also available here: [https://github.com/Dauliac/resume](https://github
 
 ## Evaluation & grading
 
-You will be graded on the **project** in collaboration with **Alan**, but based on **differents criterias**:
+You will be graded on the **project** in collaboration with **Alan**, but based on **different criteria**:
 
 ______________________________________________________________________
 

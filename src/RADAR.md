@@ -12,7 +12,7 @@ radar_visualization({
   quadrants: [
     { name: "Methods" },
     { name: "Tools" },
-    { name: "Langages & Frameworks" },
+    { name: "Languages & Frameworks" },
     { name: "Other" }
   ],
   rings: [
