@@ -9,6 +9,8 @@
 <script>
 radar_visualization({
   // title: "Tech Radar",
+  width: 1500,
+  height: 1000,
   quadrants: [
     { name: "Methods" },
     { name: "Tools" },
@@ -148,18 +150,11 @@ radar_visualization({
     { label: "Bash", quadrant: 2, ring: 1, moved: 0, link: "https://www.gnu.org/software/bash/" },
     { label: "TypeScript", quadrant: 2, ring: 1, moved: 0, link: "https://www.typescriptlang.org/" },
     { label: "Zig", quadrant: 2, ring: 2, moved: 0, link: "https://ziglang.org/" },
-    { label: "C", quadrant: 2, ring: 1, moved: 0, link: "https://en.cppreference.com/w/c" },
-    { label: "C++", quadrant: 2, ring: 2, moved: 0, link: "https://isocpp.org/" },
-    { label: "Java", quadrant: 2, ring: 2, moved: 0, link: "https://openjdk.org/" },
     { label: "Kotlin", quadrant: 2, ring: 1, moved: 0, link: "https://kotlinlang.org/" },
     { label: "Elixir", quadrant: 2, ring: 2, moved: 0, link: "https://elixir-lang.org/" },
     { label: "Haskell", quadrant: 2, ring: 2, moved: 0, link: "https://www.haskell.org/" },
-    { label: "OCaml", quadrant: 2, ring: 2, moved: 0, link: "https://ocaml.org/" },
-    { label: "Gleam", quadrant: 2, ring: 2, moved: 0, link: "https://gleam.run/" },
     { label: "CUE", quadrant: 2, ring: 1, moved: 0, link: "https://cuelang.org/" },
-    { label: "Dhall", quadrant: 2, ring: 2, moved: 0, link: "https://dhall-lang.org/" },
     { label: "Jsonnet", quadrant: 2, ring: 2, moved: 0, link: "https://jsonnet.org/" },
-    { label: "Pkl", quadrant: 2, ring: 2, moved: 0, link: "https://pkl-lang.org/" },
     { label: "Nickel", quadrant: 2, ring: 2, moved: 0, link: "https://nickel-lang.org/" },
 
     // Other — Editors & IDEs
