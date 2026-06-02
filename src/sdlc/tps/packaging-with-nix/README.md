@@ -263,6 +263,8 @@ nix search nixpkgs python
 # Or use the web interface: https://search.nixos.org/packages
 ```
 
+To look up Nix built-in functions and library functions, use [Noogle](https://noogle.dev) — a search engine for Nix functions with examples and type signatures.
+
 ### Step 7: Try with direnv (optional but recommended)
 
 If you have `direnv` installed, the `.envrc` file will automatically load your dev shell whenever you `cd` into the project:
@@ -607,6 +609,8 @@ packages.default = pkgs.writers.writePython3Bin "my-tool" {
   print(f"Your IP: {r.json()['origin']}")
 '';
 ```
+
+For real-world Python projects with `pyproject.toml` and `uv`, look at [uv2nix](https://github.com/pyproject-nix/uv2nix) — it bridges the `uv` package manager with Nix for fully reproducible Python builds.
 
 ### Challenge 2: Add a second package
 
