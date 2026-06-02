@@ -17,7 +17,6 @@ _: {
           shfmt.enable = true;
           shellcheck.enable = true;
           alejandra.enable = true;
-          nixfmt.enable = true;
           yamlfmt.enable = true;
           jsonfmt = {
             enable = true;

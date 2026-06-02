@@ -92,7 +92,7 @@ Docker Desktop integrates with WSL 2 to run Linux containers on Windows:
 If you already have Nix installed from TP 1:
 
 ```bash
-nix profile install nixpkgs#docker
+nix profile install 'nixpkgs#docker'
 ```
 
 > This installs the Docker CLI only. On Linux, you still need the Docker daemon running (`sudo systemctl start docker`). On macOS/WSL, you still need Docker Desktop.

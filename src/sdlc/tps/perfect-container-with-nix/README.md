@@ -170,7 +170,7 @@ _: {
 
 ```bash
 git add nix/container.nix
-nom build .#container
+nom build '.#container'
 ```
 
 `nom` (nix-output-monitor) wraps `nix build` with a rich live progress view. This produces a `result` file that is a Docker-compatible image archive.
@@ -262,8 +262,8 @@ Build the Nix image twice:
 
 ```bash
 # -o creates named symlinks (safe to re-run, overwrites previous symlinks)
-nix build .#container -o result1
-nix build .#container -o result2
+nix build '.#container' -o result1
+nix build '.#container' -o result2
 
 # Compare the checksums
 sha256sum result1
@@ -460,7 +460,7 @@ Build and run:
 
 ```bash
 git add main.go nix/go-package.nix nix/go-container.nix
-nix build .#go-container
+nix build '.#go-container'
 docker load < result
 
 # Stop any previous run, then start fresh
@@ -546,7 +546,7 @@ Use `nix-tree` to interactively visualize what goes into your container:
 
 ```bash
 # Interactive dependency tree of your package
-nix-tree .#default
+nix-tree '.#default'
 ```
 
 Navigate with arrow keys and Enter. You can see every transitive dependency, its size, and why it was pulled in. This is the best way to understand *why* your container is the size it is.
@@ -555,24 +555,24 @@ Then measure it:
 
 ```bash
 # Show all runtime dependencies with individual and closure sizes
-nix path-info -rsSh .#default
+nix path-info -rsSh '.#default'
 
 # Just the total closure size
-nix path-info -Sh .#default
+nix path-info -Sh '.#default'
 ```
 
 This is what ends up in your container - nothing more, nothing less. If a dependency seems surprising, use `nix why-depends` to trace the dependency chain:
 
 ```bash
 # Why does my package depend on glibc?
-nix why-depends .#default nixpkgs#glibc
+nix why-depends '.#default' 'nixpkgs#glibc'
 ```
 
 ### Exercise 3: Push to a registry
 
 ```bash
 # Build and push directly (without Docker)
-nix build .#container
+nix build '.#container'
 skopeo copy docker-archive:result docker://registry.example.com/my-app:latest
 ```
 
@@ -592,7 +592,7 @@ packages.container = pkgs.dockerTools.streamLayeredImage {
 ```
 
 ```bash
-nix build .#container
+nix build '.#container'
 ./result | docker load
 ```
 
@@ -615,12 +615,12 @@ ______________________________________________________________________
 
 | Command | Purpose |
 | --- | --- |
-| `nom build .#container` | Build the container image with fancy output |
+| `nom build '.#container'` | Build the container image with fancy output |
 | `nix run` | Build and run the default app in one step |
 | `docker load < result` | Load a Nix-built image into Docker |
-| `nix-tree .#default` | Interactive dependency tree explorer |
-| `nix path-info -rsSh .#default` | Show the dependency closure with sizes |
-| `nix why-depends .#default nixpkgs#glibc` | Trace why a dependency is included |
+| `nix-tree '.#default'` | Interactive dependency tree explorer |
+| `nix path-info -rsSh '.#default'` | Show the dependency closure with sizes |
+| `nix why-depends '.#default' 'nixpkgs#glibc'` | Trace why a dependency is included |
 | `skopeo copy docker-archive:result docker://...` | Push without Docker |
 
 ### The Big Picture
