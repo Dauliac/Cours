@@ -4,13 +4,13 @@ ______________________________________________________________________
 
 <!-- vale off -->
 
-- [height:500px](#height500px)
-- [About this course](#about-this-course)
-- [Evaluation & grading](#evaluation--grading)
-- [Course format](#course-format)
-- [Core topics](#core-topics)
-- [Key principles](#key-principles)
-- [Expectations](#expectations)
+* [height:500px](#height500px)
+* [About this course](#about-this-course)
+* [Evaluation & grading](#evaluation--grading)
+* [Course format](#course-format)
+* [Core topics](#core-topics)
+* [Key principles](#key-principles)
+* [Expectations](#expectations)
 
 <!-- vale on -->
 
@@ -34,7 +34,7 @@ I have a background in **software architecture** and enjoy **development** in ge
 
 ______________________________________________________________________
 
-My favorite technologies include **Nix** , **Kubernetes** and **Rust**, and I take a strong stance in advocating for efficient and modern software practices.
+My favorite technologies include **Nix**, **Kubernetes**, and **Rust**, and I take a strong stance in advocating for efficient and modern software practices.
 
 ______________________________________________________________________
 
@@ -60,7 +60,7 @@ My CV is also available here: [https://github.com/Dauliac/resume](https://github
 
 ## Evaluation & grading
 
-You will be graded on the **project** in collaboration with **Alan**, but based on **differents criterias**:
+You will be graded on the **project** in collaboration with **Alan**, but based on **different criteria**:
 
 ______________________________________________________________________
 

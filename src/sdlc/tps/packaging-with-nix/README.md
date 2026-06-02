@@ -8,7 +8,9 @@ By the end of this practical, you will be able to:
 2. **Set up** a Nix flake project from scratch using the course template
 3. **Use** a reproducible development environment with `devShells`
 4. **Package** a simple application with Nix
-5. **Explain** the difference between imperative and declarative package management
+5. **Inspect** derivations, dependency trees, and closures to understand Nix artefacts
+6. **Use** the Nix REPL to interactively explore packages and flake outputs
+7. **Explain** the difference between imperative and declarative package management
 
 ## Prerequisites
 
@@ -99,7 +101,7 @@ You should see:
 
 ```
 ./flake.nix          # The project's entry point
-./nix/default.nix    # Imports all nix modules
+./nix/default.nix    # Auto-imports all .nix files in nix/
 ./nix/dev-shell.nix  # Development environment definition
 ./nix/treefmt.nix    # Code formatting configuration
 ./Taskfile.yaml      # Task runner (like Make, but better)
@@ -140,12 +142,14 @@ cat flake.nix
 ### Step 4: Enter the development environment
 
 ```bash
-# Track all generated files (Nix flakes require this)
+# Track all generated files (Nix flakes ONLY see git-tracked files!)
 git add .
 
 # Enter the development shell
 nix develop
 ```
+
+> **Why `git add`?** Nix flakes use git to determine which files exist. If a file is not tracked by git, Nix cannot see it. This is a common source of "file not found" errors. **Always `git add` new files before running any `nix` command.**
 
 You are now inside a reproducible shell. Every tool listed in `nix/dev-shell.nix` is available, regardless of what is installed on your system.
 
@@ -191,6 +195,30 @@ nix flake show
 ```
 
 `nix flake show` displays all the outputs of your project. You should see your `devShell` listed.
+
+### Step 5b: Discover the build tools
+
+Your dev shell includes two tools that make working with Nix much more pleasant:
+
+**`nom` (nix-output-monitor)**: Replaces the default Nix build output with a rich, real-time view showing what's being built, downloaded, and how much is left:
+
+```bash
+# Instead of plain "nix build":
+nom build
+```
+
+You will see a live progress bar with active builds, downloads, and store paths. This is especially useful when building for the first time (many dependencies to fetch).
+
+**`nix-tree`**: An interactive terminal tool to explore the dependency tree of any Nix package:
+
+```bash
+# Explore the dev shell's dependencies interactively
+nix-tree .#devShells.x86_64-linux.default
+```
+
+Navigate with arrow keys, press Enter to expand nodes. This shows you exactly what Nix pulled in and why.
+
+Try both now. You will use them throughout the TPs.
 
 ______________________________________________________________________
 
@@ -264,6 +292,10 @@ echo "Current date: $(date)"
 echo "Built with Nix - reproducible by design."
 ```
 
+```bash
+git add hello.sh
+```
+
 ### Step 9: Create the Nix package definition
 
 Create a file `nix/package.nix`:
@@ -272,12 +304,18 @@ Create a file `nix/package.nix`:
 { pkgs, ... }:
 {
   config.perSystem =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
       packages.default = pkgs.writeShellApplication {
         name = "hello-nix";
         runtimeInputs = with pkgs; [ coreutils ];
         text = builtins.readFile ../hello.sh;
+      };
+
+      # Expose the package as a runnable app
+      apps.default = {
+        type = "app";
+        program = "${config.packages.default}/bin/hello-nix";
       };
     };
 }
@@ -289,49 +327,51 @@ Create a file `nix/package.nix`:
 - `name` is the name of the resulting binary
 - `runtimeInputs` are the dependencies available at runtime
 - `text` reads our script file
+- `apps.default` exposes the package so you can run it directly with `nix run`
 
-### Step 10: Register the package
+> **Remember**: after creating any new `.nix` file, always `git add` it immediately. Nix flakes ignore untracked files.
 
-Edit `nix/default.nix` to import the new package module:
+### Step 10: Track the new file with git
+
+> **Critical rule**: Nix flakes can only see files tracked by git. Every time you create a new `.nix` file, you **must** run `git add` on it before Nix can use it.
+
+```bash
+git add nix/package.nix
+```
+
+You do **not** need to edit `nix/default.nix`. The template uses auto-import: any `.nix` file you add to the `nix/` directory is automatically picked up, as long as git tracks it.
+
+Open `nix/default.nix` to see how it works:
 
 ```nix
-{ inputs, ... }:
-{
-  imports = [
-    inputs.treefmt-nix.flakeModule
-    ./dev-shell.nix
-    ./treefmt.nix
-    ./package.nix    # <- Add this line
-  ];
-  perSystem =
-    { system, ... }:
-    {
-      _module.args.pkgs = import inputs.nixpkgs {
-        inherit system;
-        config = {
-          allowUnfree = true;
-        };
-      };
-    };
-}
+# Auto-import all .nix files in this directory (except default.nix itself).
+# Just create a new .nix file, run `git add` on it, and it will be picked up automatically.
+nixFiles = builtins.filter (name: name != "default.nix") (
+  builtins.filter (name: builtins.match ".*\\.nix" name != null) (
+    builtins.attrNames (builtins.readDir ./.)
+  )
+);
 ```
+
+This reads all `.nix` files in the directory and imports them. No manual registration needed.
 
 ### Step 11: Build and run your package
 
 ```bash
-git add .
-
-# Build the package
-nix build
+# Build the package with fancy output
+nom build
 
 # The result is a symlink called "result"
 ls -la result/
 
-# Run it
+# Run it directly from the build output
 ./result/bin/hello-nix
+
+# Or run it with nix run (builds + runs in one step)
+nix run
 ```
 
-You should see the greeting message. Congratulations, you just built your first Nix package.
+`nix run` builds the default app and executes it in one command - no need to find the binary yourself. You should see the greeting message. Congratulations, you just built your first Nix package.
 
 ### Step 12: Explore the build output
 
@@ -355,9 +395,132 @@ Verify your understanding by answering:
 
 ______________________________________________________________________
 
-## Part 5: Code Quality Automation (20 min)
+## Part 5: Understanding Derivations and Dependencies (20 min)
 
-### Step 13: Use the formatter
+Now that you have a working package, let's look *inside* it. Nix gives you powerful tools to inspect exactly what was built, how, and why.
+
+### Step 13: Inspect the derivation
+
+A **derivation** is the low-level build recipe Nix actually executes. Every `nix build` produces one. Let's look at yours:
+
+```bash
+nix show-derivation .#default
+```
+
+This outputs JSON describing the exact build plan: the builder, arguments, environment variables, input sources, and input derivations. Notice:
+
+- `"builder"`: the program that runs the build (usually bash)
+- `"inputDrvs"`: other derivations this one depends on (coreutils, bash, etc.)
+- `"env"`: the environment variables set during the build
+- `"outputs"`: where the result will be stored
+
+Every field is deterministic. Change any input, and the output hash changes.
+
+### Step 14: Visualize the dependency tree
+
+Use `nix-tree` to interactively explore what your package depends on:
+
+```bash
+nix-tree .#default
+```
+
+Navigate with arrow keys and Enter. You will see your package at the top, with its full dependency tree below. Each node shows:
+
+- The store path and its size
+- The closure size (total size including all transitive dependencies)
+
+This is the **closure** - the complete set of everything needed to run your package. Nothing more, nothing less.
+
+### Step 15: Measure the closure
+
+```bash
+# Show all runtime dependencies with sizes
+nix path-info -rsSh .#default
+```
+
+This lists every store path in the closure with:
+
+- **NAR size** (`-s`): the size of the path itself
+- **Closure size** (`-S`): total size including dependencies
+- Human-readable (`-h`)
+
+```bash
+# Just the total closure size
+nix path-info -Sh .#default
+```
+
+For a simple shell script, you should see a closure of around 30-40 MB (mostly coreutils and bash).
+
+### Step 16: Explore with the Nix REPL
+
+The Nix REPL lets you inspect and evaluate Nix expressions interactively. This is the most powerful debugging tool in the Nix ecosystem:
+
+```bash
+nix repl
+```
+
+Inside the REPL, load your flake:
+
+```
+:lf .
+```
+
+Now explore:
+
+```
+# See all outputs
+outputs
+
+# Inspect your package
+outputs.packages.x86_64-linux.default
+
+# See its name
+outputs.packages.x86_64-linux.default.name
+
+# See its derivation path
+outputs.packages.x86_64-linux.default.drvPath
+
+# List attributes of nixpkgs
+builtins.attrNames inputs.nixpkgs.legacyPackages.x86_64-linux
+
+# Check a package version
+inputs.nixpkgs.legacyPackages.x86_64-linux.python3.version
+
+# Exit
+:q
+```
+
+The REPL is invaluable for debugging flakes, understanding how packages are composed, and exploring nixpkgs.
+
+### Step 17: Build and run with style
+
+Use `nom` (nix-output-monitor) for a much better build experience:
+
+```bash
+# Build with live progress display
+nom build
+
+# Build and run in one step
+nix run
+
+# Or use the task runner
+task build
+task run
+```
+
+`nom` replaces the default Nix output with a rich, real-time view showing active builds, downloads, and store paths. The `task run` command builds and runs the default app in one step.
+
+### Check Your Understanding
+
+- What is the difference between a derivation and a package?
+- How can you find out why a dependency is in your closure?
+- What does `:lf .` do in the Nix REPL?
+
+______________________________________________________________________
+
+## Part 6: Code Quality Automation (20 min)
+
+### Step 18: Use the formatter
 
 The template includes `treefmt` for automatic code formatting:
 
@@ -368,47 +531,48 @@ nix fmt
 
 This runs all configured formatters (see `nix/treefmt.nix`): shell formatting, Nix formatting, YAML formatting, and more. All at once, all reproducible.
 
-### Step 14: Use the task runner
+### Step 19: Use the task runner
 
-Open `Taskfile.yaml` and define real tasks:
+The template already includes a `Taskfile.yaml` with useful tasks. List them:
+
+```bash
+task --list
+```
+
+You should see tasks like `build`, `run`, `test`, `tree`, `closure`, `fmt`, and `check`. Try them:
+
+```bash
+# Build with nom (fancy output)
+task build
+
+# Build and run the default app in one step
+task run
+
+# Show the dependency tree interactively
+task tree
+
+# Show closure sizes
+task closure
+
+# Format all code
+task fmt
+
+# Run all checks (format + build + test)
+task check
+```
+
+You can customize `Taskfile.yaml` to add your own tasks. For example, add a test that verifies your package output:
 
 ```yaml
-version: '3'
-tasks:
-  build:
-    desc: Build the Nix package
-    cmds:
-      - nix build
   test:
     deps:
       - build
     desc: Test the package runs correctly
     cmds:
       - ./result/bin/hello-nix | grep "Hello"
-  fmt:
-    desc: Format all code
-    cmds:
-      - nix fmt
-  check:
-    desc: Run all checks
-    cmds:
-      - task: fmt
-      - task: build
-      - task: test
-  default:
-    cmds:
-      - task -l
 ```
 
-Now run:
-
-```bash
-task check
-```
-
-This formats, builds, and tests in one command. This is the foundation of a CI/CD pipeline.
-
-### Step 15: Understand git hooks with lefthook
+### Step 20: Understand git hooks with lefthook
 
 The `lefthook.yaml` file ensures code is formatted before every commit:
 
@@ -425,7 +589,7 @@ This means: every time you `git commit`, Nix automatically formats your code. If
 
 ______________________________________________________________________
 
-## Part 6: Going Further (Bonus)
+## Part 7: Going Further (Bonus)
 
 These exercises are optional, for students who finish early or want to dig deeper.
 
@@ -477,9 +641,14 @@ In this practical, you learned:
 | **Nix flakes** | Initialized a project with `nix flake init` |
 | **Dev shells** | Created a reproducible development environment |
 | **Package management** | Added/removed tools declaratively |
+| **Auto-import** | New `.nix` files are picked up automatically (just `git add`) |
 | **Packaging** | Built a shell script into a Nix package |
+| **Derivations** | Inspected build recipes with `nix show-derivation` |
+| **Dependency analysis** | Explored closures with `nix-tree` and `nix path-info` |
+| **Nix REPL** | Interactively explored flake outputs and nixpkgs |
+| **Build UX** | Used `nom` for fancy builds and `nix run` for instant execution |
 | **Code quality** | Used formatters, linters, and git hooks |
-| **Task automation** | Defined build/test/format tasks |
+| **Task automation** | Used pre-built tasks with `task` |
 
 ### Key Commands Reference
 
@@ -487,10 +656,15 @@ In this practical, you learned:
 | --- | --- |
 | `nix flake init -t <template>` | Initialize a project from a template |
 | `nix develop` | Enter the development shell |
-| `nix build` | Build the default package |
+| `nom build` | Build the default package with fancy output |
+| `nix run` | Build and run the default app in one step |
 | `nix fmt` | Format all code |
 | `nix flake show` | Show all flake outputs |
 | `nix search nixpkgs <name>` | Search for packages |
+| `nix show-derivation .#default` | Inspect the build recipe (derivation) |
+| `nix-tree .#default` | Interactive dependency tree explorer |
+| `nix path-info -rsSh .#default` | Show closure size and dependencies |
+| `nix repl` then `:lf .` | Interactive Nix expression explorer |
 
 ### What's Next?
 

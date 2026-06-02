@@ -18,6 +18,10 @@ additional-js = [
 [output.linkcheck]
 renderer = ["html"]
 follow-web-links = true
+exclude = [
+  "legifrance\\.gouv\\.fr",
+  "std\\.divnix\\.com",
+]
 
 [output.markdown]
 

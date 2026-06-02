@@ -1,6 +1,7 @@
 ______________________________________________________________________
 
-## header: 'License Course' footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com'
+<!-- header: 'License Course' -->
+<!-- footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com' -->
 
 <!-- headingDivider: 3 -->
 
@@ -12,34 +13,34 @@ ______________________________________________________________________
 
 <!-- vale off -->
 
-- [Intangible Assets](#intangible-assets)
-- [Theft](#theft)
-- [Software Can't be stolen](#software-cant-be-stolen)
-- [Internet](#internet)
-- [Licenses and Business Models](#licenses-and-business-models)
-  - [Rights Holder](#rights-holder)
-  - [Proprietary Licenses](#proprietary-licenses)
-  - [Shareware Licenses](#shareware-licenses)
-  - [Freeware](#freeware)
-  - [Freemium](#freemium)
-  - [Open Source](#open-source)
-    - [Copyleft](#copyleft)
-    - [Summary](#summary)
-    - [Economically](#economically)
-- [French Law](#french-law)
-  - [Asymmetry](#asymmetry)
-  - [EPO](#epo)
-  - [Patent Trolls](#patent-trolls)
-    - [Useless Patents](#useless-patents)
-  - [Primacy of US Law](#primacy-of-us-law)
-  - [Hindrance to Innovation](#hindrance-to-innovation)
-- [Degradation](#degradation)
-  - [Hashicorp Case](#hashicorp-case)
-  - [Monetization of Social and Symbolic Capital](#monetization-of-social-and-symbolic-capital)
-- [Cyber War](#cyber-war)
-- [Issues with AI Models](#issues-with-ai-models)
-- [Making Money](#making-money)
-- [Bibliography](#bibliography)
+  * [Intangible Assets](#intangible-assets)
+  * [Theft](#theft)
+  * [Software Can't be stolen](#software-cant-be-stolen)
+  * [Internet](#internet)
+* [Licenses and Business Models](#licenses-and-business-models)
+  * [Rights Holder](#rights-holder)
+  * [Proprietary Licenses](#proprietary-licenses)
+  * [Shareware Licenses](#shareware-licenses)
+  * [Freeware](#freeware)
+  * [Freemium](#freemium)
+  * [Open Source](#open-source)
+    * [Copyleft](#copyleft)
+    * [Summary](#summary)
+    * [Economically](#economically)
+* [French Law](#french-law)
+  * [Asymmetry](#asymmetry)
+  * [EPO](#epo)
+  * [Patent Trolls](#patent-trolls)
+    * [Useless Patents](#useless-patents)
+  * [Primacy of US Law](#primacy-of-us-law)
+  * [Hindrance to Innovation](#hindrance-to-innovation)
+* [Degradation](#degradation)
+  * [Hashicorp Case](#hashicorp-case)
+  * [Monetization of Social and Symbolic Capital](#monetization-of-social-and-symbolic-capital)
+* [Cyber War](#cyber-war)
+* [Issues with AI Models](#issues-with-ai-models)
+* [Making Money](#making-money)
+* [Bibliography](#bibliography)
 
 <!-- vale on -->
 
@@ -61,7 +62,6 @@ ______________________________________________________________________
 
 Wiktionary
 
->
 
 ## Software Can't be stolen
 

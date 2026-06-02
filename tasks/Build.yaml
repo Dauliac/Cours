@@ -35,6 +35,7 @@ tasks:
     vars:
       SVG_PATH: '{{joinPath .SOURCES_PATH .MODULE_NAME "assets" .FILE_NAME}}'
     cmds:
+      - mkdir -p "{{.SVG_PATH | dir}}"
       - |
         rm -rf "{{.SVG_PATH}}"
         mmdc --quiet \

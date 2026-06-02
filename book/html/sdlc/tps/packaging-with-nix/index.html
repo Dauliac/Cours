@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Packaging with nix - Cours &quot;opensource&quot;</title>
+        <title>TP 1: Packaging with Nix - Cours &quot;opensource&quot;</title>
 
 
         <!-- Custom HTML head -->
@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../../../sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../../../system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../../../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../../../documentation/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded "><a href="../../../RADAR.html"><strong aria-hidden="true">5.</strong> tech radar</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../../../sdlc/tps/packaging-with-nix/index.html" class="active"><strong aria-hidden="true">6.</strong> Packaging with nix</a></li><li class="chapter-item expanded "><a href="../../../sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">7.</strong> Perfect container with nix ?</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../../../nix/INSTALL.html"><strong aria-hidden="true">8.</strong> Install nix</a></li><li class="chapter-item expanded "><a href="../../../nix/COMMA.html"><strong aria-hidden="true">9.</strong> Install comma</a></li><li class="chapter-item expanded "><a href="../../../GET.html"><strong aria-hidden="true">10.</strong> Get courses</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../../../sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../../../system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../../../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../../../documentation/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded "><a href="../../../RADAR.html"><strong aria-hidden="true">5.</strong> tech radar</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../../../sdlc/tps/packaging-with-nix/index.html" class="active"><strong aria-hidden="true">6.</strong> TP 1: Packaging with Nix</a></li><li class="chapter-item expanded "><a href="../../../sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">7.</strong> TP 2: Building Containers - The Traditional Way</a></li><li class="chapter-item expanded "><a href="../../../sdlc/tps/perfect-container-with-nix/index.html"><strong aria-hidden="true">8.</strong> TP 3: Perfect Containers with Nix</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../../../nix/INSTALL.html"><strong aria-hidden="true">9.</strong> Install nix</a></li><li class="chapter-item expanded "><a href="../../../nix/COMMA.html"><strong aria-hidden="true">10.</strong> Install comma</a></li><li class="chapter-item expanded "><a href="../../../GET.html"><strong aria-hidden="true">11.</strong> Get courses</a></li><li class="chapter-item expanded "><a href="../../../nix/TEMPLATE.html"><strong aria-hidden="true">12.</strong> Get template</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -173,7 +173,491 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="packaging-with-nix"><a class="header" href="#packaging-with-nix">Packaging with nix</a></h1>
+                        <h1 id="tp-1-packaging-with-nix"><a class="header" href="#tp-1-packaging-with-nix">TP 1: Packaging with Nix</a></h1>
+<h2 id="learning-objectives"><a class="header" href="#learning-objectives">Learning Objectives</a></h2>
+<p>By the end of this practical, you will be able to:</p>
+<ol>
+<li><strong>Understand</strong> what Nix is and why reproducible builds matter</li>
+<li><strong>Set up</strong> a Nix flake project from scratch using the course template</li>
+<li><strong>Use</strong> a reproducible development environment with <code>devShells</code></li>
+<li><strong>Package</strong> a simple application with Nix</li>
+<li><strong>Inspect</strong> derivations, dependency trees, and closures to understand Nix artefacts</li>
+<li><strong>Use</strong> the Nix REPL to interactively explore packages and flake outputs</li>
+<li><strong>Explain</strong> the difference between imperative and declarative package management</li>
+</ol>
+<h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
+<ul>
+<li><a href="../../../nix/INSTALL.html">Nix is installed</a></li>
+<li><a href="../../../nix/COMMA.html">Comma is installed</a></li>
+<li>Basic command-line skills (cd, ls, cat, git)</li>
+<li>A text editor you are comfortable with</li>
+</ul>
+<hr />
+<h2 id="part-1-why-nix-15-min"><a class="header" href="#part-1-why-nix-15-min">Part 1: Why Nix? (15 min)</a></h2>
+<h3 id="the-problem"><a class="header" href="#the-problem">The Problem</a></h3>
+<p>Imagine this situation: you join a new team. You clone the project, run <code>npm install</code>, and...
+it fails. A colleague says <em>"it works on my machine"</em>. You spend 2 hours debugging.</p>
+<p><strong>This is the problem Nix solves.</strong></p>
+<h3 id="traditional-package-management-vs-nix"><a class="header" href="#traditional-package-management-vs-nix">Traditional package management vs Nix</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Aspect</th><th>Traditional (apt, brew, npm)</th><th>Nix</th></tr></thead><tbody>
+<tr><td>Install location</td><td>Global (<code>/usr/bin</code>, <code>/usr/lib</code>)</td><td>Isolated (<code>/nix/store/...</code>)</td></tr>
+<tr><td>Reproducibility</td><td>"It works on my machine"</td><td>Same input = same output, always</td></tr>
+<tr><td>Rollback</td><td>Difficult or impossible</td><td>Built-in, instant</td></tr>
+<tr><td>Multiple versions</td><td>Conflicts</td><td>No conflicts, all coexist</td></tr>
+<tr><td>Dependency tracking</td><td>Partial</td><td>Complete dependency graph</td></tr>
+</tbody></table>
+</div>
+<h3 id="key-concepts"><a class="header" href="#key-concepts">Key Concepts</a></h3>
+<p><strong>Derivation</strong>: A Nix derivation is a <em>recipe</em> that describes how to build something. It specifies:</p>
+<ul>
+<li>The source code</li>
+<li>The build dependencies</li>
+<li>The build commands</li>
+<li>The expected output</li>
+</ul>
+<p>Think of it like a cooking recipe: given the same ingredients and the same steps, you always get the same dish.</p>
+<p><strong>The Nix Store</strong>: Every package built by Nix lives in <code>/nix/store/</code> with a unique hash in its path:</p>
+<pre><code>/nix/store/abc123...-python-3.11.5/
+/nix/store/def456...-python-3.12.1/
+</code></pre>
+<p>Both versions coexist without conflict. The hash ensures that if any input changes, the path changes too.</p>
+<p><strong>Flake</strong>: A <code>flake.nix</code> file is the modern entry point for a Nix project. It declares:</p>
+<ul>
+<li><strong>inputs</strong>: where dependencies come from (e.g., nixpkgs)</li>
+<li><strong>outputs</strong>: what the project provides (packages, dev shells, etc.)</li>
+</ul>
+<h3 id="check-your-understanding"><a class="header" href="#check-your-understanding">Check Your Understanding</a></h3>
+<p>Before moving on, make sure you can answer:</p>
+<ul>
+<li>Why can two versions of Python coexist in the Nix store?</li>
+<li>What happens to the store path if you change a build dependency?</li>
+</ul>
+<hr />
+<h2 id="part-2-setting-up-your-project-20-min"><a class="header" href="#part-2-setting-up-your-project-20-min">Part 2: Setting Up Your Project (20 min)</a></h2>
+<h3 id="step-1-initialize-the-project"><a class="header" href="#step-1-initialize-the-project">Step 1: Initialize the project</a></h3>
+<p>Create a new directory and initialize it with the course template:</p>
+<pre><code class="language-bash">mkdir -p my-first-nix-project
+cd my-first-nix-project
+git init  # Safe to run multiple times
+nix flake init -t 'github:Dauliac/Cours'  # Skip this if flake.nix already exists
+</code></pre>
+<blockquote>
+<p><strong>If <code>nix flake init</code> fails</strong> with "file already exists", it means you already ran this step. You can safely move on.</p>
+</blockquote>
+<h3 id="step-2-explore-what-was-generated"><a class="header" href="#step-2-explore-what-was-generated">Step 2: Explore what was generated</a></h3>
+<p>List the files:</p>
+<pre><code class="language-bash">find . -type f
+</code></pre>
+<p>You should see:</p>
+<pre><code>./flake.nix          # The project's entry point
+./nix/default.nix    # Auto-imports all .nix files in nix/
+./nix/dev-shell.nix  # Development environment definition
+./nix/treefmt.nix    # Code formatting configuration
+./Taskfile.yaml      # Task runner (like Make, but better)
+./.envrc             # Direnv integration (auto-loads the environment)
+./lefthook.yaml      # Git hooks configuration
+</code></pre>
+<h3 id="step-3-understand-the-flake-structure"><a class="header" href="#step-3-understand-the-flake-structure">Step 3: Understand the flake structure</a></h3>
+<p>Open <code>flake.nix</code> and read it carefully:</p>
+<pre><code class="language-bash">cat flake.nix
+</code></pre>
+<pre><code class="language-nix">{
+  description = "Changeme";            # &lt;- Describe your project here
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";  # &lt;- Package repository
+    flake-parts.url = "github:hercules-ci/flake-parts";  # &lt;- Flake helper
+    treefmt-nix.url = "github:numtide/treefmt-nix";      # &lt;- Code formatter
+  };
+  outputs = inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } (_: {
+      systems = [
+        "x86_64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      imports = [ ./nix ];  # &lt;- All Nix configuration lives in ./nix/
+    });
+}
+</code></pre>
+<p><strong>Key takeaway</strong>: <code>inputs</code> declares <em>where</em> things come from. <code>outputs</code> declares <em>what</em> the project provides. The <code>./nix/</code> directory contains the actual definitions.</p>
+<h3 id="step-4-enter-the-development-environment"><a class="header" href="#step-4-enter-the-development-environment">Step 4: Enter the development environment</a></h3>
+<pre><code class="language-bash"># Track all generated files (Nix flakes ONLY see git-tracked files!)
+git add .
+
+# Enter the development shell
+nix develop
+</code></pre>
+<blockquote>
+<p><strong>Why <code>git add</code>?</strong> Nix flakes use git to determine which files exist. If a file is not tracked by git, Nix cannot see it. This is a common source of "file not found" errors. <strong>Always <code>git add</code> new files before running any <code>nix</code> command.</strong></p>
+</blockquote>
+<p>You are now inside a reproducible shell. Every tool listed in <code>nix/dev-shell.nix</code> is available, regardless of what is installed on your system.</p>
+<p>Try it:</p>
+<pre><code class="language-bash"># These tools are available even if you never installed them:
+task --version
+vale --version
+convco --version
+</code></pre>
+<h3 id="step-5-understand-the-dev-shell"><a class="header" href="#step-5-understand-the-dev-shell">Step 5: Understand the dev shell</a></h3>
+<p>Open <code>nix/dev-shell.nix</code>:</p>
+<pre><code class="language-nix">devShells.default = pkgs.mkShell {
+  nativeBuildInputs = with pkgs; [
+    go-task       # Task runner
+    lefthook      # Git hooks
+    vale          # Documentation linter
+    trufflehog    # Secret scanner
+    convco        # Conventional commits
+    sops          # Secret management
+  ];
+  shellHook = ''
+    lefthook install --force
+  '';
+};
+</code></pre>
+<p><strong><code>nativeBuildInputs</code></strong> lists the tools available in the shell. <strong><code>shellHook</code></strong> runs commands when you enter the shell (here: installing git hooks).</p>
+<h3 id="checkpoint"><a class="header" href="#checkpoint">Checkpoint</a></h3>
+<p>Run these commands and verify they work:</p>
+<pre><code class="language-bash">nix develop
+task --list
+nix flake show
+</code></pre>
+<p><code>nix flake show</code> displays all the outputs of your project. You should see your <code>devShell</code> listed.</p>
+<h3 id="step-5b-discover-the-build-tools"><a class="header" href="#step-5b-discover-the-build-tools">Step 5b: Discover the build tools</a></h3>
+<p>Your dev shell includes two tools that make working with Nix much more pleasant:</p>
+<p><strong><code>nom</code> (nix-output-monitor)</strong>: Replaces the default Nix build output with a rich, real-time view showing what's being built, downloaded, and how much is left:</p>
+<pre><code class="language-bash"># Instead of plain "nix build":
+nom build
+</code></pre>
+<p>You will see a live progress bar with active builds, downloads, and store paths. This is especially useful when building for the first time (many dependencies to fetch).</p>
+<p><strong><code>nix-tree</code></strong>: An interactive terminal tool to explore the dependency tree of any Nix package:</p>
+<pre><code class="language-bash"># Explore the dev shell's dependencies interactively
+nix-tree .#devShells.x86_64-linux.default
+</code></pre>
+<p>Navigate with arrow keys, press Enter to expand nodes. This shows you exactly what Nix pulled in and why.</p>
+<p>Try both now. You will use them throughout the TPs.</p>
+<hr />
+<h2 id="part-3-adding-dependencies-15-min"><a class="header" href="#part-3-adding-dependencies-15-min">Part 3: Adding Dependencies (15 min)</a></h2>
+<h3 id="step-6-add-a-tool-to-your-dev-shell"><a class="header" href="#step-6-add-a-tool-to-your-dev-shell">Step 6: Add a tool to your dev shell</a></h3>
+<p>Let's say your project needs <code>jq</code> (a JSON processor) and <code>curl</code>. Edit <code>nix/dev-shell.nix</code>:</p>
+<pre><code class="language-nix">nativeBuildInputs = with pkgs; [
+  go-task
+  lefthook
+  vale
+  trufflehog
+  convco
+  sops
+  jq       # &lt;- Add this
+  curl     # &lt;- Add this
+];
+</code></pre>
+<p>Now reload the shell:</p>
+<pre><code class="language-bash"># If you are inside a nix develop session, leave it first:
+# Press Ctrl+D or type 'exit'
+# Then re-enter:
+nix develop
+jq --version   # Verify jq is available
+curl --version # Verify curl is available
+</code></pre>
+<h3 id="how-to-find-packages"><a class="header" href="#how-to-find-packages">How to find packages</a></h3>
+<p>Search for packages in nixpkgs:</p>
+<pre><code class="language-bash"># From the command line
+nix search nixpkgs python
+
+# Or use the web interface: https://search.nixos.org/packages
+</code></pre>
+<h3 id="step-7-try-with-direnv-optional-but-recommended"><a class="header" href="#step-7-try-with-direnv-optional-but-recommended">Step 7: Try with direnv (optional but recommended)</a></h3>
+<p>If you have <code>direnv</code> installed, the <code>.envrc</code> file will automatically load your dev shell whenever you <code>cd</code> into the project:</p>
+<pre><code class="language-bash">direnv allow
+cd ..
+cd my-first-nix-project  # Shell loads automatically
+</code></pre>
+<p>No more <code>nix develop</code> needed. The environment loads and unloads as you navigate.</p>
+<hr />
+<h2 id="part-4-packaging-a-simple-application-30-min"><a class="header" href="#part-4-packaging-a-simple-application-30-min">Part 4: Packaging a Simple Application (30 min)</a></h2>
+<h3 id="step-8-write-a-small-program"><a class="header" href="#step-8-write-a-small-program">Step 8: Write a small program</a></h3>
+<p>Create a simple shell script that we will package with Nix.</p>
+<p>Create a file <code>hello.sh</code>:</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+echo "Hello from my first Nix package!"
+echo "Current date: $(date)"
+echo "Built with Nix - reproducible by design."
+</code></pre>
+<pre><code class="language-bash">git add hello.sh
+</code></pre>
+<h3 id="step-9-create-the-nix-package-definition"><a class="header" href="#step-9-create-the-nix-package-definition">Step 9: Create the Nix package definition</a></h3>
+<p>Create a file <code>nix/package.nix</code>:</p>
+<pre><code class="language-nix">{ pkgs, ... }:
+{
+  config.perSystem =
+    { pkgs, config, ... }:
+    {
+      packages.default = pkgs.writeShellApplication {
+        name = "hello-nix";
+        runtimeInputs = with pkgs; [ coreutils ];
+        text = builtins.readFile ../hello.sh;
+      };
+
+      # Expose the package as a runnable app
+      apps.default = {
+        type = "app";
+        program = "${config.packages.default}/bin/hello-nix";
+      };
+    };
+}
+</code></pre>
+<p><strong>Line by line:</strong></p>
+<ul>
+<li><code>pkgs.writeShellApplication</code> is a Nix helper that creates a proper shell script package</li>
+<li><code>name</code> is the name of the resulting binary</li>
+<li><code>runtimeInputs</code> are the dependencies available at runtime</li>
+<li><code>text</code> reads our script file</li>
+<li><code>apps.default</code> exposes the package so you can run it directly with <code>nix run</code></li>
+</ul>
+<blockquote>
+<p><strong>Remember</strong>: after creating any new <code>.nix</code> file, always <code>git add</code> it immediately. Nix flakes ignore untracked files.</p>
+</blockquote>
+<h3 id="step-10-track-the-new-file-with-git"><a class="header" href="#step-10-track-the-new-file-with-git">Step 10: Track the new file with git</a></h3>
+<blockquote>
+<p><strong>Critical rule</strong>: Nix flakes can only see files tracked by git. Every time you create a new <code>.nix</code> file, you <strong>must</strong> run <code>git add</code> on it before Nix can use it.</p>
+</blockquote>
+<pre><code class="language-bash">git add nix/package.nix
+</code></pre>
+<p>You do <strong>not</strong> need to edit <code>nix/default.nix</code>. The template uses auto-import: any <code>.nix</code> file you add to the <code>nix/</code> directory is automatically picked up, as long as git tracks it.</p>
+<p>Open <code>nix/default.nix</code> to see how it works:</p>
+<pre><code class="language-nix"># Auto-import all .nix files in this directory (except default.nix itself).
+# Just create a new .nix file, run `git add` on it, and it will be picked up automatically.
+nixFiles = builtins.filter (name: name != "default.nix") (
+  builtins.filter (name: builtins.match ".*\\.nix" name != null) (
+    builtins.attrNames (builtins.readDir ./.)
+  )
+);
+</code></pre>
+<p>This reads all <code>.nix</code> files in the directory and imports them. No manual registration needed.</p>
+<h3 id="step-11-build-and-run-your-package"><a class="header" href="#step-11-build-and-run-your-package">Step 11: Build and run your package</a></h3>
+<pre><code class="language-bash"># Build the package with fancy output
+nom build
+
+# The result is a symlink called "result"
+ls -la result/
+
+# Run it directly from the build output
+./result/bin/hello-nix
+
+# Or run it with nix run (builds + runs in one step)
+nix run
+</code></pre>
+<p><code>nix run</code> builds the default app and executes it in one command - no need to find the binary yourself. You should see the greeting message. Congratulations, you just built your first Nix package.</p>
+<h3 id="step-12-explore-the-build-output"><a class="header" href="#step-12-explore-the-build-output">Step 12: Explore the build output</a></h3>
+<pre><code class="language-bash"># See what's in the result
+tree result/ 2&gt;/dev/null || find result/ -type f
+
+# See the actual store path
+readlink result
+</code></pre>
+<p>Notice the <code>/nix/store/HASH-hello-nix</code> path. This is your package in the Nix store. The hash is derived from <strong>all</strong> inputs. If you change the script, the hash changes.</p>
+<h3 id="checkpoint-1"><a class="header" href="#checkpoint-1">Checkpoint</a></h3>
+<p>Verify your understanding by answering:</p>
+<ul>
+<li>What command builds a Nix flake's default package?</li>
+<li>Where does the build output live?</li>
+<li>What would happen if you changed the script text?</li>
+</ul>
+<hr />
+<h2 id="part-5-understanding-derivations-and-dependencies-20-min"><a class="header" href="#part-5-understanding-derivations-and-dependencies-20-min">Part 5: Understanding Derivations and Dependencies (20 min)</a></h2>
+<p>Now that you have a working package, let's look <em>inside</em> it. Nix gives you powerful tools to inspect exactly what was built, how, and why.</p>
+<h3 id="step-13-inspect-the-derivation"><a class="header" href="#step-13-inspect-the-derivation">Step 13: Inspect the derivation</a></h3>
+<p>A <strong>derivation</strong> is the low-level build recipe Nix actually executes. Every <code>nix build</code> produces one. Let's look at yours:</p>
+<pre><code class="language-bash">nix show-derivation .#default
+</code></pre>
+<p>This outputs JSON describing the exact build plan: the builder, arguments, environment variables, input sources, and input derivations. Notice:</p>
+<ul>
+<li><code>"builder"</code>: the program that runs the build (usually bash)</li>
+<li><code>"inputDrvs"</code>: other derivations this one depends on (coreutils, bash, etc.)</li>
+<li><code>"env"</code>: the environment variables set during the build</li>
+<li><code>"outputs"</code>: where the result will be stored</li>
+</ul>
+<p>Every field is deterministic. Change any input, and the output hash changes.</p>
+<h3 id="step-14-visualize-the-dependency-tree"><a class="header" href="#step-14-visualize-the-dependency-tree">Step 14: Visualize the dependency tree</a></h3>
+<p>Use <code>nix-tree</code> to interactively explore what your package depends on:</p>
+<pre><code class="language-bash">nix-tree .#default
+</code></pre>
+<p>Navigate with arrow keys and Enter. You will see your package at the top, with its full dependency tree below. Each node shows:</p>
+<ul>
+<li>The store path and its size</li>
+<li>The closure size (total size including all transitive dependencies)</li>
+</ul>
+<p>This is the <strong>closure</strong> - the complete set of everything needed to run your package. Nothing more, nothing less.</p>
+<h3 id="step-15-measure-the-closure"><a class="header" href="#step-15-measure-the-closure">Step 15: Measure the closure</a></h3>
+<pre><code class="language-bash"># Show all runtime dependencies with sizes
+nix path-info -rsSh .#default
+</code></pre>
+<p>This lists every store path in the closure with:</p>
+<ul>
+<li><strong>NAR size</strong> (<code>-s</code>): the size of the path itself</li>
+<li><strong>Closure size</strong> (<code>-S</code>): total size including dependencies</li>
+<li>Human-readable (<code>-h</code>)</li>
+</ul>
+<pre><code class="language-bash"># Just the total closure size
+nix path-info -Sh .#default
+</code></pre>
+<p>For a simple shell script, you should see a closure of around 30-40 MB (mostly coreutils and bash).</p>
+<h3 id="step-16-explore-with-the-nix-repl"><a class="header" href="#step-16-explore-with-the-nix-repl">Step 16: Explore with the Nix REPL</a></h3>
+<p>The Nix REPL lets you inspect and evaluate Nix expressions interactively. This is the most powerful debugging tool in the Nix ecosystem:</p>
+<pre><code class="language-bash">nix repl
+</code></pre>
+<p>Inside the REPL, load your flake:</p>
+<pre><code>:lf .
+</code></pre>
+<p>Now explore:</p>
+<pre><code># See all outputs
+outputs
+
+# Inspect your package
+outputs.packages.x86_64-linux.default
+
+# See its name
+outputs.packages.x86_64-linux.default.name
+
+# See its derivation path
+outputs.packages.x86_64-linux.default.drvPath
+
+# List attributes of nixpkgs
+builtins.attrNames inputs.nixpkgs.legacyPackages.x86_64-linux
+
+# Check a package version
+inputs.nixpkgs.legacyPackages.x86_64-linux.python3.version
+
+# Exit
+:q
+</code></pre>
+<p>The REPL is invaluable for debugging flakes, understanding how packages are composed, and exploring nixpkgs.</p>
+<h3 id="step-17-build-and-run-with-style"><a class="header" href="#step-17-build-and-run-with-style">Step 17: Build and run with style</a></h3>
+<p>Use <code>nom</code> (nix-output-monitor) for a much better build experience:</p>
+<pre><code class="language-bash"># Build with live progress display
+nom build
+
+# Build and run in one step
+nix run
+
+# Or use the task runner
+task build
+task run
+</code></pre>
+<p><code>nom</code> replaces the default Nix output with a rich, real-time view showing active builds, downloads, and store paths. The <code>task run</code> command builds and runs the default app in one step.</p>
+<h3 id="check-your-understanding-1"><a class="header" href="#check-your-understanding-1">Check Your Understanding</a></h3>
+<ul>
+<li>What is the difference between a derivation and a package?</li>
+<li>How can you find out why a dependency is in your closure?</li>
+<li>What does <code>:lf .</code> do in the Nix REPL?</li>
+</ul>
+<hr />
+<h2 id="part-6-code-quality-automation-20-min"><a class="header" href="#part-6-code-quality-automation-20-min">Part 6: Code Quality Automation (20 min)</a></h2>
+<h3 id="step-18-use-the-formatter"><a class="header" href="#step-18-use-the-formatter">Step 18: Use the formatter</a></h3>
+<p>The template includes <code>treefmt</code> for automatic code formatting:</p>
+<pre><code class="language-bash"># Format all code in the project
+nix fmt
+</code></pre>
+<p>This runs all configured formatters (see <code>nix/treefmt.nix</code>): shell formatting, Nix formatting, YAML formatting, and more. All at once, all reproducible.</p>
+<h3 id="step-19-use-the-task-runner"><a class="header" href="#step-19-use-the-task-runner">Step 19: Use the task runner</a></h3>
+<p>The template already includes a <code>Taskfile.yaml</code> with useful tasks. List them:</p>
+<pre><code class="language-bash">task --list
+</code></pre>
+<p>You should see tasks like <code>build</code>, <code>run</code>, <code>test</code>, <code>tree</code>, <code>closure</code>, <code>fmt</code>, and <code>check</code>. Try them:</p>
+<pre><code class="language-bash"># Build with nom (fancy output)
+task build
+
+# Build and run the default app in one step
+task run
+
+# Show the dependency tree interactively
+task tree
+
+# Show closure sizes
+task closure
+
+# Format all code
+task fmt
+
+# Run all checks (format + build + test)
+task check
+</code></pre>
+<p>You can customize <code>Taskfile.yaml</code> to add your own tasks. For example, add a test that verifies your package output:</p>
+<pre><code class="language-yaml">  test:
+    deps:
+      - build
+    desc: Test the package runs correctly
+    cmds:
+      - ./result/bin/hello-nix | grep "Hello"
+</code></pre>
+<h3 id="step-20-understand-git-hooks-with-lefthook"><a class="header" href="#step-20-understand-git-hooks-with-lefthook">Step 20: Understand git hooks with lefthook</a></h3>
+<p>The <code>lefthook.yaml</code> file ensures code is formatted before every commit:</p>
+<pre><code class="language-yaml">pre-commit:
+  commands:
+    fmt:
+      tags: formatter
+      run: nix fmt
+      stage_fixed: true
+</code></pre>
+<p>This means: every time you <code>git commit</code>, Nix automatically formats your code. If formatting changes files, they are re-staged. No more "forgot to format" in code reviews.</p>
+<hr />
+<h2 id="part-7-going-further-bonus"><a class="header" href="#part-7-going-further-bonus">Part 7: Going Further (Bonus)</a></h2>
+<p>These exercises are optional, for students who finish early or want to dig deeper.</p>
+<h3 id="challenge-1-package-a-real-program"><a class="header" href="#challenge-1-package-a-real-program">Challenge 1: Package a real program</a></h3>
+<p>Instead of a shell script, try packaging a simple Python or Go program:</p>
+<pre><code class="language-nix"># Example: a Python script
+packages.default = pkgs.writers.writePython3Bin "my-tool" {
+  libraries = with pkgs.python3Packages; [ requests ];
+} ''
+  import requests
+  r = requests.get("https://httpbin.org/ip")
+  print(f"Your IP: {r.json()['origin']}")
+'';
+</code></pre>
+<h3 id="challenge-2-add-a-second-package"><a class="header" href="#challenge-2-add-a-second-package">Challenge 2: Add a second package</a></h3>
+<p>Create a <code>packages.other</code> in addition to <code>packages.default</code>:</p>
+<pre><code class="language-bash"># Build a specific package
+nix build .#other
+</code></pre>
+<h3 id="challenge-3-pin-a-specific-nixpkgs-version"><a class="header" href="#challenge-3-pin-a-specific-nixpkgs-version">Challenge 3: Pin a specific nixpkgs version</a></h3>
+<p>Change the <code>nixpkgs</code> input in <code>flake.nix</code> to a specific commit and observe how <code>flake.lock</code> changes:</p>
+<pre><code class="language-nix">nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+</code></pre>
+<pre><code class="language-bash">nix flake update
+git diff flake.lock
+</code></pre>
+<hr />
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>In this practical, you learned:</p>
+<div class="table-wrapper"><table><thead><tr><th>Concept</th><th>What you did</th></tr></thead><tbody>
+<tr><td><strong>Nix flakes</strong></td><td>Initialized a project with <code>nix flake init</code></td></tr>
+<tr><td><strong>Dev shells</strong></td><td>Created a reproducible development environment</td></tr>
+<tr><td><strong>Package management</strong></td><td>Added/removed tools declaratively</td></tr>
+<tr><td><strong>Auto-import</strong></td><td>New <code>.nix</code> files are picked up automatically (just <code>git add</code>)</td></tr>
+<tr><td><strong>Packaging</strong></td><td>Built a shell script into a Nix package</td></tr>
+<tr><td><strong>Derivations</strong></td><td>Inspected build recipes with <code>nix show-derivation</code></td></tr>
+<tr><td><strong>Dependency analysis</strong></td><td>Explored closures with <code>nix-tree</code> and <code>nix path-info</code></td></tr>
+<tr><td><strong>Nix REPL</strong></td><td>Interactively explored flake outputs and nixpkgs</td></tr>
+<tr><td><strong>Build UX</strong></td><td>Used <code>nom</code> for fancy builds and <code>nix run</code> for instant execution</td></tr>
+<tr><td><strong>Code quality</strong></td><td>Used formatters, linters, and git hooks</td></tr>
+<tr><td><strong>Task automation</strong></td><td>Used pre-built tasks with <code>task</code></td></tr>
+</tbody></table>
+</div>
+<h3 id="key-commands-reference"><a class="header" href="#key-commands-reference">Key Commands Reference</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Command</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><code>nix flake init -t &lt;template&gt;</code></td><td>Initialize a project from a template</td></tr>
+<tr><td><code>nix develop</code></td><td>Enter the development shell</td></tr>
+<tr><td><code>nom build</code></td><td>Build the default package with fancy output</td></tr>
+<tr><td><code>nix run</code></td><td>Build and run the default app in one step</td></tr>
+<tr><td><code>nix fmt</code></td><td>Format all code</td></tr>
+<tr><td><code>nix flake show</code></td><td>Show all flake outputs</td></tr>
+<tr><td><code>nix search nixpkgs &lt;name&gt;</code></td><td>Search for packages</td></tr>
+<tr><td><code>nix show-derivation .#default</code></td><td>Inspect the build recipe (derivation)</td></tr>
+<tr><td><code>nix-tree .#default</code></td><td>Interactive dependency tree explorer</td></tr>
+<tr><td><code>nix path-info -rsSh .#default</code></td><td>Show closure size and dependencies</td></tr>
+<tr><td><code>nix repl</code> then <code>:lf .</code></td><td>Interactive Nix expression explorer</td></tr>
+</tbody></table>
+</div>
+<h3 id="whats-next"><a class="header" href="#whats-next">What's Next?</a></h3>
+<p>In the next TP, you will learn how to build <strong>container images</strong> and understand why reproducibility matters even more in that context.</p>
 
                     </main>
 

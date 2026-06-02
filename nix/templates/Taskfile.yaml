@@ -1,22 +1,37 @@
 version: '3'
 tasks:
   build:
-    # TODO: run it into lefthook
-    desc: Build your project
+    desc: Build the default package with fancy output
     cmds:
-      - echo TODO
+      - nom build
+  run:
+    desc: Build and run the default app
+    cmds:
+      - nix run
   test:
-    # TODO: run it into lefthook
     deps:
       - build
     desc: Test your project
     cmds:
       - echo TODO
-  docs:
-    # TODO: run it into lefthook
-    desc: Build project documentation
+  tree:
+    desc: Show dependency tree of the default package
     cmds:
-      - echo TODO
+      - nix-tree .#default
+  closure:
+    desc: Show closure size of the default package
+    cmds:
+      - nix path-info -rsSh .#default
+  fmt:
+    desc: Format all code
+    cmds:
+      - nix fmt
+  check:
+    desc: Run all checks (format, build, test)
+    cmds:
+      - task: fmt
+      - task: build
+      - task: test
   default:
     cmds:
       - task -l

@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../documentation/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded "><a href="../RADAR.html"><strong aria-hidden="true">5.</strong> tech radar</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">6.</strong> Packaging with nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">7.</strong> Perfect container with nix ?</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../nix/INSTALL.html" class="active"><strong aria-hidden="true">8.</strong> Install nix</a></li><li class="chapter-item expanded "><a href="../nix/COMMA.html"><strong aria-hidden="true">9.</strong> Install comma</a></li><li class="chapter-item expanded "><a href="../GET.html"><strong aria-hidden="true">10.</strong> Get courses</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../documentation/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded "><a href="../RADAR.html"><strong aria-hidden="true">5.</strong> tech radar</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">6.</strong> TP 1: Packaging with Nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">7.</strong> TP 2: Building Containers - The Traditional Way</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/perfect-container-with-nix/index.html"><strong aria-hidden="true">8.</strong> TP 3: Perfect Containers with Nix</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../nix/INSTALL.html" class="active"><strong aria-hidden="true">9.</strong> Install nix</a></li><li class="chapter-item expanded "><a href="../nix/COMMA.html"><strong aria-hidden="true">10.</strong> Install comma</a></li><li class="chapter-item expanded "><a href="../GET.html"><strong aria-hidden="true">11.</strong> Get courses</a></li><li class="chapter-item expanded "><a href="../nix/TEMPLATE.html"><strong aria-hidden="true">12.</strong> Get template</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -174,7 +174,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="how-to-install-nix"><a class="header" href="#how-to-install-nix">How to install <code>nix</code></a></h1>
-<p>This guide will walk you through installing Nix using the Determinate Nix Installer. The installation process is the same for macOS and Linux. However, Windows users must first set up the Windows Subsystem for Linux (WSL) before proceeding.</p>
+<p>This guide will walk you through installing Nix using the <a href="https://lix.systems/">Lix</a> installer. The installation process is the same for macOS and Linux. However, Windows users must first set up the Windows Subsystem for Linux (WSL) before proceeding.</p>
 <h2 id="prerequisites-for-windows-users"><a class="header" href="#prerequisites-for-windows-users">Prerequisites for Windows Users</a></h2>
 <p>If you are on Windows, you need to install <strong>WSL (Windows Subsystem for Linux)</strong> before proceeding:</p>
 <ol>
@@ -198,36 +198,90 @@
 <p><strong>Launch the installed Linux distribution</strong> and proceed with the Nix installation below.</p>
 </li>
 </ol>
-<h2 id="installing-nix-macos-linux-and-wsl"><a class="header" href="#installing-nix-macos-linux-and-wsl">Installing Nix (macOS, Linux, and WSL)</a></h2>
+<h2 id="installing-lix-macos-linux-and-wsl"><a class="header" href="#installing-lix-macos-linux-and-wsl">Installing Lix (macOS, Linux, and WSL)</a></h2>
 <ol>
 <li>
 <p><strong>Open a terminal</strong> (on macOS/Linux or inside WSL on Windows).</p>
 </li>
 <li>
-<p><strong>Download and run the installer script</strong>:</p>
-<pre><code class="language-bash">curl -L https://install.determinate.systems/nix | sh
+<p><strong>Download and run the Lix installer</strong>:</p>
+<pre><code class="language-bash">curl -sSf -L https://install.lix.systems/lix | sh -s -- install
 </code></pre>
 </li>
 <li>
-<p><strong>Follow the on-screen instructions</strong>: The script will guide you through the installation. You may need to enter your administrator password.</p>
+<p><strong>Follow the on-screen instructions</strong>: The installer will guide you through the process. You may need to enter your administrator password.</p>
 </li>
 <li>
-<p><strong>Enable Flakes and the Nix Command</strong>:</p>
-<p>Edit your Nix configuration file:</p>
-<pre><code class="language-bash">rm -rf ~/.config/nix/nix.conf
-mkdir -p ~/.config/nix
-echo 'experimental-features = nix-command flakes' &gt;&gt; ~/.config/nix/nix.conf
+<p><strong>Restart your terminal</strong> to load the Nix environment.</p>
+</li>
+</ol>
+<h2 id="configuring-nix"><a class="header" href="#configuring-nix">Configuring Nix</a></h2>
+<p>Run the following block to write a recommended configuration. The commands are idempotent and safe to re-run:</p>
+<pre><code class="language-bash">mkdir -p ~/.config/nix
+
+cat &gt; ~/.config/nix/nix.conf &lt;&lt; 'EOF'
+# Enable flakes and the unified CLI
+experimental-features = nix-command flakes
+
+# Trust flake.nix nixConfig sections
+accept-flake-config = true
+
+# Build from source if a substitute fails instead of erroring
+fallback = true
+
+# Use all CPU cores for parallel builds
+max-jobs = auto
+
+# Pass all cores to individual builders via NIX_BUILD_CORES
+cores = 0
+
+# Deduplicate identical files in /nix/store using hard links
+auto-optimise-store = true
+
+# Always fetch from substituters even when derivations set allowSubstitutes=false
+always-allow-substitutes = true
+
+# Remote builders pull from caches instead of waiting for uploads
+builders-use-substitutes = true
+
+# Prevent GC from collecting build-time deps
+keep-outputs = true
+
+# Silence noisy "Git tree is dirty" warnings during dev
+warn-dirty = false
+
+# Show more tail on build failure
+log-lines = 50
+
+# Faster failure on unreachable substituters (default 300s)
+connect-timeout = 10
+EOF
+</code></pre>
+<h2 id="authenticating-with-github"><a class="header" href="#authenticating-with-github">Authenticating with GitHub</a></h2>
+<p>When many people share the same network (e.g., a classroom), GitHub rate-limits unauthenticated requests and Nix operations will fail. Use <a href="https://github.com/numtide/nix-auth">nix-auth</a> to authenticate with your own GitHub token.</p>
+<ol>
+<li>
+<p><strong>Install nix-auth</strong>:</p>
+<pre><code class="language-bash">nix profile install 'github:numtide/nix-auth'
 </code></pre>
 </li>
 <li>
-<p><strong>Restart your terminal</strong> to apply the necessary configurations.</p>
+<p><strong>Log in with GitHub</strong>:</p>
+<pre><code class="language-bash">nix-auth login github
+</code></pre>
+<p>This opens a browser window where you authorize the application. The token is stored locally and Nix will use it automatically for all GitHub fetches.</p>
+</li>
+<li>
+<p><strong>Verify it works</strong>:</p>
+<pre><code class="language-bash">nix-auth status
+</code></pre>
 </li>
 </ol>
 <h2 id="verifying-the-installation"><a class="header" href="#verifying-the-installation">Verifying the Installation</a></h2>
 <p>To confirm that Nix has been installed correctly, run:</p>
 <pre><code class="language-bash">nix --version
 </code></pre>
-<p>If the installation was successful, this will display the installed version of Nix.</p>
+<p>If the installation was successful, this will display the installed version of Lix.</p>
 <p>You can install programs with:</p>
 <pre><code class="language-bash"># Search
 nix search nixpkgs &lt;package&gt;
@@ -236,17 +290,18 @@ nix profile install 'nixpkgs#git'
 </code></pre>
 <h2 id="additional-resources"><a class="header" href="#additional-resources">Additional Resources</a></h2>
 <ul>
+<li><a href="https://lix.systems/">Lix Official Website</a></li>
+<li><a href="https://lix.systems/install/">Lix Installation Documentation</a></li>
 <li><a href="https://nixos.org/manual/nix/stable/">Nix Official Documentation</a></li>
-<li><a href="https://github.com/DeterminateSystems/nix-installer">Determinate Nix Installer GitHub Repository</a></li>
 <li><a href="https://learn.microsoft.com/fr-fr/windows/wsl/install">Microsoft WSL</a></li>
 </ul>
-<p>If you encounter any issues or have questions, refer to the official documentation or the GitHub repository for support.</p>
+<p>If you encounter any issues or have questions, refer to the official Lix documentation for support.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../sdlc/tps/perfect-container-with/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../sdlc/tps/perfect-container-with-nix/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -260,7 +315,7 @@ nix profile install 'nixpkgs#git'
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../sdlc/tps/perfect-container-with/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../sdlc/tps/perfect-container-with-nix/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 

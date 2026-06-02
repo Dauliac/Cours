@@ -14,10 +14,12 @@ _: {
           trufflehog
           convco
           sops
+          nix-output-monitor # Fancy build output (nom)
+          nix-tree # Explore dependency trees
           # mdbook
           # vhs
           # reuse
-          # TODO: add you project deps hereyou project deps here
+          # TODO: add your project deps here
         ];
         # INFO: That run when you come in the project
         # TODO: install direnv on your machine:

@@ -1,6 +1,7 @@
 ______________________________________________________________________
 
-## header: 'Systems Course' footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com'
+<!-- header: 'Systems Course' -->
+<!-- footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com' -->
 
 <!-- headingDivider: 3 -->
 
@@ -12,27 +13,27 @@ ______________________________________________________________________
 
 <!-- vale off -->
 
-- [Introduction](#introduction)
-  - [Objectives](#objectives)
-  - [What's an OS?](#whats-an-os)
-    - [What does an OS offer?](#what-does-an-os-offer)
-  - [A Simple System to Start](#a-simple-system-to-start)
-- [BIOS](#bios)
-  - [Hard BIOS](#hard-bios)
-  - [Corporate BIOS](#corporate-bios)
-  - [Casual BIOS](#casual-bios)
-  - [What's a `BIOS`?](#whats-a-bios)
-    - [A Language Misuse](#a-language-misuse)
-    - [UEFI Architecture](#uefi-architecture)
-  - [Security](#security)
-  - [An Open Source BIOS 🎊](#an-open-source-bios-)
-- [Kernel](#kernel)
-  - [Kernel Components Summary](#kernel-components-summary)
-  - [Scheduler](#scheduler)
-    - [How do we run multiple processes?](#how-do-we-run-multiple-processes)
-    - [Scheduler and Timer](#scheduler-and-timer)
-    - [Scheduling Algorithms](#scheduling-algorithms)
-  - [System Calls (Syscalls)](#system-calls-syscalls)
+* [Introduction](#introduction)
+  * [Objectives](#objectives)
+  * [What's an OS?](#whats-an-os)
+    * [What does an OS offer?](#what-does-an-os-offer)
+  * [A Simple System to Start](#a-simple-system-to-start)
+* [BIOS](#bios)
+  * [Hard BIOS](#hard-bios)
+  * [Corporate BIOS](#corporate-bios)
+  * [Casual BIOS](#casual-bios)
+  * [What's a `BIOS`?](#whats-a-bios)
+    * [A Common Misnomer](#a-common-misnomer)
+    * [UEFI Architecture](#uefi-architecture)
+  * [Security](#security)
+  * [An Open Source BIOS 🎊](#an-open-source-bios-)
+* [Kernel](#kernel)
+  * [Kernel Components Summary](#kernel-components-summary)
+  * [Scheduler](#scheduler)
+    * [How do we run multiple processes?](#how-do-we-run-multiple-processes)
+    * [Scheduler and Timer](#scheduler-and-timer)
+    * [Scheduling Algorithms](#scheduling-algorithms)
+  * [System Calls (Syscalls)](#system-calls-syscalls)
 
 <!-- vale on -->
 
@@ -99,7 +100,7 @@ ______________________________________________________________________
 - Boots the operating system
 - Old term
 
-### A Language Misuse
+### A Common Misnomer
 
 - *Extensible Firmware Interface → INTEL*
 - **Unified Extensible Firmware Interface →** [AMD](https://fr.wikipedia.org/wiki/Advanced_Micro_Devices), [American Megatrends](https://fr.wikipedia.org/wiki/American_Megatrends), [Apple](https://fr.wikipedia.org/wiki/Apple), [ARM](<https://fr.wikipedia.org/wiki/ARM_(entreprise)>), [Dell](https://fr.wikipedia.org/wiki/Dell), [HP](https://fr.wikipedia.org/wiki/Hewlett-Packard), [Intel](https://fr.wikipedia.org/wiki/Intel), [IBM](https://fr.wikipedia.org/wiki/International_Business_Machines_Corporation), Insyde Software, [Microsoft](https://fr.wikipedia.org/wiki/Microsoft), and [Phoenix Technologies](https://fr.wikipedia.org/wiki/Phoenix_Technologies)
@@ -114,7 +115,7 @@ ______________________________________________________________________
 
 ______________________________________________________________________
 
-- PEI (*Before EFI Initialization*) for motherboard and chipset initialization. Switches processor to protected mode.
+- PEI (*Pre-EFI Initialization*) for motherboard and chipset initialization. Switches processor to protected mode.
 
 ______________________________________________________________________
 
@@ -171,7 +172,7 @@ ______________________________________________________________________
 
 ## Scheduler
 
-*What's it ?*
+*What is it?*
 
 ### How do we run multiple processes?
 

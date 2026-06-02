@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Perfect container with nix ? - Cours &quot;opensource&quot;</title>
+        <title>TP 2: Building Containers - The Traditional Way - Cours &quot;opensource&quot;</title>
 
 
         <!-- Custom HTML head -->
@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../../../sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../../../system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../../../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../../../documentation/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded "><a href="../../../RADAR.html"><strong aria-hidden="true">5.</strong> tech radar</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../../../sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">6.</strong> Packaging with nix</a></li><li class="chapter-item expanded "><a href="../../../sdlc/tps/perfect-container-with/index.html" class="active"><strong aria-hidden="true">7.</strong> Perfect container with nix ?</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../../../nix/INSTALL.html"><strong aria-hidden="true">8.</strong> Install nix</a></li><li class="chapter-item expanded "><a href="../../../nix/COMMA.html"><strong aria-hidden="true">9.</strong> Install comma</a></li><li class="chapter-item expanded "><a href="../../../GET.html"><strong aria-hidden="true">10.</strong> Get courses</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../../../sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../../../system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../../../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../../../documentation/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded "><a href="../../../RADAR.html"><strong aria-hidden="true">5.</strong> tech radar</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../../../sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">6.</strong> TP 1: Packaging with Nix</a></li><li class="chapter-item expanded "><a href="../../../sdlc/tps/perfect-container-with/index.html" class="active"><strong aria-hidden="true">7.</strong> TP 2: Building Containers - The Traditional Way</a></li><li class="chapter-item expanded "><a href="../../../sdlc/tps/perfect-container-with-nix/index.html"><strong aria-hidden="true">8.</strong> TP 3: Perfect Containers with Nix</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../../../nix/INSTALL.html"><strong aria-hidden="true">9.</strong> Install nix</a></li><li class="chapter-item expanded "><a href="../../../nix/COMMA.html"><strong aria-hidden="true">10.</strong> Install comma</a></li><li class="chapter-item expanded "><a href="../../../GET.html"><strong aria-hidden="true">11.</strong> Get courses</a></li><li class="chapter-item expanded "><a href="../../../nix/TEMPLATE.html"><strong aria-hidden="true">12.</strong> Get template</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -173,7 +173,421 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="perfect-container-with-nix-"><a class="header" href="#perfect-container-with-nix-">Perfect container with nix ?</a></h1>
+                        <h1 id="tp-2-building-containers---the-traditional-way"><a class="header" href="#tp-2-building-containers---the-traditional-way">TP 2: Building Containers - The Traditional Way</a></h1>
+<h2 id="learning-objectives"><a class="header" href="#learning-objectives">Learning Objectives</a></h2>
+<p>By the end of this practical, you will be able to:</p>
+<ol>
+<li><strong>Explain</strong> what a container is and how it differs from a virtual machine</li>
+<li><strong>Write</strong> a Dockerfile following best practices</li>
+<li><strong>Build</strong> optimized container images using multi-stage builds</li>
+<li><strong>Analyze</strong> image size, layers, and security implications</li>
+<li><strong>Identify</strong> the limitations of traditional container builds</li>
+</ol>
+<h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
+<ul>
+<li>Completed <a href="../packaging-with-nix/README.html">TP 1: Packaging with Nix</a></li>
+<li>Docker installed (see below)</li>
+<li>Basic understanding of Linux command line</li>
+</ul>
+<hr />
+<h2 id="installing-docker"><a class="header" href="#installing-docker">Installing Docker</a></h2>
+<h3 id="linux"><a class="header" href="#linux">Linux</a></h3>
+<p>Install Docker Engine using the official convenience script:</p>
+<pre><code class="language-bash"># Install Docker
+curl -fsSL https://get.docker.com | sudo sh
+
+# Add your user to the docker group (avoids needing sudo for every command)
+sudo usermod -aG docker "$USER"
+
+# Apply the new group (or log out and back in)
+newgrp docker
+
+# Verify the installation
+docker run hello-world
+</code></pre>
+<h3 id="macos"><a class="header" href="#macos">macOS</a></h3>
+<p>Docker Desktop is the recommended way to run Docker on macOS:</p>
+<ol>
+<li>Download <strong>Docker Desktop</strong> from <a href="https://www.docker.com/products/docker-desktop/">docker.com/products/docker-desktop</a></li>
+<li>Open the <code>.dmg</code> file and drag Docker to your Applications folder</li>
+<li>Launch Docker Desktop from Applications</li>
+<li>Wait for the Docker engine to start (the whale icon in the menu bar stops animating)</li>
+</ol>
+<p>Alternatively, using <a href="https://brew.sh/">Homebrew</a>:</p>
+<pre><code class="language-bash">brew install --cask docker
+# Then launch Docker Desktop from Applications
+</code></pre>
+<p>Verify the installation:</p>
+<pre><code class="language-bash">docker run hello-world
+</code></pre>
+<h3 id="windows-wsl-2"><a class="header" href="#windows-wsl-2">Windows (WSL 2)</a></h3>
+<p>Docker Desktop integrates with WSL 2 to run Linux containers on Windows:</p>
+<ol>
+<li>
+<p><strong>Enable WSL 2</strong> if not already done:</p>
+<pre><code class="language-powershell"># In PowerShell as Administrator
+wsl --install
+</code></pre>
+<p>Restart your machine if prompted.</p>
+</li>
+<li>
+<p><strong>Install Docker Desktop</strong> from <a href="https://www.docker.com/products/docker-desktop/">docker.com/products/docker-desktop</a></p>
+</li>
+<li>
+<p>During installation, ensure <strong>"Use WSL 2 instead of Hyper-V"</strong> is checked</p>
+</li>
+<li>
+<p>Open Docker Desktop → Settings → Resources → WSL Integration → Enable integration with your Linux distribution</p>
+</li>
+<li>
+<p>Open your WSL terminal and verify:</p>
+<pre><code class="language-bash">docker run hello-world
+</code></pre>
+</li>
+</ol>
+<blockquote>
+<p><strong>Note</strong>: All the commands in this TP should be run inside your WSL terminal, not in PowerShell or CMD.</p>
+</blockquote>
+<h3 id="alternative-install-via-nix"><a class="header" href="#alternative-install-via-nix">Alternative: Install via Nix</a></h3>
+<p>If you already have Nix installed from TP 1:</p>
+<pre><code class="language-bash">nix profile install nixpkgs#docker
+</code></pre>
+<blockquote>
+<p>This installs the Docker CLI only. On Linux, you still need the Docker daemon running (<code>sudo systemctl start docker</code>). On macOS/WSL, you still need Docker Desktop.</p>
+</blockquote>
+<hr />
+<h2 id="part-1-what-is-a-container-15-min"><a class="header" href="#part-1-what-is-a-container-15-min">Part 1: What Is a Container? (15 min)</a></h2>
+<h3 id="from-physical-machines-to-containers"><a class="header" href="#from-physical-machines-to-containers">From Physical Machines to Containers</a></h3>
+<p>The history of isolation in computing follows a clear trend toward lighter abstraction:</p>
+<pre><code>Physical Machine → Virtual Machine → Container → Function/Lambda
+   (heavy)           (medium)         (light)       (lightest)
+</code></pre>
+<h3 id="container-vs-virtual-machine"><a class="header" href="#container-vs-virtual-machine">Container vs Virtual Machine</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Aspect</th><th>Virtual Machine</th><th>Container</th></tr></thead><tbody>
+<tr><td>Isolation</td><td>Full OS with its own kernel</td><td>Shares the host kernel</td></tr>
+<tr><td>Startup time</td><td>Minutes</td><td>Milliseconds</td></tr>
+<tr><td>Size</td><td>Gigabytes</td><td>Megabytes</td></tr>
+<tr><td>Overhead</td><td>High (full OS)</td><td>Low (just the process)</td></tr>
+<tr><td>Security</td><td>Strong isolation</td><td>Weaker isolation (shared kernel)</td></tr>
+</tbody></table>
+</div>
+<h3 id="how-containers-work-under-the-hood"><a class="header" href="#how-containers-work-under-the-hood">How Containers Work (Under the Hood)</a></h3>
+<p>Containers are not magic. They are built on three Linux kernel features:</p>
+<ol>
+<li>
+<p><strong>Namespaces</strong>: Isolate what a process can <em>see</em></p>
+<ul>
+<li>PID namespace: the container sees its own process tree</li>
+<li>Network namespace: the container has its own network stack</li>
+<li>Mount namespace: the container has its own filesystem</li>
+</ul>
+</li>
+<li>
+<p><strong>Cgroups</strong> (Control Groups): Limit what a process can <em>use</em></p>
+<ul>
+<li>CPU limits</li>
+<li>Memory limits</li>
+<li>I/O limits</li>
+</ul>
+</li>
+<li>
+<p><strong>Union Filesystems</strong> (OverlayFS): Layer images efficiently</p>
+<ul>
+<li>Each instruction in a Dockerfile creates a new layer</li>
+<li>Layers are shared between images</li>
+<li>Only the top layer is writable</li>
+</ul>
+</li>
+</ol>
+<h3 id="the-oci-standard"><a class="header" href="#the-oci-standard">The OCI Standard</a></h3>
+<p>Containers follow the <strong>Open Container Initiative (OCI)</strong> specification. This means images built by Docker work with Podman, containerd, and Kubernetes. The standard defines:</p>
+<ul>
+<li><strong>Image format</strong>: How layers and metadata are stored</li>
+<li><strong>Runtime spec</strong>: How containers are executed</li>
+<li><strong>Distribution spec</strong>: How images are pushed/pulled from registries</li>
+</ul>
+<h3 id="check-your-understanding"><a class="header" href="#check-your-understanding">Check Your Understanding</a></h3>
+<ul>
+<li>What kernel feature prevents a container from seeing host processes?</li>
+<li>Why are containers faster to start than VMs?</li>
+<li>Can you run a Windows container on a Linux host? Why or why not?</li>
+</ul>
+<hr />
+<h2 id="part-2-your-first-dockerfile-20-min"><a class="header" href="#part-2-your-first-dockerfile-20-min">Part 2: Your First Dockerfile (20 min)</a></h2>
+<h3 id="step-1-create-a-simple-application"><a class="header" href="#step-1-create-a-simple-application">Step 1: Create a simple application</a></h3>
+<p>Let's start with a minimal Python web server. Create a project directory:</p>
+<pre><code class="language-bash">mkdir -p container-tp
+cd container-tp
+git init  # Safe to run multiple times
+</code></pre>
+<p>Create <code>app.py</code>:</p>
+<pre><code class="language-python">from http.server import HTTPServer, BaseHTTPRequestHandler
+import json
+import os
+
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        response = {
+            "message": "Hello from my container!",
+            "hostname": os.uname().nodename,
+            "path": self.path
+        }
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.end_headers()
+        self.wfile.write(json.dumps(response).encode())
+
+server = HTTPServer(("0.0.0.0", 8080), Handler)
+print("Server running on port 8080...")
+server.serve_forever()
+</code></pre>
+<h3 id="step-2-write-a-naive-dockerfile"><a class="header" href="#step-2-write-a-naive-dockerfile">Step 2: Write a naive Dockerfile</a></h3>
+<p>Create a <code>Dockerfile</code>:</p>
+<pre><code class="language-dockerfile">FROM python:3.12
+
+WORKDIR /app
+COPY app.py .
+
+CMD ["python", "app.py"]
+</code></pre>
+<h3 id="step-3-build-and-run"><a class="header" href="#step-3-build-and-run">Step 3: Build and run</a></h3>
+<pre><code class="language-bash">docker build -t my-app:v1 .
+
+# Stop any previous run of this container, then start fresh
+docker rm -f my-app-v1 2&gt;/dev/null || true
+docker run --rm --name my-app-v1 -p 8080:8080 my-app:v1
+</code></pre>
+<p>In another terminal:</p>
+<pre><code class="language-bash">curl http://localhost:8080/
+</code></pre>
+<blockquote>
+<p><strong>To stop the container</strong>, press <code>Ctrl+C</code> in the terminal where it runs. The <code>--rm</code> flag ensures it is automatically cleaned up.</p>
+</blockquote>
+<p>You should see a JSON response. It works. But is it good?</p>
+<h3 id="step-4-analyze-the-image"><a class="header" href="#step-4-analyze-the-image">Step 4: Analyze the image</a></h3>
+<pre><code class="language-bash">docker images my-app:v1
+</code></pre>
+<p>Note the image size. It is likely <strong>over 1 GB</strong>. For a 20-line Python script. Why?</p>
+<pre><code class="language-bash">docker history my-app:v1
+</code></pre>
+<p>The base image <code>python:3.12</code> includes:</p>
+<ul>
+<li>A full Debian operating system</li>
+<li>Build tools (gcc, make, etc.)</li>
+<li>Hundreds of system packages you don't need</li>
+<li>The full Python installation</li>
+</ul>
+<h3 id="the-problem"><a class="header" href="#the-problem">The Problem</a></h3>
+<p>This image has:</p>
+<ul>
+<li><strong>Unnecessary attack surface</strong>: hundreds of binaries an attacker could exploit</li>
+<li><strong>Wasted bandwidth</strong>: pushing/pulling 1 GB for every deploy</li>
+<li><strong>Slow startup</strong>: loading unnecessary layers</li>
+<li><strong>No reproducibility</strong>: <code>python:3.12</code> changes over time (it's a moving tag)</li>
+</ul>
+<hr />
+<h2 id="part-3-making-it-better---multi-stage-builds-25-min"><a class="header" href="#part-3-making-it-better---multi-stage-builds-25-min">Part 3: Making It Better - Multi-Stage Builds (25 min)</a></h2>
+<h3 id="step-5-use-a-slim-base-image"><a class="header" href="#step-5-use-a-slim-base-image">Step 5: Use a slim base image</a></h3>
+<p>Replace your Dockerfile:</p>
+<pre><code class="language-dockerfile">FROM python:3.12-slim
+
+WORKDIR /app
+COPY app.py .
+
+EXPOSE 8080
+CMD ["python", "app.py"]
+</code></pre>
+<pre><code class="language-bash">docker build -t my-app:v2 .
+docker images my-app  # Compare v1 and v2 sizes
+</code></pre>
+<p>Compare sizes. <code>slim</code> removes build tools and documentation, typically cutting the image by 60-70%.</p>
+<h3 id="step-6-use-a-multi-stage-build"><a class="header" href="#step-6-use-a-multi-stage-build">Step 6: Use a multi-stage build</a></h3>
+<p>For compiled languages, multi-stage builds are essential. Let's demonstrate with a Go example.</p>
+<p>Create <code>main.go</code>:</p>
+<pre><code class="language-go">package main
+
+import (
+    "encoding/json"
+    "fmt"
+    "net/http"
+    "os"
+)
+
+func handler(w http.ResponseWriter, r *http.Request) {
+    hostname, _ := os.Hostname()
+    response := map[string]string{
+        "message":  "Hello from Go container!",
+        "hostname": hostname,
+        "path":     r.URL.Path,
+    }
+    w.Header().Set("Content-Type", "application/json")
+    json.NewEncoder(w).Encode(response)
+}
+
+func main() {
+    http.HandleFunc("/", handler)
+    fmt.Println("Server running on port 8080...")
+    http.ListenAndServe(":8080", nil)
+}
+</code></pre>
+<p>Create <code>go.mod</code>:</p>
+<pre><code>module container-tp
+
+go 1.22
+</code></pre>
+<p>Now create a multi-stage Dockerfile for Go, <code>Dockerfile.go</code>:</p>
+<pre><code class="language-dockerfile"># Stage 1: Build
+FROM golang:1.22 AS builder
+
+WORKDIR /app
+COPY go.mod .
+COPY main.go .
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o server .
+
+# Stage 2: Run
+FROM scratch
+
+COPY --from=builder /app/server /server
+
+EXPOSE 8080
+CMD ["/server"]
+</code></pre>
+<pre><code class="language-bash">docker build -f Dockerfile.go -t my-app:v3-go .
+docker images my-app
+</code></pre>
+<p><strong><code>scratch</code></strong> is a completely empty image. The resulting image contains <em>only</em> your binary. Typically under 10 MB.</p>
+<h3 id="understanding-multi-stage-builds"><a class="header" href="#understanding-multi-stage-builds">Understanding Multi-Stage Builds</a></h3>
+<pre><code>┌─────────────────────────┐
+│  Stage 1: "builder"     │
+│  - Full Go toolchain    │  ← Thrown away
+│  - Source code           │
+│  - Compiled binary      │──────┐
+└─────────────────────────┘      │
+                                  │ COPY --from=builder
+┌─────────────────────────┐      │
+│  Stage 2: final image   │ ←────┘
+│  - Only the binary      │
+│  - Nothing else          │
+└─────────────────────────┘
+</code></pre>
+<p>The build tools stay in the builder stage. Only the artifact moves to the final image.</p>
+<hr />
+<h2 id="part-4-security-best-practices-20-min"><a class="header" href="#part-4-security-best-practices-20-min">Part 4: Security Best Practices (20 min)</a></h2>
+<h3 id="step-7-dont-run-as-root"><a class="header" href="#step-7-dont-run-as-root">Step 7: Don't run as root</a></h3>
+<p>By default, containers run as <code>root</code>. This is dangerous. If an attacker escapes the container, they have root on the host.</p>
+<pre><code class="language-dockerfile">FROM python:3.12-slim
+
+# Create a non-root user
+RUN groupadd -r appuser &amp;&amp; useradd -r -g appuser appuser
+
+WORKDIR /app
+COPY app.py .
+
+# Switch to non-root user
+USER appuser
+
+EXPOSE 8080
+CMD ["python", "app.py"]
+</code></pre>
+<h3 id="step-8-scan-for-vulnerabilities"><a class="header" href="#step-8-scan-for-vulnerabilities">Step 8: Scan for vulnerabilities</a></h3>
+<pre><code class="language-bash"># Install trivy if not available (safe to run multiple times)
+command -v trivy &gt;/dev/null || nix profile install 'nixpkgs#trivy'
+
+trivy image my-app:v1
+trivy image my-app:v2
+</code></pre>
+<p>Compare the CVE counts. The slim image has significantly fewer vulnerabilities because it has fewer packages.</p>
+<h3 id="step-9-use-pinned-digests-instead-of-tags"><a class="header" href="#step-9-use-pinned-digests-instead-of-tags">Step 9: Use pinned digests instead of tags</a></h3>
+<p>Tags are mutable. <code>python:3.12-slim</code> today is different from <code>python:3.12-slim</code> six months ago.</p>
+<pre><code class="language-dockerfile"># Bad: tag can change
+FROM python:3.12-slim
+
+# Good: pinned to exact image
+FROM python:3.12-slim@sha256:abc123...
+</code></pre>
+<p>To get the digest:</p>
+<pre><code class="language-bash"># Pull the image first if you haven't already
+docker pull python:3.12-slim 2&gt;/dev/null || true
+docker inspect --format='{{index .RepoDigests 0}}' python:3.12-slim
+</code></pre>
+<h3 id="security-checklist"><a class="header" href="#security-checklist">Security Checklist</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Practice</th><th>Why</th></tr></thead><tbody>
+<tr><td>Use minimal base images</td><td>Fewer packages = fewer vulnerabilities</td></tr>
+<tr><td>Run as non-root</td><td>Limit damage if container is compromised</td></tr>
+<tr><td>Pin image digests</td><td>Prevent supply chain attacks</td></tr>
+<tr><td>Don't store secrets in images</td><td>Secrets in layers are visible with <code>docker history</code></td></tr>
+<tr><td>Use <code>.dockerignore</code></td><td>Prevent leaking source code, <code>.git</code>, <code>.env</code> files</td></tr>
+<tr><td>Scan images regularly</td><td>Catch known CVEs before deployment</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="part-5-the-remaining-problems-10-min"><a class="header" href="#part-5-the-remaining-problems-10-min">Part 5: The Remaining Problems (10 min)</a></h2>
+<h3 id="what-docker-doesnt-solve"><a class="header" href="#what-docker-doesnt-solve">What Docker Doesn't Solve</a></h3>
+<p>Even with all best practices, Docker has fundamental limitations:</p>
+<p><strong>1. Non-reproducible builds</strong></p>
+<pre><code class="language-dockerfile">RUN apt-get update &amp;&amp; apt-get install -y curl
+</code></pre>
+<p>This installs <em>whatever version of curl is in the repo today</em>. Build the same Dockerfile in 6 months, and you get different packages. Your <code>flake.lock</code> from TP 1 solves this for Nix; Docker has no equivalent.</p>
+<p><strong>2. Layer ordering matters</strong></p>
+<pre><code class="language-dockerfile"># Bad: changing app.py invalidates the COPY layer AND all subsequent layers
+COPY . .
+RUN pip install -r requirements.txt
+
+# Better: install deps first, copy code second
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY app.py .
+</code></pre>
+<p>Layer caching is fragile and depends on instruction order, not content hashing.</p>
+<p><strong>3. The "minimal image" problem</strong></p>
+<p>To build a truly minimal image, you need to know the exact runtime dependencies of your binary. Miss one shared library and the container crashes. Include too many and you bloat the image.</p>
+<p>There is no systematic way to determine the minimal closure of dependencies in Docker.</p>
+<p><strong>4. Build environment leaks</strong></p>
+<p>Even with multi-stage builds, the build environment (network access, timestamps, environment variables) can leak non-determinism into the output.</p>
+<h3 id="reflection"><a class="header" href="#reflection">Reflection</a></h3>
+<p>Think about these questions:</p>
+<ul>
+<li>If you build the same Dockerfile on two different machines, will you get the same image hash?</li>
+<li>How do you know your <code>slim</code> image doesn't contain unnecessary packages?</li>
+<li>Is there a way to build a container image without Docker at all?</li>
+</ul>
+<p>The answer to the last question is <strong>yes</strong> - and that's what TP 3 is about.</p>
+<hr />
+<h2 id="exercises"><a class="header" href="#exercises">Exercises</a></h2>
+<h3 id="exercise-1-size-comparison-table"><a class="header" href="#exercise-1-size-comparison-table">Exercise 1: Size comparison table</a></h3>
+<p>Build images using different base images and fill in this table:</p>
+<div class="table-wrapper"><table><thead><tr><th>Base Image</th><th>Size</th><th>CVE Count (trivy)</th><th>Contains Shell?</th></tr></thead><tbody>
+<tr><td><code>python:3.12</code></td><td>?</td><td>?</td><td>?</td></tr>
+<tr><td><code>python:3.12-slim</code></td><td>?</td><td>?</td><td>?</td></tr>
+<tr><td><code>python:3.12-alpine</code></td><td>?</td><td>?</td><td>?</td></tr>
+<tr><td><code>gcr.io/distroless/python3</code></td><td>?</td><td>?</td><td>?</td></tr>
+</tbody></table>
+</div>
+<h3 id="exercise-2-multi-stage-for-your-tp1-project"><a class="header" href="#exercise-2-multi-stage-for-your-tp1-project">Exercise 2: Multi-stage for your TP1 project</a></h3>
+<p>Take the Nix package you built in TP 1 and try to containerize it using a traditional multi-stage Dockerfile. Note the difficulties you encounter.</p>
+<h3 id="exercise-3-dockerignore"><a class="header" href="#exercise-3-dockerignore">Exercise 3: <code>.dockerignore</code></a></h3>
+<p>Create a <code>.dockerignore</code> file for your project. Build the image with and without it and compare the build context size.</p>
+<hr />
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>What you learned</th><th>Key takeaway</th></tr></thead><tbody>
+<tr><td>Container fundamentals</td><td>Namespaces, cgroups, and overlay filesystems</td></tr>
+<tr><td>Dockerfile best practices</td><td>Slim images, multi-stage builds, layer ordering</td></tr>
+<tr><td>Security hardening</td><td>Non-root users, pinned digests, vulnerability scanning</td></tr>
+<tr><td>Docker limitations</td><td>Non-reproducible, no systematic minimality, layer ordering fragility</td></tr>
+</tbody></table>
+</div>
+<h3 id="key-commands-reference"><a class="header" href="#key-commands-reference">Key Commands Reference</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Command</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><code>docker build -t name:tag .</code></td><td>Build an image</td></tr>
+<tr><td><code>docker run --rm -p 8080:8080 name:tag</code></td><td>Run a container (auto-cleanup)</td></tr>
+<tr><td><code>docker images</code></td><td>List images</td></tr>
+<tr><td><code>docker history &lt;image&gt;</code></td><td>Show image layers</td></tr>
+<tr><td><code>trivy image &lt;image&gt;</code></td><td>Scan for vulnerabilities</td></tr>
+</tbody></table>
+</div>
+<h3 id="whats-next"><a class="header" href="#whats-next">What's Next?</a></h3>
+<p>In TP 3, you will discover how <strong>Nix can build container images</strong> that are reproducible, minimal, and secure by design - without even needing Docker to build them.</p>
 
                     </main>
 
@@ -183,7 +597,7 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../../nix/INSTALL.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../../sdlc/tps/perfect-container-with-nix/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -197,7 +611,7 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../../nix/INSTALL.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../../sdlc/tps/perfect-container-with-nix/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

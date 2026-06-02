@@ -2,31 +2,31 @@
 
 <!-- vale off -->
 
-- [Module Objective](#module-objective)
-- [Definitions](#definitions)
-  - [Software Delivery Life Cycle](#software-delivery-life-cycle)
-  - [Framework](#framework)
-  - [CI](#ci)
-  - [Supply Chain](#supply-chain)
-  - [CD](#cd)
-  - [A picture is worth a thousand words:](#a-picture-is-worth-a-thousand-words)
-- [5W](#5w)
-- [Also](#also)
-- [Entities](#entities)
-- [DEVOPS 💓 CICD](#devops--cicd)
-  - [Non-functional aspects](#non-functional-aspects)
-  - [Keys performance indicators (KPI)](#keys-performance-indicators-kpi)
-    - [My Favorite KPI 🔑](#my-favorite-kpi-)
-    - [DORA Metrics](#dora-metrics)
-- [CI/CD Architecture 🏗️](#cicd-architecture-)
-  - [CI/CD Geography 🗺️](#cicd-geography-)
-  - [CI/CD Timeline 🕐](#cicd-timeline-)
-    - [4 Steps](#4-steps)
-  - [Monorepo vs Polyrepo](#monorepo-vs-polyrepo)
-    - [Polyrepo](#polyrepo)
-    - [Monorepo](#monorepo)
-    - [How to split?](#how-to-split)
-    - [And for CI/CD](#and-for-cicd)
+  * [Module Objective](#module-objective)
+  * [Definitions](#definitions)
+    * [Software Delivery Life Cycle](#software-delivery-life-cycle)
+    * [Framework](#framework)
+    * [CI](#ci)
+    * [Supply Chain](#supply-chain)
+    * [CD](#cd)
+    * [A picture is worth a thousand words:](#a-picture-is-worth-a-thousand-words)
+  * [5W](#5w)
+  * [Also](#also)
+  * [Entities](#entities)
+* [DEVOPS 💓 CICD](#devops--cicd)
+  * [Non-functional aspects](#non-functional-aspects)
+  * [Key Performance Indicators (KPI)](#key-performance-indicators-kpi)
+    * [My Favorite KPI 🔑](#my-favorite-kpi-)
+    * [DORA Metrics](#dora-metrics)
+* [CI/CD Architecture 🏗️](#cicd-architecture-)
+  * [CI/CD Geography 🗺️](#cicd-geography-)
+  * [CI/CD Timeline 🕐](#cicd-timeline-)
+    * [4 Steps](#4-steps)
+  * [Monorepo vs Polyrepo](#monorepo-vs-polyrepo)
+    * [Polyrepo](#polyrepo)
+    * [Monorepo](#monorepo)
+    * [How to split?](#how-to-split)
+    * [And for CI/CD](#and-for-cicd)
 
 <!-- vale on -->
 
@@ -126,11 +126,11 @@ In Continuous Delivery, versions are ready to be deployed but aren't deployed au
 ## Non-functional aspects
 
 - A specification: RFC ISO 25 010
-- ISQTB
+- ISTQB
 
-![](./assets/test-familly.png)
+![](./assets/test-family.png)
 
-## Keys performance indicators (KPI)
+## Key Performance Indicators (KPI)
 
 > It doesn’t work, it’s too slow, it’s broken.
 
@@ -191,7 +191,7 @@ ______________________________________________________________________
 ______________________________________________________________________
 
 1. Linting:
-   The linting phase ensures that the codebase is in good shape. This may include checking formatting, style, and auto generated code.
+   The linting phase ensures that the codebase is in good shape. This may include checking formatting, style, and auto-generated code.
 
 ______________________________________________________________________
 
@@ -238,9 +238,9 @@ ______________________________________________________________________
 - **Advantages:**
   1. Easier collaboration and code sharing.
   1. Centralized version and security management.
-  1. Possibility of frequent merge conflicts and complex dependencies.
+  1. Unified dependency management.
 - **Disadvantages:**
-  1. Frequent merge conflicts.
+  1. Frequent merge conflicts and complex dependencies.
   1. Errors in one project can impact the entire system.
   1. More complex management as it scales.
 

@@ -13,8 +13,89 @@ By the end of this practical, you will be able to:
 ## Prerequisites
 
 - Completed [TP 1: Packaging with Nix](../packaging-with-nix/README.md)
-- Docker or Podman installed (use `nix profile install nixpkgs#docker` or `nixpkgs#podman`)
+- Docker installed (see below)
 - Basic understanding of Linux command line
+
+______________________________________________________________________
+
+## Installing Docker
+
+### Linux
+
+Install Docker Engine using the official convenience script:
+
+```bash
+# Install Docker
+curl -fsSL https://get.docker.com | sudo sh
+
+# Add your user to the docker group (avoids needing sudo for every command)
+sudo usermod -aG docker "$USER"
+
+# Apply the new group (or log out and back in)
+newgrp docker
+
+# Verify the installation
+docker run hello-world
+```
+
+### macOS
+
+Docker Desktop is the recommended way to run Docker on macOS:
+
+1. Download **Docker Desktop** from [docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop/)
+2. Open the `.dmg` file and drag Docker to your Applications folder
+3. Launch Docker Desktop from Applications
+4. Wait for the Docker engine to start (the whale icon in the menu bar stops animating)
+
+Alternatively, using [Homebrew](https://brew.sh/):
+
+```bash
+brew install --cask docker
+# Then launch Docker Desktop from Applications
+```
+
+Verify the installation:
+
+```bash
+docker run hello-world
+```
+
+### Windows (WSL 2)
+
+Docker Desktop integrates with WSL 2 to run Linux containers on Windows:
+
+1. **Enable WSL 2** if not already done:
+
+   ```powershell
+   # In PowerShell as Administrator
+   wsl --install
+   ```
+
+   Restart your machine if prompted.
+
+2. **Install Docker Desktop** from [docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop/)
+
+3. During installation, ensure **"Use WSL 2 instead of Hyper-V"** is checked
+
+4. Open Docker Desktop → Settings → Resources → WSL Integration → Enable integration with your Linux distribution
+
+5. Open your WSL terminal and verify:
+
+   ```bash
+   docker run hello-world
+   ```
+
+> **Note**: All the commands in this TP should be run inside your WSL terminal, not in PowerShell or CMD.
+
+### Alternative: Install via Nix
+
+If you already have Nix installed from TP 1:
+
+```bash
+nix profile install nixpkgs#docker
+```
+
+> This installs the Docker CLI only. On Linux, you still need the Docker daemon running (`sudo systemctl start docker`). On macOS/WSL, you still need Docker Desktop.
 
 ______________________________________________________________________
 

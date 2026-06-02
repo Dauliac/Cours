@@ -1,12 +1,17 @@
 { inputs, ... }:
+let
+  # Auto-import all .nix files in this directory (except default.nix itself).
+  nixFiles = builtins.filter (name: name != "default.nix") (
+    builtins.filter (name: builtins.match ".*\\.nix" name != null) (
+      builtins.attrNames (builtins.readDir ./.)
+    )
+  );
+  localImports = map (name: ./${name}) nixFiles;
+in
 {
   imports = [
     inputs.treefmt-nix.flakeModule
-    ./dev-shell.nix
-    ./treefmt.nix
-    ./vale.nix
-    ./templates.nix
-  ];
+  ] ++ localImports;
   perSystem =
     { system, ... }:
     {
