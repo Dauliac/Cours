@@ -10,7 +10,7 @@
 radar_visualization({
   // title: "Tech Radar",
   width: 1500,
-  height: 1000,
+  height: 1900,
   quadrants: [
     { name: "Methods" },
     { name: "Tools" },
@@ -118,7 +118,7 @@ radar_visualization({
 
     // Tools — Documentation & Diagrams
     { label: "mdBook", quadrant: 1, ring: 1, moved: 0, link: "https://rust-lang.github.io/mdBook/" },
-    { label: "VHS", quadrant: 1, ring: 2, moved: 0, link: "https://github.com/charmbracelet/vhs" },
+    { label: "VHS", quadrant: 1, ring: 1, moved: 0, link: "https://github.com/charmbracelet/vhs" },
     { label: "Marp", quadrant: 1, ring: 1, moved: 0, link: "https://marp.app/" },
     { label: "Mermaid", quadrant: 1, ring: 0, moved: 0, link: "https://mermaid.js.org/" },
     { label: "D2", quadrant: 1, ring: 1, moved: 0, link: "https://d2lang.com/" },
@@ -127,21 +127,9 @@ radar_visualization({
     { label: "Docusaurus", quadrant: 1, ring: 1, moved: 0, link: "https://docusaurus.io/" },
     { label: "Astro", quadrant: 1, ring: 1, moved: 0, link: "https://astro.build/" },
 
-    // Tools — Shell & Terminal
-    { label: "starship", quadrant: 1, ring: 0, moved: 0, link: "https://starship.rs/" },
+    // Tools — Dev environment
     { label: "direnv", quadrant: 1, ring: 0, moved: 0, link: "https://direnv.net/" },
-    { label: "zoxide", quadrant: 1, ring: 1, moved: 0, link: "https://github.com/ajeetdsouza/zoxide" },
-    { label: "fd", quadrant: 1, ring: 0, moved: 0, link: "https://github.com/sharkdp/fd" },
-    { label: "ripgrep", quadrant: 1, ring: 0, moved: 0, link: "https://github.com/BurntSushi/ripgrep" },
-    { label: "bat", quadrant: 1, ring: 1, moved: 0, link: "https://github.com/sharkdp/bat" },
     { label: "jq", quadrant: 1, ring: 0, moved: 0, link: "https://jqlang.github.io/jq/" },
-    { label: "fzf", quadrant: 1, ring: 0, moved: 0, link: "https://github.com/junegunn/fzf" },
-    { label: "delta", quadrant: 1, ring: 1, moved: 0, link: "https://dandavison.github.io/delta/" },
-    { label: "eza", quadrant: 1, ring: 1, moved: 0, link: "https://eza.rocks/" },
-    { label: "atuin", quadrant: 1, ring: 1, moved: 0, link: "https://atuin.sh/" },
-    { label: "nushell", quadrant: 1, ring: 2, moved: 0, link: "https://www.nushell.sh/" },
-    { label: "fish", quadrant: 1, ring: 1, moved: 0, link: "https://fishshell.com/" },
-    { label: "zsh", quadrant: 1, ring: 1, moved: 0, link: "https://www.zsh.org/" },
 
     // Languages & Frameworks
     { label: "Rust", quadrant: 2, ring: 0, moved: 0, link: "https://www.rust-lang.org/" },
