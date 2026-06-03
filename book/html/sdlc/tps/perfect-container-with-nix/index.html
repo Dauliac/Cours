@@ -177,10 +177,11 @@
 <h2 id="learning-objectives"><a class="header" href="#learning-objectives">Learning Objectives</a></h2>
 <p>By the end of this practical, you will be able to:</p>
 <ol>
+<li><strong>Explain</strong> why minimal containers matter for security, cost, and performance</li>
 <li><strong>Build</strong> OCI container images using Nix, without Docker</li>
 <li><strong>Compare</strong> Nix-built images with traditional Docker images</li>
-<li><strong>Explain</strong> why Nix images are reproducible and minimal by design</li>
-<li><strong>Create</strong> a multi-service container setup with Nix-built images</li>
+<li><strong>Understand</strong> how the Nix store deduplicates dependencies across containers and dev shells</li>
+<li><strong>Create</strong> layered container images optimized for registry efficiency</li>
 <li><strong>Evaluate</strong> when to use Nix containers vs traditional Dockerfiles</li>
 </ol>
 <h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
@@ -191,7 +192,17 @@
 <li>Nix with flakes enabled</li>
 </ul>
 <hr />
-<h2 id="part-1-the-nix-approach-to-containers-15-min"><a class="header" href="#part-1-the-nix-approach-to-containers-15-min">Part 1: The Nix Approach to Containers (15 min)</a></h2>
+<h2 id="part-1-the-nix-approach-to-containers-20-min"><a class="header" href="#part-1-the-nix-approach-to-containers-20-min">Part 1: The Nix Approach to Containers (20 min)</a></h2>
+<h3 id="why-minimal-containers-matter"><a class="header" href="#why-minimal-containers-matter">Why Minimal Containers Matter</a></h3>
+<p>Before we look at <em>how</em> Nix builds containers, let's understand <em>why</em> minimalism is so important.</p>
+<p>A typical <code>debian:bookworm-slim</code> image ships with hundreds of packages: <code>apt</code>, <code>dpkg</code>, <code>perl</code>, <code>sed</code>, <code>grep</code>, <code>login</code>, <code>passwd</code>, <code>mount</code>... Your application needs none of these. Yet they are all there, and each one:</p>
+<ul>
+<li><strong>Increases the attack surface</strong>: every binary is a potential exploit vector. The 2024 <code>xz-utils</code> backdoor (CVE-2024-3094) was embedded in a compression library that most containers included <em>for no reason</em>. Fewer packages = fewer CVEs to patch.</li>
+<li><strong>Costs real money</strong>: container registries charge per GB stored. CI/CD pipelines push and pull images on every deploy. A 500 MB image pulled 100 times/day across 20 services = 1 TB/day of bandwidth.</li>
+<li><strong>Slows everything down</strong>: larger images mean slower pulls, slower cold starts, slower autoscaling. In Kubernetes, a pod with a 30 MB image starts in seconds; a pod with a 500 MB image can take minutes on a cold node.</li>
+<li><strong>Makes auditing impossible</strong>: when your image contains 400 packages, how do you answer "what exactly is running in production?" With a minimal image, you can list every file.</li>
+</ul>
+<p><strong>The ideal container contains your application and its exact runtime dependencies. Nothing else.</strong> This is what Nix gives you automatically.</p>
 <h3 id="why-build-containers-with-nix"><a class="header" href="#why-build-containers-with-nix">Why Build Containers with Nix?</a></h3>
 <p>In TP 2, we identified fundamental problems with traditional Docker builds:</p>
 <div class="table-wrapper"><table><thead><tr><th>Problem</th><th>Docker's answer</th><th>Nix's answer</th></tr></thead><tbody>
@@ -201,6 +212,7 @@
 <tr><td>Layer optimization</td><td>Careful ordering (fragile)</td><td>Content-addressed layers (automatic)</td></tr>
 </tbody></table>
 </div>
+<p>With Docker, achieving minimalism is manual and fragile. You guess which packages to remove, use multi-stage builds to strip build tools, and hope you didn't forget a runtime dependency. With Nix, the closure <em>is</em> the answer - it is mathematically computed from your dependency graph.</p>
 <h3 id="how-nix-builds-container-images"><a class="header" href="#how-nix-builds-container-images">How Nix Builds Container Images</a></h3>
 <p>Nix doesn't use Docker to build images. Instead, it:</p>
 <ol>
@@ -224,10 +236,27 @@
 └──────────────────────────────────────────┘
 </code></pre>
 <p><strong>The closure</strong> is the key concept. When you build a Nix package, Nix knows every single dependency, transitively. When building a container, it includes <em>exactly</em> those dependencies and nothing more. No guessing, no extra packages.</p>
+<h3 id="the-nix-store-deduplication-for-free"><a class="header" href="#the-nix-store-deduplication-for-free">The Nix Store: Deduplication for Free</a></h3>
+<p>Here is something powerful that is easy to miss: the Nix store (<code>/nix/store/</code>) deduplicates everything on disk.</p>
+<p>When you ran <code>nix develop</code> in TP 1, Nix downloaded <code>coreutils</code>, <code>bash</code>, <code>glibc</code>, and other packages into the store. When you now build a container image that uses the same <code>coreutils</code>, <strong>Nix does not download or store it again</strong>. It is the same store path, identified by the same hash.</p>
+<pre><code>/nix/store/f8bb29v1w8...-coreutils-9.5/    # Used by BOTH devShell and container
+
+Your devShell ──→ references this path
+Your container ──→ references the same path
+Your second container ──→ still the same path
+</code></pre>
+<p>This means:</p>
+<ul>
+<li><strong>Building the container after <code>nix develop</code> is nearly instant</strong> - all shared dependencies are already in the store</li>
+<li><strong>10 containers that all use <code>coreutils</code> store it once</strong> on disk, not 10 times</li>
+<li><strong>CI caches work perfectly</strong> - if the store is cached, subsequent builds only fetch what changed</li>
+</ul>
+<p>Compare this with Docker, where each image is an isolated filesystem. If you have 10 images all based on <code>debian:slim</code>, that base layer is stored 10 times in the image layers (unless you carefully organize layer sharing, which Docker makes very hard).</p>
 <h3 id="check-your-understanding"><a class="header" href="#check-your-understanding">Check Your Understanding</a></h3>
 <ul>
 <li>What is a "closure" in the context of Nix?</li>
 <li>Why doesn't Nix need a Docker daemon to build images?</li>
+<li>If your devShell and your container both depend on <code>coreutils</code>, how many copies exist on disk?</li>
 </ul>
 <hr />
 <h2 id="part-2-your-first-nix-container-25-min"><a class="header" href="#part-2-your-first-nix-container-25-min">Part 2: Your First Nix Container (25 min)</a></h2>
@@ -313,7 +342,7 @@ nix run
 <p><strong>Remember</strong>: every new <code>.nix</code> file must be <code>git add</code>ed. The template auto-imports all <code>.nix</code> files from <code>nix/</code> - no need to edit <code>default.nix</code>.</p>
 </blockquote>
 <pre><code class="language-bash">git add nix/container.nix
-nom build .#container
+nom build '.#container'
 </code></pre>
 <p><code>nom</code> (nix-output-monitor) wraps <code>nix build</code> with a rich live progress view. This produces a <code>result</code> file that is a Docker-compatible image archive.</p>
 <h3 id="step-6-load-and-run-the-image"><a class="header" href="#step-6-load-and-run-the-image">Step 6: Load and run the image</a></h3>
@@ -376,11 +405,19 @@ trivy image my-docker-app:latest 2&gt;/dev/null | tail -5
 <tr><td>Contains shell</td><td>Yes (+ many utilities)</td><td>Only if explicitly added</td></tr>
 </tbody></table>
 </div>
+<h3 id="why-this-difference-matters-at-scale"><a class="header" href="#why-this-difference-matters-at-scale">Why This Difference Matters at Scale</a></h3>
+<p>The size difference might seem small for one image. Now multiply it:</p>
+<ul>
+<li><strong>20 microservices</strong> x 4 deploys/day x 150 MB = <strong>12 GB/day</strong> pushed to the registry (Docker)</li>
+<li><strong>20 microservices</strong> x 4 deploys/day x 40 MB = <strong>3.2 GB/day</strong> pushed to the registry (Nix)</li>
+</ul>
+<p>But it gets even better with Nix. Remember that <code>buildLayeredImage</code> creates layers from individual store paths. If 15 of your 20 services share <code>glibc</code> and <code>coreutils</code>, those layers are pushed <strong>once</strong> and reused across all images in the registry. Docker cannot do this because each <code>RUN apt-get install</code> creates a unique layer hash even if the content is identical.</p>
+<p>On the security side: every package in your image is a liability. The Debian slim image contains <code>login</code>, <code>passwd</code>, <code>su</code>, <code>mount</code> - tools that have no place in a container but regularly appear in CVE databases. With Nix, the question is inverted: instead of "what can I remove?", it's "what do I actually need?". The answer is always the exact closure - nothing to forget, nothing to audit manually.</p>
 <h3 id="step-9-verify-reproducibility"><a class="header" href="#step-9-verify-reproducibility">Step 9: Verify reproducibility</a></h3>
 <p>Build the Nix image twice:</p>
 <pre><code class="language-bash"># -o creates named symlinks (safe to re-run, overwrites previous symlinks)
-nix build .#container -o result1
-nix build .#container -o result2
+nix build '.#container' -o result1
+nix build '.#container' -o result2
 
 # Compare the checksums
 sha256sum result1
@@ -425,7 +462,17 @@ sha256sum result2
     };
 }
 </code></pre>
-<p><strong>Why layered?</strong> When pushing to a registry, unchanged layers don't need to be re-uploaded. Nix creates layers based on the dependency graph, so updating your app only pushes the changed layer, not the entire image.</p>
+<p><strong>Why layered?</strong> <code>buildLayeredImage</code> maps Nix store paths to OCI layers. Each dependency becomes its own layer (or group of layers). This has two major benefits:</p>
+<ol>
+<li><strong>Incremental pushes</strong>: when you update your app code, only the layer containing your app is re-pushed. The layers for <code>glibc</code>, <code>coreutils</code>, etc. are already in the registry.</li>
+<li><strong>Cross-image sharing</strong>: if two different container images both depend on <code>coreutils</code>, the registry stores that layer once. This is the store deduplication concept, but extended to the container registry.</li>
+</ol>
+<p>You can verify this by comparing layers:</p>
+<pre><code class="language-bash">nom build '.#container'
+docker load &lt; result
+docker history my-nix-app:latest
+</code></pre>
+<p>Notice how each layer corresponds to a Nix store path. The bottom layers (large, rarely changing dependencies) are stable across builds. Only the top layer (your application) changes when you edit your code.</p>
 <h3 id="step-11-add-a-non-root-user"><a class="header" href="#step-11-add-a-non-root-user">Step 11: Add a non-root user</a></h3>
 <pre><code class="language-nix">_: {
   config.perSystem =
@@ -549,7 +596,7 @@ func main() {
 </code></pre>
 <p>Build and run:</p>
 <pre><code class="language-bash">git add main.go nix/go-package.nix nix/go-container.nix
-nix build .#go-container
+nix build '.#go-container'
 docker load &lt; result
 
 # Stop any previous run, then start fresh
@@ -613,23 +660,23 @@ CMD ["/my-app"]
 <h3 id="exercise-2-explore-the-closure-in-depth"><a class="header" href="#exercise-2-explore-the-closure-in-depth">Exercise 2: Explore the closure in depth</a></h3>
 <p>Use <code>nix-tree</code> to interactively visualize what goes into your container:</p>
 <pre><code class="language-bash"># Interactive dependency tree of your package
-nix-tree .#default
+nix-tree '.#default'
 </code></pre>
 <p>Navigate with arrow keys and Enter. You can see every transitive dependency, its size, and why it was pulled in. This is the best way to understand <em>why</em> your container is the size it is.</p>
 <p>Then measure it:</p>
 <pre><code class="language-bash"># Show all runtime dependencies with individual and closure sizes
-nix path-info -rsSh .#default
+nix path-info -rsSh '.#default'
 
 # Just the total closure size
-nix path-info -Sh .#default
+nix path-info -Sh '.#default'
 </code></pre>
 <p>This is what ends up in your container - nothing more, nothing less. If a dependency seems surprising, use <code>nix why-depends</code> to trace the dependency chain:</p>
 <pre><code class="language-bash"># Why does my package depend on glibc?
-nix why-depends .#default nixpkgs#glibc
+nix why-depends '.#default' 'nixpkgs#glibc'
 </code></pre>
 <h3 id="exercise-3-push-to-a-registry"><a class="header" href="#exercise-3-push-to-a-registry">Exercise 3: Push to a registry</a></h3>
 <pre><code class="language-bash"># Build and push directly (without Docker)
-nix build .#container
+nix build '.#container'
 skopeo copy docker-archive:result docker://registry.example.com/my-app:latest
 </code></pre>
 <p><code>skopeo</code> can push Nix-built images to any OCI registry without needing a Docker daemon.</p>
@@ -642,17 +689,19 @@ skopeo copy docker-archive:result docker://registry.example.com/my-app:latest
   config.Cmd = [ "/bin/my-app" ];
 };
 </code></pre>
-<pre><code class="language-bash">nix build .#container
+<pre><code class="language-bash">nix build '.#container'
 ./result | docker load
 </code></pre>
 <hr />
 <h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Concept</th><th>What you learned</th></tr></thead><tbody>
+<tr><td><strong>Why minimal matters</strong></td><td>Fewer packages = smaller attack surface, faster pulls, lower cost</td></tr>
 <tr><td><strong>Nix container builds</strong></td><td>Building OCI images without Docker using <code>dockerTools</code></td></tr>
 <tr><td><strong>Dependency closures</strong></td><td>Nix computes the exact minimal set of runtime dependencies</td></tr>
+<tr><td><strong>Store deduplication</strong></td><td>Dependencies are shared on disk between devShell, containers, and builds</td></tr>
 <tr><td><strong>Closure inspection</strong></td><td>Using <code>nix-tree</code> and <code>nix why-depends</code> to understand image contents</td></tr>
 <tr><td><strong>Reproducibility</strong></td><td>Same inputs = same image hash, every time</td></tr>
-<tr><td><strong>Layered images</strong></td><td><code>buildLayeredImage</code> for efficient registry pushes</td></tr>
+<tr><td><strong>Layered images</strong></td><td>Store paths map to layers, enabling cross-image sharing in registries</td></tr>
 <tr><td><strong>Security</strong></td><td>Non-root users, minimal attack surface, no unnecessary packages</td></tr>
 <tr><td><strong>Build UX</strong></td><td>Using <code>nom</code> for fancy builds and <code>nix run</code> for instant execution</td></tr>
 <tr><td><strong>Trade-offs</strong></td><td>When Nix containers vs Docker makes sense</td></tr>
@@ -660,12 +709,12 @@ skopeo copy docker-archive:result docker://registry.example.com/my-app:latest
 </div>
 <h3 id="key-commands-reference"><a class="header" href="#key-commands-reference">Key Commands Reference</a></h3>
 <div class="table-wrapper"><table><thead><tr><th>Command</th><th>Purpose</th></tr></thead><tbody>
-<tr><td><code>nom build .#container</code></td><td>Build the container image with fancy output</td></tr>
+<tr><td><code>nom build '.#container'</code></td><td>Build the container image with fancy output</td></tr>
 <tr><td><code>nix run</code></td><td>Build and run the default app in one step</td></tr>
 <tr><td><code>docker load &lt; result</code></td><td>Load a Nix-built image into Docker</td></tr>
-<tr><td><code>nix-tree .#default</code></td><td>Interactive dependency tree explorer</td></tr>
-<tr><td><code>nix path-info -rsSh .#default</code></td><td>Show the dependency closure with sizes</td></tr>
-<tr><td><code>nix why-depends .#default nixpkgs#glibc</code></td><td>Trace why a dependency is included</td></tr>
+<tr><td><code>nix-tree '.#default'</code></td><td>Interactive dependency tree explorer</td></tr>
+<tr><td><code>nix path-info -rsSh '.#default'</code></td><td>Show the dependency closure with sizes</td></tr>
+<tr><td><code>nix why-depends '.#default' 'nixpkgs#glibc'</code></td><td>Trace why a dependency is included</td></tr>
 <tr><td><code>skopeo copy docker-archive:result docker://...</code></td><td>Push without Docker</td></tr>
 </tbody></table>
 </div>

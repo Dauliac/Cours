@@ -250,6 +250,9 @@ keep-outputs = true
 # Silence noisy "Git tree is dirty" warnings during dev
 warn-dirty = false
 
+# Suppress "or as an identifier is deprecated" warnings from nixpkgs
+extra-deprecated-features = or-as-identifier
+
 # Show more tail on build failure
 log-lines = 50
 
@@ -288,6 +291,91 @@ nix search nixpkgs &lt;package&gt;
 # Install
 nix profile install 'nixpkgs#git'
 </code></pre>
+<h2 id="uninstalling-nix"><a class="header" href="#uninstalling-nix">Uninstalling Nix</a></h2>
+<p>If you have a broken Nix installation, packages from the official Nix installer instead of Lix, or need a clean slate, follow the steps below for your platform.</p>
+<h3 id="linux-and-wsl"><a class="header" href="#linux-and-wsl">Linux and WSL</a></h3>
+<ol>
+<li>
+<p><strong>If you installed with the Lix installer</strong>, it provides a built-in uninstall command:</p>
+<pre><code class="language-bash">/nix/nix-installer uninstall
+</code></pre>
+<p>This reverses all changes made during installation (systemd units, build users, <code>/nix</code> mount, shell hooks). If the command succeeds, you are done.</p>
+</li>
+<li>
+<p><strong>If the uninstaller is missing or fails</strong>, clean up manually:</p>
+<pre><code class="language-bash"># Stop and disable Nix daemons
+sudo systemctl stop nix-daemon.service nix-daemon.socket 2&gt;/dev/null
+sudo systemctl disable nix-daemon.service nix-daemon.socket 2&gt;/dev/null
+sudo rm -f /etc/systemd/system/nix-daemon.service /etc/systemd/system/nix-daemon.socket
+sudo systemctl daemon-reload
+
+# Remove the Nix store and all related state
+sudo rm -rf /nix
+
+# Remove Nix configuration and user state
+rm -rf ~/.nix-profile ~/.nix-defexpr ~/.nix-channels
+rm -rf ~/.local/state/nix ~/.cache/nix
+rm -rf ~/.config/nix
+
+# Remove shell hooks injected by the installer
+# Check and edit these files — remove any lines referencing /nix or nix-daemon:
+#   ~/.bashrc  ~/.bash_profile  ~/.zshrc  ~/.profile
+#   /etc/bashrc  /etc/zshrc  /etc/bash.bashrc  /etc/profile
+sudo sed -i '/nix-daemon\|nix-profile\|\/nix\/store/d' /etc/bashrc /etc/zshrc /etc/bash.bashrc /etc/profile 2&gt;/dev/null
+sed -i '/nix-daemon\|nix-profile\|\/nix\/store/d' ~/.bashrc ~/.zshrc ~/.bash_profile ~/.profile 2&gt;/dev/null
+
+# Remove Nix build users and group
+for i in $(seq 1 32); do sudo userdel "nixbld$i" 2&gt;/dev/null; done
+sudo groupdel nixbld 2&gt;/dev/null
+</code></pre>
+</li>
+<li>
+<p><strong>Restart your terminal</strong> (or log out and back in) to ensure a clean environment.</p>
+</li>
+</ol>
+<h3 id="macos"><a class="header" href="#macos">macOS</a></h3>
+<ol>
+<li>
+<p><strong>If you installed with the Lix installer</strong>:</p>
+<pre><code class="language-bash">/nix/nix-installer uninstall
+</code></pre>
+<p>If this succeeds, you are done.</p>
+</li>
+<li>
+<p><strong>If the uninstaller is missing or fails</strong>, clean up manually:</p>
+<pre><code class="language-bash"># Stop and remove the Nix daemon LaunchDaemon
+sudo launchctl bootout system/org.nixos.nix-daemon 2&gt;/dev/null
+sudo rm -f /Library/LaunchDaemons/org.nixos.nix-daemon.plist
+
+# Remove the Nix store volume (macOS uses a dedicated APFS volume)
+sudo diskutil apfs deleteVolume /nix 2&gt;/dev/null
+sudo rm -rf /nix
+
+# Remove the /nix entry from /etc/fstab and /etc/synthetic.conf
+sudo sed -i '' '/\/nix/d' /etc/fstab 2&gt;/dev/null
+sudo sed -i '' '/^nix$/d' /etc/synthetic.conf 2&gt;/dev/null
+
+# Remove Nix configuration and user state
+rm -rf ~/.nix-profile ~/.nix-defexpr ~/.nix-channels
+rm -rf ~/.local/state/nix ~/.cache/nix
+rm -rf ~/.config/nix
+
+# Remove shell hooks — edit these files and remove lines referencing /nix:
+#   ~/.bashrc  ~/.bash_profile  ~/.zshrc  ~/.zprofile  /etc/zshrc  /etc/bashrc
+sudo sed -i '' '/nix-daemon\|nix-profile\|\/nix\/store/d' /etc/zshrc /etc/bashrc 2&gt;/dev/null
+sed -i '' '/nix-daemon\|nix-profile\|\/nix\/store/d' ~/.bashrc ~/.zshrc ~/.bash_profile ~/.zprofile 2&gt;/dev/null
+
+# Remove Nix build users and group
+for i in $(seq 1 32); do sudo dscl . -delete /Users/"_nixbld$i" 2&gt;/dev/null; done
+sudo dscl . -delete /Groups/nixbld 2&gt;/dev/null
+</code></pre>
+</li>
+<li>
+<p><strong>Reboot</strong> to fully detach the APFS volume and clean up mount points.</p>
+</li>
+</ol>
+<h3 id="after-uninstalling"><a class="header" href="#after-uninstalling">After uninstalling</a></h3>
+<p>Once Nix is fully removed, you can do a fresh install by following the <a href="#installing-lix-macos-linux-and-wsl">Installing Lix</a> section above.</p>
 <h2 id="additional-resources"><a class="header" href="#additional-resources">Additional Resources</a></h2>
 <ul>
 <li><a href="https://lix.systems/">Lix Official Website</a></li>

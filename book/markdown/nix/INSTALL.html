@@ -124,6 +124,91 @@ nix search nixpkgs &lt;package&gt;
 <span class="hljs-comment"># Install</span>
 nix profile install <span class="hljs-string">&#x27;nixpkgs#git&#x27;</span>
 </code></pre>
+<h2 id="uninstalling-nix">Uninstalling Nix</h2>
+<p>If you have a broken Nix installation, packages from the official Nix installer instead of Lix, or need a clean slate, follow the steps below for your platform.</p>
+<h3 id="linux-and-wsl">Linux and WSL</h3>
+<ol>
+<li>
+<p><strong>If you installed with the Lix installer</strong>, it provides a built-in uninstall command:</p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash">/nix/nix-installer uninstall
+</code></pre>
+<p>This reverses all changes made during installation (systemd units, build users, <code>/nix</code> mount, shell hooks). If the command succeeds, you are done.</p>
+</li>
+<li>
+<p><strong>If the uninstaller is missing or fails</strong>, clean up manually:</p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash"><span class="hljs-comment"># Stop and disable Nix daemons</span>
+sudo systemctl stop nix-daemon.service nix-daemon.socket 2&gt;/dev/null
+sudo systemctl <span class="hljs-built_in">disable</span> nix-daemon.service nix-daemon.socket 2&gt;/dev/null
+sudo <span class="hljs-built_in">rm</span> -f /etc/systemd/system/nix-daemon.service /etc/systemd/system/nix-daemon.socket
+sudo systemctl daemon-reload
+
+<span class="hljs-comment"># Remove the Nix store and all related state</span>
+sudo <span class="hljs-built_in">rm</span> -rf /nix
+
+<span class="hljs-comment"># Remove Nix configuration and user state</span>
+<span class="hljs-built_in">rm</span> -rf ~/.nix-profile ~/.nix-defexpr ~/.nix-channels
+<span class="hljs-built_in">rm</span> -rf ~/.local/state/nix ~/.cache/nix
+<span class="hljs-built_in">rm</span> -rf ~/.config/nix
+
+<span class="hljs-comment"># Remove shell hooks injected by the installer</span>
+<span class="hljs-comment"># Check and edit these files — remove any lines referencing /nix or nix-daemon:</span>
+<span class="hljs-comment">#   ~/.bashrc  ~/.bash_profile  ~/.zshrc  ~/.profile</span>
+<span class="hljs-comment">#   /etc/bashrc  /etc/zshrc  /etc/bash.bashrc  /etc/profile</span>
+sudo sed -i <span class="hljs-string">&#x27;/nix-daemon\|nix-profile\|\/nix\/store/d&#x27;</span> /etc/bashrc /etc/zshrc /etc/bash.bashrc /etc/profile 2&gt;/dev/null
+sed -i <span class="hljs-string">&#x27;/nix-daemon\|nix-profile\|\/nix\/store/d&#x27;</span> ~/.bashrc ~/.zshrc ~/.bash_profile ~/.profile 2&gt;/dev/null
+
+<span class="hljs-comment"># Remove Nix build users and group</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> $(<span class="hljs-built_in">seq</span> 1 32); <span class="hljs-keyword">do</span> sudo userdel <span class="hljs-string">&quot;nixbld<span class="hljs-variable">$i</span>&quot;</span> 2&gt;/dev/null; <span class="hljs-keyword">done</span>
+sudo groupdel nixbld 2&gt;/dev/null
+</code></pre>
+</li>
+<li>
+<p><strong>Restart your terminal</strong> (or log out and back in) to ensure a clean environment.</p>
+</li>
+</ol>
+<h3 id="macos">macOS</h3>
+<ol>
+<li>
+<p><strong>If you installed with the Lix installer</strong>:</p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash">/nix/nix-installer uninstall
+</code></pre>
+<p>If this succeeds, you are done.</p>
+</li>
+<li>
+<p><strong>If the uninstaller is missing or fails</strong>, clean up manually:</p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash"><span class="hljs-comment"># Stop and remove the Nix daemon LaunchDaemon</span>
+sudo launchctl bootout system/org.nixos.nix-daemon 2&gt;/dev/null
+sudo <span class="hljs-built_in">rm</span> -f /Library/LaunchDaemons/org.nixos.nix-daemon.plist
+
+<span class="hljs-comment"># Remove the Nix store volume (macOS uses a dedicated APFS volume)</span>
+sudo diskutil apfs deleteVolume /nix 2&gt;/dev/null
+sudo <span class="hljs-built_in">rm</span> -rf /nix
+
+<span class="hljs-comment"># Remove the /nix entry from /etc/fstab and /etc/synthetic.conf</span>
+sudo sed -i <span class="hljs-string">&#x27;&#x27;</span> <span class="hljs-string">&#x27;/\/nix/d&#x27;</span> /etc/fstab 2&gt;/dev/null
+sudo sed -i <span class="hljs-string">&#x27;&#x27;</span> <span class="hljs-string">&#x27;/^nix$/d&#x27;</span> /etc/synthetic.conf 2&gt;/dev/null
+
+<span class="hljs-comment"># Remove Nix configuration and user state</span>
+<span class="hljs-built_in">rm</span> -rf ~/.nix-profile ~/.nix-defexpr ~/.nix-channels
+<span class="hljs-built_in">rm</span> -rf ~/.local/state/nix ~/.cache/nix
+<span class="hljs-built_in">rm</span> -rf ~/.config/nix
+
+<span class="hljs-comment"># Remove shell hooks — edit these files and remove lines referencing /nix:</span>
+<span class="hljs-comment">#   ~/.bashrc  ~/.bash_profile  ~/.zshrc  ~/.zprofile  /etc/zshrc  /etc/bashrc</span>
+sudo sed -i <span class="hljs-string">&#x27;&#x27;</span> <span class="hljs-string">&#x27;/nix-daemon\|nix-profile\|\/nix\/store/d&#x27;</span> /etc/zshrc /etc/bashrc 2&gt;/dev/null
+sed -i <span class="hljs-string">&#x27;&#x27;</span> <span class="hljs-string">&#x27;/nix-daemon\|nix-profile\|\/nix\/store/d&#x27;</span> ~/.bashrc ~/.zshrc ~/.bash_profile ~/.zprofile 2&gt;/dev/null
+
+<span class="hljs-comment"># Remove Nix build users and group</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> $(<span class="hljs-built_in">seq</span> 1 32); <span class="hljs-keyword">do</span> sudo dscl . -delete /Users/<span class="hljs-string">&quot;_nixbld<span class="hljs-variable">$i</span>&quot;</span> 2&gt;/dev/null; <span class="hljs-keyword">done</span>
+sudo dscl . -delete /Groups/nixbld 2&gt;/dev/null
+</code></pre>
+</li>
+<li>
+<p><strong>Reboot</strong> to fully detach the APFS volume and clean up mount points.</p>
+</li>
+</ol>
+<h3 id="after-uninstalling">After uninstalling</h3>
+<p>Once Nix is fully removed, you can do a fresh install by following the <a href="#installing-lix-macos-linux-and-wsl">Installing Lix</a> section above.</p>
 <h2 id="additional-resources">Additional Resources</h2>
 <ul>
 <li><a href="https://lix.systems/">Lix Official Website</a></li>

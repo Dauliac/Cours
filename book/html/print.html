@@ -785,6 +785,8 @@ This is easier when you know all processes in advance.</p>
 <ul>
 <li><a href="licences/index.html#copyleft">Copyleft</a></li>
 <li><a href="licences/index.html#summary">Summary</a></li>
+<li><a href="licences/index.html#non-american-open-source-licenses">Non-American Open Source Licenses</a></li>
+<li><a href="licences/index.html#recommended-licenses">Recommended Licenses</a></li>
 <li><a href="licences/index.html#economically">Economically</a></li>
 </ul>
 </li>
@@ -805,13 +807,34 @@ This is easier when you know all processes in advance.</p>
 </li>
 <li><a href="licences/index.html#degradation">Degradation</a>
 <ul>
-<li><a href="licences/index.html#hashicorp-case">Hashicorp Case</a></li>
+<li><a href="licences/index.html#the-merdification-pattern">The "Merdification" Pattern</a>
+<ul>
+<li><a href="licences/index.html#hashicorp-case-2023">Hashicorp Case (2023)</a></li>
+<li><a href="licences/index.html#redis-2024">Redis (2024)</a></li>
+<li><a href="licences/index.html#mongodb-2018">MongoDB (2018)</a></li>
+<li><a href="licences/index.html#elasticsearch-2021">Elasticsearch (2021)</a></li>
+<li><a href="licences/index.html#cockroachdb-2019">CockroachDB (2019)</a></li>
+<li><a href="licences/index.html#confluent--kafka-tools-2019">Confluent / Kafka Tools (2019)</a></li>
+<li><a href="licences/index.html#grafana-loki-tempo-2021">Grafana, Loki, Tempo (2021)</a></li>
+<li><a href="licences/index.html#docker-desktop-2021">Docker Desktop (2021)</a></li>
+<li><a href="licences/index.html#common-pattern">Common Pattern</a></li>
+</ul>
+</li>
 <li><a href="licences/index.html#monetization-of-social-and-symbolic-capital">Monetization of Social and Symbolic Capital</a></li>
 </ul>
 </li>
 <li><a href="licences/index.html#cyber-war">Cyber War</a></li>
 <li><a href="licences/index.html#issues-with-ai-models">Issues with AI Models</a></li>
 <li><a href="licences/index.html#making-money">Making Money</a></li>
+<li><a href="licences/index.html#license-compliance-tooling">License Compliance Tooling</a>
+<ul>
+<li><a href="licences/index.html#the-reuse-standard-fsfe">The REUSE Standard (FSFE)</a></li>
+<li><a href="licences/index.html#sbom-generation">SBOM Generation</a></li>
+<li><a href="licences/index.html#license-auditing">License Auditing</a></li>
+<li><a href="licences/index.html#license-file-generators">License File Generators</a></li>
+<li><a href="licences/index.html#recommended-workflow">Recommended Workflow</a></li>
+</ul>
+</li>
 <li><a href="licences/index.html#bibliography">Bibliography</a></li>
 </ul>
 <!-- vale on -->
@@ -918,6 +941,32 @@ Intellectual Property Code (<a href="https://www.legifrance.gouv.fr/affichCodeAr
 </ul>
 <h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
 <p><img src="licences/assets/Untitled.png" alt="width:200px" /></p>
+<h3 id="non-american-open-source-licenses"><a class="header" href="#non-american-open-source-licenses">Non-American Open Source Licenses</a></h3>
+<p>Some well-known licenses (MIT, BSD, Apache) are tied to American institutions.
+Alternatives exist:</p>
+<ul>
+<li><strong><a href="https://opensource.org/license/isc-license-txt">ISC</a></strong> — functionally equivalent to MIT, simpler wording</li>
+<li><strong><a href="https://eupl.eu/">EUPL</a></strong> — European Union Public License, copyleft, written under EU law, available in 23 languages</li>
+<li><strong><a href="https://cecill.info/">CeCILL</a></strong> — French license (CEA/CNRS/INRIA), GPL-compatible</li>
+<li><strong><a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a></strong> — Public domain dedication (Creative Commons)</li>
+<li><strong><a href="https://unlicense.org/">Unlicense</a></strong> — Public domain, no conditions</li>
+<li><strong><a href="https://opensource.org/license/zlib">Zlib</a></strong> — Very permissive, no institution</li>
+</ul>
+<h3 id="recommended-licenses"><a class="header" href="#recommended-licenses">Recommended Licenses</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Use case</th><th>License</th><th>Type</th></tr></thead><tbody>
+<tr><td>Library / small project</td><td><strong>ISC</strong> or <strong>MIT</strong></td><td>Permissive</td></tr>
+<tr><td>Want contributions back</td><td><strong>EUPL</strong> or <strong>MPL 2.0</strong></td><td>Weak copyleft</td></tr>
+<tr><td>Maximum freedom protection</td><td><strong>AGPLv3</strong></td><td>Strong copyleft</td></tr>
+<tr><td>French context / public sector</td><td><strong>CeCILL v2.1</strong> or <strong>EUPL</strong></td><td>Copyleft, EU/FR law</td></tr>
+<tr><td>Documentation</td><td><strong>CC BY-SA 4.0</strong></td><td>Creative Commons</td></tr>
+<tr><td>Give up all rights</td><td><strong>CC0</strong></td><td>Public domain</td></tr>
+</tbody></table>
+</div>
+<hr />
+<ul>
+<li>Prefer <strong>EUPL</strong> or <strong>CeCILL</strong> in French/European contexts: they are governed by EU law, not US law.</li>
+<li><strong>MPL 2.0</strong> is a good middle ground: file-level copyleft, compatible with proprietary code.</li>
+</ul>
 <h3 id="economically"><a class="header" href="#economically">Economically</a></h3>
 <ul>
 <li>Highly effective:
@@ -1007,8 +1056,70 @@ Intellectual Property Code (<a href="https://www.legifrance.gouv.fr/affichCodeAr
 <li>Large corporations buy, fund, integrate</li>
 </ul>
 <h1 id="degradation"><a class="header" href="#degradation">Degradation</a></h1>
-<h2 id="hashicorp-case"><a class="header" href="#hashicorp-case">Hashicorp Case</a></h2>
-<p>All Hashicorp software has moved from free licenses to BUSL.</p>
+<h2 id="the-merdification-pattern"><a class="header" href="#the-merdification-pattern">The "Merdification" Pattern</a></h2>
+<p>A recurring trend: companies build products on open-source licenses,
+gain massive adoption, then switch to restrictive licenses once dominant.</p>
+<hr />
+<h3 id="hashicorp-case-2023"><a class="header" href="#hashicorp-case-2023">Hashicorp Case (2023)</a></h3>
+<p>All Hashicorp software (Terraform, Vault, Consul, Nomad, Vagrant...)
+moved from <strong>MPL 2.0</strong> to <strong>BUSL</strong> (Business Source License).</p>
+<ul>
+<li>Community response: <strong><a href="https://opentofu.org/">OpenTofu</a></strong> (Terraform fork, Linux Foundation)</li>
+<li><strong><a href="https://openbao.org/">OpenBao</a></strong> (Vault fork)</li>
+</ul>
+<hr />
+<h3 id="redis-2024"><a class="header" href="#redis-2024">Redis (2024)</a></h3>
+<p>Redis moved from <strong>BSD</strong> to <strong>SSPL / RSALv2</strong>.</p>
+<ul>
+<li>Community response: <strong><a href="https://valkey.io/">Valkey</a></strong> (fork, Linux Foundation)</li>
+</ul>
+<hr />
+<h3 id="mongodb-2018"><a class="header" href="#mongodb-2018">MongoDB (2018)</a></h3>
+<p>MongoDB moved from <strong>AGPL</strong> to <strong>SSPL</strong> (Server Side Public License).</p>
+<ul>
+<li>SSPL is so restrictive that OSI does not recognize it as open source.</li>
+<li>Community response: <strong><a href="https://www.ferretdb.com/">FerretDB</a></strong> (PostgreSQL-based alternative)</li>
+</ul>
+<hr />
+<h3 id="elasticsearch-2021"><a class="header" href="#elasticsearch-2021">Elasticsearch (2021)</a></h3>
+<p>Elasticsearch moved from <strong>Apache 2.0</strong> to <strong>SSPL / Elastic License v2</strong>.</p>
+<ul>
+<li>Community response: <strong><a href="https://opensearch.org/">OpenSearch</a></strong> (fork, AWS / Linux Foundation)</li>
+</ul>
+<hr />
+<h3 id="cockroachdb-2019"><a class="header" href="#cockroachdb-2019">CockroachDB (2019)</a></h3>
+<p>CockroachDB moved from <strong>Apache 2.0</strong> to <strong>BSL</strong>.</p>
+<hr />
+<h3 id="confluent--kafka-tools-2019"><a class="header" href="#confluent--kafka-tools-2019">Confluent / Kafka Tools (2019)</a></h3>
+<p>Confluent Platform components moved from <strong>Apache 2.0</strong> to <strong>Confluent Community License</strong>.</p>
+<ul>
+<li>Kafka itself remains Apache 2.0 (ASF project).</li>
+</ul>
+<hr />
+<h3 id="grafana-loki-tempo-2021"><a class="header" href="#grafana-loki-tempo-2021">Grafana, Loki, Tempo (2021)</a></h3>
+<p>Moved from <strong>Apache 2.0</strong> to <strong>AGPLv3</strong>.</p>
+<ul>
+<li>AGPLv3 is still open source, but much more restrictive (copyleft on network use).</li>
+</ul>
+<hr />
+<h3 id="docker-desktop-2021"><a class="header" href="#docker-desktop-2021">Docker Desktop (2021)</a></h3>
+<p>Docker Desktop moved from <strong>free</strong> to a <strong>paid subscription</strong> for enterprises (&gt;250 employees).</p>
+<ul>
+<li>Alternative: <strong><a href="https://podman.io/">Podman</a></strong> (Red Hat, fully open source)</li>
+</ul>
+<hr />
+<h3 id="common-pattern"><a class="header" href="#common-pattern">Common Pattern</a></h3>
+<pre><code class="language-text">1. Build open source, gain adoption
+2. Become the standard (network effect)
+3. Change license to capture value
+4. Community forks (sometimes)
+</code></pre>
+<hr />
+<ul>
+<li>The BUSL and SSPL are <strong>not</strong> open source licenses (per OSI definition).</li>
+<li>They restrict cloud providers from offering the software as a service.</li>
+<li>The stated justification: "AWS/cloud providers profit without contributing back."</li>
+</ul>
 <h2 id="monetization-of-social-and-symbolic-capital"><a class="header" href="#monetization-of-social-and-symbolic-capital">Monetization of Social and Symbolic Capital</a></h2>
 <p>Bourdieu:</p>
 <ul>
@@ -1080,6 +1191,64 @@ Intellectual Property Code (<a href="https://www.legifrance.gouv.fr/affichCodeAr
 </ul>
 </li>
 </ul>
+<h1 id="license-compliance-tooling"><a class="header" href="#license-compliance-tooling">License Compliance Tooling</a></h1>
+<h2 id="the-reuse-standard-fsfe"><a class="header" href="#the-reuse-standard-fsfe">The REUSE Standard (FSFE)</a></h2>
+<p><a href="https://reuse.software/">REUSE</a> makes licensing easy and machine-readable:</p>
+<ul>
+<li>Add <strong>SPDX headers</strong> to every file (<code>SPDX-License-Identifier: MIT</code>)</li>
+<li>Store full license texts in a <code>LICENSES/</code> directory</li>
+<li>Lint compliance with <code>reuse lint</code></li>
+<li>Generate SBOM with <code>reuse spdx</code></li>
+</ul>
+<pre><code class="language-bash">pip install reuse
+reuse download MIT EUPL-1.2
+reuse annotate --license MIT --copyright "Your Name" src/*.py
+reuse lint
+</code></pre>
+<ul>
+<li>Integrates into CI/CD with the <code>fsfe/reuse</code> Docker image.</li>
+</ul>
+<hr />
+<h2 id="sbom-generation"><a class="header" href="#sbom-generation">SBOM Generation</a></h2>
+<p>A <strong>Software Bill of Materials</strong> (SBOM) lists all components and their licenses.</p>
+<blockquote>
+<p>Required by US Executive Order 14028, and EU Cyber Resilience Act (2027).</p>
+</blockquote>
+<div class="table-wrapper"><table><thead><tr><th>Tool</th><th>What it does</th><th>Format</th></tr></thead><tbody>
+<tr><td><strong><a href="https://github.com/anchore/syft">Syft</a></strong></td><td>SBOM generator from images, filesystems, archives</td><td>CycloneDX, SPDX</td></tr>
+<tr><td><strong><a href="https://github.com/aquasecurity/trivy">Trivy</a></strong></td><td>Vulnerability scanner + SBOM generation</td><td>CycloneDX, SPDX</td></tr>
+<tr><td><strong><a href="https://github.com/CycloneDX">CycloneDX CLI</a></strong></td><td>SBOM creation and conversion</td><td>CycloneDX</td></tr>
+</tbody></table>
+</div>
+<pre><code class="language-bash"># Generate SBOM from a container image
+syft myimage:latest -o spdx-json &gt; sbom.json
+</code></pre>
+<hr />
+<h2 id="license-auditing"><a class="header" href="#license-auditing">License Auditing</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Tool</th><th>What it does</th></tr></thead><tbody>
+<tr><td><strong><a href="https://github.com/aboutcode-org/scancode-toolkit">ScanCode Toolkit</a></strong></td><td>Deep license &amp; copyright detection by scanning source code</td></tr>
+<tr><td><strong><a href="https://github.com/oss-review-toolkit/ort">ORT</a></strong> (OSS Review Toolkit)</td><td>Full compliance pipeline: analyze, scan, evaluate policies, report (Linux Foundation)</td></tr>
+<tr><td><strong><a href="https://dependencytrack.org/">OWASP Dependency-Track</a></strong></td><td>Continuous SBOM analysis platform, identifies license &amp; vulnerability risks</td></tr>
+<tr><td><strong><a href="https://fossa.com/">FOSSA</a></strong></td><td>Commercial license compliance (free tier available)</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="license-file-generators"><a class="header" href="#license-file-generators">License File Generators</a></h2>
+<p>For bootstrapping a project with the right license file:</p>
+<div class="table-wrapper"><table><thead><tr><th>Tool</th><th>Language</th></tr></thead><tbody>
+<tr><td><strong><a href="https://reuse.software/">reuse download</a></strong></td><td>Python (recommended)</td></tr>
+<tr><td><strong><a href="https://nishanths.github.io/license/">license</a></strong></td><td>Go</td></tr>
+<tr><td><strong><a href="https://github.com/intincrab/license-generator">license-generator</a></strong></td><td>Go</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="recommended-workflow"><a class="header" href="#recommended-workflow">Recommended Workflow</a></h2>
+<pre><code class="language-text">1. Choose license (EUPL, MIT, AGPLv3...)
+2. Add SPDX headers to all files (reuse annotate)
+3. Generate SBOM in CI (syft / trivy)
+4. Audit dependencies licenses (scancode / ORT)
+5. Lint compliance (reuse lint)
+</code></pre>
 <h1 id="bibliography"><a class="header" href="#bibliography">Bibliography</a></h1>
 <ul>
 <li><a href="https://fr.wiktionary.org/wiki/soustraction">https://fr.wiktionary.org/wiki/soustraction</a></li>
@@ -1537,13 +1706,13 @@ nix flake show
 <h3 id="step-5b-discover-the-build-tools"><a class="header" href="#step-5b-discover-the-build-tools">Step 5b: Discover the build tools</a></h3>
 <p>Your dev shell includes two tools that make working with Nix much more pleasant:</p>
 <p><strong><code>nom</code> (nix-output-monitor)</strong>: Replaces the default Nix build output with a rich, real-time view showing what's being built, downloaded, and how much is left:</p>
-<pre><code class="language-bash"># Instead of plain "nix build":
-nom build
+<pre><code class="language-bash"># Build the formatter to see nom in action
+nom build '.#formatter.x86_64-linux'
 </code></pre>
-<p>You will see a live progress bar with active builds, downloads, and store paths. This is especially useful when building for the first time (many dependencies to fetch).</p>
+<p>You will see a live progress bar with active builds, downloads, and store paths. Later, when we create our own package, we will use <code>nom build</code> instead of plain <code>nix build</code>.</p>
 <p><strong><code>nix-tree</code></strong>: An interactive terminal tool to explore the dependency tree of any Nix package:</p>
 <pre><code class="language-bash"># Explore the dev shell's dependencies interactively
-nix-tree .#devShells.x86_64-linux.default
+nix-tree '.#devShells.x86_64-linux.default'
 </code></pre>
 <p>Navigate with arrow keys, press Enter to expand nodes. This shows you exactly what Nix pulled in and why.</p>
 <p>Try both now. You will use them throughout the TPs.</p>
@@ -1577,6 +1746,7 @@ nix search nixpkgs python
 
 # Or use the web interface: https://search.nixos.org/packages
 </code></pre>
+<p>To look up Nix built-in functions and library functions, use <a href="https://noogle.dev">Noogle</a> — a search engine for Nix functions with examples and type signatures.</p>
 <h3 id="step-7-try-with-direnv-optional-but-recommended"><a class="header" href="#step-7-try-with-direnv-optional-but-recommended">Step 7: Try with direnv (optional but recommended)</a></h3>
 <p>If you have <code>direnv</code> installed, the <code>.envrc</code> file will automatically load your dev shell whenever you <code>cd</code> into the project:</p>
 <pre><code class="language-bash">direnv allow
@@ -1679,7 +1849,7 @@ readlink result
 <p>Now that you have a working package, let's look <em>inside</em> it. Nix gives you powerful tools to inspect exactly what was built, how, and why.</p>
 <h3 id="step-13-inspect-the-derivation"><a class="header" href="#step-13-inspect-the-derivation">Step 13: Inspect the derivation</a></h3>
 <p>A <strong>derivation</strong> is the low-level build recipe Nix actually executes. Every <code>nix build</code> produces one. Let's look at yours:</p>
-<pre><code class="language-bash">nix show-derivation .#default
+<pre><code class="language-bash">nix derivation show '.#default'
 </code></pre>
 <p>This outputs JSON describing the exact build plan: the builder, arguments, environment variables, input sources, and input derivations. Notice:</p>
 <ul>
@@ -1691,7 +1861,7 @@ readlink result
 <p>Every field is deterministic. Change any input, and the output hash changes.</p>
 <h3 id="step-14-visualize-the-dependency-tree"><a class="header" href="#step-14-visualize-the-dependency-tree">Step 14: Visualize the dependency tree</a></h3>
 <p>Use <code>nix-tree</code> to interactively explore what your package depends on:</p>
-<pre><code class="language-bash">nix-tree .#default
+<pre><code class="language-bash">nix-tree '.#default'
 </code></pre>
 <p>Navigate with arrow keys and Enter. You will see your package at the top, with its full dependency tree below. Each node shows:</p>
 <ul>
@@ -1701,7 +1871,7 @@ readlink result
 <p>This is the <strong>closure</strong> - the complete set of everything needed to run your package. Nothing more, nothing less.</p>
 <h3 id="step-15-measure-the-closure"><a class="header" href="#step-15-measure-the-closure">Step 15: Measure the closure</a></h3>
 <pre><code class="language-bash"># Show all runtime dependencies with sizes
-nix path-info -rsSh .#default
+nix path-info -rsSh '.#default'
 </code></pre>
 <p>This lists every store path in the closure with:</p>
 <ul>
@@ -1710,7 +1880,7 @@ nix path-info -rsSh .#default
 <li>Human-readable (<code>-h</code>)</li>
 </ul>
 <pre><code class="language-bash"># Just the total closure size
-nix path-info -Sh .#default
+nix path-info -Sh '.#default'
 </code></pre>
 <p>For a simple shell script, you should see a closure of around 30-40 MB (mostly coreutils and bash).</p>
 <h3 id="step-16-explore-with-the-nix-repl"><a class="header" href="#step-16-explore-with-the-nix-repl">Step 16: Explore with the Nix REPL</a></h3>
@@ -1825,10 +1995,11 @@ packages.default = pkgs.writers.writePython3Bin "my-tool" {
   print(f"Your IP: {r.json()['origin']}")
 '';
 </code></pre>
+<p>For real-world Python projects with <code>pyproject.toml</code> and <code>uv</code>, look at <a href="https://github.com/pyproject-nix/uv2nix">uv2nix</a> — it bridges the <code>uv</code> package manager with Nix for fully reproducible Python builds.</p>
 <h3 id="challenge-2-add-a-second-package"><a class="header" href="#challenge-2-add-a-second-package">Challenge 2: Add a second package</a></h3>
 <p>Create a <code>packages.other</code> in addition to <code>packages.default</code>:</p>
 <pre><code class="language-bash"># Build a specific package
-nix build .#other
+nix build '.#other'
 </code></pre>
 <h3 id="challenge-3-pin-a-specific-nixpkgs-version"><a class="header" href="#challenge-3-pin-a-specific-nixpkgs-version">Challenge 3: Pin a specific nixpkgs version</a></h3>
 <p>Change the <code>nixpkgs</code> input in <code>flake.nix</code> to a specific commit and observe how <code>flake.lock</code> changes:</p>
@@ -1846,7 +2017,7 @@ git diff flake.lock
 <tr><td><strong>Package management</strong></td><td>Added/removed tools declaratively</td></tr>
 <tr><td><strong>Auto-import</strong></td><td>New <code>.nix</code> files are picked up automatically (just <code>git add</code>)</td></tr>
 <tr><td><strong>Packaging</strong></td><td>Built a shell script into a Nix package</td></tr>
-<tr><td><strong>Derivations</strong></td><td>Inspected build recipes with <code>nix show-derivation</code></td></tr>
+<tr><td><strong>Derivations</strong></td><td>Inspected build recipes with <code>nix derivation show</code></td></tr>
 <tr><td><strong>Dependency analysis</strong></td><td>Explored closures with <code>nix-tree</code> and <code>nix path-info</code></td></tr>
 <tr><td><strong>Nix REPL</strong></td><td>Interactively explored flake outputs and nixpkgs</td></tr>
 <tr><td><strong>Build UX</strong></td><td>Used <code>nom</code> for fancy builds and <code>nix run</code> for instant execution</td></tr>
@@ -1863,9 +2034,9 @@ git diff flake.lock
 <tr><td><code>nix fmt</code></td><td>Format all code</td></tr>
 <tr><td><code>nix flake show</code></td><td>Show all flake outputs</td></tr>
 <tr><td><code>nix search nixpkgs &lt;name&gt;</code></td><td>Search for packages</td></tr>
-<tr><td><code>nix show-derivation .#default</code></td><td>Inspect the build recipe (derivation)</td></tr>
-<tr><td><code>nix-tree .#default</code></td><td>Interactive dependency tree explorer</td></tr>
-<tr><td><code>nix path-info -rsSh .#default</code></td><td>Show closure size and dependencies</td></tr>
+<tr><td><code>nix derivation show '.#default'</code></td><td>Inspect the build recipe (derivation)</td></tr>
+<tr><td><code>nix-tree '.#default'</code></td><td>Interactive dependency tree explorer</td></tr>
+<tr><td><code>nix path-info -rsSh '.#default'</code></td><td>Show closure size and dependencies</td></tr>
 <tr><td><code>nix repl</code> then <code>:lf .</code></td><td>Interactive Nix expression explorer</td></tr>
 </tbody></table>
 </div>
@@ -1948,7 +2119,7 @@ wsl --install
 </blockquote>
 <h3 id="alternative-install-via-nix"><a class="header" href="#alternative-install-via-nix">Alternative: Install via Nix</a></h3>
 <p>If you already have Nix installed from TP 1:</p>
-<pre><code class="language-bash">nix profile install nixpkgs#docker
+<pre><code class="language-bash">nix profile install 'nixpkgs#docker'
 </code></pre>
 <blockquote>
 <p>This installs the Docker CLI only. On Linux, you still need the Docker daemon running (<code>sudo systemctl start docker</code>). On macOS/WSL, you still need Docker Desktop.</p>
@@ -2290,10 +2461,11 @@ COPY app.py .
 <h2 id="learning-objectives-2"><a class="header" href="#learning-objectives-2">Learning Objectives</a></h2>
 <p>By the end of this practical, you will be able to:</p>
 <ol>
+<li><strong>Explain</strong> why minimal containers matter for security, cost, and performance</li>
 <li><strong>Build</strong> OCI container images using Nix, without Docker</li>
 <li><strong>Compare</strong> Nix-built images with traditional Docker images</li>
-<li><strong>Explain</strong> why Nix images are reproducible and minimal by design</li>
-<li><strong>Create</strong> a multi-service container setup with Nix-built images</li>
+<li><strong>Understand</strong> how the Nix store deduplicates dependencies across containers and dev shells</li>
+<li><strong>Create</strong> layered container images optimized for registry efficiency</li>
 <li><strong>Evaluate</strong> when to use Nix containers vs traditional Dockerfiles</li>
 </ol>
 <h2 id="prerequisites-2"><a class="header" href="#prerequisites-2">Prerequisites</a></h2>
@@ -2304,7 +2476,17 @@ COPY app.py .
 <li>Nix with flakes enabled</li>
 </ul>
 <hr />
-<h2 id="part-1-the-nix-approach-to-containers-15-min"><a class="header" href="#part-1-the-nix-approach-to-containers-15-min">Part 1: The Nix Approach to Containers (15 min)</a></h2>
+<h2 id="part-1-the-nix-approach-to-containers-20-min"><a class="header" href="#part-1-the-nix-approach-to-containers-20-min">Part 1: The Nix Approach to Containers (20 min)</a></h2>
+<h3 id="why-minimal-containers-matter"><a class="header" href="#why-minimal-containers-matter">Why Minimal Containers Matter</a></h3>
+<p>Before we look at <em>how</em> Nix builds containers, let's understand <em>why</em> minimalism is so important.</p>
+<p>A typical <code>debian:bookworm-slim</code> image ships with hundreds of packages: <code>apt</code>, <code>dpkg</code>, <code>perl</code>, <code>sed</code>, <code>grep</code>, <code>login</code>, <code>passwd</code>, <code>mount</code>... Your application needs none of these. Yet they are all there, and each one:</p>
+<ul>
+<li><strong>Increases the attack surface</strong>: every binary is a potential exploit vector. The 2024 <code>xz-utils</code> backdoor (CVE-2024-3094) was embedded in a compression library that most containers included <em>for no reason</em>. Fewer packages = fewer CVEs to patch.</li>
+<li><strong>Costs real money</strong>: container registries charge per GB stored. CI/CD pipelines push and pull images on every deploy. A 500 MB image pulled 100 times/day across 20 services = 1 TB/day of bandwidth.</li>
+<li><strong>Slows everything down</strong>: larger images mean slower pulls, slower cold starts, slower autoscaling. In Kubernetes, a pod with a 30 MB image starts in seconds; a pod with a 500 MB image can take minutes on a cold node.</li>
+<li><strong>Makes auditing impossible</strong>: when your image contains 400 packages, how do you answer "what exactly is running in production?" With a minimal image, you can list every file.</li>
+</ul>
+<p><strong>The ideal container contains your application and its exact runtime dependencies. Nothing else.</strong> This is what Nix gives you automatically.</p>
 <h3 id="why-build-containers-with-nix"><a class="header" href="#why-build-containers-with-nix">Why Build Containers with Nix?</a></h3>
 <p>In TP 2, we identified fundamental problems with traditional Docker builds:</p>
 <div class="table-wrapper"><table><thead><tr><th>Problem</th><th>Docker's answer</th><th>Nix's answer</th></tr></thead><tbody>
@@ -2314,6 +2496,7 @@ COPY app.py .
 <tr><td>Layer optimization</td><td>Careful ordering (fragile)</td><td>Content-addressed layers (automatic)</td></tr>
 </tbody></table>
 </div>
+<p>With Docker, achieving minimalism is manual and fragile. You guess which packages to remove, use multi-stage builds to strip build tools, and hope you didn't forget a runtime dependency. With Nix, the closure <em>is</em> the answer - it is mathematically computed from your dependency graph.</p>
 <h3 id="how-nix-builds-container-images"><a class="header" href="#how-nix-builds-container-images">How Nix Builds Container Images</a></h3>
 <p>Nix doesn't use Docker to build images. Instead, it:</p>
 <ol>
@@ -2337,10 +2520,27 @@ COPY app.py .
 └──────────────────────────────────────────┘
 </code></pre>
 <p><strong>The closure</strong> is the key concept. When you build a Nix package, Nix knows every single dependency, transitively. When building a container, it includes <em>exactly</em> those dependencies and nothing more. No guessing, no extra packages.</p>
+<h3 id="the-nix-store-deduplication-for-free"><a class="header" href="#the-nix-store-deduplication-for-free">The Nix Store: Deduplication for Free</a></h3>
+<p>Here is something powerful that is easy to miss: the Nix store (<code>/nix/store/</code>) deduplicates everything on disk.</p>
+<p>When you ran <code>nix develop</code> in TP 1, Nix downloaded <code>coreutils</code>, <code>bash</code>, <code>glibc</code>, and other packages into the store. When you now build a container image that uses the same <code>coreutils</code>, <strong>Nix does not download or store it again</strong>. It is the same store path, identified by the same hash.</p>
+<pre><code>/nix/store/f8bb29v1w8...-coreutils-9.5/    # Used by BOTH devShell and container
+
+Your devShell ──→ references this path
+Your container ──→ references the same path
+Your second container ──→ still the same path
+</code></pre>
+<p>This means:</p>
+<ul>
+<li><strong>Building the container after <code>nix develop</code> is nearly instant</strong> - all shared dependencies are already in the store</li>
+<li><strong>10 containers that all use <code>coreutils</code> store it once</strong> on disk, not 10 times</li>
+<li><strong>CI caches work perfectly</strong> - if the store is cached, subsequent builds only fetch what changed</li>
+</ul>
+<p>Compare this with Docker, where each image is an isolated filesystem. If you have 10 images all based on <code>debian:slim</code>, that base layer is stored 10 times in the image layers (unless you carefully organize layer sharing, which Docker makes very hard).</p>
 <h3 id="check-your-understanding-3"><a class="header" href="#check-your-understanding-3">Check Your Understanding</a></h3>
 <ul>
 <li>What is a "closure" in the context of Nix?</li>
 <li>Why doesn't Nix need a Docker daemon to build images?</li>
+<li>If your devShell and your container both depend on <code>coreutils</code>, how many copies exist on disk?</li>
 </ul>
 <hr />
 <h2 id="part-2-your-first-nix-container-25-min"><a class="header" href="#part-2-your-first-nix-container-25-min">Part 2: Your First Nix Container (25 min)</a></h2>
@@ -2426,7 +2626,7 @@ nix run
 <p><strong>Remember</strong>: every new <code>.nix</code> file must be <code>git add</code>ed. The template auto-imports all <code>.nix</code> files from <code>nix/</code> - no need to edit <code>default.nix</code>.</p>
 </blockquote>
 <pre><code class="language-bash">git add nix/container.nix
-nom build .#container
+nom build '.#container'
 </code></pre>
 <p><code>nom</code> (nix-output-monitor) wraps <code>nix build</code> with a rich live progress view. This produces a <code>result</code> file that is a Docker-compatible image archive.</p>
 <h3 id="step-6-load-and-run-the-image"><a class="header" href="#step-6-load-and-run-the-image">Step 6: Load and run the image</a></h3>
@@ -2489,11 +2689,19 @@ trivy image my-docker-app:latest 2&gt;/dev/null | tail -5
 <tr><td>Contains shell</td><td>Yes (+ many utilities)</td><td>Only if explicitly added</td></tr>
 </tbody></table>
 </div>
+<h3 id="why-this-difference-matters-at-scale"><a class="header" href="#why-this-difference-matters-at-scale">Why This Difference Matters at Scale</a></h3>
+<p>The size difference might seem small for one image. Now multiply it:</p>
+<ul>
+<li><strong>20 microservices</strong> x 4 deploys/day x 150 MB = <strong>12 GB/day</strong> pushed to the registry (Docker)</li>
+<li><strong>20 microservices</strong> x 4 deploys/day x 40 MB = <strong>3.2 GB/day</strong> pushed to the registry (Nix)</li>
+</ul>
+<p>But it gets even better with Nix. Remember that <code>buildLayeredImage</code> creates layers from individual store paths. If 15 of your 20 services share <code>glibc</code> and <code>coreutils</code>, those layers are pushed <strong>once</strong> and reused across all images in the registry. Docker cannot do this because each <code>RUN apt-get install</code> creates a unique layer hash even if the content is identical.</p>
+<p>On the security side: every package in your image is a liability. The Debian slim image contains <code>login</code>, <code>passwd</code>, <code>su</code>, <code>mount</code> - tools that have no place in a container but regularly appear in CVE databases. With Nix, the question is inverted: instead of "what can I remove?", it's "what do I actually need?". The answer is always the exact closure - nothing to forget, nothing to audit manually.</p>
 <h3 id="step-9-verify-reproducibility"><a class="header" href="#step-9-verify-reproducibility">Step 9: Verify reproducibility</a></h3>
 <p>Build the Nix image twice:</p>
 <pre><code class="language-bash"># -o creates named symlinks (safe to re-run, overwrites previous symlinks)
-nix build .#container -o result1
-nix build .#container -o result2
+nix build '.#container' -o result1
+nix build '.#container' -o result2
 
 # Compare the checksums
 sha256sum result1
@@ -2538,7 +2746,17 @@ sha256sum result2
     };
 }
 </code></pre>
-<p><strong>Why layered?</strong> When pushing to a registry, unchanged layers don't need to be re-uploaded. Nix creates layers based on the dependency graph, so updating your app only pushes the changed layer, not the entire image.</p>
+<p><strong>Why layered?</strong> <code>buildLayeredImage</code> maps Nix store paths to OCI layers. Each dependency becomes its own layer (or group of layers). This has two major benefits:</p>
+<ol>
+<li><strong>Incremental pushes</strong>: when you update your app code, only the layer containing your app is re-pushed. The layers for <code>glibc</code>, <code>coreutils</code>, etc. are already in the registry.</li>
+<li><strong>Cross-image sharing</strong>: if two different container images both depend on <code>coreutils</code>, the registry stores that layer once. This is the store deduplication concept, but extended to the container registry.</li>
+</ol>
+<p>You can verify this by comparing layers:</p>
+<pre><code class="language-bash">nom build '.#container'
+docker load &lt; result
+docker history my-nix-app:latest
+</code></pre>
+<p>Notice how each layer corresponds to a Nix store path. The bottom layers (large, rarely changing dependencies) are stable across builds. Only the top layer (your application) changes when you edit your code.</p>
 <h3 id="step-11-add-a-non-root-user"><a class="header" href="#step-11-add-a-non-root-user">Step 11: Add a non-root user</a></h3>
 <pre><code class="language-nix">_: {
   config.perSystem =
@@ -2662,7 +2880,7 @@ func main() {
 </code></pre>
 <p>Build and run:</p>
 <pre><code class="language-bash">git add main.go nix/go-package.nix nix/go-container.nix
-nix build .#go-container
+nix build '.#go-container'
 docker load &lt; result
 
 # Stop any previous run, then start fresh
@@ -2726,23 +2944,23 @@ CMD ["/my-app"]
 <h3 id="exercise-2-explore-the-closure-in-depth"><a class="header" href="#exercise-2-explore-the-closure-in-depth">Exercise 2: Explore the closure in depth</a></h3>
 <p>Use <code>nix-tree</code> to interactively visualize what goes into your container:</p>
 <pre><code class="language-bash"># Interactive dependency tree of your package
-nix-tree .#default
+nix-tree '.#default'
 </code></pre>
 <p>Navigate with arrow keys and Enter. You can see every transitive dependency, its size, and why it was pulled in. This is the best way to understand <em>why</em> your container is the size it is.</p>
 <p>Then measure it:</p>
 <pre><code class="language-bash"># Show all runtime dependencies with individual and closure sizes
-nix path-info -rsSh .#default
+nix path-info -rsSh '.#default'
 
 # Just the total closure size
-nix path-info -Sh .#default
+nix path-info -Sh '.#default'
 </code></pre>
 <p>This is what ends up in your container - nothing more, nothing less. If a dependency seems surprising, use <code>nix why-depends</code> to trace the dependency chain:</p>
 <pre><code class="language-bash"># Why does my package depend on glibc?
-nix why-depends .#default nixpkgs#glibc
+nix why-depends '.#default' 'nixpkgs#glibc'
 </code></pre>
 <h3 id="exercise-3-push-to-a-registry"><a class="header" href="#exercise-3-push-to-a-registry">Exercise 3: Push to a registry</a></h3>
 <pre><code class="language-bash"># Build and push directly (without Docker)
-nix build .#container
+nix build '.#container'
 skopeo copy docker-archive:result docker://registry.example.com/my-app:latest
 </code></pre>
 <p><code>skopeo</code> can push Nix-built images to any OCI registry without needing a Docker daemon.</p>
@@ -2755,17 +2973,19 @@ skopeo copy docker-archive:result docker://registry.example.com/my-app:latest
   config.Cmd = [ "/bin/my-app" ];
 };
 </code></pre>
-<pre><code class="language-bash">nix build .#container
+<pre><code class="language-bash">nix build '.#container'
 ./result | docker load
 </code></pre>
 <hr />
 <h2 id="summary-3"><a class="header" href="#summary-3">Summary</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>Concept</th><th>What you learned</th></tr></thead><tbody>
+<tr><td><strong>Why minimal matters</strong></td><td>Fewer packages = smaller attack surface, faster pulls, lower cost</td></tr>
 <tr><td><strong>Nix container builds</strong></td><td>Building OCI images without Docker using <code>dockerTools</code></td></tr>
 <tr><td><strong>Dependency closures</strong></td><td>Nix computes the exact minimal set of runtime dependencies</td></tr>
+<tr><td><strong>Store deduplication</strong></td><td>Dependencies are shared on disk between devShell, containers, and builds</td></tr>
 <tr><td><strong>Closure inspection</strong></td><td>Using <code>nix-tree</code> and <code>nix why-depends</code> to understand image contents</td></tr>
 <tr><td><strong>Reproducibility</strong></td><td>Same inputs = same image hash, every time</td></tr>
-<tr><td><strong>Layered images</strong></td><td><code>buildLayeredImage</code> for efficient registry pushes</td></tr>
+<tr><td><strong>Layered images</strong></td><td>Store paths map to layers, enabling cross-image sharing in registries</td></tr>
 <tr><td><strong>Security</strong></td><td>Non-root users, minimal attack surface, no unnecessary packages</td></tr>
 <tr><td><strong>Build UX</strong></td><td>Using <code>nom</code> for fancy builds and <code>nix run</code> for instant execution</td></tr>
 <tr><td><strong>Trade-offs</strong></td><td>When Nix containers vs Docker makes sense</td></tr>
@@ -2773,12 +2993,12 @@ skopeo copy docker-archive:result docker://registry.example.com/my-app:latest
 </div>
 <h3 id="key-commands-reference-2"><a class="header" href="#key-commands-reference-2">Key Commands Reference</a></h3>
 <div class="table-wrapper"><table><thead><tr><th>Command</th><th>Purpose</th></tr></thead><tbody>
-<tr><td><code>nom build .#container</code></td><td>Build the container image with fancy output</td></tr>
+<tr><td><code>nom build '.#container'</code></td><td>Build the container image with fancy output</td></tr>
 <tr><td><code>nix run</code></td><td>Build and run the default app in one step</td></tr>
 <tr><td><code>docker load &lt; result</code></td><td>Load a Nix-built image into Docker</td></tr>
-<tr><td><code>nix-tree .#default</code></td><td>Interactive dependency tree explorer</td></tr>
-<tr><td><code>nix path-info -rsSh .#default</code></td><td>Show the dependency closure with sizes</td></tr>
-<tr><td><code>nix why-depends .#default nixpkgs#glibc</code></td><td>Trace why a dependency is included</td></tr>
+<tr><td><code>nix-tree '.#default'</code></td><td>Interactive dependency tree explorer</td></tr>
+<tr><td><code>nix path-info -rsSh '.#default'</code></td><td>Show the dependency closure with sizes</td></tr>
+<tr><td><code>nix why-depends '.#default' 'nixpkgs#glibc'</code></td><td>Trace why a dependency is included</td></tr>
 <tr><td><code>skopeo copy docker-archive:result docker://...</code></td><td>Push without Docker</td></tr>
 </tbody></table>
 </div>
@@ -2867,6 +3087,9 @@ keep-outputs = true
 # Silence noisy "Git tree is dirty" warnings during dev
 warn-dirty = false
 
+# Suppress "or as an identifier is deprecated" warnings from nixpkgs
+extra-deprecated-features = or-as-identifier
+
 # Show more tail on build failure
 log-lines = 50
 
@@ -2905,6 +3128,91 @@ nix search nixpkgs &lt;package&gt;
 # Install
 nix profile install 'nixpkgs#git'
 </code></pre>
+<h2 id="uninstalling-nix"><a class="header" href="#uninstalling-nix">Uninstalling Nix</a></h2>
+<p>If you have a broken Nix installation, packages from the official Nix installer instead of Lix, or need a clean slate, follow the steps below for your platform.</p>
+<h3 id="linux-and-wsl"><a class="header" href="#linux-and-wsl">Linux and WSL</a></h3>
+<ol>
+<li>
+<p><strong>If you installed with the Lix installer</strong>, it provides a built-in uninstall command:</p>
+<pre><code class="language-bash">/nix/nix-installer uninstall
+</code></pre>
+<p>This reverses all changes made during installation (systemd units, build users, <code>/nix</code> mount, shell hooks). If the command succeeds, you are done.</p>
+</li>
+<li>
+<p><strong>If the uninstaller is missing or fails</strong>, clean up manually:</p>
+<pre><code class="language-bash"># Stop and disable Nix daemons
+sudo systemctl stop nix-daemon.service nix-daemon.socket 2&gt;/dev/null
+sudo systemctl disable nix-daemon.service nix-daemon.socket 2&gt;/dev/null
+sudo rm -f /etc/systemd/system/nix-daemon.service /etc/systemd/system/nix-daemon.socket
+sudo systemctl daemon-reload
+
+# Remove the Nix store and all related state
+sudo rm -rf /nix
+
+# Remove Nix configuration and user state
+rm -rf ~/.nix-profile ~/.nix-defexpr ~/.nix-channels
+rm -rf ~/.local/state/nix ~/.cache/nix
+rm -rf ~/.config/nix
+
+# Remove shell hooks injected by the installer
+# Check and edit these files — remove any lines referencing /nix or nix-daemon:
+#   ~/.bashrc  ~/.bash_profile  ~/.zshrc  ~/.profile
+#   /etc/bashrc  /etc/zshrc  /etc/bash.bashrc  /etc/profile
+sudo sed -i '/nix-daemon\|nix-profile\|\/nix\/store/d' /etc/bashrc /etc/zshrc /etc/bash.bashrc /etc/profile 2&gt;/dev/null
+sed -i '/nix-daemon\|nix-profile\|\/nix\/store/d' ~/.bashrc ~/.zshrc ~/.bash_profile ~/.profile 2&gt;/dev/null
+
+# Remove Nix build users and group
+for i in $(seq 1 32); do sudo userdel "nixbld$i" 2&gt;/dev/null; done
+sudo groupdel nixbld 2&gt;/dev/null
+</code></pre>
+</li>
+<li>
+<p><strong>Restart your terminal</strong> (or log out and back in) to ensure a clean environment.</p>
+</li>
+</ol>
+<h3 id="macos-1"><a class="header" href="#macos-1">macOS</a></h3>
+<ol>
+<li>
+<p><strong>If you installed with the Lix installer</strong>:</p>
+<pre><code class="language-bash">/nix/nix-installer uninstall
+</code></pre>
+<p>If this succeeds, you are done.</p>
+</li>
+<li>
+<p><strong>If the uninstaller is missing or fails</strong>, clean up manually:</p>
+<pre><code class="language-bash"># Stop and remove the Nix daemon LaunchDaemon
+sudo launchctl bootout system/org.nixos.nix-daemon 2&gt;/dev/null
+sudo rm -f /Library/LaunchDaemons/org.nixos.nix-daemon.plist
+
+# Remove the Nix store volume (macOS uses a dedicated APFS volume)
+sudo diskutil apfs deleteVolume /nix 2&gt;/dev/null
+sudo rm -rf /nix
+
+# Remove the /nix entry from /etc/fstab and /etc/synthetic.conf
+sudo sed -i '' '/\/nix/d' /etc/fstab 2&gt;/dev/null
+sudo sed -i '' '/^nix$/d' /etc/synthetic.conf 2&gt;/dev/null
+
+# Remove Nix configuration and user state
+rm -rf ~/.nix-profile ~/.nix-defexpr ~/.nix-channels
+rm -rf ~/.local/state/nix ~/.cache/nix
+rm -rf ~/.config/nix
+
+# Remove shell hooks — edit these files and remove lines referencing /nix:
+#   ~/.bashrc  ~/.bash_profile  ~/.zshrc  ~/.zprofile  /etc/zshrc  /etc/bashrc
+sudo sed -i '' '/nix-daemon\|nix-profile\|\/nix\/store/d' /etc/zshrc /etc/bashrc 2&gt;/dev/null
+sed -i '' '/nix-daemon\|nix-profile\|\/nix\/store/d' ~/.bashrc ~/.zshrc ~/.bash_profile ~/.zprofile 2&gt;/dev/null
+
+# Remove Nix build users and group
+for i in $(seq 1 32); do sudo dscl . -delete /Users/"_nixbld$i" 2&gt;/dev/null; done
+sudo dscl . -delete /Groups/nixbld 2&gt;/dev/null
+</code></pre>
+</li>
+<li>
+<p><strong>Reboot</strong> to fully detach the APFS volume and clean up mount points.</p>
+</li>
+</ol>
+<h3 id="after-uninstalling"><a class="header" href="#after-uninstalling">After uninstalling</a></h3>
+<p>Once Nix is fully removed, you can do a fresh install by following the <a href="nix/INSTALL.html#installing-lix-macos-linux-and-wsl">Installing Lix</a> section above.</p>
 <h2 id="additional-resources"><a class="header" href="#additional-resources">Additional Resources</a></h2>
 <ul>
 <li><a href="https://lix.systems/">Lix Official Website</a></li>

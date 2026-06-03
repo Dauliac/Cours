@@ -203,17 +203,17 @@ Your dev shell includes two tools that make working with Nix much more pleasant:
 **`nom` (nix-output-monitor)**: Replaces the default Nix build output with a rich, real-time view showing what's being built, downloaded, and how much is left:
 
 ```bash
-# Instead of plain "nix build":
-nom build
+# Build the formatter to see nom in action
+nom build '.#formatter.x86_64-linux'
 ```
 
-You will see a live progress bar with active builds, downloads, and store paths. This is especially useful when building for the first time (many dependencies to fetch).
+You will see a live progress bar with active builds, downloads, and store paths. Later, when we create our own package, we will use `nom build` instead of plain `nix build`.
 
 **`nix-tree`**: An interactive terminal tool to explore the dependency tree of any Nix package:
 
 ```bash
 # Explore the dev shell's dependencies interactively
-nix-tree .#devShells.x86_64-linux.default
+nix-tree '.#devShells.x86_64-linux.default'
 ```
 
 Navigate with arrow keys, press Enter to expand nodes. This shows you exactly what Nix pulled in and why.
@@ -262,6 +262,8 @@ nix search nixpkgs python
 
 # Or use the web interface: https://search.nixos.org/packages
 ```
+
+To look up Nix built-in functions and library functions, use [Noogle](https://noogle.dev) — a search engine for Nix functions with examples and type signatures.
 
 ### Step 7: Try with direnv (optional but recommended)
 
@@ -404,7 +406,7 @@ Now that you have a working package, let's look *inside* it. Nix gives you power
 A **derivation** is the low-level build recipe Nix actually executes. Every `nix build` produces one. Let's look at yours:
 
 ```bash
-nix show-derivation .#default
+nix derivation show '.#default'
 ```
 
 This outputs JSON describing the exact build plan: the builder, arguments, environment variables, input sources, and input derivations. Notice:
@@ -421,7 +423,7 @@ Every field is deterministic. Change any input, and the output hash changes.
 Use `nix-tree` to interactively explore what your package depends on:
 
 ```bash
-nix-tree .#default
+nix-tree '.#default'
 ```
 
 Navigate with arrow keys and Enter. You will see your package at the top, with its full dependency tree below. Each node shows:
@@ -435,7 +437,7 @@ This is the **closure** - the complete set of everything needed to run your pack
 
 ```bash
 # Show all runtime dependencies with sizes
-nix path-info -rsSh .#default
+nix path-info -rsSh '.#default'
 ```
 
 This lists every store path in the closure with:
@@ -446,7 +448,7 @@ This lists every store path in the closure with:
 
 ```bash
 # Just the total closure size
-nix path-info -Sh .#default
+nix path-info -Sh '.#default'
 ```
 
 For a simple shell script, you should see a closure of around 30-40 MB (mostly coreutils and bash).
@@ -608,13 +610,15 @@ packages.default = pkgs.writers.writePython3Bin "my-tool" {
 '';
 ```
 
+For real-world Python projects with `pyproject.toml` and `uv`, look at [uv2nix](https://github.com/pyproject-nix/uv2nix) — it bridges the `uv` package manager with Nix for fully reproducible Python builds.
+
 ### Challenge 2: Add a second package
 
 Create a `packages.other` in addition to `packages.default`:
 
 ```bash
 # Build a specific package
-nix build .#other
+nix build '.#other'
 ```
 
 ### Challenge 3: Pin a specific nixpkgs version
@@ -643,7 +647,7 @@ In this practical, you learned:
 | **Package management** | Added/removed tools declaratively |
 | **Auto-import** | New `.nix` files are picked up automatically (just `git add`) |
 | **Packaging** | Built a shell script into a Nix package |
-| **Derivations** | Inspected build recipes with `nix show-derivation` |
+| **Derivations** | Inspected build recipes with `nix derivation show` |
 | **Dependency analysis** | Explored closures with `nix-tree` and `nix path-info` |
 | **Nix REPL** | Interactively explored flake outputs and nixpkgs |
 | **Build UX** | Used `nom` for fancy builds and `nix run` for instant execution |
@@ -661,9 +665,9 @@ In this practical, you learned:
 | `nix fmt` | Format all code |
 | `nix flake show` | Show all flake outputs |
 | `nix search nixpkgs <name>` | Search for packages |
-| `nix show-derivation .#default` | Inspect the build recipe (derivation) |
-| `nix-tree .#default` | Interactive dependency tree explorer |
-| `nix path-info -rsSh .#default` | Show closure size and dependencies |
+| `nix derivation show '.#default'` | Inspect the build recipe (derivation) |
+| `nix-tree '.#default'` | Interactive dependency tree explorer |
+| `nix path-info -rsSh '.#default'` | Show closure size and dependencies |
 | `nix repl` then `:lf .` | Interactive Nix expression explorer |
 
 ### What's Next?

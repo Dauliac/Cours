@@ -250,7 +250,7 @@ wsl --install
 </blockquote>
 <h3 id="alternative-install-via-nix"><a class="header" href="#alternative-install-via-nix">Alternative: Install via Nix</a></h3>
 <p>If you already have Nix installed from TP 1:</p>
-<pre><code class="language-bash">nix profile install nixpkgs#docker
+<pre><code class="language-bash">nix profile install 'nixpkgs#docker'
 </code></pre>
 <blockquote>
 <p>This installs the Docker CLI only. On Linux, you still need the Docker daemon running (<code>sudo systemctl start docker</code>). On macOS/WSL, you still need Docker Desktop.</p>

@@ -324,13 +324,13 @@ nix flake show
 <h3 id="step-5b-discover-the-build-tools"><a class="header" href="#step-5b-discover-the-build-tools">Step 5b: Discover the build tools</a></h3>
 <p>Your dev shell includes two tools that make working with Nix much more pleasant:</p>
 <p><strong><code>nom</code> (nix-output-monitor)</strong>: Replaces the default Nix build output with a rich, real-time view showing what's being built, downloaded, and how much is left:</p>
-<pre><code class="language-bash"># Instead of plain "nix build":
-nom build
+<pre><code class="language-bash"># Build the formatter to see nom in action
+nom build '.#formatter.x86_64-linux'
 </code></pre>
-<p>You will see a live progress bar with active builds, downloads, and store paths. This is especially useful when building for the first time (many dependencies to fetch).</p>
+<p>You will see a live progress bar with active builds, downloads, and store paths. Later, when we create our own package, we will use <code>nom build</code> instead of plain <code>nix build</code>.</p>
 <p><strong><code>nix-tree</code></strong>: An interactive terminal tool to explore the dependency tree of any Nix package:</p>
 <pre><code class="language-bash"># Explore the dev shell's dependencies interactively
-nix-tree .#devShells.x86_64-linux.default
+nix-tree '.#devShells.x86_64-linux.default'
 </code></pre>
 <p>Navigate with arrow keys, press Enter to expand nodes. This shows you exactly what Nix pulled in and why.</p>
 <p>Try both now. You will use them throughout the TPs.</p>
@@ -364,6 +364,7 @@ nix search nixpkgs python
 
 # Or use the web interface: https://search.nixos.org/packages
 </code></pre>
+<p>To look up Nix built-in functions and library functions, use <a href="https://noogle.dev">Noogle</a> — a search engine for Nix functions with examples and type signatures.</p>
 <h3 id="step-7-try-with-direnv-optional-but-recommended"><a class="header" href="#step-7-try-with-direnv-optional-but-recommended">Step 7: Try with direnv (optional but recommended)</a></h3>
 <p>If you have <code>direnv</code> installed, the <code>.envrc</code> file will automatically load your dev shell whenever you <code>cd</code> into the project:</p>
 <pre><code class="language-bash">direnv allow
@@ -466,7 +467,7 @@ readlink result
 <p>Now that you have a working package, let's look <em>inside</em> it. Nix gives you powerful tools to inspect exactly what was built, how, and why.</p>
 <h3 id="step-13-inspect-the-derivation"><a class="header" href="#step-13-inspect-the-derivation">Step 13: Inspect the derivation</a></h3>
 <p>A <strong>derivation</strong> is the low-level build recipe Nix actually executes. Every <code>nix build</code> produces one. Let's look at yours:</p>
-<pre><code class="language-bash">nix show-derivation .#default
+<pre><code class="language-bash">nix derivation show '.#default'
 </code></pre>
 <p>This outputs JSON describing the exact build plan: the builder, arguments, environment variables, input sources, and input derivations. Notice:</p>
 <ul>
@@ -478,7 +479,7 @@ readlink result
 <p>Every field is deterministic. Change any input, and the output hash changes.</p>
 <h3 id="step-14-visualize-the-dependency-tree"><a class="header" href="#step-14-visualize-the-dependency-tree">Step 14: Visualize the dependency tree</a></h3>
 <p>Use <code>nix-tree</code> to interactively explore what your package depends on:</p>
-<pre><code class="language-bash">nix-tree .#default
+<pre><code class="language-bash">nix-tree '.#default'
 </code></pre>
 <p>Navigate with arrow keys and Enter. You will see your package at the top, with its full dependency tree below. Each node shows:</p>
 <ul>
@@ -488,7 +489,7 @@ readlink result
 <p>This is the <strong>closure</strong> - the complete set of everything needed to run your package. Nothing more, nothing less.</p>
 <h3 id="step-15-measure-the-closure"><a class="header" href="#step-15-measure-the-closure">Step 15: Measure the closure</a></h3>
 <pre><code class="language-bash"># Show all runtime dependencies with sizes
-nix path-info -rsSh .#default
+nix path-info -rsSh '.#default'
 </code></pre>
 <p>This lists every store path in the closure with:</p>
 <ul>
@@ -497,7 +498,7 @@ nix path-info -rsSh .#default
 <li>Human-readable (<code>-h</code>)</li>
 </ul>
 <pre><code class="language-bash"># Just the total closure size
-nix path-info -Sh .#default
+nix path-info -Sh '.#default'
 </code></pre>
 <p>For a simple shell script, you should see a closure of around 30-40 MB (mostly coreutils and bash).</p>
 <h3 id="step-16-explore-with-the-nix-repl"><a class="header" href="#step-16-explore-with-the-nix-repl">Step 16: Explore with the Nix REPL</a></h3>
@@ -612,10 +613,11 @@ packages.default = pkgs.writers.writePython3Bin "my-tool" {
   print(f"Your IP: {r.json()['origin']}")
 '';
 </code></pre>
+<p>For real-world Python projects with <code>pyproject.toml</code> and <code>uv</code>, look at <a href="https://github.com/pyproject-nix/uv2nix">uv2nix</a> — it bridges the <code>uv</code> package manager with Nix for fully reproducible Python builds.</p>
 <h3 id="challenge-2-add-a-second-package"><a class="header" href="#challenge-2-add-a-second-package">Challenge 2: Add a second package</a></h3>
 <p>Create a <code>packages.other</code> in addition to <code>packages.default</code>:</p>
 <pre><code class="language-bash"># Build a specific package
-nix build .#other
+nix build '.#other'
 </code></pre>
 <h3 id="challenge-3-pin-a-specific-nixpkgs-version"><a class="header" href="#challenge-3-pin-a-specific-nixpkgs-version">Challenge 3: Pin a specific nixpkgs version</a></h3>
 <p>Change the <code>nixpkgs</code> input in <code>flake.nix</code> to a specific commit and observe how <code>flake.lock</code> changes:</p>
@@ -633,7 +635,7 @@ git diff flake.lock
 <tr><td><strong>Package management</strong></td><td>Added/removed tools declaratively</td></tr>
 <tr><td><strong>Auto-import</strong></td><td>New <code>.nix</code> files are picked up automatically (just <code>git add</code>)</td></tr>
 <tr><td><strong>Packaging</strong></td><td>Built a shell script into a Nix package</td></tr>
-<tr><td><strong>Derivations</strong></td><td>Inspected build recipes with <code>nix show-derivation</code></td></tr>
+<tr><td><strong>Derivations</strong></td><td>Inspected build recipes with <code>nix derivation show</code></td></tr>
 <tr><td><strong>Dependency analysis</strong></td><td>Explored closures with <code>nix-tree</code> and <code>nix path-info</code></td></tr>
 <tr><td><strong>Nix REPL</strong></td><td>Interactively explored flake outputs and nixpkgs</td></tr>
 <tr><td><strong>Build UX</strong></td><td>Used <code>nom</code> for fancy builds and <code>nix run</code> for instant execution</td></tr>
@@ -650,9 +652,9 @@ git diff flake.lock
 <tr><td><code>nix fmt</code></td><td>Format all code</td></tr>
 <tr><td><code>nix flake show</code></td><td>Show all flake outputs</td></tr>
 <tr><td><code>nix search nixpkgs &lt;name&gt;</code></td><td>Search for packages</td></tr>
-<tr><td><code>nix show-derivation .#default</code></td><td>Inspect the build recipe (derivation)</td></tr>
-<tr><td><code>nix-tree .#default</code></td><td>Interactive dependency tree explorer</td></tr>
-<tr><td><code>nix path-info -rsSh .#default</code></td><td>Show closure size and dependencies</td></tr>
+<tr><td><code>nix derivation show '.#default'</code></td><td>Inspect the build recipe (derivation)</td></tr>
+<tr><td><code>nix-tree '.#default'</code></td><td>Interactive dependency tree explorer</td></tr>
+<tr><td><code>nix path-info -rsSh '.#default'</code></td><td>Show closure size and dependencies</td></tr>
 <tr><td><code>nix repl</code> then <code>:lf .</code></td><td>Interactive Nix expression explorer</td></tr>
 </tbody></table>
 </div>

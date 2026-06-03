@@ -116,6 +116,34 @@ Examples:
 
 ![width:200px](assets/Untitled.png)
 
+### Non-American Open Source Licenses
+
+Some well-known licenses (MIT, BSD, Apache) are tied to American institutions.
+Alternatives exist:
+
+- **[ISC](https://opensource.org/license/isc-license-txt)** — functionally equivalent to MIT, simpler wording
+- **[EUPL](https://eupl.eu/)** — European Union Public License, copyleft, written under EU law, available in 23 languages
+- **[CeCILL](https://cecill.info/)** — French license (CEA/CNRS/INRIA), GPL-compatible
+- **[CC0](https://creativecommons.org/publicdomain/zero/1.0/)** — Public domain dedication (Creative Commons)
+- **[Unlicense](https://unlicense.org/)** — Public domain, no conditions
+- **[Zlib](https://opensource.org/license/zlib)** — Very permissive, no institution
+
+### Recommended Licenses
+
+| Use case | License | Type |
+|---|---|---|
+| Library / small project | **ISC** or **MIT** | Permissive |
+| Want contributions back | **EUPL** or **MPL 2.0** | Weak copyleft |
+| Maximum freedom protection | **AGPLv3** | Strong copyleft |
+| French context / public sector | **CeCILL v2.1** or **EUPL** | Copyleft, EU/FR law |
+| Documentation | **CC BY-SA 4.0** | Creative Commons |
+| Give up all rights | **CC0** | Public domain |
+
+______________________________________________________________________
+
+- Prefer **EUPL** or **CeCILL** in French/European contexts: they are governed by EU law, not US law.
+- **MPL 2.0** is a good middle ground: file-level copyleft, compatible with proprietary code.
+
 ### Economically
 
 - Highly effective:
@@ -198,9 +226,92 @@ ______________________________________________________________________
 
 # Degradation
 
-## Hashicorp Case
+## The "Merdification" Pattern
 
-All Hashicorp software has moved from free licenses to BUSL.
+A recurring trend: companies build products on open-source licenses,
+gain massive adoption, then switch to restrictive licenses once dominant.
+
+______________________________________________________________________
+
+### Hashicorp Case (2023)
+
+All Hashicorp software (Terraform, Vault, Consul, Nomad, Vagrant...)
+moved from **MPL 2.0** to **BUSL** (Business Source License).
+
+- Community response: **[OpenTofu](https://opentofu.org/)** (Terraform fork, Linux Foundation)
+- **[OpenBao](https://openbao.org/)** (Vault fork)
+
+______________________________________________________________________
+
+### Redis (2024)
+
+Redis moved from **BSD** to **SSPL / RSALv2**.
+
+- Community response: **[Valkey](https://valkey.io/)** (fork, Linux Foundation)
+
+______________________________________________________________________
+
+### MongoDB (2018)
+
+MongoDB moved from **AGPL** to **SSPL** (Server Side Public License).
+
+- SSPL is so restrictive that OSI does not recognize it as open source.
+- Community response: **[FerretDB](https://www.ferretdb.com/)** (PostgreSQL-based alternative)
+
+______________________________________________________________________
+
+### Elasticsearch (2021)
+
+Elasticsearch moved from **Apache 2.0** to **SSPL / Elastic License v2**.
+
+- Community response: **[OpenSearch](https://opensearch.org/)** (fork, AWS / Linux Foundation)
+
+______________________________________________________________________
+
+### CockroachDB (2019)
+
+CockroachDB moved from **Apache 2.0** to **BSL**.
+
+______________________________________________________________________
+
+### Confluent / Kafka Tools (2019)
+
+Confluent Platform components moved from **Apache 2.0** to **Confluent Community License**.
+
+- Kafka itself remains Apache 2.0 (ASF project).
+
+______________________________________________________________________
+
+### Grafana, Loki, Tempo (2021)
+
+Moved from **Apache 2.0** to **AGPLv3**.
+
+- AGPLv3 is still open source, but much more restrictive (copyleft on network use).
+
+______________________________________________________________________
+
+### Docker Desktop (2021)
+
+Docker Desktop moved from **free** to a **paid subscription** for enterprises (>250 employees).
+
+- Alternative: **[Podman](https://podman.io/)** (Red Hat, fully open source)
+
+______________________________________________________________________
+
+### Common Pattern
+
+```text
+1. Build open source, gain adoption
+2. Become the standard (network effect)
+3. Change license to capture value
+4. Community forks (sometimes)
+```
+
+______________________________________________________________________
+
+- The BUSL and SSPL are **not** open source licenses (per OSI definition).
+- They restrict cloud providers from offering the software as a service.
+- The stated justification: "AWS/cloud providers profit without contributing back."
 
 ## Monetization of Social and Symbolic Capital
 
@@ -280,6 +391,80 @@ Tools that are:
   - Regional support
   - Forces better product design
   - Easier recruitment
+
+# License Compliance Tooling
+
+## The REUSE Standard (FSFE)
+
+[REUSE](https://reuse.software/) makes licensing easy and machine-readable:
+
+- Add **SPDX headers** to every file (`SPDX-License-Identifier: MIT`)
+- Store full license texts in a `LICENSES/` directory
+- Lint compliance with `reuse lint`
+- Generate SBOM with `reuse spdx`
+
+```bash
+pip install reuse
+reuse download MIT EUPL-1.2
+reuse annotate --license MIT --copyright "Your Name" src/*.py
+reuse lint
+```
+
+- Integrates into CI/CD with the `fsfe/reuse` Docker image.
+
+______________________________________________________________________
+
+## SBOM Generation
+
+A **Software Bill of Materials** (SBOM) lists all components and their licenses.
+
+> Required by US Executive Order 14028, and EU Cyber Resilience Act (2027).
+
+| Tool | What it does | Format |
+|---|---|---|
+| **[Syft](https://github.com/anchore/syft)** | SBOM generator from images, filesystems, archives | CycloneDX, SPDX |
+| **[Trivy](https://github.com/aquasecurity/trivy)** | Vulnerability scanner + SBOM generation | CycloneDX, SPDX |
+| **[CycloneDX CLI](https://github.com/CycloneDX)** | SBOM creation and conversion | CycloneDX |
+
+```bash
+# Generate SBOM from a container image
+syft myimage:latest -o spdx-json > sbom.json
+```
+
+______________________________________________________________________
+
+## License Auditing
+
+| Tool | What it does |
+|---|---|
+| **[ScanCode Toolkit](https://github.com/aboutcode-org/scancode-toolkit)** | Deep license & copyright detection by scanning source code |
+| **[ORT](https://github.com/oss-review-toolkit/ort)** (OSS Review Toolkit) | Full compliance pipeline: analyze, scan, evaluate policies, report (Linux Foundation) |
+| **[OWASP Dependency-Track](https://dependencytrack.org/)** | Continuous SBOM analysis platform, identifies license & vulnerability risks |
+| **[FOSSA](https://fossa.com/)** | Commercial license compliance (free tier available) |
+
+______________________________________________________________________
+
+## License File Generators
+
+For bootstrapping a project with the right license file:
+
+| Tool | Language |
+|---|---|
+| **[reuse download](https://reuse.software/)** | Python (recommended) |
+| **[license](https://nishanths.github.io/license/)** | Go |
+| **[license-generator](https://github.com/intincrab/license-generator)** | Go |
+
+______________________________________________________________________
+
+## Recommended Workflow
+
+```text
+1. Choose license (EUPL, MIT, AGPLv3...)
+2. Add SPDX headers to all files (reuse annotate)
+3. Generate SBOM in CI (syft / trivy)
+4. Audit dependencies licenses (scancode / ORT)
+5. Lint compliance (reuse lint)
+```
 
 # Bibliography
 
