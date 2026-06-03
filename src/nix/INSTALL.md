@@ -72,6 +72,9 @@ keep-outputs = true
 # Silence noisy "Git tree is dirty" warnings during dev
 warn-dirty = false
 
+# Suppress "or as an identifier is deprecated" warnings from nixpkgs
+extra-deprecated-features = or-as-identifier
+
 # Show more tail on build failure
 log-lines = 50
 
