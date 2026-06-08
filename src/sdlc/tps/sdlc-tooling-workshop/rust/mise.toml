@@ -1,0 +1,13 @@
+[tools]
+dasel = "latest"
+dagger = "latest"
+grype = "latest"
+syft = "latest"
+gitleaks = "latest"
+hk = "latest"
+pkl = "latest"
+rust = "latest"
+taplo = "latest"
+task = "latest"
+typos = "latest"
+dive = "latest"

@@ -24,6 +24,7 @@ ______________________________________________________________________
 - [TP 1: Packaging with Nix](./sdlc/tps/packaging-with-nix/README.md)
 - [TP 2: Building Containers - The Traditional Way](./sdlc/tps/perfect-container-with/README.md)
 - [TP 3: Perfect Containers with Nix](./sdlc/tps/perfect-container-with-nix/README.md)
+- [TP 4: SDLC Tooling Workshop](./sdlc/tps/sdlc-tooling-workshop/README.md)
 
 ______________________________________________________________________
 
