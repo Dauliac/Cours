@@ -19,6 +19,8 @@
 <li><strong>Automate</strong> all project tasks through a task runner</li>
 <li><strong>Enforce</strong> code quality and security with git hooks</li>
 <li><strong>Generate</strong> an SBOM and scan for CVEs as automated tasks</li>
+<li><strong>Test</strong> at multiple levels: unit, benchmarks, e2e, API contracts, integration with real dependencies</li>
+<li><strong>Wire up</strong> a CI pipeline that enforces all checks server-side</li>
 <li><strong>Apply</strong> linters and formatters across multiple file types</li>
 </ol>
 <h2 id="prerequisites">Prerequisites</h2>
@@ -74,13 +76,35 @@ Running the task runner with <strong>no arguments</strong> should list all avail
 <li><strong>CVE scanning</strong> on the container image (e.g. <a href="https://github.com/anchore/grype">Grype</a> or <a href="https://trivy.dev/">Trivy</a>)</li>
 </ul>
 <p>Pick security tools from the <a href="../../../RADAR.md">Tech Radar</a> (look for security/scanning tools in the Tools quadrant).</p>
-<h3 id="7-linters-and-formatters">7. Linters and formatters</h3>
+<h3 id="7-testing">7. Testing</h3>
+<p>Set up <strong>multiple levels of testing</strong> for your project:</p>
+<ul>
+<li><strong>Unit tests</strong> -- test your application logic in isolation</li>
+<li><strong>Benchmark / load tests</strong> -- use a tool like <a href="https://k6.io/">k6</a> to benchmark your HTTP server (if applicable)</li>
+<li><strong>End-to-end tests</strong> -- test the full application running in a container (use <a href="https://k3d.io/">k3d</a>, <a href="https://docs.docker.com/compose/">Docker Compose</a>, or similar)</li>
+<li><strong>API contract tests</strong> -- if your app exposes an API, validate it against a <a href="https://swagger.io/specification/">Swagger / OpenAPI</a> spec</li>
+<li><strong>Integration tests with real dependencies</strong> -- use <a href="https://testcontainers.com/">Testcontainers</a> to spin up real databases or services during tests (this gives you unit-test ergonomics with real infrastructure)</li>
+</ul>
+<p>You don't need all of these -- pick the ones that make sense for your project.<br />
+At minimum, include <strong>unit tests</strong> and <strong>one other testing level</strong>.</p>
+<p>Pick testing tools from the <a href="../../../RADAR.md">Tech Radar</a> (look for testing &amp; benchmarking tools in the Tools quadrant).</p>
+<h3 id="8-ci-pipeline">8. CI pipeline</h3>
+<p>Set up a <strong>CI pipeline</strong> (e.g. GitHub Actions, GitLab CI) that runs at minimum:</p>
+<ul>
+<li><strong>Pre-commit checks</strong> -- linting, formatting, secret detection (same as your git hooks, but enforced server-side)</li>
+<li><strong>Build</strong> -- compile the project</li>
+<li><strong>Tests</strong> -- run unit tests (and optionally other test levels)</li>
+<li><strong>Container build + CVE scan</strong> -- build the image and scan it</li>
+</ul>
+<p>The CI must fail if any check fails. This ensures that even if someone skips git hooks locally, the pipeline catches it.</p>
+<p>Pick a CI platform from the <a href="../../../RADAR.md">Tech Radar</a> (look for CI/CD tools in the Tools quadrant).</p>
+<h3 id="9-linters-and-formatters">9. Linters and formatters</h3>
 <p>Add <strong>as many as reasonable</strong> for your language, config files, Dockerfiles, shell scripts, markdown, etc.</p>
 <p>Pick linters and formatters from the <a href="../../../RADAR.md">Tech Radar</a> (look for linting/formatting tools in the Tools quadrant).</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="4" lang="en-US">
 <h2 id="reference-implementations">Reference Implementations</h2>
-<p>Two complete examples are provided in this directory:</p>
+<p>Two complete examples are provided in <a href="https://github.com/Dauliac/Cours/tree/main/src/sdlc/tps/sdlc-tooling-workshop">this directory</a>:</p>
 <table>
 <thead>
 <tr>
@@ -162,6 +186,14 @@ You are free to combine tools differently or use entirely different ones.</p>
 <td>High</td>
 </tr>
 <tr>
+<td><strong>Tests exist</strong> (unit + at least one other level)</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>CI pipeline</strong> runs pre-commit, build, tests, and CVE scan</td>
+<td>High</td>
+</tr>
+<tr>
 <td>SBOM and CVE scan are <strong>automated tasks</strong></td>
 <td>Medium</td>
 </tr>
@@ -176,6 +208,14 @@ You are free to combine tools differently or use entirely different ones.</p>
 <tr>
 <td>Container image is <strong>small</strong> (&lt; 20 MB for Go/Rust)</td>
 <td>Medium</td>
+</tr>
+<tr>
+<td><strong>Benchmarks or load tests</strong> with k6 or similar</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><strong>Integration tests</strong> with Testcontainers, k3d, or docker-compose</td>
+<td>Bonus</td>
 </tr>
 <tr>
 <td>Builds are <strong>reproducible</strong></td>
@@ -217,6 +257,10 @@ You are free to combine tools differently or use entirely different ones.</p>
 <tr>
 <td>Supply chain security</td>
 <td>SBOM generation, CVE scanning, and credential detection</td>
+</tr>
+<tr>
+<td>Testing at multiple levels</td>
+<td>Unit tests, benchmarks, e2e, API contracts, Testcontainers</td>
 </tr>
 <tr>
 <td>Linting at scale</td>
