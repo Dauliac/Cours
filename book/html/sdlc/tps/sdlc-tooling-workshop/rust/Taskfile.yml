@@ -1,0 +1,93 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: "3"
+
+vars:
+  IMAGE_NAME:
+    sh: dasel -i toml 'package.name' < Cargo.toml | tr -d "'"
+  IMAGE_VERSION:
+    sh: dasel -i toml 'package.version' < Cargo.toml | tr -d "'"
+  IMAGE_TAG: "{{.IMAGE_NAME}}:{{.IMAGE_VERSION}}"
+
+tasks:
+  install:
+    desc: Get all project deps
+    sources:
+      - ./mise.toml
+    silent: true
+    cmds:
+      - mise trust
+      - mise install
+      - rustup target add x86_64-unknown-linux-musl
+      - hk install
+  build:
+    desc: Compile the project with rust
+    deps:
+      - install
+    silent: true
+    sources:
+      - ./src/**/*.rs
+      - ./Cargo.*
+    cmds:
+      - cargo build
+  build:static:
+    desc: Compile a static musl binary for containers
+    deps:
+      - install
+    silent: true
+    sources:
+      - ./src/**/*.rs
+      - ./Cargo.*
+    cmds:
+      - cargo build --release --target x86_64-unknown-linux-musl
+  check:
+    desc: Run all linters and quality checks
+    deps:
+      - install
+    cmds:
+      - hk check
+  fix:
+    desc: Auto-fix all linting issues
+    deps:
+      - install
+    cmds:
+      - hk fix
+  container:
+    desc: Build a container image with Dagger
+    deps:
+      - install
+    sources:
+      - ./src/**/*.rs
+      - ./Cargo.*
+      - ./.dagger/main.go
+    cmds:
+      - dagger call build --source=.
+  container:load:
+    desc: Build and load the container image into local Docker daemon
+    deps:
+      - install
+    sources:
+      - ./src/**/*.rs
+      - ./Cargo.*
+      - ./.dagger/main.go
+    cmds:
+      - dagger call build --source=. export --path=demo.tar
+      - 'IMAGE_ID=$(docker load -i demo.tar | sed "s/.*: //") && docker tag "$IMAGE_ID" {{.IMAGE_TAG}} && echo "Tagged {{.IMAGE_TAG}}"'
+      - rm -f demo.tar
+  container:sbom:
+    desc: Generate SBOM for the container image
+    deps:
+      - container:load
+    cmds:
+      - syft {{.IMAGE_TAG}} -o spdx-json=sbom.json
+      - echo "SBOM written to sbom.json"
+  container:cve:
+    desc: Scan the container image for CVEs
+    deps:
+      - container:load
+    cmds:
+      - grype {{.IMAGE_TAG}}
+  default:
+    cmds:
+      - task --list
+    silent: true

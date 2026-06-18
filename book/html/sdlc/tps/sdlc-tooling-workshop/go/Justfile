@@ -1,0 +1,41 @@
+# List available recipes
+default:
+    @just --list
+
+# Project metadata
+image_name := "demo2"
+image_version := "0.1.0"
+image_tag := image_name + ":" + image_version
+
+# Install all project dependencies
+install:
+    mise trust
+    mise install
+
+# Compile the project
+build: install
+    go build -o demo2 .
+
+# Compile a static binary for containers
+build-static: install
+    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags='-s -w -extldflags "-static"' -o demo2 .
+
+# Build a container image with Earthly
+container: install
+    earthly +build
+
+# Build and load the container image into local Docker daemon
+container-load: install
+    earthly +build
+    docker load -i demo2.tar
+    docker tag demo2:latest {{image_tag}}
+    rm -f demo2.tar
+
+# Generate SBOM for the container image
+container-sbom: container-load
+    syft {{image_tag}} -o spdx-json=sbom.json
+    @echo "SBOM written to sbom.json"
+
+# Scan the container image for CVEs
+container-cve: container-load
+    grype {{image_tag}}

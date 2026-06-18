@@ -1,0 +1,8 @@
+[tools]
+go = "latest"
+just = "latest"
+earthly = "latest"
+lefthook = "latest"
+grype = "latest"
+syft = "latest"
+dive = "latest"

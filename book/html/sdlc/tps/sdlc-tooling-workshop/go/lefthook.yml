@@ -1,0 +1,13 @@
+pre-commit:
+  commands:
+    lint:
+      glob: "*.go"
+      run: gofmt -l {staged_files} && test -z "$(gofmt -l {staged_files})"
+    vet:
+      glob: "*.go"
+      run: go vet ./...
+
+pre-push:
+  commands:
+    build:
+      run: go build ./...

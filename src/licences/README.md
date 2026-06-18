@@ -123,7 +123,7 @@ Alternatives exist:
 
 - **[ISC](https://opensource.org/license/isc-license-txt)** — functionally equivalent to MIT, simpler wording
 - **[EUPL](https://eupl.eu/)** — European Union Public License, copyleft, written under EU law, available in 23 languages
-- **[CeCILL](https://cecill.info/)** — French license (CEA/CNRS/INRIA), GPL-compatible
+- **[CeCILL](https://en.wikipedia.org/wiki/CeCILL)** — French license (CEA/CNRS/INRIA), GPL-compatible
 - **[CC0](https://creativecommons.org/publicdomain/zero/1.0/)** — Public domain dedication (Creative Commons)
 - **[Unlicense](https://unlicense.org/)** — Public domain, no conditions
 - **[Zlib](https://opensource.org/license/zlib)** — Very permissive, no institution
@@ -256,7 +256,7 @@ ______________________________________________________________________
 MongoDB moved from **AGPL** to **SSPL** (Server Side Public License).
 
 - SSPL is so restrictive that OSI does not recognize it as open source.
-- Community response: **[FerretDB](https://www.ferretdb.com/)** (PostgreSQL-based alternative)
+- Community response: **[FerretDB](https://github.com/FerretDB/FerretDB)** (PostgreSQL-based alternative)
 
 ______________________________________________________________________
 

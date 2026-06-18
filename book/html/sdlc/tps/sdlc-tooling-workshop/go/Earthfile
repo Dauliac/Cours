@@ -1,0 +1,26 @@
+VERSION 0.8
+
+build:
+    # Builder stage
+    FROM golang:1.24-alpine
+    WORKDIR /app
+    COPY go.mod .
+    COPY *.go .
+    RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags='-s -w -extldflags "-static"' -o demo2 .
+
+    # Runtime stage: scratch with only the static binary, non-root
+    FROM scratch
+    COPY +build/app/demo2 /demo2
+    COPY (+build-etc/passwd) /etc/passwd
+    COPY (+build-etc/group) /etc/group
+    USER 65534
+    ENTRYPOINT ["/demo2"]
+    SAVE IMAGE demo2:latest
+    SAVE IMAGE --push demo2:latest
+
+build-etc:
+    FROM alpine:3.20
+    RUN echo 'nobody:x:65534:65534:nobody:/:/nonexistent' > /tmp/passwd
+    RUN echo 'nobody:x:65534:' > /tmp/group
+    SAVE ARTIFACT /tmp/passwd passwd
+    SAVE ARTIFACT /tmp/group group
