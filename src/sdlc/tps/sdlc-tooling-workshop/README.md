@@ -93,7 +93,7 @@ ______________________________________________________________________
 
 ## Reference Implementations
 
-Two complete examples are provided in this directory:
+Two complete examples are provided in [this directory](https://github.com/Dauliac/Cours/tree/main/src/sdlc/tps/sdlc-tooling-workshop):
 
 | Directory | Language | Container builder | Task runner | Dev shell | Git hooks | Credential scanner |
 |-----------|----------|-------------------|-------------|-----------|-----------|-------------------|
