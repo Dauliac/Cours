@@ -136,6 +136,7 @@ radar_visualization({
     // Tools — Testing & Benchmarking
     { label: "k6", quadrant: 1, ring: 0, moved: 0, link: "https://k6.io/" },
     { label: "Testcontainers", quadrant: 1, ring: 0, moved: 0, link: "https://testcontainers.com/" },
+    { label: "container-structure-test", quadrant: 1, ring: 1, moved: 0, link: "https://github.com/GoogleContainerTools/container-structure-test" },
     { label: "k3d", quadrant: 1, ring: 1, moved: 0, link: "https://k3d.io/" },
     { label: "Swagger / OpenAPI", quadrant: 1, ring: 1, moved: 0, link: "https://swagger.io/specification/" },
     { label: "Hurl", quadrant: 1, ring: 1, moved: 0, link: "https://hurl.dev/" },
