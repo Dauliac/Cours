@@ -21,6 +21,9 @@ follow-web-links = true
 exclude = [
   "legifrance\\.gouv\\.fr",
   "std\\.divnix\\.com",
+  "argo-cd\\.readthedocs\\.io",
+  "argocd\\.localhost",
+  "diataxis\\.fr",
 ]
 
 [output.markdown]

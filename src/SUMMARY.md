@@ -10,6 +10,7 @@ ______________________________________________________________________
 - [OS](./system/README.md)
 - [Licences](./licences/README.md)
 - [Technical documentation](./documentation/README.md)
+- [Monitoring & Observability](./monitoring/README.md)
 
 ______________________________________________________________________
 
@@ -25,6 +26,7 @@ ______________________________________________________________________
 - [TP 2: Building Containers - The Traditional Way](./sdlc/tps/perfect-container-with/README.md)
 - [TP 3: Perfect Containers with Nix](./sdlc/tps/perfect-container-with-nix/README.md)
 - [TP 4: SDLC Tooling Workshop](./sdlc/tps/sdlc-tooling-workshop/README.md)
+- [TP 5: Local Kubernetes with k3d](./sdlc/tps/local-kubernetes-with-k3d/README.md)
 
 ______________________________________________________________________
 

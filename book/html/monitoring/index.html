@@ -1,0 +1,2060 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Monitoring &amp; Observability - Cours &quot;opensource&quot;</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content=".">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../documentation/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded "><a href="../monitoring/index.html" class="active"><strong aria-hidden="true">5.</strong> Monitoring & Observability</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded "><a href="../RADAR.html"><strong aria-hidden="true">6.</strong> tech radar</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">7.</strong> TP 1: Packaging with Nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">8.</strong> TP 2: Building Containers - The Traditional Way</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/perfect-container-with-nix/index.html"><strong aria-hidden="true">9.</strong> TP 3: Perfect Containers with Nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/sdlc-tooling-workshop/index.html"><strong aria-hidden="true">10.</strong> TP 4: SDLC Tooling Workshop</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/local-kubernetes-with-k3d/index.html"><strong aria-hidden="true">11.</strong> TP 5: Local Kubernetes with k3d</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../nix/INSTALL.html"><strong aria-hidden="true">12.</strong> Install nix</a></li><li class="chapter-item expanded "><a href="../nix/COMMA.html"><strong aria-hidden="true">13.</strong> Install comma</a></li><li class="chapter-item expanded "><a href="../GET.html"><strong aria-hidden="true">14.</strong> Get courses</a></li><li class="chapter-item expanded "><a href="../nix/TEMPLATE.html"><strong aria-hidden="true">15.</strong> Get template</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cours &quot;opensource&quot;</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="monitoring--observability"><a class="header" href="#monitoring--observability">Monitoring &amp; Observability</a></h1>
+<!-- vale off -->
+<ul>
+<li><a href="#module-objective">Module Objective</a></li>
+<li><a href="#monitoring-vs-observability">Monitoring vs Observability</a>
+<ul>
+<li><a href="#monitoring">Monitoring</a></li>
+<li><a href="#observability">Observability</a></li>
+<li><a href="#you-always-need-observability">You Always Need Observability</a></li>
+</ul>
+</li>
+<li><a href="#the-three-pillars">The Three Pillars</a>
+<ul>
+<li><a href="#quick-comparison">Quick Comparison</a></li>
+</ul>
+</li>
+<li><a href="#logs">Logs</a>
+<ul>
+<li><a href="#what-makes-a-good-log">What Makes a Good Log?</a>
+<ul>
+<li><a href="#log-levels-use-them-right">Log Levels: Use Them Right</a></li>
+<li><a href="#structured-vs-unstructured">Structured vs Unstructured</a></li>
+</ul>
+</li>
+<li><a href="#how-to-write-good-errors">How to Write Good Errors</a>
+<ul>
+<li><a href="#why-this-matters-the-alert-fatigue-death-spiral">Why This Matters: The Alert Fatigue Death Spiral</a></li>
+<li><a href="#the-three-laws-of-error-messages">The Three Laws of Error Messages</a></li>
+<li><a href="#error-anatomy">Error Anatomy</a></li>
+<li><a href="#error-patterns-by-audience">Error Patterns by Audience</a></li>
+<li><a href="#error-anti-patterns">Error Anti-patterns</a></li>
+<li><a href="#rust-error-handling-done-right">Rust: Error Handling Done Right</a>
+<ul>
+<li><a href="#the-resultt-e-pattern">The <code>Result&lt;T, E&gt;</code> Pattern</a></li>
+<li><a href="#exhaustive-matching-the-compiler-as-safety-net">Exhaustive Matching: The Compiler as Safety Net</a></li>
+<li><a href="#thiserror-derive-error-boilerplate-away"><code>thiserror</code>: Derive Error Boilerplate Away</a></li>
+<li><a href="#error-composition-across-layers">Error Composition Across Layers</a></li>
+<li><a href="#why-this-pattern-matters-for-observability">Why This Pattern Matters for Observability</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#metrics">Metrics</a>
+<ul>
+<li><a href="#types-of-metrics">Types of Metrics</a>
+<ul>
+<li><a href="#when-to-use-what">When to Use What</a></li>
+<li><a href="#the-four-golden-signals-google-sre">The Four Golden Signals (Google SRE)</a></li>
+<li><a href="#red-and-use-methods">RED and USE Methods</a></li>
+<li><a href="#slis-slos-slas">SLIs, SLOs, SLAs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#the-math-you-need-for-monitoring">The Math You Need for Monitoring</a>
+<ul>
+<li><a href="#rates-and-derivatives">Rates and Derivatives</a>
+<ul>
+<li><a href="#what-is-a-rate">What is a Rate?</a></li>
+<li><a href="#derivative-seeing-the-trend-of-a-trend">Derivative: Seeing the Trend of a Trend</a></li>
+</ul>
+</li>
+<li><a href="#percentiles-and-histograms">Percentiles and Histograms</a>
+<ul>
+<li><a href="#why-averages-lie">Why Averages Lie</a></li>
+<li><a href="#histogram-buckets">Histogram Buckets</a></li>
+</ul>
+</li>
+<li><a href="#cardinality-the-silent-budget-killer">Cardinality: The Silent Budget Killer</a>
+<ul>
+<li><a href="#cardinality-in-mathematics">Cardinality in Mathematics</a></li>
+<li><a href="#what-is-cardinality-in-monitoring">What is Cardinality in Monitoring?</a></li>
+<li><a href="#the-cardinality-explosion-formula">The Cardinality Explosion Formula</a></li>
+<li><a href="#what-to-do-instead-of-high-cardinality-labels">What to Do Instead of High-Cardinality Labels</a></li>
+</ul>
+</li>
+<li><a href="#moving-averages-and-smoothing">Moving Averages and Smoothing</a>
+<ul>
+<li><a href="#why-raw-metrics-are-noisy">Why Raw Metrics Are Noisy</a></li>
+<li><a href="#window-size-trade-off">Window Size Trade-off</a></li>
+</ul>
+</li>
+<li><a href="#aggregation-functions-cheat-sheet">Aggregation Functions Cheat Sheet</a>
+<ul>
+<li><a href="#the-quantile-aggregation-trap">The Quantile Aggregation Trap</a></li>
+</ul>
+</li>
+<li><a href="#math-summary">Math Summary</a></li>
+</ul>
+</li>
+<li><a href="#traces">Traces</a>
+<ul>
+<li><a href="#distributed-tracing-concepts">Distributed Tracing Concepts</a>
+<ul>
+<li><a href="#span-anatomy">Span Anatomy</a></li>
+<li><a href="#context-propagation">Context Propagation</a></li>
+<li><a href="#sampling-strategies">Sampling Strategies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#opentelemetry-otel">OpenTelemetry (OTel)</a>
+<ul>
+<li><a href="#what-is-opentelemetry">What is OpenTelemetry?</a>
+<ul>
+<li><a href="#why-otel-matters">Why OTel Matters</a></li>
+<li><a href="#otel-collector-architecture">OTel Collector Architecture</a></li>
+<li><a href="#collector-configuration-example">Collector Configuration Example</a></li>
+<li><a href="#otel-semantic-conventions">OTel Semantic Conventions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#modern-observability-stack">Modern Observability Stack</a>
+<ul>
+<li><a href="#architecture-overview">Architecture Overview</a></li>
+<li><a href="#vector-the-modern-data-pipeline">Vector: The Modern Data Pipeline</a>
+<ul>
+<li><a href="#why-vector">Why Vector?</a></li>
+<li><a href="#vector-pipeline-architecture">Vector Pipeline Architecture</a></li>
+<li><a href="#vector-configuration-example">Vector Configuration Example</a></li>
+<li><a href="#vrl-vector-remap-language">VRL (Vector Remap Language)</a></li>
+</ul>
+</li>
+<li><a href="#new-compression-and-storage-technologies">New Compression and Storage Technologies</a>
+<ul>
+<li><a href="#why-compression-matters-for-observability">Why Compression Matters for Observability</a></li>
+<li><a href="#compression-algorithms-compared">Compression Algorithms Compared</a></li>
+<li><a href="#zstandard-zstd-the-new-default">Zstandard (zstd): The New Default</a></li>
+<li><a href="#columnar-formats-for-observability">Columnar Formats for Observability</a></li>
+<li><a href="#notable-modern-storage-backends">Notable Modern Storage Backends</a></li>
+</ul>
+</li>
+<li><a href="#grafana-alloy">Grafana Alloy</a></li>
+</ul>
+</li>
+<li><a href="#continuous-profiling-the-fourth-pillar">Continuous Profiling: The Fourth Pillar</a></li>
+<li><a href="#alerting-best-practices">Alerting Best Practices</a>
+<ul>
+<li><a href="#alert-on-symptoms-not-causes">Alert on Symptoms, Not Causes</a>
+<ul>
+<li><a href="#alert-fatigue-is-a-real-problem">Alert Fatigue is a Real Problem</a></li>
+<li><a href="#good-alert-anatomy">Good Alert Anatomy</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#service-tiers-not-all-services-are-equal">Service Tiers: Not All Services Are Equal</a>
+<ul>
+<li><a href="#tier-definitions">Tier Definitions</a></li>
+<li><a href="#tier-matrix">Tier Matrix</a></li>
+<li><a href="#how-to-classify-your-services">How to Classify Your Services</a>
+<ul>
+<li><a href="#tier-determines-the-response-to-errors">Tier Determines the Response to Errors</a></li>
+<li><a href="#cascading-tier-elevation">Cascading Tier Elevation</a></li>
+<li><a href="#rules-for-tier-assignment">Rules for Tier Assignment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#observability-anti-patterns">Observability Anti-Patterns</a></li>
+<li><a href="#putting-it-all-together">Putting It All Together</a>
+<ul>
+<li><a href="#a-production-ready-stack">A Production-Ready Stack</a>
+<ul>
+<li><a href="#key-design-decisions">Key Design Decisions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#real-world-observability-guidelines">Real-World Observability Guidelines</a>
+<ul>
+<li><a href="#the-zero-errors-when-healthy-principle">The "Zero Errors When Healthy" Principle</a>
+<ul>
+<li><a href="#rules-for-zero-error-baselines">Rules for Zero-Error Baselines</a></li>
+</ul>
+</li>
+<li><a href="#magic-numbers-thresholds-that-actually-work">Magic Numbers: Thresholds That Actually Work</a>
+<ul>
+<li><a href="#the-authorized-magic-numbers">The Authorized Magic Numbers</a></li>
+<li><a href="#burn-rate-windows-for-slo-alerting">Burn Rate Windows for SLO Alerting</a></li>
+</ul>
+</li>
+<li><a href="#tagging-discipline">Tagging Discipline</a></li>
+<li><a href="#metric-naming-conventions">Metric Naming Conventions</a></li>
+<li><a href="#logging-discipline">Logging Discipline</a>
+<ul>
+<li><a href="#mandatory-rules">Mandatory Rules</a></li>
+<li><a href="#when-to-log-vs-when-to-metric">When to Log vs When to Metric</a></li>
+</ul>
+</li>
+<li><a href="#dashboard-discipline">Dashboard Discipline</a>
+<ul>
+<li><a href="#rules">Rules</a></li>
+</ul>
+</li>
+<li><a href="#production-governance-checklist">Production Governance Checklist</a></li>
+<li><a href="#summary">Summary</a>
+<ul>
+<li><a href="#the-observability-checklist">The Observability Checklist</a></li>
+<li><a href="#key-takeaways">Key Takeaways</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- vale on -->
+<hr />
+<h2 id="module-objective"><a class="header" href="#module-objective">Module Objective</a></h2>
+<!-- header: 'Monitoring & Observability Course' -->
+<!-- footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com' -->
+<!-- headingDivider: 3 -->
+<!-- colorPreset: sunset -->
+<!-- paginate: true -->
+<ul>
+<li>Understand the difference between monitoring and observability</li>
+<li>Master the three pillars: logs, metrics, traces</li>
+<li>Learn OpenTelemetry as the industry standard</li>
+<li>Know how to write actionable errors and structured logs</li>
+<li>Discover modern tooling: Vector, new compression, columnar formats</li>
+<li>Design a production-grade observability stack</li>
+</ul>
+<h2 id="monitoring-vs-observability"><a class="header" href="#monitoring-vs-observability">Monitoring vs Observability</a></h2>
+<h3 id="monitoring"><a class="header" href="#monitoring">Monitoring</a></h3>
+<blockquote>
+<p>Monitoring tells you <strong>when</strong> something is wrong.</p>
+</blockquote>
+<ul>
+<li>Predefined dashboards and alerts</li>
+<li>Known-unknowns: you know what to watch</li>
+<li>Reactive: fires alerts after thresholds are breached</li>
+</ul>
+<h3 id="observability"><a class="header" href="#observability">Observability</a></h3>
+<blockquote>
+<p>Observability tells you <strong>why</strong> something is wrong.</p>
+</blockquote>
+<ul>
+<li>Explore any dimension of your system on the fly</li>
+<li>Unknown-unknowns: you can ask new questions without deploying new code</li>
+<li>Proactive: enables debugging without prior instrumentation for every case</li>
+</ul>
+<hr />
+<pre class="mermaid">graph LR
+    subgraph Monitoring
+        A[Predefined Dashboards] --&gt; B[Threshold Alerts]
+        B --&gt; C[Pager / On-call]
+    end
+    subgraph Observability
+        D[High-cardinality Data] --&gt; E[Ad-hoc Queries]
+        E --&gt; F[Root Cause Analysis]
+    end
+    C -.-&gt;|Needs context| E
+</pre>
+<hr />
+<h3 id="you-always-need-observability"><a class="header" href="#you-always-need-observability">You Always Need Observability</a></h3>
+<p>A common misconception is that simple systems only need monitoring. In reality, <strong>every production system benefits from observability</strong> -- the difference is the depth required.</p>
+<div class="table-wrapper"><table><thead><tr><th>System type</th><th>Observability depth</th><th>Why</th></tr></thead><tbody>
+<tr><td>Monolith, single DB</td><td>Logs + metrics + basic traces</td><td>Even monoliths have slow queries, memory leaks, and unexpected user behavior. "Few moving parts" doesn't mean "no unknowns".</td></tr>
+<tr><td>Microservices</td><td>Full stack (logs, metrics, traces, profiling)</td><td>Requests fan out, failures cascade, latency compounds across hops</td></tr>
+<tr><td>Event-driven / async</td><td>Full stack + message tracing</td><td>No single request path to follow, messages can be lost or reprocessed silently</td></tr>
+<tr><td>Serverless / FaaS</td><td>Full stack + cold start tracking</td><td>Ephemeral, distributed, cold starts, vendor-specific failure modes</td></tr>
+</tbody></table>
+</div>
+<blockquote>
+<p><strong>The question is never "do I need observability?" -- it's "how deep does my observability need to go?"</strong> A monolith that handles payments needs the same rigor as a microservices platform. The architecture doesn't determine the need; the <strong>business criticality</strong> does.</p>
+</blockquote>
+<h2 id="the-three-pillars"><a class="header" href="#the-three-pillars">The Three Pillars</a></h2>
+<pre class="mermaid">graph TB
+    subgraph Observability[&quot;The Three Pillars of Observability&quot;]
+        direction LR
+        L[&quot;Logs&lt;br/&gt;&lt;i&gt;What happened?&lt;/i&gt;&lt;br/&gt;Discrete events&quot;]
+        M[&quot;Metrics&lt;br/&gt;&lt;i&gt;How much?&lt;/i&gt;&lt;br/&gt;Numerical aggregates&quot;]
+        T[&quot;Traces&lt;br/&gt;&lt;i&gt;Where did time go?&lt;/i&gt;&lt;br/&gt;Request journey&quot;]
+    end
+    L --- C[Correlation]
+    M --- C
+    T --- C
+    C --&gt; R[&quot;Root Cause&lt;br/&gt;Analysis&quot;]
+</pre>
+<hr />
+<h3 id="quick-comparison"><a class="header" href="#quick-comparison">Quick Comparison</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Aspect</th><th>Logs</th><th>Metrics</th><th>Traces</th></tr></thead><tbody>
+<tr><td><strong>Data model</strong></td><td>Timestamped text/JSON event</td><td>Numeric time series</td><td>DAG of spans</td></tr>
+<tr><td><strong>Cardinality</strong></td><td>Very high</td><td>Low to medium</td><td>High</td></tr>
+<tr><td><strong>Storage cost</strong></td><td>Expensive</td><td>Cheap</td><td>Medium</td></tr>
+<tr><td><strong>Best for</strong></td><td>Debugging, audit trails</td><td>Alerting, dashboards, SLOs</td><td>Latency, dependencies</td></tr>
+<tr><td><strong>Retention</strong></td><td>Days to weeks</td><td>Months to years</td><td>Days</td></tr>
+<tr><td><strong>Sampling</strong></td><td>Rarely</td><td>N/A</td><td>Almost always</td></tr>
+</tbody></table>
+</div>
+<h1 id="logs"><a class="header" href="#logs">Logs</a></h1>
+<h2 id="what-makes-a-good-log"><a class="header" href="#what-makes-a-good-log">What Makes a Good Log?</a></h2>
+<p>A good log is:</p>
+<ol>
+<li><strong>Structured</strong>: machine-parseable (JSON, not free text)</li>
+<li><strong>Contextual</strong>: carries correlation IDs, user IDs, request IDs</li>
+<li><strong>Leveled</strong>: uses the right severity</li>
+<li><strong>Actionable</strong>: helps a human or machine take the next step</li>
+<li><strong>Safe</strong>: never leaks secrets, PII, or tokens</li>
+</ol>
+<hr />
+<h3 id="log-levels-use-them-right"><a class="header" href="#log-levels-use-them-right">Log Levels: Use Them Right</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Level</th><th>When to use</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>TRACE</code></td><td>Framework internals, never in prod</td><td><code>Entering parser state HEADER_VALUE</code></td></tr>
+<tr><td><code>DEBUG</code></td><td>Developer troubleshooting</td><td><code>Cache miss for key user:42</code></td></tr>
+<tr><td><code>INFO</code></td><td>Normal business events</td><td><code>Order 123 created, 3 items, total=59.90</code></td></tr>
+<tr><td><code>WARN</code></td><td>Degraded but recoverable</td><td><code>Retry 2/3 for payment gateway timeout</code></td></tr>
+<tr><td><code>ERROR</code></td><td>Failed operation, needs attention</td><td><code>Payment failed: card declined, orderId=123</code></td></tr>
+<tr><td><code>FATAL</code></td><td>Process cannot continue</td><td><code>Database connection pool exhausted, shutting down</code></td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="structured-vs-unstructured"><a class="header" href="#structured-vs-unstructured">Structured vs Unstructured</a></h3>
+<p><strong>Bad</strong> (unstructured):</p>
+<pre><code>2024-03-15 10:23:45 ERROR Failed to process order 42 for user john@example.com
+</code></pre>
+<p>Problems: hard to parse, contains PII (email), no correlation ID, no stack trace.</p>
+<p><strong>Good</strong> (structured JSON):</p>
+<pre><code class="language-json">{
+  "timestamp": "2024-03-15T10:23:45.123Z",
+  "level": "ERROR",
+  "logger": "com.app.OrderService",
+  "message": "Order processing failed",
+  "correlationId": "abc-123-def",
+  "orderId": 42,
+  "userId": "usr_k8x2p",
+  "error": {
+    "type": "PaymentDeclinedException",
+    "message": "Card declined by issuer",
+    "code": "CARD_DECLINED"
+  },
+  "spanId": "7a3f2b1c",
+  "traceId": "4bf92f3577b34da6a3ce929d0e0e4736"
+}
+</code></pre>
+<h2 id="how-to-write-good-errors"><a class="header" href="#how-to-write-good-errors">How to Write Good Errors</a></h2>
+<blockquote>
+<p>An error message should answer: <strong>What happened, why, and what can the user/operator do about it?</strong></p>
+</blockquote>
+<h3 id="why-this-matters-the-alert-fatigue-death-spiral"><a class="header" href="#why-this-matters-the-alert-fatigue-death-spiral">Why This Matters: The Alert Fatigue Death Spiral</a></h3>
+<p>Bad error messages are not just annoying -- they <strong>directly cause incidents</strong>. Here's the mechanism:</p>
+<pre class="mermaid">graph TB
+    BAD[&quot;Bad error messages&lt;br/&gt;&lt;i&gt;'Error', 'Something went wrong',&lt;br/&gt;'null', 'undefined'&lt;/i&gt;&quot;] --&gt; NOISE[&quot;Alerts fire but carry&lt;br/&gt;no useful context&quot;]
+    NOISE --&gt; IGNORE[&quot;On-call learns to&lt;br/&gt;ignore alerts&lt;br/&gt;&lt;i&gt;(alert fatigue)&lt;/i&gt;&quot;]
+    IGNORE --&gt; MISS[&quot;Real incident fires&lt;br/&gt;same noisy alert&quot;]
+    MISS --&gt; OUTAGE[&quot;Outage goes unnoticed&lt;br/&gt;until users complain&quot;]
+    OUTAGE --&gt; TRUST[&quot;Team loses trust&lt;br/&gt;in monitoring&quot;]
+    TRUST --&gt; LESS[&quot;Less investment&lt;br/&gt;in observability&quot;]
+    LESS --&gt; BAD
+
+    style BAD fill:#e09b96
+    style OUTAGE fill:#e09b96
+</pre>
+<p><strong>Alert fatigue</strong> is the #1 killer of on-call effectiveness. Studies show that when more than 30% of alerts are non-actionable, engineers start ignoring <strong>all</strong> alerts -- including the real ones.</p>
+<p>The fix starts at the source: <strong>every error message must be clear enough that the person reading it at 3 AM knows exactly what to do.</strong> If your error says <code>"Error"</code>, the on-call engineer has to investigate from scratch every time. If it says <code>"Payment gateway timeout after 5s, circuit breaker open, check stripe status page"</code>, they know what to do in seconds.</p>
+<div class="table-wrapper"><table><thead><tr><th>Error quality</th><th>On-call experience</th><th>Result</th></tr></thead><tbody>
+<tr><td><code>"Error"</code></td><td>Investigate 20 min, find nothing, dismiss</td><td>Alert fatigue builds</td></tr>
+<tr><td><code>"Connection refused"</code></td><td>Investigate 10 min, narrow it down</td><td>Slow but works</td></tr>
+<tr><td><code>"DB 'orders' at db.internal:5432 connection refused: pool exhausted (20/20), all busy &gt;30s. Scale pool or check slow queries."</code></td><td>Read, act, resolve in 2 min</td><td>Trust in alerts grows</td></tr>
+</tbody></table>
+</div>
+<blockquote>
+<p><strong>Good errors reduce mean time to recovery (MTTR). Bad errors increase mean time to acknowledge (MTTA) -- because nobody wants to look at them anymore.</strong></p>
+</blockquote>
+<h3 id="the-three-laws-of-error-messages"><a class="header" href="#the-three-laws-of-error-messages">The Three Laws of Error Messages</a></h3>
+<hr />
+<p><strong>1. State what happened (fact)</strong></p>
+<pre><code>BAD:  "Error"
+BAD:  "Something went wrong"
+GOOD: "Failed to connect to database 'orders' at db.internal:5432"
+</code></pre>
+<hr />
+<p><strong>2. Explain why (context)</strong></p>
+<pre><code>BAD:  "Connection refused"
+GOOD: "Connection refused: max pool size (20) reached, all connections busy for &gt;30s"
+</code></pre>
+<hr />
+<p><strong>3. Suggest what to do (action)</strong></p>
+<pre><code>BAD:  "Timeout"
+GOOD: "Request to payment-service timed out after 5s. Check payment-service health at /healthz or increase timeout via PAYMENT_TIMEOUT_MS"
+</code></pre>
+<h3 id="error-anatomy"><a class="header" href="#error-anatomy">Error Anatomy</a></h3>
+<pre class="mermaid">graph LR
+    E[Error] --&gt; W[What]
+    E --&gt; Y[Why]
+    E --&gt; A[Action]
+    W --&gt; W1[&quot;'Failed to write to disk'&quot;]
+    Y --&gt; Y1[&quot;'Disk /data is 100% full'&quot;]
+    A --&gt; A1[&quot;'Free space or increase volume size'&quot;]
+</pre>
+<hr />
+<h3 id="error-patterns-by-audience"><a class="header" href="#error-patterns-by-audience">Error Patterns by Audience</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Audience</th><th>What they need</th><th>Example</th></tr></thead><tbody>
+<tr><td>End user</td><td>Friendly, no internals</td><td><code>"We couldn't process your payment. Please try again or use a different card."</code></td></tr>
+<tr><td>API consumer</td><td>Machine-readable, error code</td><td><code>{"error": "INSUFFICIENT_FUNDS", "message": "...", "retryable": false}</code></td></tr>
+<tr><td>Operator / SRE</td><td>Full context, correlation IDs</td><td><code>"PaymentGateway.charge failed: HTTP 503 from stripe.com, traceId=abc, retry 3/3 exhausted"</code></td></tr>
+<tr><td>Developer</td><td>Stack trace, local state</td><td>Full exception with stack trace in DEBUG logs</td></tr>
+</tbody></table>
+</div>
+<h3 id="error-anti-patterns"><a class="header" href="#error-anti-patterns">Error Anti-patterns</a></h3>
+<ul>
+<li><strong>Swallowing exceptions</strong>: catching errors and doing nothing</li>
+<li><strong>Logging and throwing</strong>: creates duplicate noise</li>
+<li><strong>Generic messages</strong>: <code>"An error occurred"</code> tells nobody anything</li>
+<li><strong>Leaking internals to users</strong>: stack traces in API responses</li>
+<li><strong>Missing error codes</strong>: forces consumers to parse human text</li>
+<li><strong>Not distinguishing retryable vs permanent failures</strong></li>
+</ul>
+<h3 id="rust-error-handling-done-right"><a class="header" href="#rust-error-handling-done-right">Rust: Error Handling Done Right</a></h3>
+<p>Rust takes a radically different approach to errors: <strong>no exceptions</strong>. Every fallible function returns <code>Result&lt;T, E&gt;</code> where <code>T</code> is the success type and <code>E</code> is an error enum. This makes errors <strong>explicit, typed, and exhaustively handled</strong> at compile time.</p>
+<pre class="mermaid">graph TB
+    subgraph &quot;Result&amp;lt;T, E&amp;gt;&quot;
+        R[&quot;Result&quot;] --&gt; OK[&quot;Ok(T)&lt;br/&gt;&lt;i&gt;Success value&lt;/i&gt;&quot;]
+        R --&gt; ERR[&quot;Err(E)&lt;br/&gt;&lt;i&gt;Error value&lt;/i&gt;&quot;]
+    end
+
+    subgraph &quot;Error Enum (E)&quot;
+        ERR --&gt; V1[&quot;Variant: NotFound&quot;]
+        ERR --&gt; V2[&quot;Variant: Timeout(Duration)&quot;]
+        ERR --&gt; V3[&quot;Variant: DatabaseError(sqlx::Error)&quot;]
+        ERR --&gt; V4[&quot;Variant: InvalidInput(String)&quot;]
+    end
+
+    subgraph &quot;Compiler Guarantees&quot;
+        V1 --&gt; CG[&quot;Match must be exhaustive&lt;br/&gt;Every variant handled&lt;br/&gt;or code won't compile&quot;]
+    end
+</pre>
+<hr />
+<h4 id="the-resultt-e-pattern"><a class="header" href="#the-resultt-e-pattern">The <code>Result&lt;T, E&gt;</code> Pattern</a></h4>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Every error variant is an explicit, documented possibility
+enum OrderError {
+    NotFound(OrderId),
+    PaymentDeclined { reason: String, retryable: bool },
+    InsufficientStock { product_id: u64, available: u32, requested: u32 },
+    DatabaseError(sqlx::Error),
+    Timeout { service: String, duration: std::time::Duration },
+}
+
+// The function signature tells you EXACTLY what can go wrong
+fn create_order(request: CreateOrderRequest) -&gt; Result&lt;Order, OrderError&gt; {
+    let stock = check_stock(&amp;request.items)
+        .map_err(|e| OrderError::InsufficientStock {
+            product_id: e.product_id,
+            available: e.available,
+            requested: e.requested,
+        })?;  // ? propagates errors up the call chain
+
+    let payment = charge_card(&amp;request.payment)
+        .map_err(|e| OrderError::PaymentDeclined {
+            reason: e.to_string(),
+            retryable: e.is_retryable(),
+        })?;
+
+    Ok(Order::new(stock, payment))
+}
+<span class="boring">}</span></code></pre></pre>
+<hr />
+<h4 id="exhaustive-matching-the-compiler-as-safety-net"><a class="header" href="#exhaustive-matching-the-compiler-as-safety-net">Exhaustive Matching: The Compiler as Safety Net</a></h4>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// The compiler FORCES you to handle every variant.
+// Add a new variant? Every match in the codebase must be updated.
+fn handle_order_error(err: OrderError) -&gt; HttpResponse {
+    match err {
+        OrderError::NotFound(id) =&gt;
+            HttpResponse::not_found(format!("Order {id} not found")),
+
+        OrderError::PaymentDeclined { reason, retryable } =&gt; {
+            if retryable {
+                HttpResponse::service_unavailable("Payment failed, please retry")
+            } else {
+                HttpResponse::bad_request(format!("Payment declined: {reason}"))
+            }
+        }
+
+        OrderError::InsufficientStock { product_id, available, requested } =&gt;
+            HttpResponse::conflict(
+                format!("Product {product_id}: {available} available, {requested} requested")
+            ),
+
+        OrderError::DatabaseError(e) =&gt; {
+            tracing::error!(?e, "Database error"); // log internals
+            HttpResponse::internal_error("Internal error") // hide from user
+        }
+
+        OrderError::Timeout { service, duration } =&gt; {
+            tracing::warn!(%service, ?duration, "Service timeout");
+            HttpResponse::gateway_timeout(
+                format!("{service} did not respond within {duration:?}")
+            )
+        }
+    }
+    // Try commenting out any arm above: the compiler refuses to build.
+}
+<span class="boring">}</span></code></pre></pre>
+<hr />
+<h4 id="thiserror-derive-error-boilerplate-away"><a class="header" href="#thiserror-derive-error-boilerplate-away"><a href="https://docs.rs/thiserror"><code>thiserror</code></a>: Derive Error Boilerplate Away</a></h4>
+<p><a href="https://github.com/dtolnay/thiserror"><code>thiserror</code></a> auto-generates <code>Display</code> and <code>Error</code> trait implementations from your enum, keeping error definitions concise:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use thiserror::Error;
+
+#[derive(Debug, Error)]
+enum OrderError {
+    #[error("Order {0} not found")]
+    NotFound(OrderId),
+
+    #[error("Payment declined: {reason}")]
+    PaymentDeclined { reason: String, retryable: bool },
+
+    #[error("Insufficient stock for product {product_id}: {available} available, {requested} requested")]
+    InsufficientStock {
+        product_id: u64,
+        available: u32,
+        requested: u32,
+    },
+
+    #[error("Database error")]
+    DatabaseError(#[from] sqlx::Error),  // auto-converts sqlx::Error via From trait
+
+    #[error("{service} timed out after {duration:?}")]
+    Timeout {
+        service: String,
+        duration: std::time::Duration,
+    },
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The <code>#[from]</code> attribute auto-implements <code>From&lt;sqlx::Error&gt;</code> for <code>OrderError</code>, so <code>?</code> converts automatically.</p>
+<hr />
+<h4 id="error-composition-across-layers"><a class="header" href="#error-composition-across-layers">Error Composition Across Layers</a></h4>
+<pre class="mermaid">graph TB
+    subgraph &quot;Layered Error Enums&quot;
+        direction TB
+        API[&quot;ApiError&lt;br/&gt;#[error] enum&quot;] --&gt;|&quot;From&quot;| SVC[&quot;ServiceError&lt;br/&gt;#[error] enum&quot;]
+        SVC --&gt;|&quot;From&quot;| REPO[&quot;RepositoryError&lt;br/&gt;#[error] enum&quot;]
+        REPO --&gt;|&quot;From&quot;| DB[&quot;sqlx::Error&lt;br/&gt;(third-party)&quot;]
+    end
+
+    subgraph &quot;Each Layer&quot;
+        direction TB
+        L1[&quot;Handler: ApiError → HTTP status + JSON body&quot;]
+        L2[&quot;Service: ServiceError → business logic decisions&quot;]
+        L3[&quot;Repository: RepositoryError → retry, fallback&quot;]
+    end
+
+    API ~~~ L1
+    SVC ~~~ L2
+    REPO ~~~ L3
+</pre>
+<p>Each layer defines its <strong>own error enum</strong> and converts from the layer below using <code>#[from]</code>. This gives each layer the right abstraction level: the HTTP handler doesn't know about <code>sqlx::Error</code>, it knows about <code>ApiError::InternalError</code>.</p>
+<hr />
+<h4 id="why-this-pattern-matters-for-observability"><a class="header" href="#why-this-pattern-matters-for-observability">Why This Pattern Matters for Observability</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>Benefit</th><th>How it helps</th></tr></thead><tbody>
+<tr><td><strong>No hidden failures</strong></td><td>Every error path is visible in the type signature</td></tr>
+<tr><td><strong>Structured by default</strong></td><td>Error variants carry typed fields, not free-text</td></tr>
+<tr><td><strong>Retryable vs permanent</strong></td><td>Model it as a field on the variant</td></tr>
+<tr><td><strong>Easy to log</strong></td><td><code>#[derive(Debug)]</code> + <code>tracing::error!(?err)</code> gives structured output</td></tr>
+<tr><td><strong>Easy to metric</strong></td><td>Match on variant to increment the right counter</td></tr>
+<tr><td><strong>Compile-time exhaustiveness</strong></td><td>Add a new failure mode, compiler shows every place to update</td></tr>
+</tbody></table>
+</div>
+<blockquote>
+<p><strong>Takeaway</strong>: Rust's <code>Result</code> + enum errors + <code>thiserror</code> is the gold standard for error handling. Even in other languages, <strong>model your errors as typed variants, not exception hierarchies or string messages</strong>.</p>
+</blockquote>
+<h1 id="metrics"><a class="header" href="#metrics">Metrics</a></h1>
+<h2 id="types-of-metrics"><a class="header" href="#types-of-metrics">Types of Metrics</a></h2>
+<pre class="mermaid">graph TB
+    subgraph &quot;Metric Types&quot;
+        direction LR
+        C[&quot;Counter&lt;br/&gt;&lt;i&gt;Monotonically increasing&lt;/i&gt;&lt;br/&gt;requests_total = 42,897&quot;]
+        G[&quot;Gauge&lt;br/&gt;&lt;i&gt;Goes up and down&lt;/i&gt;&lt;br/&gt;temperature = 23.5&quot;]
+        H[&quot;Histogram&lt;br/&gt;&lt;i&gt;Distribution of values&lt;/i&gt;&lt;br/&gt;request_duration_bucket&quot;]
+        S[&quot;Summary&lt;br/&gt;&lt;i&gt;Pre-calculated quantiles&lt;/i&gt;&lt;br/&gt;request_duration{p99}&quot;]
+    end
+</pre>
+<hr />
+<h3 id="when-to-use-what"><a class="header" href="#when-to-use-what">When to Use What</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Type</th><th>Use case</th><th>Example</th></tr></thead><tbody>
+<tr><td>Counter</td><td>Cumulative events</td><td><code>http_requests_total</code>, <code>errors_total</code></td></tr>
+<tr><td>Gauge</td><td>Current state</td><td><code>cpu_usage</code>, <code>queue_depth</code>, <code>active_connections</code></td></tr>
+<tr><td>Histogram</td><td>Latency distribution, server-side aggregation</td><td><code>http_request_duration_seconds</code></td></tr>
+<tr><td>Summary</td><td>Latency quantiles, client-side calculation</td><td><code>rpc_duration_seconds{quantile="0.99"}</code></td></tr>
+</tbody></table>
+</div>
+<h3 id="the-four-golden-signals-google-sre"><a class="header" href="#the-four-golden-signals-google-sre">The Four Golden Signals (Google SRE)</a></h3>
+<blockquote>
+<p>If you can only measure four things, measure these.</p>
+</blockquote>
+<ol>
+<li><strong>Latency</strong>: How long requests take (distinguish success vs error latency)</li>
+<li><strong>Traffic</strong>: How much demand (requests/sec, messages/sec)</li>
+<li><strong>Errors</strong>: Rate of failed requests (explicit 5xx, implicit wrong results)</li>
+<li><strong>Saturation</strong>: How "full" is the system (CPU, memory, queue depth)</li>
+</ol>
+<hr />
+<pre class="mermaid">graph TB
+    subgraph &quot;Golden Signals&quot;
+        direction TB
+        LA[Latency] --&gt; D1[&quot;p50, p95, p99 response times&quot;]
+        TR[Traffic] --&gt; D2[&quot;req/s, messages/s, bytes/s&quot;]
+        ER[Errors] --&gt; D3[&quot;5xx rate, timeout rate, error ratio&quot;]
+        SA[Saturation] --&gt; D4[&quot;CPU %, memory %, disk I/O, queue depth&quot;]
+    end
+    LA --&gt; ALERT[SLO-based Alerts]
+    ER --&gt; ALERT
+</pre>
+<h3 id="red-and-use-methods"><a class="header" href="#red-and-use-methods">RED and USE Methods</a></h3>
+<p><strong>RED</strong> (for request-driven services):</p>
+<ul>
+<li><strong>R</strong>ate: requests per second</li>
+<li><strong>E</strong>rrors: failed requests per second</li>
+<li><strong>D</strong>uration: latency percentiles</li>
+</ul>
+<p><strong>USE</strong> (for resources like CPU, disk, network):</p>
+<ul>
+<li><strong>U</strong>tilization: % time the resource is busy</li>
+<li><strong>S</strong>aturation: queue depth (extra work waiting)</li>
+<li><strong>E</strong>rrors: error event count</li>
+</ul>
+<h3 id="slis-slos-slas"><a class="header" href="#slis-slos-slas">SLIs, SLOs, SLAs</a></h3>
+<pre class="mermaid">graph LR
+    SLI[&quot;SLI&lt;br/&gt;&lt;i&gt;Service Level Indicator&lt;/i&gt;&lt;br/&gt;The measurement&lt;br/&gt;e.g. 99.3% of requests &lt; 200ms&quot;]
+    SLO[&quot;SLO&lt;br/&gt;&lt;i&gt;Service Level Objective&lt;/i&gt;&lt;br/&gt;The target&lt;br/&gt;e.g. 99.9% of requests &lt; 200ms&quot;]
+    SLA[&quot;SLA&lt;br/&gt;&lt;i&gt;Service Level Agreement&lt;/i&gt;&lt;br/&gt;The contract&lt;br/&gt;e.g. refund if below 99.5%&quot;]
+    SLI --&gt;|&quot;feeds&quot;| SLO
+    SLO --&gt;|&quot;underpins&quot;| SLA
+</pre>
+<hr />
+<ul>
+<li><strong>SLI</strong>: What you measure (latency, availability, throughput)</li>
+<li><strong>SLO</strong>: What you promise internally (99.9% availability over 30 days)</li>
+<li><strong>SLA</strong>: What you promise externally with consequences (contractual)</li>
+<li><strong>Error budget</strong>: <code>100% - SLO</code> = how much failure you can tolerate</li>
+</ul>
+<blockquote>
+<p>Alert on SLO burn rate, not on raw thresholds. A brief spike is fine if you're within budget.</p>
+</blockquote>
+<h1 id="the-math-you-need-for-monitoring"><a class="header" href="#the-math-you-need-for-monitoring">The Math You Need for Monitoring</a></h1>
+<p>You don't need a PhD, but you need a handful of concepts to understand what your dashboards actually show and why cardinality blows up your bill.</p>
+<h2 id="rates-and-derivatives"><a class="header" href="#rates-and-derivatives">Rates and Derivatives</a></h2>
+<h3 id="what-is-a-rate"><a class="header" href="#what-is-a-rate">What is a Rate?</a></h3>
+<p>A <strong>rate</strong> is the derivative of a counter over time. Counters only go up (e.g., <code>http_requests_total = 142,857</code>). The raw number is useless -- what matters is <em>how fast</em> it changes.</p>
+<pre><code>rate = delta(counter) / delta(time)
+</code></pre>
+<hr />
+<p><strong>Counter: always goes up</strong> (total requests over time)</p>
+<pre class="mermaid">xychart-beta
+    title &quot;Counter: http_requests_total&quot;
+    x-axis &quot;Time (minutes)&quot; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    y-axis &quot;Total requests&quot; 0 --&gt; 5000
+    line [1000, 1300, 1650, 2100, 2600, 3200, 3500, 3700, 4200, 4800, 5000]
+</pre>
+<p><strong>Rate: the derivative</strong> (how fast the counter changes = requests/second)</p>
+<pre class="mermaid">xychart-beta
+    title &quot;rate(http_requests_total[1m]) -- requests per second&quot;
+    x-axis &quot;Time (minutes)&quot; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    y-axis &quot;req/s&quot; 0 --&gt; 12
+    line [0, 5, 5.8, 7.5, 8.3, 10, 5, 3.3, 8.3, 10, 3.3]
+</pre>
+<blockquote>
+<p>Notice: the counter always climbs, but the <strong>rate</strong> shows the actual behavior -- a spike at t=5, a dip at t=6-7, then recovery. This is what you dashboard and alert on.</p>
+</blockquote>
+<hr />
+<pre class="mermaid">graph LR
+    subgraph &quot;Counter (raw)&quot;
+        C1[&quot;t=0: 1000&quot;]
+        C2[&quot;t=60s: 1300&quot;]
+        C3[&quot;t=120s: 1900&quot;]
+    end
+    subgraph &quot;Rate (derived)&quot;
+        R1[&quot;t=0→60s: 5 req/s&quot;]
+        R2[&quot;t=60→120s: 10 req/s&quot;]
+    end
+    C1 --&gt; R1
+    C2 --&gt; R1
+    C2 --&gt; R2
+    C3 --&gt; R2
+</pre>
+<hr />
+<p>In Prometheus/PromQL:</p>
+<pre><code class="language-promql"># rate() computes per-second increase averaged over a window
+rate(http_requests_total[5m])
+
+# irate() uses only the last two data points (more spiky, more reactive)
+irate(http_requests_total[5m])
+</code></pre>
+<p><strong>Why it matters</strong>: You never alert on a counter value. You alert on its <strong>rate</strong> (derivative). "1 million total errors" is meaningless. "500 errors/second right now" is actionable.</p>
+<h3 id="derivative-seeing-the-trend-of-a-trend"><a class="header" href="#derivative-seeing-the-trend-of-a-trend">Derivative: Seeing the Trend of a Trend</a></h3>
+<p>The <strong>derivative of a rate</strong> tells you if things are getting worse or better.</p>
+<pre><code>rate       = how fast errors are happening
+deriv(rate) = is the error rate increasing or decreasing?
+</code></pre>
+<p><strong>Stable rate</strong> (derivative = 0): flat line, nothing to worry about.</p>
+<pre class="mermaid">xychart-beta
+    title &quot;Stable: rate ~ 10 req/s (deriv = 0)&quot;
+    x-axis &quot;Time (minutes)&quot; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    y-axis &quot;req/s&quot; 0 --&gt; 20
+    line [10, 10, 11, 10, 9, 10, 10, 11, 10, 10, 10]
+</pre>
+<p><strong>Increasing rate</strong> (derivative &gt; 0): getting worse, something is going wrong.</p>
+<pre class="mermaid">xychart-beta
+    title &quot;Getting worse: rate climbing (deriv &gt; 0)&quot;
+    x-axis &quot;Time (minutes)&quot; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    y-axis &quot;errors/s&quot; 0 --&gt; 60
+    line [5, 8, 12, 18, 25, 30, 37, 42, 48, 53, 58]
+</pre>
+<p><strong>Decreasing rate</strong> (derivative &lt; 0): recovering, the fix is working.</p>
+<pre class="mermaid">xychart-beta
+    title &quot;Recovering: rate dropping (deriv &lt; 0)&quot;
+    x-axis &quot;Time (minutes)&quot; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    y-axis &quot;errors/s&quot; 0 --&gt; 60
+    line [55, 48, 40, 33, 25, 18, 12, 8, 5, 3, 2]
+</pre>
+<pre class="mermaid">graph TB
+    subgraph &quot;Reading a Dashboard&quot;
+        direction TB
+        FLAT[&quot;Rate is flat at 10 req/s&lt;br/&gt;&lt;i&gt;deriv = 0&lt;/i&gt;&lt;br/&gt;Stable&quot;]
+        UP[&quot;Rate rising from 10 to 50 req/s&lt;br/&gt;&lt;i&gt;deriv &gt; 0&lt;/i&gt;&lt;br/&gt;Getting worse&quot;]
+        DOWN[&quot;Rate falling from 50 to 10 req/s&lt;br/&gt;&lt;i&gt;deriv &lt; 0&lt;/i&gt;&lt;br/&gt;Recovering&quot;]
+    end
+</pre>
+<p>In Prometheus:</p>
+<pre><code class="language-promql"># Is the error rate accelerating?
+deriv(rate(http_errors_total[5m])[30m:1m])
+# Positive = getting worse. Negative = recovering. Zero = stable.
+</code></pre>
+<blockquote>
+<p><strong>Pro tip</strong>: Alert on sustained positive derivatives, not on spikes. A brief spike that self-heals is fine. A slow, steady increase is the real danger.</p>
+</blockquote>
+<h2 id="percentiles-and-histograms"><a class="header" href="#percentiles-and-histograms">Percentiles and Histograms</a></h2>
+<h3 id="why-averages-lie"><a class="header" href="#why-averages-lie">Why Averages Lie</a></h3>
+<p>The <strong>average</strong> hides the worst experience. If 99 requests take 10ms and 1 request takes 10 seconds, the average is 109ms -- looks fine, but 1% of users had a terrible experience.</p>
+<div class="table-wrapper"><table><thead><tr><th>Metric</th><th>Value</th><th>What it tells you</th></tr></thead><tbody>
+<tr><td><strong>p50</strong> (median)</td><td>10ms</td><td>Half of requests are faster than this</td></tr>
+<tr><td><strong>p95</strong></td><td>50ms</td><td>95% of requests are faster. 5% are slower.</td></tr>
+<tr><td><strong>p99</strong></td><td>500ms</td><td>1 in 100 requests is this slow or worse</td></tr>
+<tr><td><strong>p99.9</strong></td><td>2000ms</td><td>1 in 1,000 requests. Your worst users.</td></tr>
+<tr><td><strong>average</strong></td><td>109ms</td><td>Meaningless blend -- hides the tail</td></tr>
+</tbody></table>
+</div>
+<hr />
+<p><strong>Latency distribution</strong>: most requests are fast, but a "long tail" of slow requests exists. The average (dashed line in your head) sits at ~109ms and tells you nothing about the 0.5% of users waiting 10 seconds.</p>
+<pre class="mermaid">xychart-beta
+    title &quot;Latency Distribution (% of requests per bucket)&quot;
+    x-axis &quot;Latency bucket&quot; [&quot;0-5ms&quot;, &quot;5-10ms&quot;, &quot;10-25ms&quot;, &quot;25-50ms&quot;, &quot;50-100ms&quot;, &quot;100-250ms&quot;, &quot;250-500ms&quot;, &quot;500ms-1s&quot;, &quot;1-2s&quot;, &quot;2-5s&quot;, &quot;5-10s&quot;]
+    y-axis &quot;% of requests&quot; 0 --&gt; 40
+    bar [35, 25, 15, 8, 5, 4, 3, 2, 1.5, 1, 0.5]
+</pre>
+<blockquote>
+<p>The tall bars on the left are the "happy path". The short bars on the right are the <strong>long tail</strong> -- invisible to averages, painful for real users.</p>
+</blockquote>
+<p><strong>Percentile lines on the same data</strong>:</p>
+<pre class="mermaid">xychart-beta
+    title &quot;Cumulative: How percentiles map to latency&quot;
+    x-axis &quot;Latency (ms)&quot; [5, 10, 25, 50, 100, 250, 500, 1000, 2000, 5000, 10000]
+    y-axis &quot;% of requests &lt;= this latency&quot; 0 --&gt; 100
+    line [35, 60, 75, 83, 88, 92, 95, 97, 98.5, 99.5, 100]
+</pre>
+<p>Read it like this: find 95 on the Y-axis, trace right to the curve, drop down to the X-axis --&gt; p95 is ~500ms. Find 99 --&gt; p99 is ~5000ms.</p>
+<hr />
+<p>In Prometheus, percentiles come from <strong>histograms</strong> (buckets):</p>
+<pre><code class="language-promql"># p95 latency
+histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))
+
+# p99 latency
+histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m]))
+</code></pre>
+<blockquote>
+<p><strong>Rule</strong>: Always monitor p95 and p99, never the average. SLOs should be defined on percentiles.</p>
+</blockquote>
+<h3 id="histogram-buckets"><a class="header" href="#histogram-buckets">Histogram Buckets</a></h3>
+<p>A histogram doesn't store every value. It counts how many observations fell into predefined <strong>buckets</strong>:</p>
+<pre><code class="language-yaml"># Typical bucket boundaries for HTTP latency (seconds)
+buckets: [0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10]
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Bucket <code>le</code></th><th>Count</th><th>Meaning</th></tr></thead><tbody>
+<tr><td>0.01</td><td>4,521</td><td>4,521 requests took &lt;= 10ms</td></tr>
+<tr><td>0.05</td><td>8,903</td><td>8,903 requests took &lt;= 50ms</td></tr>
+<tr><td>0.1</td><td>9,412</td><td>9,412 requests took &lt;= 100ms</td></tr>
+<tr><td>1.0</td><td>9,890</td><td>9,890 requests took &lt;= 1s</td></tr>
+<tr><td>+Inf</td><td>10,000</td><td>10,000 total requests</td></tr>
+</tbody></table>
+</div>
+<p>The <code>histogram_quantile()</code> function <strong>interpolates</strong> within buckets to estimate the actual percentile. More buckets = more accuracy, but also more time series (cost).</p>
+<p><strong>Histogram buckets are cumulative counters</strong> (each bucket includes all requests faster than it):</p>
+<pre class="mermaid">xychart-beta
+    title &quot;Histogram: cumulative request count per bucket (le)&quot;
+    x-axis &quot;Bucket boundary (seconds)&quot; [&quot;0.01&quot;, &quot;0.05&quot;, &quot;0.1&quot;, &quot;0.25&quot;, &quot;0.5&quot;, &quot;1.0&quot;, &quot;2.5&quot;, &quot;5.0&quot;, &quot;10&quot;, &quot;+Inf&quot;]
+    y-axis &quot;Cumulative count&quot; 0 --&gt; 10000
+    bar [4521, 8903, 9412, 9650, 9810, 9890, 9950, 9980, 9995, 10000]
+</pre>
+<blockquote>
+<p>Each bar includes <strong>all</strong> previous bars. The jump between bars tells you how many requests landed in that specific bucket. The flatter the curve gets on the right, the fewer outliers you have.</p>
+</blockquote>
+<h2 id="cardinality-the-silent-budget-killer"><a class="header" href="#cardinality-the-silent-budget-killer">Cardinality: The Silent Budget Killer</a></h2>
+<h3 id="cardinality-in-mathematics"><a class="header" href="#cardinality-in-mathematics">Cardinality in Mathematics</a></h3>
+<p>In set theory, the <strong>cardinality</strong> of a set is simply the number of distinct elements it contains.</p>
+<pre><code>Set A = {red, green, blue}         → |A| = 3
+Set B = {small, medium, large}     → |B| = 3
+</code></pre>
+<p>The <strong>cartesian product</strong> <code>A x B</code> is the set of all possible pairs:</p>
+<pre><code>A x B = {(red,small), (red,medium), (red,large),
+         (green,small), (green,medium), (green,large),
+         (blue,small), (blue,medium), (blue,large)}
+
+|A x B| = |A| x |B| = 3 x 3 = 9
+</code></pre>
+<p>This is exactly what happens with metric labels: each label is a set, and every unique combination creates a new time series.</p>
+<pre class="mermaid">xychart-beta
+    title &quot;Cartesian product growth: |A| x |B| x |C|&quot;
+    x-axis &quot;Dimensions&quot; [&quot;1 set (3)&quot;, &quot;2 sets (3x3)&quot;, &quot;3 sets (3x3x3)&quot;, &quot;4 sets (3x3x3x3)&quot;, &quot;5 sets (3^5)&quot;]
+    y-axis &quot;Total combinations&quot; 0 --&gt; 250
+    bar [3, 9, 27, 81, 243]
+</pre>
+<blockquote>
+<p>With just 3 values per dimension, 5 dimensions already produce 243 combinations. Now imagine a dimension with 100,000 values (user IDs)...</p>
+</blockquote>
+<h3 id="what-is-cardinality-in-monitoring"><a class="header" href="#what-is-cardinality-in-monitoring">What is Cardinality in Monitoring?</a></h3>
+<p><strong>Cardinality</strong> = the number of <strong>unique time series</strong> a metric produces. Each unique combination of label values creates a new time series.</p>
+<pre><code>http_requests_total{method="GET", status="200", endpoint="/api/orders"}
+</code></pre>
+<p>This is <strong>one</strong> time series. The total cardinality of this metric is:</p>
+<pre><code>cardinality = |methods| x |statuses| x |endpoints|
+</code></pre>
+<hr />
+<pre class="mermaid">graph TB
+    subgraph &quot;Safe: Low Cardinality&quot;
+        S1[&quot;method: GET, POST, PUT, DELETE&lt;br/&gt;&lt;i&gt;4 values&lt;/i&gt;&quot;]
+        S2[&quot;status: 2xx, 3xx, 4xx, 5xx&lt;br/&gt;&lt;i&gt;4 values&lt;/i&gt;&quot;]
+        S3[&quot;region: eu, us, ap&lt;br/&gt;&lt;i&gt;3 values&lt;/i&gt;&quot;]
+        S4[&quot;Total: 4 x 4 x 3 = &lt;b&gt;48 series&lt;/b&gt;&quot;]
+    end
+
+    subgraph &quot;Dangerous: High Cardinality&quot;
+        D1[&quot;user_id: usr_001 ... usr_999999&lt;br/&gt;&lt;i&gt;1M values&lt;/i&gt;&quot;]
+        D2[&quot;request_id: uuid&lt;br/&gt;&lt;i&gt;infinite values&lt;/i&gt;&quot;]
+        D3[&quot;url: /users/123, /users/456...&lt;br/&gt;&lt;i&gt;unbounded&lt;/i&gt;&quot;]
+        D4[&quot;Total: &lt;b&gt;millions of series&lt;/b&gt;&lt;br/&gt;= OOM + $$$&quot;]
+    end
+</pre>
+<hr />
+<h3 id="the-cardinality-explosion-formula"><a class="header" href="#the-cardinality-explosion-formula">The Cardinality Explosion Formula</a></h3>
+<p>Cardinality grows as the <strong>cartesian product</strong> (multiplication) of all label values:</p>
+<pre><code>Total series = |label_1| x |label_2| x ... x |label_n|
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Scenario</th><th>Labels</th><th>Cardinality</th><th>Risk</th></tr></thead><tbody>
+<tr><td><code>method</code> x <code>status</code></td><td>4 x 5</td><td><strong>20</strong></td><td>Safe</td></tr>
+<tr><td>+ <code>endpoint</code> (10 routes)</td><td>4 x 5 x 10</td><td><strong>200</strong></td><td>Fine</td></tr>
+<tr><td>+ <code>customer_id</code> (100K)</td><td>4 x 5 x 10 x 100K</td><td><strong>20,000,000</strong></td><td>Prometheus OOM</td></tr>
+<tr><td>+ <code>request_id</code> (unique)</td><td>4 x 5 x 10 x infinity</td><td><strong>infinity</strong></td><td>Disaster</td></tr>
+</tbody></table>
+</div>
+<blockquote>
+<p><strong>Rule of thumb</strong>: &lt; 50 unique values per label = safe. &gt; 300 = almost never what you want. Never use user IDs, request IDs, IPs, or emails as metric labels.</p>
+</blockquote>
+<p><strong>Cardinality explosion visualized</strong>: adding one high-cardinality label destroys everything.</p>
+<pre class="mermaid">xychart-beta
+    title &quot;Time series count as labels are added&quot;
+    x-axis &quot;Labels added&quot; [&quot;method (4)&quot;, &quot;+ status (5)&quot;, &quot;+ endpoint (10)&quot;, &quot;+ region (3)&quot;, &quot;+ customer_id (1K)&quot;, &quot;+ request_id&quot;]
+    y-axis &quot;Number of time series&quot; 0 --&gt; 700000
+    bar [4, 20, 200, 600, 600000, 600000]
+</pre>
+<blockquote>
+<p>The first four labels: 600 series. Manageable. Add <code>customer_id</code>: 600,000 series. Your Prometheus instance is now on fire. The chart can't even show <code>request_id</code> because it would be infinite.</p>
+</blockquote>
+<h3 id="what-to-do-instead-of-high-cardinality-labels"><a class="header" href="#what-to-do-instead-of-high-cardinality-labels">What to Do Instead of High-Cardinality Labels</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Want to track</th><th>Wrong approach</th><th>Right approach</th></tr></thead><tbody>
+<tr><td>Per-user latency</td><td><code>{user_id="..."}</code> label</td><td>Log with userId, query in Loki/ClickHouse</td></tr>
+<tr><td>Per-URL metrics</td><td><code>{url="/users/123"}</code></td><td>Use route templates: <code>{route="/users/:id"}</code></td></tr>
+<tr><td>Per-request tracing</td><td><code>{request_id="..."}</code> label</td><td>Put it in traces (spans), not metrics</td></tr>
+<tr><td>Error details</td><td><code>{error_message="..."}</code> label</td><td>Use <code>{error_type="timeout"}</code> (bounded enum)</td></tr>
+</tbody></table>
+</div>
+<h2 id="moving-averages-and-smoothing"><a class="header" href="#moving-averages-and-smoothing">Moving Averages and Smoothing</a></h2>
+<h3 id="why-raw-metrics-are-noisy"><a class="header" href="#why-raw-metrics-are-noisy">Why Raw Metrics Are Noisy</a></h3>
+<p>Raw metrics fluctuate constantly. A CPU gauge might read 23%, 87%, 12%, 95%, 30% across 5 seconds. Which is the "real" value?</p>
+<p><strong>Moving averages</strong> smooth the noise to reveal the trend.</p>
+<p><strong>Raw signal</strong> (1-second resolution): noisy, hard to read.</p>
+<pre class="mermaid">xychart-beta
+    title &quot;CPU % -- raw 1s samples (noisy)&quot;
+    x-axis &quot;Time (seconds)&quot; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    y-axis &quot;CPU %&quot; 0 --&gt; 100
+    line [23, 87, 12, 95, 30, 78, 15, 88, 42, 91, 25, 82, 18, 90, 35, 85, 50, 92, 28, 80]
+</pre>
+<p><strong>Smoothed signal</strong> (5-point moving average): the trend emerges -- CPU is hovering around 55-60%.</p>
+<pre class="mermaid">xychart-beta
+    title &quot;CPU % -- 5-point moving average (trend visible)&quot;
+    x-axis &quot;Time (seconds)&quot; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    y-axis &quot;CPU %&quot; 0 --&gt; 100
+    line [23, 55, 41, 49, 49, 60, 46, 61, 49, 63, 54, 62, 48, 61, 50, 62, 56, 66, 57, 64]
+</pre>
+<blockquote>
+<p>Same data, two views. The raw chart causes panic. The smoothed chart shows reality: CPU is busy but stable. <strong>Always smooth before alerting.</strong></p>
+</blockquote>
+<pre><code class="language-promql"># Simple moving average: average the rate over 5 minutes
+avg_over_time(rate(cpu_usage[1m])[5m:1m])
+
+# Exponentially Weighted Moving Average (EWMA)
+# Recent values count more than old values
+# Used internally by many tools (Prometheus recording rules, Datadog)
+</code></pre>
+<pre class="mermaid">graph LR
+    subgraph &quot;Signal Processing&quot;
+        RAW[&quot;Raw signal&lt;br/&gt;&lt;i&gt;Noisy, spiky&lt;/i&gt;&quot;] --&gt;|&quot;Moving average&quot;| SMOOTH[&quot;Smoothed signal&lt;br/&gt;&lt;i&gt;Trend visible&lt;/i&gt;&quot;]
+        SMOOTH --&gt;|&quot;Derivative&quot;| TREND[&quot;Trend direction&lt;br/&gt;&lt;i&gt;Up / Down / Stable&lt;/i&gt;&quot;]
+    end
+</pre>
+<h3 id="window-size-trade-off"><a class="header" href="#window-size-trade-off">Window Size Trade-off</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Window</th><th>Effect</th><th>Use case</th></tr></thead><tbody>
+<tr><td><strong>1m</strong></td><td>Very reactive, still noisy</td><td>Real-time debugging</td></tr>
+<tr><td><strong>5m</strong></td><td>Good balance</td><td>Standard dashboards and alerts</td></tr>
+<tr><td><strong>15m</strong></td><td>Smooth, slow to react</td><td>SLO tracking, capacity planning</td></tr>
+<tr><td><strong>1h</strong></td><td>Very smooth, delayed</td><td>Trend analysis, weekly reports</td></tr>
+</tbody></table>
+</div>
+<blockquote>
+<p>Choose the window based on your <strong>time to act</strong>. If your team can respond in 5 minutes, a 5m window is right. If response time is hours, use a longer window.</p>
+</blockquote>
+<p><strong>Same incident, different windows</strong>: a latency spike at t=5 seen through different smoothing windows.</p>
+<pre class="mermaid">xychart-beta
+    title &quot;1-minute window (reactive, noisy)&quot;
+    x-axis &quot;Time (min)&quot; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    y-axis &quot;Latency (ms)&quot; 0 --&gt; 600
+    line [50, 48, 55, 52, 45, 520, 480, 200, 80, 55, 50, 48, 52, 50, 49]
+</pre>
+<pre class="mermaid">xychart-beta
+    title &quot;5-minute window (balanced)&quot;
+    x-axis &quot;Time (min)&quot; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    y-axis &quot;Latency (ms)&quot; 0 --&gt; 600
+    line [50, 49, 51, 50, 50, 144, 230, 259, 265, 187, 113, 87, 57, 51, 50]
+</pre>
+<pre class="mermaid">xychart-beta
+    title &quot;15-minute window (smooth, delayed)&quot;
+    x-axis &quot;Time (min)&quot; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    y-axis &quot;Latency (ms)&quot; 0 --&gt; 600
+    line [50, 50, 50, 50, 50, 70, 95, 120, 140, 145, 140, 130, 110, 90, 75]
+</pre>
+<blockquote>
+<p>The 1m window catches the spike instantly but shows false spikes too. The 15m window barely shows it. The 5m window is the sweet spot for most alerting.</p>
+</blockquote>
+<h2 id="aggregation-functions-cheat-sheet"><a class="header" href="#aggregation-functions-cheat-sheet">Aggregation Functions Cheat Sheet</a></h2>
+<p>When combining metrics across instances or time, the function matters:</p>
+<div class="table-wrapper"><table><thead><tr><th>Function</th><th>Use with</th><th>Example</th><th>Gotcha</th></tr></thead><tbody>
+<tr><td><code>sum</code></td><td>Counters, rates</td><td>Total requests across all pods</td><td>Never sum gauges like CPU%</td></tr>
+<tr><td><code>avg</code></td><td>Gauges</td><td>Average CPU across pods</td><td>Hides outliers</td></tr>
+<tr><td><code>max</code></td><td>Gauges</td><td>Hottest pod</td><td>Good for saturation alerts</td></tr>
+<tr><td><code>min</code></td><td>Gauges</td><td>Coldest pod (underutilized)</td><td>Rarely used for alerting</td></tr>
+<tr><td><code>count</code></td><td>Any</td><td>How many pods are reporting</td><td>Useful for fleet health</td></tr>
+<tr><td><code>quantile</code></td><td>Histograms</td><td>p99 latency</td><td>Quantiles are not addable: you cannot average p99s across pods</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="the-quantile-aggregation-trap"><a class="header" href="#the-quantile-aggregation-trap">The Quantile Aggregation Trap</a></h3>
+<blockquote>
+<p><strong>You cannot average percentiles.</strong> The p99 of averaged p99s is mathematically meaningless.</p>
+</blockquote>
+<pre><code>Pod A p99 = 100ms (1000 requests)
+Pod B p99 = 500ms (10 requests)
+
+Average of p99s = 300ms  &lt;-- WRONG
+True p99 = ~100ms        &lt;-- almost all requests came from Pod A
+</code></pre>
+<p>Always aggregate <strong>histograms</strong> (the raw bucket counts), then compute the percentile on the aggregated result:</p>
+<pre><code class="language-promql"># CORRECT: aggregate buckets first, then compute percentile
+histogram_quantile(0.99,
+  sum(rate(http_request_duration_seconds_bucket[5m])) by (le)
+)
+
+# WRONG: compute percentile per pod, then average
+avg(histogram_quantile(0.99,
+  rate(http_request_duration_seconds_bucket[5m]) by (le, pod)
+))
+</code></pre>
+<h2 id="math-summary"><a class="header" href="#math-summary">Math Summary</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Concept</th><th>What it is</th><th>Why you need it</th></tr></thead><tbody>
+<tr><td><strong>Rate (derivative)</strong></td><td>Change per second of a counter</td><td>Turn raw counters into actionable req/s</td></tr>
+<tr><td><strong>Derivative of rate</strong></td><td>Is the rate increasing or decreasing?</td><td>Detect acceleration of problems</td></tr>
+<tr><td><strong>Percentiles (p50/p95/p99)</strong></td><td>Value below which X% of observations fall</td><td>Measure real user experience, not averages</td></tr>
+<tr><td><strong>Cardinality</strong></td><td>Number of unique label combinations (cartesian product)</td><td>Predict cost and prevent OOM</td></tr>
+<tr><td><strong>Moving average</strong></td><td>Smoothed value over a time window</td><td>Separate signal from noise</td></tr>
+<tr><td><strong>Aggregation</strong></td><td>Combining values across dimensions</td><td><code>sum</code> for counters, <code>max</code> for gauges, never avg percentiles</td></tr>
+</tbody></table>
+</div>
+<h1 id="traces"><a class="header" href="#traces">Traces</a></h1>
+<h2 id="distributed-tracing-concepts"><a class="header" href="#distributed-tracing-concepts">Distributed Tracing Concepts</a></h2>
+<p>A <strong>trace</strong> represents a single request's journey through a distributed system. It's composed of <strong>spans</strong> organized as a tree (or DAG).</p>
+<hr />
+<pre class="mermaid">gantt
+    title Trace: POST /api/orders (traceId: 4bf92f)
+    dateFormat X
+    axisFormat %L ms
+
+    section API Gateway
+    gateway.handleRequest       :0, 350
+
+    section Order Service
+    order.createOrder           :20, 300
+    order.validateRequest       :25, 50
+    order.saveToDatabase        :80, 80
+
+    section Payment Service
+    payment.charge              :170, 120
+    payment.callStripeAPI       :180, 90
+
+    section Notification Service
+    notification.sendEmail      :300, 40
+</pre>
+<hr />
+<h3 id="span-anatomy"><a class="header" href="#span-anatomy">Span Anatomy</a></h3>
+<p>Each span contains:</p>
+<div class="table-wrapper"><table><thead><tr><th>Field</th><th>Description</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>traceId</code></td><td>Unique ID for the entire request</td><td><code>4bf92f3577b34da6</code></td></tr>
+<tr><td><code>spanId</code></td><td>Unique ID for this span</td><td><code>7a3f2b1c</code></td></tr>
+<tr><td><code>parentSpanId</code></td><td>Parent span (builds the tree)</td><td><code>00f067aa</code></td></tr>
+<tr><td><code>operationName</code></td><td>What this span represents</td><td><code>order.saveToDatabase</code></td></tr>
+<tr><td><code>startTime</code></td><td>When the span started</td><td><code>2024-03-15T10:23:45.123Z</code></td></tr>
+<tr><td><code>duration</code></td><td>How long it took</td><td><code>80ms</code></td></tr>
+<tr><td><code>attributes</code></td><td>Key-value metadata</td><td><code>db.system=postgresql</code></td></tr>
+<tr><td><code>events</code></td><td>Timestamped annotations</td><td><code>exception</code>, <code>retry</code></td></tr>
+<tr><td><code>status</code></td><td>OK, ERROR, UNSET</td><td><code>ERROR</code></td></tr>
+</tbody></table>
+</div>
+<h3 id="context-propagation"><a class="header" href="#context-propagation">Context Propagation</a></h3>
+<p>How does a trace cross service boundaries?</p>
+<pre class="mermaid">sequenceDiagram
+    participant Client
+    participant ServiceA
+    participant ServiceB
+    participant ServiceC
+
+    Client-&gt;&gt;ServiceA: POST /orders&lt;br/&gt;traceparent: 00-traceId-spanA-01
+    Note over ServiceA: Extract context&lt;br/&gt;Create child span
+    ServiceA-&gt;&gt;ServiceB: gRPC CreatePayment&lt;br/&gt;traceparent: 00-traceId-spanB-01
+    Note over ServiceB: Extract context&lt;br/&gt;Create child span
+    ServiceB-&gt;&gt;ServiceC: HTTP GET /fraud-check&lt;br/&gt;traceparent: 00-traceId-spanC-01
+    ServiceC--&gt;&gt;ServiceB: 200 OK
+    ServiceB--&gt;&gt;ServiceA: Payment confirmed
+    ServiceA--&gt;&gt;Client: 201 Created
+</pre>
+<hr />
+<p>The <strong>W3C Trace Context</strong> header <code>traceparent</code> carries:</p>
+<pre><code>traceparent: 00-&lt;traceId&gt;-&lt;parentSpanId&gt;-&lt;flags&gt;
+             |   |          |              |
+             v   v          v              v
+          version  32 hex   16 hex     sampled?
+</code></pre>
+<h3 id="sampling-strategies"><a class="header" href="#sampling-strategies">Sampling Strategies</a></h3>
+<p>You <strong>cannot</strong> trace 100% of production traffic. Sampling controls what gets recorded.</p>
+<div class="table-wrapper"><table><thead><tr><th>Strategy</th><th>How it works</th><th>Pros</th><th>Cons</th></tr></thead><tbody>
+<tr><td><strong>Head-based</strong></td><td>Decide at the start of the request</td><td>Simple, consistent</td><td>May miss interesting requests</td></tr>
+<tr><td><strong>Tail-based</strong></td><td>Decide after the request completes</td><td>Captures errors/slow requests</td><td>Requires buffering all spans</td></tr>
+<tr><td><strong>Rate-based</strong></td><td>Fixed % of requests</td><td>Predictable cost</td><td>Misses rare events</td></tr>
+<tr><td><strong>Adaptive</strong></td><td>Adjust rate based on traffic</td><td>Cost-effective</td><td>Complex to configure</td></tr>
+</tbody></table>
+</div>
+<blockquote>
+<p>Best practice: Use <strong>tail-based sampling</strong> to always capture errors and slow requests, combined with a low base rate (1-5%) for normal traffic.</p>
+</blockquote>
+<h1 id="opentelemetry-otel"><a class="header" href="#opentelemetry-otel">OpenTelemetry (OTel)</a></h1>
+<h2 id="what-is-opentelemetry"><a class="header" href="#what-is-opentelemetry">What is OpenTelemetry?</a></h2>
+<p>OpenTelemetry is the <strong>CNCF standard</strong> for collecting telemetry data (logs, metrics, traces). It provides:</p>
+<ul>
+<li><strong>APIs</strong>: Instrument your code</li>
+<li><strong>SDKs</strong>: Process and export data</li>
+<li><strong>Collector</strong>: Vendor-agnostic pipeline for receiving, processing, and exporting</li>
+<li><strong>Semantic Conventions</strong>: Standard attribute names</li>
+</ul>
+<hr />
+<pre class="mermaid">graph LR
+    subgraph &quot;Your Application&quot;
+        A[OTel SDK] --&gt;|OTLP| B
+    end
+    subgraph &quot;OTel Collector&quot;
+        B[Receiver] --&gt; C[Processor]
+        C --&gt; D[Exporter]
+    end
+    D --&gt;|&quot;Traces&quot;| E[Jaeger / Tempo]
+    D --&gt;|&quot;Metrics&quot;| F[Prometheus / Mimir]
+    D --&gt;|&quot;Logs&quot;| G[Loki / Elasticsearch]
+</pre>
+<hr />
+<h3 id="why-otel-matters"><a class="header" href="#why-otel-matters">Why OTel Matters</a></h3>
+<ul>
+<li><strong>Vendor-neutral</strong>: Switch backends without changing code</li>
+<li><strong>Unified</strong>: One SDK for logs, metrics, and traces</li>
+<li><strong>Correlation</strong>: Logs, metrics, and traces share <code>traceId</code></li>
+<li><strong>Industry standard</strong>: Supported by every major vendor (Datadog, Grafana, New Relic, Dynatrace...)</li>
+<li><strong>Auto-instrumentation</strong>: Libraries for HTTP, DB, gRPC out of the box</li>
+</ul>
+<h3 id="otel-collector-architecture"><a class="header" href="#otel-collector-architecture">OTel Collector Architecture</a></h3>
+<p>The Collector is the <strong>heart</strong> of a production OTel deployment. It decouples applications from backends.</p>
+<pre class="mermaid">graph TB
+    subgraph &quot;Applications&quot;
+        App1[Service A&lt;br/&gt;OTel SDK]
+        App2[Service B&lt;br/&gt;OTel SDK]
+        App3[Service C&lt;br/&gt;OTel SDK]
+    end
+
+    subgraph &quot;OTel Collector Pipeline&quot;
+        direction TB
+        subgraph &quot;Receivers&quot;
+            R1[OTLP gRPC :4317]
+            R2[OTLP HTTP :4318]
+            R3[Prometheus :8888]
+        end
+        subgraph &quot;Processors&quot;
+            P1[Batch]
+            P2[Memory Limiter]
+            P3[Attributes]
+            P4[Tail Sampling]
+        end
+        subgraph &quot;Exporters&quot;
+            E1[OTLP/gRPC]
+            E2[Prometheus Remote Write]
+            E3[Loki]
+        end
+    end
+
+    App1 --&gt; R1
+    App2 --&gt; R1
+    App3 --&gt; R2
+    R1 --&gt; P1
+    R2 --&gt; P1
+    R3 --&gt; P1
+    P1 --&gt; P2
+    P2 --&gt; P3
+    P3 --&gt; P4
+    P4 --&gt; E1
+    P4 --&gt; E2
+    P4 --&gt; E3
+
+    E1 --&gt; Tempo[Grafana Tempo]
+    E2 --&gt; Mimir[Grafana Mimir]
+    E3 --&gt; Loki[Grafana Loki]
+</pre>
+<hr />
+<h3 id="collector-configuration-example"><a class="header" href="#collector-configuration-example">Collector Configuration Example</a></h3>
+<pre><code class="language-yaml"># otel-collector-config.yaml
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch:
+    timeout: 5s
+    send_batch_size: 1024
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 512
+  attributes:
+    actions:
+      - key: environment
+        value: production
+        action: upsert
+
+exporters:
+  otlp/tempo:
+    endpoint: tempo:4317
+    tls:
+      insecure: true
+  prometheusremotewrite:
+    endpoint: http://mimir:9009/api/v1/push
+  loki:
+    endpoint: http://loki:3100/loki/api/v1/push
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [otlp/tempo]
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [prometheusremotewrite]
+    logs:
+      receivers: [otlp]
+      processors: [memory_limiter, attributes, batch]
+      exporters: [loki]
+</code></pre>
+<h3 id="otel-semantic-conventions"><a class="header" href="#otel-semantic-conventions">OTel Semantic Conventions</a></h3>
+<p>Standard attribute names so that all tools understand each other.</p>
+<div class="table-wrapper"><table><thead><tr><th>Convention</th><th>Attributes</th><th>Example</th></tr></thead><tbody>
+<tr><td>HTTP</td><td><code>http.method</code>, <code>http.status_code</code>, <code>http.url</code></td><td><code>http.method=GET</code></td></tr>
+<tr><td>Database</td><td><code>db.system</code>, <code>db.statement</code>, <code>db.name</code></td><td><code>db.system=postgresql</code></td></tr>
+<tr><td>Messaging</td><td><code>messaging.system</code>, <code>messaging.destination</code></td><td><code>messaging.system=kafka</code></td></tr>
+<tr><td>RPC</td><td><code>rpc.system</code>, <code>rpc.method</code>, <code>rpc.service</code></td><td><code>rpc.system=grpc</code></td></tr>
+<tr><td>Cloud</td><td><code>cloud.provider</code>, <code>cloud.region</code></td><td><code>cloud.provider=aws</code></td></tr>
+</tbody></table>
+</div>
+<h1 id="modern-observability-stack"><a class="header" href="#modern-observability-stack">Modern Observability Stack</a></h1>
+<h2 id="architecture-overview"><a class="header" href="#architecture-overview">Architecture Overview</a></h2>
+<pre class="mermaid">graph TB
+    subgraph &quot;Data Sources&quot;
+        Apps[Applications&lt;br/&gt;OTel SDK]
+        Infra[Infrastructure&lt;br/&gt;node_exporter, cAdvisor]
+        K8s[Kubernetes&lt;br/&gt;kube-state-metrics]
+    end
+
+    subgraph &quot;Collection Layer&quot;
+        OTelCol[OTel Collector]
+        Vec[Vector]
+        Alloy[Grafana Alloy]
+    end
+
+    subgraph &quot;Storage Layer&quot;
+        subgraph &quot;Metrics&quot;
+            Prom[Prometheus]
+            Mimir2[Mimir / Thanos]
+        end
+        subgraph &quot;Logs&quot;
+            Loki2[Loki]
+            ES[OpenSearch]
+        end
+        subgraph &quot;Traces&quot;
+            Tempo2[Tempo]
+            Jaeger2[Jaeger]
+        end
+        subgraph &quot;Profiles&quot;
+            Pyro[Pyroscope]
+        end
+    end
+
+    subgraph &quot;Visualization&quot;
+        Graf[Grafana]
+    end
+
+    Apps --&gt; OTelCol
+    Apps --&gt; Vec
+    Infra --&gt; OTelCol
+    K8s --&gt; OTelCol
+    OTelCol --&gt; Prom
+    OTelCol --&gt; Mimir2
+    OTelCol --&gt; Loki2
+    OTelCol --&gt; Tempo2
+    Vec --&gt; Loki2
+    Vec --&gt; ES
+    Alloy --&gt; Mimir2
+    Alloy --&gt; Loki2
+    Alloy --&gt; Tempo2
+    Alloy --&gt; Pyro
+    Prom --&gt; Graf
+    Mimir2 --&gt; Graf
+    Loki2 --&gt; Graf
+    Tempo2 --&gt; Graf
+    Pyro --&gt; Graf
+</pre>
+<h2 id="vector-the-modern-data-pipeline"><a class="header" href="#vector-the-modern-data-pipeline">Vector: The Modern Data Pipeline</a></h2>
+<p><a href="https://vector.dev">Vector</a> is a high-performance observability data pipeline built in <strong>Rust</strong>.
+It replaces Fluentd, Logstash, Filebeat, and Telegraf with a single binary.</p>
+<h3 id="why-vector"><a class="header" href="#why-vector">Why Vector?</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Feature</th><th>Vector</th><th>Fluentd</th><th>Logstash</th><th>Filebeat</th></tr></thead><tbody>
+<tr><td><strong>Language</strong></td><td>Rust</td><td>Ruby/C</td><td>JVM</td><td>Go</td></tr>
+<tr><td><strong>Memory usage</strong></td><td>~10 MB</td><td>~40 MB</td><td>~500 MB</td><td>~20 MB</td></tr>
+<tr><td><strong>Throughput</strong></td><td>~10 GB/s</td><td>~1 GB/s</td><td>~0.5 GB/s</td><td>~2 GB/s</td></tr>
+<tr><td><strong>Config language</strong></td><td>TOML/YAML</td><td>XML-like</td><td>Ruby DSL</td><td>YAML</td></tr>
+<tr><td><strong>Logs + Metrics</strong></td><td>Both</td><td>Logs only</td><td>Logs only</td><td>Logs only</td></tr>
+<tr><td><strong>End-to-end acks</strong></td><td>Yes</td><td>Partial</td><td>No</td><td>Yes</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="vector-pipeline-architecture"><a class="header" href="#vector-pipeline-architecture">Vector Pipeline Architecture</a></h3>
+<pre class="mermaid">graph LR
+    subgraph &quot;Vector Pipeline&quot;
+        direction LR
+        S1[Source:&lt;br/&gt;file, kafka,&lt;br/&gt;syslog, OTLP] --&gt; T1[Transform:&lt;br/&gt;remap VRL,&lt;br/&gt;filter, aggregate]
+        T1 --&gt; SK1[Sink:&lt;br/&gt;Loki, S3,&lt;br/&gt;Elasticsearch, OTLP]
+    end
+</pre>
+<h3 id="vector-configuration-example"><a class="header" href="#vector-configuration-example">Vector Configuration Example</a></h3>
+<pre><code class="language-toml"># vector.toml
+[sources.app_logs]
+type = "file"
+include = ["/var/log/app/*.log"]
+
+[sources.kubernetes]
+type = "kubernetes_logs"
+
+[transforms.parse_json]
+type = "remap"
+inputs = ["app_logs"]
+source = '''
+  . = parse_json!(.message)
+  .timestamp = parse_timestamp!(.timestamp, format: "%+")
+  # Redact PII
+  if exists(.email) {
+    .email = "REDACTED"
+  }
+  # Enrich with environment
+  .environment = get_env_var("ENVIRONMENT") ?? "unknown"
+'''
+
+[transforms.filter_errors]
+type = "filter"
+inputs = ["parse_json"]
+condition = '.level == "ERROR" || .level == "WARN"'
+
+[sinks.loki]
+type = "loki"
+inputs = ["parse_json"]
+endpoint = "http://loki:3100"
+encoding.codec = "json"
+labels.app = "{{ app_name }}"
+labels.level = "{{ level }}"
+
+[sinks.error_alerts]
+type = "http"
+inputs = ["filter_errors"]
+uri = "https://alerts.internal/webhook"
+encoding.codec = "json"
+</code></pre>
+<h3 id="vrl-vector-remap-language"><a class="header" href="#vrl-vector-remap-language">VRL (Vector Remap Language)</a></h3>
+<p>Vector's transformation language is <strong>purpose-built</strong> for observability data:</p>
+<pre><code class="language-coffee"># Parse, transform, and enrich in one pipeline
+. = parse_json!(.message)
+
+# Type-safe coercion
+.duration_ms = to_float!(.duration)
+
+# Pattern matching
+.severity = if .status_code &gt;= 500 {
+    "critical"
+} else if .status_code &gt;= 400 {
+    "warning"
+} else {
+    "info"
+}
+
+# Redact sensitive data
+.headers = redact(.headers, filters: ["pattern"], redactor: {"type": "text", "replacement": "[REDACTED]"})
+</code></pre>
+<h2 id="new-compression-and-storage-technologies"><a class="header" href="#new-compression-and-storage-technologies">New Compression and Storage Technologies</a></h2>
+<h3 id="why-compression-matters-for-observability"><a class="header" href="#why-compression-matters-for-observability">Why Compression Matters for Observability</a></h3>
+<p>Observability data is <strong>massive</strong>: a medium-sized microservices platform generates:</p>
+<ul>
+<li><strong>Logs</strong>: 1-10 TB/day</li>
+<li><strong>Metrics</strong>: 100M+ active time series</li>
+<li><strong>Traces</strong>: billions of spans/day</li>
+</ul>
+<p>Storage cost dominates observability budgets. Modern compression is a game-changer.</p>
+<hr />
+<h3 id="compression-algorithms-compared"><a class="header" href="#compression-algorithms-compared">Compression Algorithms Compared</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Algorithm</th><th>Ratio</th><th>Speed (compress)</th><th>Speed (decompress)</th><th>Best for</th></tr></thead><tbody>
+<tr><td><strong>gzip</strong></td><td>~6x</td><td>Moderate</td><td>Moderate</td><td>General purpose, legacy</td></tr>
+<tr><td><strong>lz4</strong></td><td>~3x</td><td>Very fast</td><td>Very fast</td><td>Real-time streaming</td></tr>
+<tr><td><strong>zstd</strong> (Zstandard)</td><td>~7x</td><td>Fast</td><td>Very fast</td><td>Best all-rounder, logs</td></tr>
+<tr><td><strong>snappy</strong></td><td>~2.5x</td><td>Very fast</td><td>Very fast</td><td>Kafka, low-latency</td></tr>
+<tr><td><strong>brotli</strong></td><td>~8x</td><td>Slow</td><td>Fast</td><td>Static content, HTTP</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="zstandard-zstd-the-new-default"><a class="header" href="#zstandard-zstd-the-new-default">Zstandard (zstd): The New Default</a></h3>
+<p>Created by Yann Collet (Facebook), zstd offers:</p>
+<ul>
+<li><strong>Better ratio than gzip</strong> at <strong>faster speed</strong></li>
+<li><strong>Dictionary compression</strong>: train on your log patterns for 2-5x better ratio on small payloads</li>
+<li><strong>Adaptive compression levels</strong>: 1 (fast) to 22 (max compression)</li>
+<li><strong>Widely adopted</strong>: Linux kernel, HTTP/3, Kafka, ClickHouse, Parquet</li>
+</ul>
+<pre class="mermaid">quadrantChart
+    title Compression: Speed vs Ratio
+    x-axis &quot;Low Compression Ratio&quot; --&gt; &quot;High Compression Ratio&quot;
+    y-axis &quot;Slow&quot; --&gt; &quot;Fast&quot;
+    lz4: [0.25, 0.95]
+    snappy: [0.20, 0.90]
+    zstd: [0.70, 0.80]
+    gzip: [0.55, 0.45]
+    brotli: [0.85, 0.30]
+    zstd-fast: [0.45, 0.90]
+</pre>
+<h3 id="columnar-formats-for-observability"><a class="header" href="#columnar-formats-for-observability">Columnar Formats for Observability</a></h3>
+<p>Traditional row-based storage (JSON lines, CSV) is inefficient for analytical queries.
+Modern observability backends use <strong>columnar formats</strong>.</p>
+<div class="table-wrapper"><table><thead><tr><th>Format</th><th>Description</th><th>Used by</th></tr></thead><tbody>
+<tr><td><strong>Parquet</strong></td><td>Columnar, compressed, schema-aware</td><td>Snowflake, Spark, Grafana Tempo</td></tr>
+<tr><td><strong>Arrow</strong></td><td>In-memory columnar format</td><td>DataFusion, InfluxDB IOx</td></tr>
+<tr><td><strong>ORC</strong></td><td>Optimized Row Columnar</td><td>Hadoop ecosystem</td></tr>
+</tbody></table>
+</div>
+<hr />
+<p>Why columnar matters for logs:</p>
+<pre class="mermaid">graph TB
+    subgraph &quot;Row Storage (JSON Lines)&quot;
+        R1[&quot;{ts, level, msg, svc, trace}&quot;]
+        R2[&quot;{ts, level, msg, svc, trace}&quot;]
+        R3[&quot;{ts, level, msg, svc, trace}&quot;]
+        R4[&quot;Read ALL fields to filter by level&quot;]
+    end
+
+    subgraph &quot;Columnar Storage (Parquet)&quot;
+        C1[&quot;ts: [t1, t2, t3, ...]&quot;]
+        C2[&quot;level: [INFO, ERROR, WARN, ...]&quot;]
+        C3[&quot;msg: [m1, m2, m3, ...]&quot;]
+        C4[&quot;Read ONLY level column to filter&quot;]
+    end
+
+    R4 --&gt;|&quot;Reads 5x more data&quot;| SLOW[Slow]
+    C4 --&gt;|&quot;Reads 1/5 of data&quot;| FAST[Fast]
+</pre>
+<hr />
+<h3 id="notable-modern-storage-backends"><a class="header" href="#notable-modern-storage-backends">Notable Modern Storage Backends</a></h3>
+<ul>
+<li><strong>Grafana Loki</strong>: Log aggregation, labels-based indexing (like Prometheus for logs), uses object storage (S3/GCS) with compacted chunks</li>
+<li><strong>Grafana Tempo</strong>: Trace storage on object storage, no index needed (search by traceId), Parquet-based</li>
+<li><strong>Grafana Mimir</strong>: Horizontally-scalable Prometheus, long-term metrics storage</li>
+<li><strong>ClickHouse</strong>: Columnar OLAP database, excellent for logs and traces at scale</li>
+<li><strong>VictoriaMetrics</strong>: High-performance Prometheus-compatible time-series DB</li>
+<li><strong><a href="https://quickwit.io/">Quickwit</a></strong>: Search engine built in Rust on object storage, designed for logs and traces. Sub-second search on Parquet/tantivy, directly competes with Elasticsearch at a fraction of the cost</li>
+<li><strong><a href="https://openobserve.ai/">OpenObserve</a></strong>: Lightweight Elasticsearch alternative, built in Rust, stores on S3, ~140x lower storage cost</li>
+<li><strong><a href="https://signoz.io/">SigNoz</a></strong>: Open-source alternative to Datadog, unified logs/metrics/traces UI on top of ClickHouse</li>
+</ul>
+<h2 id="grafana-alloy"><a class="header" href="#grafana-alloy">Grafana Alloy</a></h2>
+<p><a href="https://grafana.com/docs/alloy/">Grafana Alloy</a> is Grafana's <strong>distribution of the OTel Collector</strong> with added capabilities:</p>
+<ul>
+<li>Native Prometheus scraping</li>
+<li>Loki log collection (replaces Promtail)</li>
+<li>Tempo trace collection</li>
+<li>Pyroscope continuous profiling</li>
+<li><strong>Single agent</strong> for all telemetry types</li>
+</ul>
+<pre class="mermaid">graph LR
+    subgraph &quot;Before: Many Agents&quot;
+        PA[Promtail] --&gt; L[Loki]
+        PE[Prometheus] --&gt; M[Mimir]
+        OC[OTel Collector] --&gt; T[Tempo]
+        PY[Pyroscope Agent] --&gt; P[Pyroscope]
+    end
+
+    subgraph &quot;After: One Agent&quot;
+        AL[Grafana Alloy] --&gt; L2[Loki]
+        AL --&gt; M2[Mimir]
+        AL --&gt; T2[Tempo]
+        AL --&gt; P2[Pyroscope]
+    end
+</pre>
+<h1 id="continuous-profiling-the-fourth-pillar"><a class="header" href="#continuous-profiling-the-fourth-pillar">Continuous Profiling: The Fourth Pillar</a></h1>
+<p>Beyond logs, metrics, and traces, <strong>continuous profiling</strong> shows exactly which code paths consume CPU, memory, or I/O.</p>
+<pre class="mermaid">graph TB
+    subgraph &quot;Four Pillars&quot;
+        direction LR
+        L2[&quot;Logs&lt;br/&gt;&lt;i&gt;Events&lt;/i&gt;&quot;]
+        M2[&quot;Metrics&lt;br/&gt;&lt;i&gt;Aggregates&lt;/i&gt;&quot;]
+        T2[&quot;Traces&lt;br/&gt;&lt;i&gt;Request flow&lt;/i&gt;&quot;]
+        P2[&quot;Profiles&lt;br/&gt;&lt;i&gt;Code-level perf&lt;/i&gt;&quot;]
+    end
+    P2 --&gt; Q1[&quot;Where is CPU spent?&quot;]
+    P2 --&gt; Q2[&quot;Which function allocates most memory?&quot;]
+    P2 --&gt; Q3[&quot;Why is this endpoint slow?&quot;]
+</pre>
+<hr />
+<ul>
+<li><strong>Pyroscope</strong> (Grafana): Continuous profiling with flame graphs</li>
+<li><strong>pprof</strong> (Go): Built-in profiling</li>
+<li><strong>async-profiler</strong> (JVM): Low-overhead Java/Kotlin profiling</li>
+<li><strong>eBPF-based</strong>: Kernel-level profiling without code changes (Parca, Pixie)</li>
+</ul>
+<h1 id="alerting-best-practices"><a class="header" href="#alerting-best-practices">Alerting Best Practices</a></h1>
+<h2 id="alert-on-symptoms-not-causes"><a class="header" href="#alert-on-symptoms-not-causes">Alert on Symptoms, Not Causes</a></h2>
+<pre class="mermaid">graph LR
+    subgraph &quot;Bad: Cause-Based&quot;
+        CPU[&quot;CPU &gt; 80%&quot;] --&gt; ALERT1[&quot;Page on-call&quot;]
+    end
+    subgraph &quot;Good: Symptom-Based&quot;
+        SLO[&quot;Error budget burn rate &gt; 2x&quot;] --&gt; EVAL[&quot;Is user impacted?&quot;]
+        EVAL --&gt;|Yes| ALERT2[&quot;Page on-call&quot;]
+        EVAL --&gt;|No| TICKET[&quot;Create ticket&quot;]
+    end
+</pre>
+<hr />
+<h3 id="alert-fatigue-is-a-real-problem"><a class="header" href="#alert-fatigue-is-a-real-problem">Alert Fatigue is a Real Problem</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Problem</th><th>Impact</th><th>Solution</th></tr></thead><tbody>
+<tr><td>Too many alerts</td><td>On-call ignores them</td><td>Reduce to SLO-based alerts</td></tr>
+<tr><td>Noisy thresholds</td><td>False positives</td><td>Use burn-rate windows</td></tr>
+<tr><td>No runbook</td><td>Slow response</td><td>Every alert links to a runbook</td></tr>
+<tr><td>Missing context</td><td>Wastes investigation time</td><td>Include dashboard links, recent changes</td></tr>
+</tbody></table>
+</div>
+<h3 id="good-alert-anatomy"><a class="header" href="#good-alert-anatomy">Good Alert Anatomy</a></h3>
+<pre><code class="language-yaml"># Every alert should contain:
+alert: OrderServiceHighErrorRate
+annotations:
+  summary: "Order Service error rate above SLO"
+  description: |
+    Error rate is {{ $value | humanizePercentage }} (SLO: 0.1%)
+    Dashboard: https://grafana.internal/d/order-svc
+    Runbook: https://wiki.internal/runbooks/order-svc-errors
+    Recent deploys: https://cd.internal/order-service/releases
+  impact: "Users cannot place orders"
+  action: "Check order-service logs, verify database connectivity"
+</code></pre>
+<h1 id="service-tiers-not-all-services-are-equal"><a class="header" href="#service-tiers-not-all-services-are-equal">Service Tiers: Not All Services Are Equal</a></h1>
+<p>Not every error deserves the same response. A bug in the recommendation engine is not the same as a bug in the payment service. <strong>Service tiering</strong> classifies services by business criticality to determine the right observability depth, alerting severity, and incident response.</p>
+<h2 id="tier-definitions"><a class="header" href="#tier-definitions">Tier Definitions</a></h2>
+<pre class="mermaid">graph TB
+    subgraph &quot;Tier 0 -- Revenue Critical&quot;
+        T0[&quot;Payment, Checkout, Auth&lt;br/&gt;&lt;i&gt;If this breaks, the company loses money NOW&lt;/i&gt;&quot;]
+    end
+    subgraph &quot;Tier 1 -- Core Experience&quot;
+        T1[&quot;Search, Catalog, Cart, Orders&lt;br/&gt;&lt;i&gt;Major user impact, but workarounds may exist&lt;/i&gt;&quot;]
+    end
+    subgraph &quot;Tier 2 -- Important&quot;
+        T2[&quot;Recommendations, Reviews, Notifications&lt;br/&gt;&lt;i&gt;Degraded experience, users can still complete tasks&lt;/i&gt;&quot;]
+    end
+    subgraph &quot;Tier 3 -- Internal / Best Effort&quot;
+        T3[&quot;Back-office tools, Analytics pipelines, Dev tooling&lt;br/&gt;&lt;i&gt;No direct user impact&lt;/i&gt;&quot;]
+    end
+
+    T0 ~~~ T1 ~~~ T2 ~~~ T3
+</pre>
+<hr />
+<h2 id="tier-matrix"><a class="header" href="#tier-matrix">Tier Matrix</a></h2>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Tier 0 -- Revenue Critical</th><th>Tier 1 -- Core Experience</th><th>Tier 2 -- Important</th><th>Tier 3 -- Internal</th></tr></thead><tbody>
+<tr><td><strong>Examples</strong></td><td>Payment, Checkout, Auth, Login</td><td>Search, Catalog, Cart, Orders</td><td>Recommendations, Reviews, Notifications</td><td>Back-office, Analytics, Batch jobs</td></tr>
+<tr><td><strong>SLO target</strong></td><td>99.99% (4.3 min downtime/month)</td><td>99.9% (43 min/month)</td><td>99.5% (3.6 h/month)</td><td>99% (7.3 h/month)</td></tr>
+<tr><td><strong>Error response</strong></td><td>Page on-call immediately, 24/7</td><td>Page on-call during business hours + 15 min after-hours</td><td>Slack alert + ticket</td><td>Ticket next business day</td></tr>
+<tr><td><strong>Response time</strong></td><td>&lt; 5 min</td><td>&lt; 15 min</td><td>&lt; 1 hour</td><td>Next business day</td></tr>
+<tr><td><strong>Observability depth</strong></td><td>Full: logs, metrics, traces, profiling, synthetic monitoring</td><td>Full: logs, metrics, traces</td><td>Logs + metrics + sampled traces</td><td>Logs + basic metrics</td></tr>
+<tr><td><strong>Alerting</strong></td><td>Multi-window burn rate, synthetic checks, canary alerts</td><td>Burn rate + threshold alerts</td><td>Threshold alerts</td><td>Batch job success/failure</td></tr>
+<tr><td><strong>Runbook required?</strong></td><td>Yes, tested quarterly</td><td>Yes</td><td>Recommended</td><td>Optional</td></tr>
+<tr><td><strong>Post-mortem required?</strong></td><td>Yes, within 24h</td><td>Yes, within 2 business days</td><td>If SLO breached</td><td>No</td></tr>
+<tr><td><strong>Dashboards</strong></td><td>Dedicated + golden signals + business KPIs</td><td>Golden signals + business KPIs</td><td>Golden signals</td><td>Basic health</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="how-to-classify-your-services"><a class="header" href="#how-to-classify-your-services">How to Classify Your Services</a></h2>
+<pre class="mermaid">graph TB
+    Q1[&quot;Does the service directly&lt;br/&gt;handle money or auth?&quot;]
+    Q1 --&gt;|Yes| T0[&quot;Tier 0&quot;]
+    Q1 --&gt;|No| Q2[&quot;Can users complete their&lt;br/&gt;primary task without it?&quot;]
+    Q2 --&gt;|No| T1[&quot;Tier 1&quot;]
+    Q2 --&gt;|Yes| Q3[&quot;Would users notice&lt;br/&gt;if it was down?&quot;]
+    Q3 --&gt;|Yes| T2[&quot;Tier 2&quot;]
+    Q3 --&gt;|No| T3[&quot;Tier 3&quot;]
+</pre>
+<hr />
+<h3 id="tier-determines-the-response-to-errors"><a class="header" href="#tier-determines-the-response-to-errors">Tier Determines the Response to Errors</a></h3>
+<p>The same error type triggers very different responses depending on the tier:</p>
+<div class="table-wrapper"><table><thead><tr><th>Error</th><th>Tier 0 response</th><th>Tier 1 response</th><th>Tier 2 response</th><th>Tier 3 response</th></tr></thead><tbody>
+<tr><td><strong>5xx error rate &gt; 1%</strong></td><td>Page on-call immediately</td><td>Page if sustained &gt; 5 min</td><td>Slack alert</td><td>Ticket</td></tr>
+<tr><td><strong>Latency p99 &gt; 2s</strong></td><td>Page on-call</td><td>Alert if sustained &gt; 10 min</td><td>Investigate next sprint</td><td>Ignore unless extreme</td></tr>
+<tr><td><strong>Pod OOMKilled</strong></td><td>Page + auto-rollback</td><td>Alert + investigate</td><td>Ticket</td><td>Fix when convenient</td></tr>
+<tr><td><strong>Dependency timeout</strong></td><td>Page + activate circuit breaker</td><td>Alert + graceful degradation</td><td>Log + retry silently</td><td>Log</td></tr>
+<tr><td><strong>Deployment failed</strong></td><td>Auto-rollback + page</td><td>Auto-rollback + alert</td><td>Manual rollback</td><td>Retry next day</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="cascading-tier-elevation"><a class="header" href="#cascading-tier-elevation">Cascading Tier Elevation</a></h3>
+<p>A Tier 2 service can become <strong>temporarily Tier 0</strong> if a Tier 0 service depends on it in the critical path.</p>
+<pre class="mermaid">graph LR
+    subgraph &quot;Normal&quot;
+        RECO[&quot;Recommendations&lt;br/&gt;&lt;b&gt;Tier 2&lt;/b&gt;&quot;]
+    end
+    subgraph &quot;During Checkout&quot;
+        CHECKOUT[&quot;Checkout&lt;br/&gt;&lt;b&gt;Tier 0&lt;/b&gt;&quot;] --&gt;|&quot;calls&quot;| RECO2[&quot;Recommendations&lt;br/&gt;&lt;b&gt;Tier 0 (elevated)&lt;/b&gt;&quot;]
+    end
+</pre>
+<blockquote>
+<p>If your Tier 0 checkout service calls recommendations synchronously to display upsells, then recommendations is <strong>effectively Tier 0</strong> for that code path. Either decouple it (async, circuit breaker, cached fallback) or treat it with Tier 0 rigor.</p>
+</blockquote>
+<h3 id="rules-for-tier-assignment"><a class="header" href="#rules-for-tier-assignment">Rules for Tier Assignment</a></h3>
+<ol>
+<li><strong>Tier is based on worst-case business impact</strong>, not technical complexity</li>
+<li><strong>Review tiers quarterly</strong> -- services evolve, dependencies change</li>
+<li><strong>Dependencies inherit the caller's tier</strong> in the critical path (or must be decoupled)</li>
+<li><strong>Every service must have an assigned tier</strong> -- untiered services are invisible during incidents</li>
+<li><strong>Tier determines budget</strong>: Tier 0 gets the observability investment, Tier 3 gets the minimum</li>
+</ol>
+<h1 id="observability-anti-patterns"><a class="header" href="#observability-anti-patterns">Observability Anti-Patterns</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>Anti-pattern</th><th>Why it's bad</th><th>What to do instead</th></tr></thead><tbody>
+<tr><td>Log everything at DEBUG in prod</td><td>Storage explosion, noise</td><td>Use INFO default, enable DEBUG per-service via config</td></tr>
+<tr><td>Metrics with unbounded cardinality</td><td>Prometheus OOM, series explosion</td><td>Never use userId, requestId, or IP as metric labels</td></tr>
+<tr><td>No sampling on traces</td><td>Cost explosion</td><td>Tail-based sampling at 1-5% base rate</td></tr>
+<tr><td>Dashboards nobody looks at</td><td>Wasted effort, stale</td><td>Alert-driven dashboards, delete unused ones</td></tr>
+<tr><td>Separate tools for each signal</td><td>No correlation</td><td>Unified backend (Grafana stack) or correlate via traceId</td></tr>
+<tr><td>Alerting on raw metrics</td><td>False positives</td><td>Alert on SLO burn rate</td></tr>
+<tr><td>No correlation IDs</td><td>Can't trace requests</td><td>Inject traceId/correlationId at the edge</td></tr>
+<tr><td>Logging PII</td><td>GDPR violation</td><td>Redact at the collection layer (Vector/OTel processor)</td></tr>
+</tbody></table>
+</div>
+<h1 id="putting-it-all-together"><a class="header" href="#putting-it-all-together">Putting It All Together</a></h1>
+<h2 id="a-production-ready-stack"><a class="header" href="#a-production-ready-stack">A Production-Ready Stack</a></h2>
+<pre class="mermaid">graph TB
+    subgraph &quot;Edge&quot;
+        LB[Load Balancer / Ingress]
+    end
+
+    subgraph &quot;Application Tier&quot;
+        S1[Service A&lt;br/&gt;OTel SDK]
+        S2[Service B&lt;br/&gt;OTel SDK]
+        S3[Service C&lt;br/&gt;OTel SDK]
+    end
+
+    subgraph &quot;Collection Tier&quot;
+        OC[OTel Collector&lt;br/&gt;Gateway mode]
+        V[Vector&lt;br/&gt;Log enrichment]
+    end
+
+    subgraph &quot;Storage Tier&quot;
+        Mimir3[Mimir&lt;br/&gt;Metrics]
+        Loki3[Loki&lt;br/&gt;Logs]
+        Tempo3[Tempo&lt;br/&gt;Traces]
+        Pyro3[Pyroscope&lt;br/&gt;Profiles]
+    end
+
+    subgraph &quot;Visualization &amp; Alerting&quot;
+        G[Grafana&lt;br/&gt;Dashboards]
+        AM[Alertmanager&lt;br/&gt;Routing]
+        PD[PagerDuty / Slack]
+    end
+
+    LB --&gt; S1 &amp; S2 &amp; S3
+    S1 &amp; S2 &amp; S3 --&gt;|&quot;OTLP gRPC&quot;| OC
+    S1 &amp; S2 &amp; S3 --&gt;|&quot;stdout logs&quot;| V
+    OC --&gt;|&quot;metrics&quot;| Mimir3
+    OC --&gt;|&quot;traces&quot;| Tempo3
+    OC --&gt;|&quot;profiles&quot;| Pyro3
+    V --&gt;|&quot;structured logs&quot;| Loki3
+    Mimir3 &amp; Loki3 &amp; Tempo3 &amp; Pyro3 --&gt; G
+    Mimir3 --&gt; AM
+    AM --&gt; PD
+</pre>
+<hr />
+<h3 id="key-design-decisions"><a class="header" href="#key-design-decisions">Key Design Decisions</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Decision</th><th>Recommendation</th><th>Why</th></tr></thead><tbody>
+<tr><td><strong>Protocol</strong></td><td>OTLP gRPC</td><td>Standard, efficient, supports all signals</td></tr>
+<tr><td><strong>Collector topology</strong></td><td>Agent + Gateway</td><td>Agent on each node, gateway for processing</td></tr>
+<tr><td><strong>Log format</strong></td><td>Structured JSON</td><td>Machine-parseable, queryable</td></tr>
+<tr><td><strong>Metric cardinality</strong></td><td>&lt; 10 labels per metric</td><td>Prevents series explosion</td></tr>
+<tr><td><strong>Trace sampling</strong></td><td>Tail-based, 5% base</td><td>Captures errors, controls cost</td></tr>
+<tr><td><strong>Retention</strong></td><td>Metrics: 90d, Logs: 30d, Traces: 14d</td><td>Balance cost vs debug ability</td></tr>
+<tr><td><strong>Compression</strong></td><td>zstd level 3</td><td>Best speed/ratio trade-off</td></tr>
+<tr><td><strong>Storage</strong></td><td>Object storage (S3/GCS)</td><td>Cheap, durable, scalable</td></tr>
+</tbody></table>
+</div>
+<h1 id="real-world-observability-guidelines"><a class="header" href="#real-world-observability-guidelines">Real-World Observability Guidelines</a></h1>
+<p>This section consolidates battle-tested rules from production environments running hundreds of microservices.</p>
+<h2 id="the-zero-errors-when-healthy-principle"><a class="header" href="#the-zero-errors-when-healthy-principle">The "Zero Errors When Healthy" Principle</a></h2>
+<blockquote>
+<p>A well-monitored service should emit <strong>zero errors, zero alerts, and zero warnings</strong> during normal operation.</p>
+</blockquote>
+<p>If your dashboards show a constant background of errors that everyone ignores, you have lost the signal. Every error in your logs should be <strong>surprising and actionable</strong>. If it's expected, it's not an error -- it's a log at INFO level.</p>
+<pre class="mermaid">graph LR
+    subgraph &quot;Healthy Service&quot;
+        H1[&quot;ERROR count = 0&quot;]
+        H2[&quot;WARN count = 0&quot;]
+        H3[&quot;Alerts firing = 0&quot;]
+    end
+    subgraph &quot;Unhealthy Service&quot;
+        U1[&quot;ERROR count = 47/min&lt;br/&gt;&lt;i&gt;'normal background noise'&lt;/i&gt;&quot;]
+        U2[&quot;Team ignores alerts&quot;]
+        U3[&quot;Real incident buried in noise&quot;]
+    end
+    H1 --&gt;|&quot;Any error = signal&quot;| ACT[&quot;Investigate immediately&quot;]
+    U1 --&gt;|&quot;Can't distinguish real issues&quot;| MISS[&quot;Incidents missed&quot;]
+</pre>
+<hr />
+<h3 id="rules-for-zero-error-baselines"><a class="header" href="#rules-for-zero-error-baselines">Rules for Zero-Error Baselines</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Rule</th><th>Why</th></tr></thead><tbody>
+<tr><td><strong>Expected failures are not errors</strong></td><td>A 404 from a user typo is INFO, not ERROR</td></tr>
+<tr><td><strong>Retried-and-succeeded is not an error</strong></td><td>Log the retry at WARN, the success at INFO</td></tr>
+<tr><td><strong>Deprecation warnings must be fixed or silenced</strong></td><td>Noise trains people to ignore logs</td></tr>
+<tr><td><strong>Health check logs must be suppressed</strong></td><td>They generate massive volume with zero signal</td></tr>
+<tr><td><strong>Background noise must be driven to zero</strong></td><td>If you can't distinguish 47 errors/min from 48, you'll miss the real one</td></tr>
+</tbody></table>
+</div>
+<h2 id="magic-numbers-thresholds-that-actually-work"><a class="header" href="#magic-numbers-thresholds-that-actually-work">Magic Numbers: Thresholds That Actually Work</a></h2>
+<p>In monitoring, certain numeric thresholds appear repeatedly across organizations. These are not arbitrary -- they emerge from operational experience.</p>
+<h3 id="the-authorized-magic-numbers"><a class="header" href="#the-authorized-magic-numbers">The Authorized Magic Numbers</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Number</th><th>Where it applies</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><strong>0</strong></td><td>Error count in steady state</td><td>A healthy service has 0 errors. Any error is a signal.</td></tr>
+<tr><td><strong>1</strong></td><td>Minimum event count for alerting</td><td>If you alert on count &lt; 1, you're alerting on absence of data (dead service).</td></tr>
+<tr><td><strong>0.5</strong></td><td>SLO error budget burn rate (baseline)</td><td>Burning at 0.5x is normal. Burning at 2x means you'll exhaust budget early.</td></tr>
+<tr><td><strong>0.1%</strong></td><td>Typical error rate SLO</td><td>99.9% success rate = 0.1% error budget</td></tr>
+<tr><td><strong>50</strong></td><td>Max label/tag cardinality</td><td>Below 50 unique values per label is almost always safe for Prometheus/Datadog</td></tr>
+<tr><td><strong>300</strong></td><td>Danger zone for cardinality</td><td>Above 300 unique values per label causes series explosion and cost blowup</td></tr>
+<tr><td><strong>1,500</strong></td><td>Minimum events/hour for a custom metric</td><td>Below this threshold, the metric is too sparse to be useful -- build a back-office feature instead</td></tr>
+<tr><td><strong>4 KB</strong></td><td>Target max log line size</td><td>Logs should stay under 4 KB. Large logs waste storage and slow queries.</td></tr>
+<tr><td><strong>640 KB</strong></td><td>Absolute max log line size</td><td>Logs above this are truncated or dropped by most pipelines</td></tr>
+<tr><td><strong>10M</strong></td><td>Daily log line budget per service</td><td>Above 10M lines/day, you must reduce volume or convert high-frequency events to counter metrics</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h3 id="burn-rate-windows-for-slo-alerting"><a class="header" href="#burn-rate-windows-for-slo-alerting">Burn Rate Windows for SLO Alerting</a></h3>
+<pre class="mermaid">graph LR
+    subgraph &quot;Multi-Window Burn Rate&quot;
+        B1[&quot;1h window @ 14x burn&lt;br/&gt;&lt;i&gt;= Page immediately&lt;/i&gt;&quot;]
+        B2[&quot;6h window @ 6x burn&lt;br/&gt;&lt;i&gt;= Page&lt;/i&gt;&quot;]
+        B3[&quot;3d window @ 1x burn&lt;br/&gt;&lt;i&gt;= Ticket&lt;/i&gt;&quot;]
+        B4[&quot;30d window @ 0.5x burn&lt;br/&gt;&lt;i&gt;= Normal&lt;/i&gt;&quot;]
+    end
+    B1 --&gt; P[&quot;PagerDuty&quot;]
+    B2 --&gt; P
+    B3 --&gt; T[&quot;Jira Ticket&quot;]
+    B4 --&gt; OK[&quot;No action&quot;]
+</pre>
+<blockquote>
+<p>Use multi-window burn rates instead of raw thresholds. A 14x burn rate over 1 hour means you'll exhaust your 30-day error budget in ~2 hours -- that's a real emergency.</p>
+</blockquote>
+<h2 id="tagging-discipline"><a class="header" href="#tagging-discipline">Tagging Discipline</a></h2>
+<p>Every observability resource (monitors, dashboards, SLOs, metrics) <strong>must</strong> carry mandatory tags:</p>
+<div class="table-wrapper"><table><thead><tr><th>Tag</th><th>Rule</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>owner</code></td><td>Must be set and valid (team or individual)</td><td><code>owner:order-team</code></td></tr>
+<tr><td><code>env</code></td><td>Must match the environment</td><td><code>env:prd</code>, <code>env:stg</code></td></tr>
+<tr><td><code>service</code></td><td>The service name</td><td><code>service:order-service</code></td></tr>
+<tr><td><code>domain</code></td><td>Business domain when applicable</td><td><code>domain:checkout</code></td></tr>
+</tbody></table>
+</div>
+<ul>
+<li>Critical-severity monitors are <strong>production-only</strong> -- never tag non-prod monitors as critical</li>
+<li>Monitors posting to alerting channels <strong>must</strong> trigger on-call rotation</li>
+<li>Monitors triggering on-call <strong>must</strong> link to a runbook</li>
+</ul>
+<h2 id="metric-naming-conventions"><a class="header" href="#metric-naming-conventions">Metric Naming Conventions</a></h2>
+<pre><code>&lt;scope&gt;.&lt;project_or_domain&gt;.&lt;what&gt;_&lt;unit&gt;
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Scope</th><th>Convention</th><th>Example</th></tr></thead><tbody>
+<tr><td>Service metric</td><td><code>mm.&lt;project&gt;</code></td><td><code>mm.order.created_total</code></td></tr>
+<tr><td>Tech metric</td><td><code>&lt;tech&gt;.&lt;what&gt;</code></td><td><code>java.gc.pause_seconds</code></td></tr>
+<tr><td>Business metric</td><td><code>mm.business.&lt;domain&gt;</code></td><td><code>mm.business.checkout.conversion_ratio</code></td></tr>
+</tbody></table>
+</div>
+<p>Rules:</p>
+<ul>
+<li>Use underscores <code>_</code>, never hyphens <code>-</code></li>
+<li>End with SI unit suffix: <code>_seconds</code>, <code>_bytes</code>, <code>_ratio</code>, <code>_total</code></li>
+<li>Set type (counter/gauge/histogram) and description metadata on every custom metric</li>
+<li><strong>Never duplicate an existing metric</strong> -- check the metric catalog first</li>
+</ul>
+<h2 id="logging-discipline"><a class="header" href="#logging-discipline">Logging Discipline</a></h2>
+<h3 id="mandatory-rules"><a class="header" href="#mandatory-rules">Mandatory Rules</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Rule</th><th>Rationale</th></tr></thead><tbody>
+<tr><td>JSON to stdout/stderr</td><td>12-factor, Kubernetes-native, machine-parseable</td></tr>
+<tr><td>Use standard attribute names</td><td><code>evt.name</code>, <code>evt.outcome</code>, <code>error.kind</code>, <code>error.message</code> -- not custom names</td></tr>
+<tr><td>Duration in nanoseconds</td><td>Consistent across stacks, avoids unit confusion</td></tr>
+<tr><td>No arrays as values</td><td>Use objects with keys instead (array values break monitor filters)</td></tr>
+<tr><td>No PII in logs</td><td>No emails, names, phone numbers, passwords, IPs (GDPR critical)</td></tr>
+<tr><td>TRACE/DEBUG disabled in staging and production</td><td>Cost and noise control</td></tr>
+<tr><td>Health check endpoints never log</td><td>They generate massive volume with zero diagnostic value</td></tr>
+<tr><td>HTTP access logs emitted by infra, not apps</td><td>Ingress/service mesh already handles this; don't duplicate</td></tr>
+</tbody></table>
+</div>
+<h3 id="when-to-log-vs-when-to-metric"><a class="header" href="#when-to-log-vs-when-to-metric">When to Log vs When to Metric</a></h3>
+<pre class="mermaid">graph TB
+    Q[&quot;High-volume event&lt;br/&gt;&gt;100K/day same content?&quot;]
+    Q --&gt;|Yes| M[&quot;Replace with a counter metric&lt;br/&gt;e.g. cache_miss_total&quot;]
+    Q --&gt;|No| L[&quot;Keep as a structured log&quot;]
+    L --&gt; Q2[&quot;Does it carry unique context&lt;br/&gt;per occurrence?&quot;]
+    Q2 --&gt;|Yes| KEEP[&quot;Log it (with correlation ID)&quot;]
+    Q2 --&gt;|No| AGG[&quot;Consider aggregating&lt;br/&gt;into a metric instead&quot;]
+</pre>
+<h2 id="dashboard-discipline"><a class="header" href="#dashboard-discipline">Dashboard Discipline</a></h2>
+<blockquote>
+<p>A dashboard must tell a story or answer a question. If it has no goal, delete it.</p>
+</blockquote>
+<h3 id="rules"><a class="header" href="#rules">Rules</a></h3>
+<ul>
+<li>Add an <strong>intent statement</strong> at the top: what question does this dashboard answer?</li>
+<li>Use <strong>sections</strong> to group related widgets</li>
+<li>Add <strong>interpretive text</strong>: "When this goes up, it means X... If it drops below Y, do Z"</li>
+<li>Never sum gauge values (meaningless); always sum count values</li>
+<li>Use template variables for <code>region</code> and <code>env</code> -- never hardcode</li>
+<li>Prefix experimental dashboards with <code>[TMP]</code> and delete when done</li>
+<li>Augment time series with <strong>anomaly detection</strong> when available</li>
+</ul>
+<h2 id="production-governance-checklist"><a class="header" href="#production-governance-checklist">Production Governance Checklist</a></h2>
+<p>Every service in production <strong>must</strong> have:</p>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Monitoring dashboard (with intent statement)</li>
+<li><input disabled="" type="checkbox"/>
+Alerting with on-call routing</li>
+<li><input disabled="" type="checkbox"/>
+SLO defined and tracked</li>
+<li><input disabled="" type="checkbox"/>
+Runbook (infra + debugging steps)</li>
+<li><input disabled="" type="checkbox"/>
+Backup &amp; disaster recovery plan</li>
+<li><input disabled="" type="checkbox"/>
+Rollback procedure documented</li>
+<li><input disabled="" type="checkbox"/>
+Team owns the service -- not SRE alone</li>
+<li><input disabled="" type="checkbox"/>
+Everyone on the team can deploy -- no single gatekeeper</li>
+<li><input disabled="" type="checkbox"/>
+Blameless post-mortem within 2 business days after any SLA-breaking incident</li>
+</ul>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<h3 id="the-observability-checklist"><a class="header" href="#the-observability-checklist">The Observability Checklist</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+<strong>Structured logging</strong> with JSON and correlation IDs</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Meaningful error messages</strong> (what, why, action)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Four golden signals</strong> instrumented (latency, traffic, errors, saturation)</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Distributed tracing</strong> with OpenTelemetry</li>
+<li><input disabled="" type="checkbox"/>
+<strong>SLOs defined</strong> with error budgets</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Alerts based on symptoms</strong> not causes</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Runbooks</strong> linked from every alert</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Dashboards</strong> driven by alerts, not vanity</li>
+<li><input disabled="" type="checkbox"/>
+<strong>PII redacted</strong> at collection layer</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Sampling strategy</strong> for traces</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Compression</strong> (zstd) and columnar storage for cost control</li>
+<li><input disabled="" type="checkbox"/>
+<strong>Single collector</strong> (OTel Collector or Grafana Alloy)</li>
+</ul>
+<h3 id="key-takeaways"><a class="header" href="#key-takeaways">Key Takeaways</a></h3>
+<ol>
+<li><strong>Observability &gt; Monitoring</strong>: Don't just watch dashboards, build systems you can interrogate</li>
+<li><strong>OpenTelemetry is the standard</strong>: Vendor-lock-in on telemetry is a losing strategy</li>
+<li><strong>Errors are UX</strong>: Write errors for humans, not for log files</li>
+<li><strong>Cost is the hidden enemy</strong>: Unbounded cardinality and no sampling will bankrupt your budget</li>
+<li><strong>Correlation is everything</strong>: traceId connects logs, metrics, and traces into one story</li>
+<li><strong>Modern tools matter</strong>: Vector, zstd, Parquet, Loki bring 10x efficiency over legacy stacks</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../documentation/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../RADAR.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../documentation/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../RADAR.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../.mermaid/mermaid.min.js"></script>
+        <script src="../.mermaid/mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>

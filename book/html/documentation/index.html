@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../documentation/index.html" class="active"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded "><a href="../RADAR.html"><strong aria-hidden="true">5.</strong> tech radar</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">6.</strong> TP 1: Packaging with Nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">7.</strong> TP 2: Building Containers - The Traditional Way</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/perfect-container-with-nix/index.html"><strong aria-hidden="true">8.</strong> TP 3: Perfect Containers with Nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/sdlc-tooling-workshop/index.html"><strong aria-hidden="true">9.</strong> TP 4: SDLC Tooling Workshop</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../nix/INSTALL.html"><strong aria-hidden="true">10.</strong> Install nix</a></li><li class="chapter-item expanded "><a href="../nix/COMMA.html"><strong aria-hidden="true">11.</strong> Install comma</a></li><li class="chapter-item expanded "><a href="../GET.html"><strong aria-hidden="true">12.</strong> Get courses</a></li><li class="chapter-item expanded "><a href="../nix/TEMPLATE.html"><strong aria-hidden="true">13.</strong> Get template</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../documentation/index.html" class="active"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded "><a href="../monitoring/index.html"><strong aria-hidden="true">5.</strong> Monitoring & Observability</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded "><a href="../RADAR.html"><strong aria-hidden="true">6.</strong> tech radar</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">7.</strong> TP 1: Packaging with Nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">8.</strong> TP 2: Building Containers - The Traditional Way</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/perfect-container-with-nix/index.html"><strong aria-hidden="true">9.</strong> TP 3: Perfect Containers with Nix</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/sdlc-tooling-workshop/index.html"><strong aria-hidden="true">10.</strong> TP 4: SDLC Tooling Workshop</a></li><li class="chapter-item expanded "><a href="../sdlc/tps/local-kubernetes-with-k3d/index.html"><strong aria-hidden="true">11.</strong> TP 5: Local Kubernetes with k3d</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../nix/INSTALL.html"><strong aria-hidden="true">12.</strong> Install nix</a></li><li class="chapter-item expanded "><a href="../nix/COMMA.html"><strong aria-hidden="true">13.</strong> Install comma</a></li><li class="chapter-item expanded "><a href="../GET.html"><strong aria-hidden="true">14.</strong> Get courses</a></li><li class="chapter-item expanded "><a href="../nix/TEMPLATE.html"><strong aria-hidden="true">15.</strong> Get template</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -174,114 +174,729 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="technical-documentation-a-cross-disciplinary-approach"><a class="header" href="#technical-documentation-a-cross-disciplinary-approach">Technical Documentation: A Cross-Disciplinary Approach</a></h1>
+<!-- vale off -->
+<ul>
+<li><a href="#introduction-to-technical-documentation">Introduction to Technical Documentation</a>
+<ul>
+<li><a href="#why-documentation-matters">Why Documentation Matters</a></li>
+<li><a href="#types-of-documentation">Types of Documentation</a></li>
+</ul>
+</li>
+<li><a href="#structuring-knowledge">Structuring Knowledge</a>
+<ul>
+<li><a href="#di%C3%A1taxis">Diátaxis</a>
+<ul>
+<li><a href="#tutorials-learning-by-doing">Tutorials (learning by doing)</a></li>
+<li><a href="#how-to-guides-working-to-achieve-goals">How-To Guides (working to achieve goals)</a></li>
+<li><a href="#reference-facts-while-working">Reference (facts while working)</a></li>
+<li><a href="#explanation-understanding-concepts">Explanation (understanding concepts)</a></li>
+</ul>
+</li>
+<li><a href="#zettelkasten">Zettelkasten</a></li>
+</ul>
+</li>
+<li><a href="#community-standard-files">Community Standard Files</a>
+<ul>
+<li><a href="#the-essential-files">The Essential Files</a></li>
+<li><a href="#contributingmd-in-depth">CONTRIBUTING.md in Depth</a>
+<ul>
+<li><a href="#example-structure">Example structure</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#ai-assisted-documentation-the-new-standard">AI-Assisted Documentation: The New Standard</a>
+<ul>
+<li><a href="#agentsmd-the-cross-tool-standard">AGENTS.md: The Cross-Tool Standard</a>
+<ul>
+<li><a href="#research-evidence">Research evidence</a></li>
+<li><a href="#the-landscape-of-agent-instruction-files">The landscape of agent instruction files</a></li>
+<li><a href="#what-to-include">What to include</a></li>
+<li><a href="#effective-patterns">Effective patterns</a></li>
+<li><a href="#hooks-vs-instructions">Hooks vs instructions</a></li>
+<li><a href="#best-practices">Best practices</a></li>
+<li><a href="#hierarchy-and-scoping">Hierarchy and scoping</a></li>
+<li><a href="#anti-patterns">Anti-patterns</a></li>
+<li><a href="#continuous-improvement-loop">Continuous improvement loop</a></li>
+</ul>
+</li>
+<li><a href="#model-context-protocol-mcp">Model Context Protocol (MCP)</a>
+<ul>
+<li><a href="#the-problem-mcp-solves">The problem MCP solves</a></li>
+<li><a href="#how-mcp-works">How MCP works</a></li>
+<li><a href="#mcp-in-practice">MCP in practice</a></li>
+<li><a href="#why-mcp-matters-for-documentation">Why MCP matters for documentation</a></li>
+</ul>
+</li>
+<li><a href="#skills">Skills</a>
+<ul>
+<li><a href="#example-a-documentation-skill">Example: a documentation skill</a></li>
+<li><a href="#skills-vs-agentsmd">Skills vs AGENTS.md</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#documentation-types-and-evolution">Documentation Types and Evolution</a>
+<ul>
+<li><a href="#adr-architectural-decision-records">ADR (Architectural Decision Records)</a>
+<ul>
+<li><a href="#adr-format">ADR format</a></li>
+</ul>
+</li>
+<li><a href="#tech-radar">Tech Radar</a></li>
+<li><a href="#eventstorming">EventStorming</a></li>
+</ul>
+</li>
+<li><a href="#best-practices-for-writing-documentation">Best Practices for Writing Documentation</a>
+<ul>
+<li><a href="#clarity-and-structure">Clarity and Structure</a></li>
+<li><a href="#consistency-and-uniformity">Consistency and Uniformity</a></li>
+<li><a href="#writing-style-techniques">Writing Style Techniques</a>
+<ul>
+<li><a href="#active-voice-vs-passive-voice">Active voice vs passive voice</a></li>
+<li><a href="#use-imperative-mood-for-instructions">Use imperative mood for instructions</a></li>
+<li><a href="#second-person-you-vs-third-person">Second person ("you") vs third person</a></li>
+<li><a href="#present-tense-vs-future-tense">Present tense vs future tense</a></li>
+<li><a href="#sentence-length-and-complexity">Sentence length and complexity</a></li>
+<li><a href="#avoid-nominalisations">Avoid nominalisations</a></li>
+<li><a href="#hedging-and-weasel-words">Hedging and weasel words</a></li>
+<li><a href="#parallel-structure">Parallel structure</a></li>
+<li><a href="#terminology-consistency">Terminology consistency</a></li>
+<li><a href="#documentation-specific-patterns">Documentation-specific patterns</a></li>
+</ul>
+</li>
+<li><a href="#documentation-as-code">Documentation as Code</a></li>
+</ul>
+</li>
+<li><a href="#accessibility-in-documentation">Accessibility in Documentation</a>
+<ul>
+<li><a href="#why-make-documentation-accessible">Why Make Documentation Accessible?</a></li>
+<li><a href="#practices">Practices</a></li>
+</ul>
+</li>
+<li><a href="#automating-documentation">Automating Documentation</a>
+<ul>
+<li><a href="#generation-from-source-code">Generation from Source Code</a></li>
+<li><a href="#interactive-documentation">Interactive Documentation</a></li>
+<li><a href="#repository-linting">Repository Linting</a></li>
+</ul>
+</li>
+<li><a href="#tools-and-platforms">Tools and Platforms</a>
+<ul>
+<li><a href="#documentation-generators">Documentation Generators</a></li>
+<li><a href="#diagram-tools">Diagram Tools</a></li>
+<li><a href="#ai-assisted-writing">AI-Assisted Writing</a></li>
+</ul>
+</li>
+<li><a href="#putting-it-all-together">Putting It All Together</a></li>
+</ul>
+<!-- vale on -->
+<hr />
 <h2 id="introduction-to-technical-documentation"><a class="header" href="#introduction-to-technical-documentation">Introduction to Technical Documentation</a></h2>
-<h3 id="definition-and-roles"><a class="header" href="#definition-and-roles">Definition and Roles</a></h3>
-<p>Technical documentation is an essential component of a project's lifecycle. It allows:</p>
+<!-- header: 'Technical Documentation' -->
+<!-- footer: 'Julien Dauliac -- ynov.casualty925@passfwd.com' -->
+<!-- headingDivider: 3 -->
+<!-- colorPreset: sunset -->
+<!-- paginate: true -->
+<h3 id="why-documentation-matters"><a class="header" href="#why-documentation-matters">Why Documentation Matters</a></h3>
+<p>Documentation is an essential component of a project's lifecycle.
+Without it, knowledge lives only in people's heads — and when they leave, the knowledge leaves with them.</p>
+<p>Good documentation serves four purposes:</p>
 <ul>
-<li>Knowledge transfer.</li>
-<li>Easier system maintenance and evolution.</li>
-<li>Improved user and developer experience.</li>
+<li><strong>Knowledge transfer</strong> — new team members ramp up faster</li>
+<li><strong>Maintenance</strong> — understanding <em>why</em> decisions were made helps evolve systems safely</li>
+<li><strong>Developer experience</strong> — clear docs reduce friction and frustration</li>
+<li><strong>User experience</strong> — users can self-serve instead of filing support tickets</li>
 </ul>
+<hr />
 <h3 id="types-of-documentation"><a class="header" href="#types-of-documentation">Types of Documentation</a></h3>
-<ul>
-<li>User Documentation</li>
-<li>API Documentation</li>
-<li>Architecture Documentation</li>
-<li>Reference Documentation and Practical Guides</li>
-</ul>
+<p>Not all documentation is the same. At a high level, projects need:</p>
+<div class="table-wrapper"><table><thead><tr><th>Type</th><th>Audience</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><strong>User documentation</strong></td><td>End users</td><td>How to use the product</td></tr>
+<tr><td><strong>API documentation</strong></td><td>Integrators</td><td>Contract and behaviour of interfaces</td></tr>
+<tr><td><strong>Architecture documentation</strong></td><td>Engineers</td><td>System design and decisions</td></tr>
+<tr><td><strong>Operational documentation</strong></td><td>Operators / SREs</td><td>Runbooks, deployment, monitoring</td></tr>
+<tr><td><strong>Contributor documentation</strong></td><td>Contributors</td><td>How to set up, develop, and submit changes</td></tr>
+</tbody></table>
+</div>
+<hr />
 <h2 id="structuring-knowledge"><a class="header" href="#structuring-knowledge">Structuring Knowledge</a></h2>
-<h3 id="structuring-methods"><a class="header" href="#structuring-methods">Structuring Methods</a></h3>
-<h4 id="zettelkasten"><a class="header" href="#zettelkasten"><strong>Zettelkasten</strong></a></h4>
-<p>A dynamic approach to knowledge management:</p>
+<p>The hardest part of documentation is not writing — it is organising.
+Two methods stand out for structuring knowledge effectively.</p>
+<h3 id="diátaxis"><a class="header" href="#diátaxis">Diátaxis</a></h3>
+<p><a href="https://diataxis.fr/">Diátaxis</a> is a framework based on a simple insight: documentation serves practitioners in a domain of skill, and what they need changes based on two dimensions:</p>
+<ol>
+<li><strong>Action vs Cognition</strong> — are they doing something or understanding something?</li>
+<li><strong>Acquisition vs Application</strong> — are they learning or working?</li>
+</ol>
+<p>These two axes create exactly four documentation types:</p>
+<pre><code>                    ACQUISITION          APPLICATION
+                  (learning)            (working)
+              ┌────────────────────┬────────────────────┐
+   ACTION     │                    │                    │
+   (doing)    │    TUTORIALS       │   HOW-TO GUIDES    │
+              │                    │                    │
+              ├────────────────────┼────────────────────┤
+   COGNITION  │                    │                    │
+   (thinking) │   EXPLANATION      │    REFERENCE       │
+              │                    │                    │
+              └────────────────────┴────────────────────┘
+</code></pre>
+<h4 id="tutorials-learning-by-doing"><a class="header" href="#tutorials-learning-by-doing">Tutorials (learning by doing)</a></h4>
+<p>The teacher is responsible for the learner's success.
+Every step must work. One path only, no alternatives.
+Focus on doing, not explaining.</p>
+<p><strong>Language</strong>: "We will create...", "First, do X. Now, do Y.", "Notice that..."</p>
+<h4 id="how-to-guides-working-to-achieve-goals"><a class="header" href="#how-to-guides-working-to-achieve-goals">How-To Guides (working to achieve goals)</a></h4>
+<p>Assume competence. The reader knows what they want — help them get there.
+Address real-world complexity with conditionals ("If X, do Y").</p>
+<p><strong>Language</strong>: "This guide shows you how to...", "To achieve W, do Z"</p>
+<h4 id="reference-facts-while-working"><a class="header" href="#reference-facts-while-working">Reference (facts while working)</a></h4>
+<p>Describe, don't instruct. Be austere and authoritative.
+Structure mirrors the product architecture. Completeness matters.</p>
+<p><strong>Language</strong>: "X is available as Y", "Sub-commands are: A, B, C"</p>
+<h4 id="explanation-understanding-concepts"><a class="header" href="#explanation-understanding-concepts">Explanation (understanding concepts)</a></h4>
+<p>Answer "why". Talk about the subject from multiple angles.
+Permit opinion. Provide context and bigger picture.</p>
+<p><strong>Language</strong>: "The reason for X is...", "Some prefer W. This can be effective, but..."</p>
+<blockquote>
+<p><strong>Key principle</strong>: keep these four types separate. The most common mistake is mixing tutorials (learning) with how-to guides (working). If content serves multiple needs, split it and link between documents.</p>
+</blockquote>
+<hr />
+<h3 id="zettelkasten"><a class="header" href="#zettelkasten">Zettelkasten</a></h3>
+<p><a href="https://zettelkasten.de/">Zettelkasten</a> is a knowledge management method based on interconnected atomic notes.
+Each note captures one idea and links to related notes, building a web of knowledge over time.</p>
+<p>This approach is useful for:</p>
 <ul>
-<li>Interconnected notes</li>
-<li>Facilitates research and critical thinking</li>
+<li>Research and critical thinking</li>
+<li>Building a personal knowledge base</li>
+<li>Discovering connections between ideas that were not obvious</li>
 </ul>
-<h4 id="diátaxis"><a class="header" href="#diátaxis"><strong>Diátaxis</strong></a></h4>
-<p>A structure based on user needs:</p>
+<p>While Diátaxis structures project documentation, Zettelkasten structures personal knowledge. They are complementary.</p>
+<hr />
+<h2 id="community-standard-files"><a class="header" href="#community-standard-files">Community Standard Files</a></h2>
+<p>Open-source projects (and increasingly internal ones) follow a set of <strong>community standard files</strong> that live at the repository root. These files form the "social contract" of a project — they tell contributors, users, and machines how to interact with the codebase.</p>
+<h3 id="the-essential-files"><a class="header" href="#the-essential-files">The Essential Files</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>File</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><code>README.md</code></td><td>First impression. What this project is, how to install it, how to use it</td></tr>
+<tr><td><code>CONTRIBUTING.md</code></td><td>How to contribute: setup, conventions, PR process, code style</td></tr>
+<tr><td><code>CODE_OF_CONDUCT.md</code></td><td>Behavioural expectations for participants</td></tr>
+<tr><td><code>LICENSE</code></td><td>Legal terms under which the code is distributed</td></tr>
+<tr><td><code>CHANGELOG.md</code></td><td>What changed in each release (see <a href="https://keepachangelog.com/">Keep a Changelog</a>)</td></tr>
+<tr><td><code>SECURITY.md</code></td><td>How to report security vulnerabilities responsibly</td></tr>
+<tr><td><code>.github/ISSUE_TEMPLATE/</code></td><td>Structured templates for bug reports and feature requests</td></tr>
+<tr><td><code>.github/PULL_REQUEST_TEMPLATE.md</code></td><td>Checklist and structure for pull requests</td></tr>
+</tbody></table>
+</div>
+<p>GitHub, GitLab, and Forgejo all recognise these files and surface them in the UI. A project without them looks abandoned.</p>
+<hr />
+<h3 id="contributingmd-in-depth"><a class="header" href="#contributingmd-in-depth">CONTRIBUTING.md in Depth</a></h3>
+<p>The <code>CONTRIBUTING.md</code> file is the single most important file for project health after <code>README.md</code>. It answers:</p>
 <ul>
-<li>Tutorials</li>
-<li>How-To Guides</li>
-<li>References</li>
-<li>Explanations</li>
+<li><strong>How do I set up the development environment?</strong> (prerequisites, tools, commands)</li>
+<li><strong>What conventions do you follow?</strong> (commit messages, branch naming, code style)</li>
+<li><strong>How do I submit a change?</strong> (fork/branch workflow, PR checklist, review process)</li>
+<li><strong>How do I run the tests?</strong> (unit, integration, linting)</li>
+<li><strong>What should I not do?</strong> (anti-patterns, out-of-scope changes)</li>
 </ul>
+<p>A good <code>CONTRIBUTING.md</code> reduces friction for first-time contributors and enforces consistency across the team.</p>
+<h4 id="example-structure"><a class="header" href="#example-structure">Example structure</a></h4>
+<pre><code class="language-markdown"># Contributing to &lt;project&gt;
+
+## Prerequisites
+- Nix (see [install guide](./nix/INSTALL.md))
+- direnv
+
+## Getting started
+1. Clone the repo
+2. Run `direnv allow`
+3. Run `task build`
+
+## Conventions
+- Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/)
+- Code is formatted with `treefmt`
+
+## Submitting changes
+1. Create a feature branch from `main`
+2. Make your changes
+3. Run `task check` to validate
+4. Open a pull request
+</code></pre>
+<hr />
+<h2 id="ai-assisted-documentation-the-new-standard"><a class="header" href="#ai-assisted-documentation-the-new-standard">AI-Assisted Documentation: The New Standard</a></h2>
+<p>The rise of AI coding agents (Claude Code, Copilot, Cursor, Aider) has created a new category of documentation: <strong>files that instruct machines</strong> rather than humans.</p>
+<p>These files are not optional extras — they are becoming as fundamental as <code>README.md</code> was in 2015.</p>
+<h3 id="agentsmd-the-cross-tool-standard"><a class="header" href="#agentsmd-the-cross-tool-standard">AGENTS.md: The Cross-Tool Standard</a></h3>
+<p><a href="https://agents.md/">AGENTS.md</a> is an open standard for guiding AI coding agents. Proposed by OpenAI in August 2025 through collaboration with Google, Cursor, Factory, and Sourcegraph, it is now governed by the <strong>Agentic AI Foundation (AAIF)</strong> under the <strong>Linux Foundation</strong>.</p>
+<p>The format is plain Markdown, intentionally schema-free. The AAIF spec defines optional fields (<code>allowed_tools</code>, <code>disallowed_tools</code>, <code>agent_instructions</code>, <code>output_format</code>, <code>environment</code>) but tools read what they understand and skip the rest.</p>
+<p>By mid-2026, AGENTS.md is read natively by 30+ tools: OpenAI Codex, Gemini CLI, Google Jules, Devin, Cursor, Windsurf, GitHub Copilot, Warp, Zed, and more. It is adopted by over 60,000 repositories.</p>
+<h4 id="research-evidence"><a class="header" href="#research-evidence">Research evidence</a></h4>
+<p>An <a href="https://arxiv.org/html/2601.20404v2">ETH Zurich empirical study</a> on 10 repositories and 124 pull requests measured the impact of AGENTS.md files:</p>
+<div class="table-wrapper"><table><thead><tr><th>Metric</th><th>With AGENTS.md</th><th>Without</th></tr></thead><tbody>
+<tr><td>Output tokens</td><td><strong>-20%</strong> (mean)</td><td>baseline</td></tr>
+<tr><td>Wall-clock time</td><td><strong>-28.6%</strong> (median)</td><td>baseline</td></tr>
+<tr><td>Total tokens</td><td><strong>-9.9%</strong> (mean)</td><td>baseline</td></tr>
+</tbody></table>
+</div>
+<p>Critical finding: <strong>LLM-generated context files reduced task success rates</strong> in 5 of 8 settings while increasing inference costs by 20–23%. Human-curated files delivered ~4% success rate improvement. The takeaway: always write these files by hand.</p>
+<h4 id="the-landscape-of-agent-instruction-files"><a class="header" href="#the-landscape-of-agent-instruction-files">The landscape of agent instruction files</a></h4>
+<p>Different AI tools started with their own formats, but the ecosystem is converging:</p>
+<div class="table-wrapper"><table><thead><tr><th>Format</th><th>Tool</th><th>Location</th><th>Status</th></tr></thead><tbody>
+<tr><td><code>AGENTS.md</code></td><td>Cross-tool standard</td><td>Repo root + subdirs</td><td>Open standard (AAIF / Linux Foundation)</td></tr>
+<tr><td><code>CLAUDE.md</code></td><td>Claude Code</td><td>Repo root + subdirs + <code>~/.claude/</code></td><td>Anthropic-specific, richer memory model</td></tr>
+<tr><td><code>.cursor/rules/*.mdc</code></td><td>Cursor</td><td><code>.cursor/rules/</code></td><td>Cursor-only, glob-scoped activation</td></tr>
+<tr><td><code>.github/copilot-instructions.md</code></td><td>GitHub Copilot</td><td><code>.github/</code></td><td>GitHub-specific</td></tr>
+<tr><td><code>.windsurfrules</code></td><td>Windsurf</td><td>Repo root</td><td>Migrating toward AGENTS.md</td></tr>
+</tbody></table>
+</div>
+<p>The trend is clear: <strong>AGENTS.md is becoming the universal format</strong>, with tool-specific files layered on top for features unique to each agent.</p>
+<h4 id="what-to-include"><a class="header" href="#what-to-include">What to include</a></h4>
+<p>An effective AGENTS.md contains <strong>what the agent cannot infer from code alone</strong>:</p>
+<ol>
+<li><strong>One-line project description</strong> — acts like a role-based prompt</li>
+<li><strong>Tech stack</strong> — framework, language, versions, database</li>
+<li><strong>Commands</strong> — the exact invocations for build, test, lint, deploy (not the conventional ones — the actual ones)</li>
+<li><strong>Architecture</strong> — the 3–5 directories that matter and what each does</li>
+<li><strong>Conventions</strong> — patterns that linters cannot catch (naming, module boundaries, import ordering)</li>
+<li><strong>Boundaries</strong> — what the agent should never do (modify generated files, skip tests, etc.)</li>
+</ol>
+<p>The key principle is <strong>non-inferability</strong>: include only details the agent cannot figure out by reading the code. ETH Zurich found that architectural overviews did not reduce navigation time — removing an Architecture section while keeping commands, constraints, and non-standard patterns produces the same agent behaviour at lower token cost. Non-standard tooling (pixi, custom build systems, unusual package managers) delivers the highest ROI because these tools are underrepresented in LLM training data.</p>
+<h4 id="effective-patterns"><a class="header" href="#effective-patterns">Effective patterns</a></h4>
+<p><strong>Definition of Done</strong> — eliminates false completion claims:</p>
+<pre><code class="language-markdown">## Definition of Done
+A task is complete when ALL of the following pass:
+1. `task lint` exits 0
+2. `task test` exits 0
+3. `task typecheck` exits 0
+4. Commit message follows: `type(scope): description`
+</code></pre>
+<p><strong>Escalation rules</strong> — prevents destructive workarounds when the agent is stuck:</p>
+<pre><code class="language-markdown">## When Blocked
+- Tests fail after 3 attempts: stop and report the error
+- Missing dependency: check requirements first, do not install without asking
+- Never: delete files to resolve errors, force push, skip tests
+</code></pre>
+<p><strong>Decision log</strong> — prevents agents from suggesting already-rejected alternatives:</p>
+<pre><code class="language-markdown">## Architecture Decisions
+- mdBook over Docusaurus (Markdown-native, fast builds)
+- Nix over Docker for dev environments (reproducibility)
+- Do NOT suggest switching these.
+</code></pre>
+<p><strong>Task-organised sections</strong> — reduces irrelevant context parsing:</p>
+<pre><code class="language-markdown">## When Writing Code
+- Run `task lint` after every file change
+
+## When Reviewing Code
+- Check: `task security-scan`
+
+## When Releasing
+- Update version in `flake.nix`
+</code></pre>
+<h4 id="hooks-vs-instructions"><a class="header" href="#hooks-vs-instructions">Hooks vs instructions</a></h4>
+<p>Anthropic draws a clear distinction:</p>
+<ul>
+<li><strong>CLAUDE.md instructions</strong> are <em>advisory</em>. The agent may not follow them, especially as context grows.</li>
+<li><strong>Hooks</strong> are <em>deterministic</em>. Scripts that run automatically at specific points (before/after tool use, session start). Guaranteed to execute.</li>
+</ul>
+<p><strong>Rule of thumb</strong>: if an action must happen every time with zero exceptions (run a formatter after every edit, block writes to a protected directory), use a hook. If it is guidance, use CLAUDE.md.</p>
+<h4 id="best-practices"><a class="header" href="#best-practices">Best practices</a></h4>
+<p><strong>Keep it short.</strong> Aim for under 200 lines. Research shows that all frontier LLMs lose accuracy as input grows — some dropping from 95% to 60% past a threshold. For every line, ask: <em>"Would removing this cause the agent to make mistakes?"</em> If not, cut it.</p>
+<p><strong>Commands over prose.</strong> Lead with exact commands, not explanations. Setup first, testing second, deployment third, debugging last.</p>
+<pre><code class="language-markdown"># Good: actionable
+## Test
+- `task test` — run all tests
+- `task test -- -run TestAuth` — run a single test
+
+# Bad: vague
+## Testing
+Please make sure all tests pass before committing.
+</code></pre>
+<p><strong>Don't duplicate the linter.</strong> If <code>treefmt</code> enforces formatting and <code>eslint</code> enforces style, do not repeat those rules in AGENTS.md. LLMs are slow and expensive at jobs a linter does instantly and deterministically. Use <strong>hooks</strong> instead — they run automatically and catch mistakes before they are committed.</p>
+<p><strong>Use progressive disclosure.</strong> Do not inline everything. Reference deeper docs by path — the agent pulls them only when relevant:</p>
+<pre><code class="language-markdown">## Architecture
+See [docs/architecture.md](./docs/architecture.md) for the full diagram.
+The key directories are:
+- `src/` — source code
+- `tests/` — test suites
+- `infra/` — Terraform modules
+</code></pre>
+<p><strong>Review it regularly.</strong> Stale information actively poisons context. If your AGENTS.md says authentication logic lives in <code>src/auth/</code> and that directory was renamed to <code>src/identity/</code>, the agent will confidently look in the wrong place. Treat AGENTS.md like CI config — require PR reviews for changes.</p>
+<p><strong>Start with <code>/init</code>, then rewrite.</strong> Most AI tools offer a scaffolding command (<code>/init</code> in Claude Code) that analyses your codebase to detect build systems, test frameworks, and patterns. Use it as a foundation, then rewrite by hand.</p>
+<h4 id="hierarchy-and-scoping"><a class="header" href="#hierarchy-and-scoping">Hierarchy and scoping</a></h4>
+<p>AGENTS.md files follow a <strong>nearest-file-wins</strong> rule. Place them at different levels of your repository:</p>
+<pre><code>repo/
+├── AGENTS.md              # Root: global defaults
+├── CLAUDE.md              # Claude Code (can import AGENTS.md)
+├── packages/
+│   ├── api/
+│   │   └── AGENTS.md      # API-specific conventions
+│   └── frontend/
+│       └── AGENTS.md      # Frontend-specific conventions
+</code></pre>
+<p>Agents concatenate files from root to leaf, with <strong>closer files appearing later</strong> so they override earlier guidance. This lets different parts of a monorepo have different rules without conflict.</p>
+<p>For Claude Code specifically, <code>CLAUDE.md</code> supports three tiers:</p>
+<ol>
+<li><strong>User-level</strong> (<code>~/.claude/CLAUDE.md</code>) — personal preferences across all projects</li>
+<li><strong>Project-level</strong> (repo root) — project conventions</li>
+<li><strong>Subdirectory-level</strong> — scoped overrides</li>
+</ol>
+<blockquote>
+<p><strong>Bridging AGENTS.md and CLAUDE.md</strong>: Claude Code does not natively read <code>AGENTS.md</code>. The workaround is to create a <code>CLAUDE.md</code> whose first line is <code>@AGENTS.md</code> — an import directive that pulls in the shared file. This way, both Claude Code and every other agent read the same instructions.</p>
+</blockquote>
+<h4 id="anti-patterns"><a class="header" href="#anti-patterns">Anti-patterns</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>Anti-pattern</th><th>Why it fails</th><th>Fix</th></tr></thead><tbody>
+<tr><td><strong>Vague instructions</strong> ("be careful", "write clean code")</td><td>No actionable command, no threshold to meet</td><td>Specific: "Run <code>task lint</code> before committing"</td></tr>
+<tr><td><strong>Prose paragraphs</strong></td><td>LLMs skip or misinterpret long narrative</td><td>Bullet points with exact commands</td></tr>
+<tr><td><strong>Contradictory priorities</strong></td><td>Agent oscillates between conflicting rules (ICLR 2026: -42% resolve rate)</td><td>Rank priorities explicitly</td></tr>
+<tr><td><strong>Including secrets</strong></td><td>Leaked to anyone with repo access, cached in AI context</td><td>Use environment variables and <code>.env</code> files</td></tr>
+<tr><td><strong>Documenting file paths that change</strong></td><td>Stale paths poison context more than no paths</td><td>Reference by pattern (<code>src/**/test_*.py</code>) or keep paths updated</td></tr>
+<tr><td><strong>Too long (500+ lines)</strong></td><td>Causes "agentic drift" — agent starts strong then becomes incoherent</td><td>Under 200 lines; split into subdirectory files</td></tr>
+<tr><td><strong>Human documentation instead of agent operations</strong></td><td>Agents need commands, not explanations</td><td>Write for a machine: what to run, what to check, what is "done"</td></tr>
+<tr><td><strong>Auto-generating the file</strong></td><td>ETH Zurich: LLM-generated files reduced success in 5/8 settings, +20% cost</td><td>Always curate by hand; use <code>/init</code> only as a starting point</td></tr>
+<tr><td><strong>Marking everything IMPORTANT</strong></td><td>Overuse dilutes emphasis; agent treats nothing as important</td><td>Reserve emphasis for truly non-negotiable rules</td></tr>
+<tr><td><strong>Never updating</strong></td><td>Instructions drift as code evolves; stale info actively misleads</td><td>Review in PRs like code; prune when rules no longer apply</td></tr>
+</tbody></table>
+</div>
+<h4 id="continuous-improvement-loop"><a class="header" href="#continuous-improvement-loop">Continuous improvement loop</a></h4>
+<p>A powerful pattern is to ask the AI agent itself to improve the AGENTS.md:</p>
+<blockquote>
+<p>"Summarise what you learned this session and suggest improvements to AGENTS.md."</p>
+</blockquote>
+<p>This creates a feedback loop where the agent helps refine its own instructions based on actual usage — what commands it needed to discover, what conventions it got wrong, what context was missing.</p>
+<hr />
+<h3 id="model-context-protocol-mcp"><a class="header" href="#model-context-protocol-mcp">Model Context Protocol (MCP)</a></h3>
+<p>The <a href="https://modelcontextprotocol.io/">Model Context Protocol</a> (MCP) is an open standard that defines how AI agents connect to external tools and data sources. Think of it as <strong>USB-C for AI</strong> — a universal plug that lets any agent talk to any service.</p>
+<h4 id="the-problem-mcp-solves"><a class="header" href="#the-problem-mcp-solves">The problem MCP solves</a></h4>
+<p>Without MCP, every AI tool builds its own integrations:</p>
+<pre><code>Before MCP:
+  Claude Code ──custom──&gt; GitHub
+  Claude Code ──custom──&gt; Jira
+  Copilot     ──custom──&gt; GitHub
+  Copilot     ──custom──&gt; Jira
+  Cursor      ──custom──&gt; GitHub
+  ...
+
+With MCP:
+  Claude Code ──MCP──┐
+  Copilot     ──MCP──┤──&gt; MCP Server (GitHub)
+  Cursor      ──MCP──┘    MCP Server (Jira)
+                           MCP Server (Datadog)
+</code></pre>
+<h4 id="how-mcp-works"><a class="header" href="#how-mcp-works">How MCP works</a></h4>
+<p>MCP follows a client-server architecture:</p>
+<ul>
+<li><strong>MCP Host</strong> — the AI application (Claude Code, an IDE plugin)</li>
+<li><strong>MCP Client</strong> — maintains a 1:1 connection with a server</li>
+<li><strong>MCP Server</strong> — exposes capabilities (tools, resources, prompts)</li>
+</ul>
+<p>Servers can provide three types of capabilities:</p>
+<div class="table-wrapper"><table><thead><tr><th>Capability</th><th>Description</th><th>Example</th></tr></thead><tbody>
+<tr><td><strong>Tools</strong></td><td>Actions the AI can invoke</td><td><code>git_commit</code>, <code>create_jira_issue</code></td></tr>
+<tr><td><strong>Resources</strong></td><td>Data the AI can read</td><td>File contents, database records</td></tr>
+<tr><td><strong>Prompts</strong></td><td>Pre-built prompt templates</td><td>Code review checklist, PR description</td></tr>
+</tbody></table>
+</div>
+<h4 id="mcp-in-practice"><a class="header" href="#mcp-in-practice">MCP in practice</a></h4>
+<p>An MCP configuration for Claude Code lives in <code>.claude/settings.json</code> or the project's configuration:</p>
+<pre><code class="language-json">{
+  "mcpServers": {
+    "git": {
+      "command": "mcp-server-git",
+      "args": ["--repository", "."]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@context7/mcp"]
+    }
+  }
+}
+</code></pre>
+<p>With this configuration, the AI agent can:</p>
+<ul>
+<li>Read git history, create branches, make commits</li>
+<li>Fetch up-to-date library documentation instead of relying on training data</li>
+</ul>
+<h4 id="why-mcp-matters-for-documentation"><a class="header" href="#why-mcp-matters-for-documentation">Why MCP matters for documentation</a></h4>
+<p>MCP servers like <a href="https://context7.com/">Context7</a> solve a fundamental documentation problem: <strong>AI models have a training cutoff</strong>. When a library releases a new version, the AI's knowledge is stale. MCP lets the agent fetch current documentation on demand, ensuring accurate and up-to-date guidance.</p>
+<hr />
+<h3 id="skills"><a class="header" href="#skills">Skills</a></h3>
+<p>Skills are <strong>reusable prompt packages</strong> that extend AI agents with specialised domain knowledge. They are to AI agents what libraries are to programming languages.</p>
+<p>A skill encapsulates:</p>
+<ul>
+<li><strong>Domain expertise</strong> — best practices, patterns, anti-patterns</li>
+<li><strong>Workflow</strong> — step-by-step procedures for common tasks</li>
+<li><strong>Conventions</strong> — project or organisation-specific rules</li>
+<li><strong>Tool orchestration</strong> — which tools to use and when</li>
+</ul>
+<h4 id="example-a-documentation-skill"><a class="header" href="#example-a-documentation-skill">Example: a documentation skill</a></h4>
+<p>A Diátaxis documentation skill might contain:</p>
+<ul>
+<li>The four documentation types and their characteristics</li>
+<li>Language patterns appropriate for each type</li>
+<li>A workflow for evaluating and improving existing documentation</li>
+<li>Common mistakes to avoid</li>
+</ul>
+<p>When activated, the AI agent applies this knowledge automatically — it does not need to be re-explained every session.</p>
+<h4 id="skills-vs-agentsmd"><a class="header" href="#skills-vs-agentsmd">Skills vs AGENTS.md</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>Aspect</th><th>AGENTS.md</th><th>Skills</th></tr></thead><tbody>
+<tr><td><strong>Scope</strong></td><td>One repository</td><td>Cross-repository</td></tr>
+<tr><td><strong>Content</strong></td><td>Project-specific facts</td><td>Domain expertise and workflows</td></tr>
+<tr><td><strong>Activation</strong></td><td>Automatic (agent reads on start)</td><td>On demand (invoked when relevant)</td></tr>
+<tr><td><strong>Maintained by</strong></td><td>Repository owners</td><td>Skill authors (can be shared)</td></tr>
+</tbody></table>
+</div>
+<p>They are complementary: <code>AGENTS.md</code> tells the agent <em>about this project</em>, skills tell the agent <em>how to do things well</em>.</p>
+<hr />
 <h2 id="documentation-types-and-evolution"><a class="header" href="#documentation-types-and-evolution">Documentation Types and Evolution</a></h2>
 <h3 id="adr-architectural-decision-records"><a class="header" href="#adr-architectural-decision-records">ADR (Architectural Decision Records)</a></h3>
+<p>An <a href="https://adr.github.io/">ADR</a> captures a single architectural decision: the context, the decision, and the consequences.</p>
+<p>Why ADRs matter:</p>
 <ul>
-<li>Documenting architectural decisions</li>
-<li>Transparency and tracking project evolution</li>
+<li>They answer "<strong>why</strong> was this done this way?" — the question every new team member asks</li>
+<li>They prevent relitigating decisions that were already carefully considered</li>
+<li>They create a transparent, searchable decision trail</li>
 </ul>
+<h4 id="adr-format"><a class="header" href="#adr-format">ADR format</a></h4>
+<pre><code class="language-markdown"># ADR-001: Use mdBook for course documentation
+
+## Status
+Accepted
+
+## Context
+We need a documentation tool that supports Markdown, Mermaid diagrams,
+and can be extended with preprocessors.
+
+## Decision
+We will use mdBook with custom preprocessors.
+
+## Consequences
+- Positive: Markdown-native, fast builds, extensible
+- Negative: Less mature plugin ecosystem than Docusaurus
+</code></pre>
 <h3 id="tech-radar"><a class="header" href="#tech-radar">Tech Radar</a></h3>
+<p>A <a href="https://www.thoughtworks.com/radar">Tech Radar</a> is a living document that tracks the technologies a team or organisation uses, evaluates, or rejects.</p>
+<p>It categorises technologies into rings:</p>
 <ul>
-<li>Tracking technologies in use and under evaluation</li>
-<li>Aiding in technical decision-making</li>
+<li><strong>Adopt</strong> — proven, use by default</li>
+<li><strong>Trial</strong> — worth trying on real projects</li>
+<li><strong>Assess</strong> — interesting, explore in side projects</li>
+<li><strong>Hold</strong> — do not start new work with this</li>
 </ul>
+<p>The radar prevents technology sprawl and makes technical choices visible to the whole organisation.</p>
 <h3 id="eventstorming"><a class="header" href="#eventstorming">EventStorming</a></h3>
-<ul>
-<li>Collaborative modeling of business processes</li>
-<li>Identifying critical points in a system</li>
-</ul>
+<p><a href="https://www.eventstorming.com/">EventStorming</a> is a collaborative workshop format for modelling business processes. Participants use sticky notes to map out domain events, commands, and aggregates.</p>
+<p>It produces documentation as a side effect: the resulting event map is itself a powerful architectural diagram that captures business flows.</p>
+<hr />
 <h2 id="best-practices-for-writing-documentation"><a class="header" href="#best-practices-for-writing-documentation">Best Practices for Writing Documentation</a></h2>
 <h3 id="clarity-and-structure"><a class="header" href="#clarity-and-structure">Clarity and Structure</a></h3>
 <ul>
-<li>Using simple and precise language</li>
-<li>Organizing content into coherent sections and subsections</li>
+<li>Use simple, precise language — write for someone who has never seen the project</li>
+<li>Organise content into coherent sections with clear headings</li>
+<li>Use tables for structured data, code blocks for commands and config</li>
+<li>Keep paragraphs short — three to five sentences maximum</li>
 </ul>
 <h3 id="consistency-and-uniformity"><a class="header" href="#consistency-and-uniformity">Consistency and Uniformity</a></h3>
 <ul>
-<li>Adhering to style guides</li>
-<li>Using automated validation tools: <a href="https://github.com/errata-ai/vale">Vale</a>, <a href="https://doc-detective.com/docs/category/configuration">Doc Detective</a></li>
+<li>Adhere to a style guide (or create one)</li>
+<li>Use automated validation tools:
+<ul>
+<li><a href="https://github.com/errata-ai/vale">Vale</a> — prose linter with customisable rules</li>
+<li><a href="https://doc-detective.com/">Doc Detective</a> — automated documentation testing</li>
+<li><a href="https://github.com/DavidAnson/markdownlint">markdownlint</a> — Markdown style enforcement</li>
 </ul>
+</li>
+</ul>
+<h3 id="writing-style-techniques"><a class="header" href="#writing-style-techniques">Writing Style Techniques</a></h3>
+<p>How you write matters as much as what you write. Style affects comprehension, trust, and how quickly a reader can act on information.</p>
+<h4 id="active-voice-vs-passive-voice"><a class="header" href="#active-voice-vs-passive-voice">Active voice vs passive voice</a></h4>
+<p>Active voice makes sentences shorter, clearer, and more direct. Passive voice obscures who does what.</p>
+<div class="table-wrapper"><table><thead><tr><th>Passive (avoid)</th><th>Active (prefer)</th></tr></thead><tbody>
+<tr><td>"The configuration file is read by the application"</td><td>"The application reads the configuration file"</td></tr>
+<tr><td>"Errors are logged when a request is failed"</td><td>"The server logs errors when a request fails"</td></tr>
+<tr><td>"The tests should be run before committing"</td><td>"Run the tests before committing"</td></tr>
+</tbody></table>
+</div>
+<p><strong>When passive is acceptable</strong>: when the actor is irrelevant or unknown ("Logs are rotated daily", "The bug was introduced in v2.3").</p>
+<h4 id="use-imperative-mood-for-instructions"><a class="header" href="#use-imperative-mood-for-instructions">Use imperative mood for instructions</a></h4>
+<p>In tutorials and how-to guides, tell the reader what to do — do not describe what they might do.</p>
+<div class="table-wrapper"><table><thead><tr><th>Descriptive (avoid)</th><th>Imperative (prefer)</th></tr></thead><tbody>
+<tr><td>"You can start the server by running..."</td><td>"Start the server:"</td></tr>
+<tr><td>"The user should then open the file..."</td><td>"Open the file:"</td></tr>
+<tr><td>"It is possible to configure X by..."</td><td>"To configure X:"</td></tr>
+</tbody></table>
+</div>
+<h4 id="second-person-you-vs-third-person"><a class="header" href="#second-person-you-vs-third-person">Second person ("you") vs third person</a></h4>
+<p>Use <strong>"you"</strong> when addressing the reader directly. Avoid the detached third person ("the user", "the developer", "one").</p>
+<div class="table-wrapper"><table><thead><tr><th>Third person (avoid)</th><th>Second person (prefer)</th></tr></thead><tbody>
+<tr><td>"The developer must install Nix"</td><td>"You must install Nix"</td></tr>
+<tr><td>"One can verify the setup by running..."</td><td>"Verify the setup by running:"</td></tr>
+</tbody></table>
+</div>
+<p>Exception: reference documentation often uses neutral third person because it describes the system, not the reader.</p>
+<h4 id="present-tense-vs-future-tense"><a class="header" href="#present-tense-vs-future-tense">Present tense vs future tense</a></h4>
+<p>Write in present tense. Documentation describes how things <strong>are</strong>, not how they will be.</p>
+<div class="table-wrapper"><table><thead><tr><th>Future (avoid)</th><th>Present (prefer)</th></tr></thead><tbody>
+<tr><td>"The command will create a new directory"</td><td>"The command creates a new directory"</td></tr>
+<tr><td>"The server will respond with a 200 status"</td><td>"The server responds with a 200 status"</td></tr>
+<tr><td>"This will fail if the file does not exist"</td><td>"This fails if the file does not exist"</td></tr>
+</tbody></table>
+</div>
+<h4 id="sentence-length-and-complexity"><a class="header" href="#sentence-length-and-complexity">Sentence length and complexity</a></h4>
+<ul>
+<li>Aim for <strong>15–25 words</strong> per sentence</li>
+<li>One idea per sentence</li>
+<li>Break long sentences at natural conjunctions ("and", "but", "because")</li>
+<li>If a sentence has more than one comma, consider splitting it</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>Too long</th><th>Better</th></tr></thead><tbody>
+<tr><td>"The server reads the configuration file on startup, validates all required fields, logs any missing values, and exits with an error code if the configuration is invalid."</td><td>"The server reads the configuration file on startup. It validates all required fields and logs any missing values. If the configuration is invalid, it exits with an error code."</td></tr>
+</tbody></table>
+</div>
+<h4 id="avoid-nominalisations"><a class="header" href="#avoid-nominalisations">Avoid nominalisations</a></h4>
+<p>A nominalisation turns a verb into a noun, making prose bloated and vague.</p>
+<div class="table-wrapper"><table><thead><tr><th>Nominalised (avoid)</th><th>Direct (prefer)</th></tr></thead><tbody>
+<tr><td>"Perform an installation of..."</td><td>"Install..."</td></tr>
+<tr><td>"Make a modification to..."</td><td>"Modify..."</td></tr>
+<tr><td>"Carry out the execution of..."</td><td>"Run..."</td></tr>
+<tr><td>"Conduct an investigation into..."</td><td>"Investigate..."</td></tr>
+</tbody></table>
+</div>
+<h4 id="hedging-and-weasel-words"><a class="header" href="#hedging-and-weasel-words">Hedging and weasel words</a></h4>
+<p>Remove words that weaken your statements without adding precision.</p>
+<div class="table-wrapper"><table><thead><tr><th>Hedged (avoid)</th><th>Direct (prefer)</th></tr></thead><tbody>
+<tr><td>"It is generally recommended to..."</td><td>"We recommend..."</td></tr>
+<tr><td>"This can potentially cause..."</td><td>"This causes..."</td></tr>
+<tr><td>"It should be noted that..."</td><td>(just state the fact)</td></tr>
+<tr><td>"Basically, the system..."</td><td>"The system..."</td></tr>
+</tbody></table>
+</div>
+<h4 id="parallel-structure"><a class="header" href="#parallel-structure">Parallel structure</a></h4>
+<p>When listing items, use the same grammatical structure for each.</p>
+<div class="table-wrapper"><table><thead><tr><th>Not parallel</th><th>Parallel</th></tr></thead><tbody>
+<tr><td>"The tool can: lint code, running tests, and the formatting of files"</td><td>"The tool can: lint code, run tests, and format files"</td></tr>
+<tr><td>"Prerequisites: install Nix, Docker should be running, you need Git"</td><td>"Prerequisites: install Nix, start Docker, install Git"</td></tr>
+</tbody></table>
+</div>
+<h4 id="terminology-consistency"><a class="header" href="#terminology-consistency">Terminology consistency</a></h4>
+<p>Pick one term and stick with it. Do not alternate between synonyms.</p>
+<div class="table-wrapper"><table><thead><tr><th>Inconsistent</th><th>Consistent</th></tr></thead><tbody>
+<tr><td>"container" / "Docker image" / "image" (interchangeably)</td><td>"container image" (everywhere)</td></tr>
+<tr><td>"repo" / "repository" / "codebase"</td><td>"repository" (everywhere)</td></tr>
+<tr><td>"CLI" / "command line" / "terminal"</td><td>"command line" (everywhere, or define abbreviation once)</td></tr>
+</tbody></table>
+</div>
+<h4 id="documentation-specific-patterns"><a class="header" href="#documentation-specific-patterns">Documentation-specific patterns</a></h4>
+<div class="table-wrapper"><table><thead><tr><th>Pattern</th><th>When to use</th><th>Example</th></tr></thead><tbody>
+<tr><td><strong>Admonitions</strong></td><td>Warnings, tips, important notes</td><td><code>&gt; **Warning**: This deletes all data.</code></td></tr>
+<tr><td><strong>Code fences with language</strong></td><td>Any command or code</td><td><code>```bash</code> not <code>```</code></td></tr>
+<tr><td><strong>Placeholder syntax</strong></td><td>Values the reader must replace</td><td><code>&lt;your-api-key&gt;</code> or <code>${PROJECT_NAME}</code></td></tr>
+<tr><td><strong>Cross-references</strong></td><td>Linking related concepts</td><td><code>See [ADR-001](./adr/001.md) for context</code></td></tr>
+<tr><td><strong>Changelog-style</strong></td><td>Describing what changed</td><td>"Added", "Changed", "Removed", "Fixed"</td></tr>
+</tbody></table>
+</div>
+<h3 id="documentation-as-code"><a class="header" href="#documentation-as-code">Documentation as Code</a></h3>
+<p>Treat documentation like source code:</p>
+<ul>
+<li><strong>Version controlled</strong> — documentation lives in Git alongside the code it describes</li>
+<li><strong>Reviewed</strong> — documentation changes go through pull requests</li>
+<li><strong>Tested</strong> — link checkers, prose linters, and build checks run in CI</li>
+<li><strong>Automated</strong> — generation from source code, diagrams from code, API docs from schemas</li>
+</ul>
+<p>This ensures documentation stays in sync with the codebase.</p>
+<hr />
 <h2 id="accessibility-in-documentation"><a class="header" href="#accessibility-in-documentation">Accessibility in Documentation</a></h2>
 <h3 id="why-make-documentation-accessible"><a class="header" href="#why-make-documentation-accessible">Why Make Documentation Accessible?</a></h3>
 <ul>
-<li>Inclusion for all users</li>
-<li>Compliance with standards (e.g., WCAG)</li>
+<li>Inclusion for all users, including those with visual or motor impairments</li>
+<li>Compliance with standards (e.g., <a href="https://www.w3.org/WAI/WCAG21/quickref/">WCAG 2.1</a>)</li>
+<li>Better documentation for everyone — accessible writing is clearer writing</li>
 </ul>
-<h3 id="tools-and-best-practices"><a class="header" href="#tools-and-best-practices">Tools and Best Practices</a></h3>
+<h3 id="practices"><a class="header" href="#practices">Practices</a></h3>
 <ul>
-<li><a href="https://github.com/rust-lang/mdBook">mdBook</a>: Generating accessible digital documentation</li>
-<li><a href="https://github.com/errata-ai/vale">Vale</a>: Verifying accessibility standards</li>
-<li><a href="https://doc-detective.com/docs/get-started/intro">Doc detective</a>: Verifying accessibility standards</li>
+<li>Use semantic headings (<code>#</code>, <code>##</code>, <code>###</code>) in proper hierarchy</li>
+<li>Provide alt text for images</li>
+<li>Ensure sufficient colour contrast</li>
+<li>Use descriptive link text (not "click here")</li>
+<li>Test with screen readers</li>
 </ul>
+<hr />
 <h2 id="automating-documentation"><a class="header" href="#automating-documentation">Automating Documentation</a></h2>
-<h3 id="automating-repository-linting"><a class="header" href="#automating-repository-linting">Automating Repository Linting</a></h3>
+<h3 id="generation-from-source-code"><a class="header" href="#generation-from-source-code">Generation from Source Code</a></h3>
+<p>Good code documentation is extracted, not written separately:</p>
 <ul>
-<li>Checking syntax and style</li>
-<li><a href="https://github.com/charmbracelet/vhs">VHS</a>: Capturing terminal sessions and creating interactive tutorials</li>
-<li><a href="https://github.com/errata-ai/vale">Vale</a>: Automatic style checking</li>
+<li><a href="https://doc.rust-lang.org/rustdoc/">rustdoc</a> — generates documentation from Rust doc comments, including runnable examples</li>
+<li><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html">Javadoc</a> / <a href="https://kotlinlang.org/docs/kotlin-doc.html">KDoc</a> — JVM documentation generation</li>
+<li><a href="https://swagger.io/">Swagger / OpenAPI</a> — generates API documentation from specifications</li>
 </ul>
+<h3 id="interactive-documentation"><a class="header" href="#interactive-documentation">Interactive Documentation</a></h3>
+<ul>
+<li><a href="https://github.com/FauconFan/mdbook-cmdrun">mdBook cmd-run</a> — executes commands within documentation and embeds their output</li>
+<li><a href="https://github.com/charmbracelet/vhs">VHS</a> — records terminal sessions as GIFs for visual tutorials</li>
+<li><a href="https://mermaid.js.org/">Mermaid</a> — generates diagrams from text, embedded directly in Markdown</li>
+</ul>
+<h3 id="repository-linting"><a class="header" href="#repository-linting">Repository Linting</a></h3>
+<p>Automate quality checks in CI:</p>
+<pre><code class="language-yaml"># Example: linkcheck in CI
+tasks:
+  check:
+    cmds:
+      - mdbook build  # linkcheck runs as a renderer
+      - vale src/      # prose linting
+</code></pre>
 <hr />
-<h2 id="automatic-documentation-generation"><a class="header" href="#automatic-documentation-generation">Automatic Documentation Generation</a></h2>
-<h3 id="generating-documentation-from-source-code"><a class="header" href="#generating-documentation-from-source-code">Generating Documentation from Source Code</a></h3>
-<ul>
-<li><a href="https://doc.rust-lang.org/rustdoc/write-documentation/documentation-tests.html">rustdoc</a>: Automatically extracting documentation from code comments</li>
-<li><a href="https://github.com/rust-lang/mdBook">mdBook cmd-run</a>: Running commands within documentation</li>
-<li><a href="https://github.com/charmbracelet/vhs">VHS</a>: Interactive documentation with execution recordings</li>
-</ul>
+<h2 id="tools-and-platforms"><a class="header" href="#tools-and-platforms">Tools and Platforms</a></h2>
+<h3 id="documentation-generators"><a class="header" href="#documentation-generators">Documentation Generators</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Tool</th><th>Language</th><th>Strengths</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/mdBook/">mdBook</a></td><td>Rust / Markdown</td><td>Fast, extensible, great for technical books</td></tr>
+<tr><td><a href="https://docusaurus.io/">Docusaurus</a></td><td>React / MDX</td><td>Rich plugins, versioning, i18n</td></tr>
+<tr><td><a href="https://astro.build/">Astro</a></td><td>Multi-framework</td><td>Content-focused, excellent performance</td></tr>
+<tr><td><a href="https://www.mkdocs.org/">MkDocs</a></td><td>Python / Markdown</td><td>Simple, material theme is popular</td></tr>
+</tbody></table>
+</div>
+<h3 id="diagram-tools"><a class="header" href="#diagram-tools">Diagram Tools</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Tool</th><th>Approach</th><th>Best for</th></tr></thead><tbody>
+<tr><td><a href="https://mermaid.js.org/">Mermaid</a></td><td>Text-to-diagram</td><td>Flowcharts, sequences, embedded in Markdown</td></tr>
+<tr><td><a href="https://d2lang.com/">D2</a></td><td>Text-to-diagram</td><td>Complex architecture diagrams</td></tr>
+<tr><td><a href="https://www.drawio.com/">draw.io</a></td><td>Visual editor</td><td>Collaborative, free, offline-capable</td></tr>
+<tr><td><a href="https://excalidraw.com/">Excalidraw</a></td><td>Sketch-style</td><td>Whiteboard-feel diagrams</td></tr>
+</tbody></table>
+</div>
+<h3 id="ai-assisted-writing"><a class="header" href="#ai-assisted-writing">AI-Assisted Writing</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Tool</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code</a></td><td>AI coding agent with MCP support, skills, AGENTS.md</td></tr>
+<tr><td><a href="https://github.com/features/copilot">Copilot</a></td><td>AI pair programmer, inline suggestions</td></tr>
+<tr><td><a href="https://cursor.sh/">Cursor</a></td><td>AI-native IDE with codebase understanding</td></tr>
+<tr><td><a href="https://aider.chat/">Aider</a></td><td>Terminal-based AI pair programming</td></tr>
+</tbody></table>
+</div>
 <hr />
-<h2 id="collaboration-and-version-control"><a class="header" href="#collaboration-and-version-control">Collaboration and Version Control</a></h2>
-<h3 id="versioning-documentation"><a class="header" href="#versioning-documentation">Versioning Documentation</a></h3>
-<ul>
-<li>Using Git and GitHub</li>
-<li>Review process with pull requests</li>
-<li><a href="https://adr.github.io/">ADR</a> for decision tracking</li>
-</ul>
-<hr />
-<h2 id="tools-and-dedicated-platforms"><a class="header" href="#tools-and-dedicated-platforms">Tools and Dedicated Platforms</a></h2>
-<h3 id="overview-of-collaborative-tools"><a class="header" href="#overview-of-collaborative-tools">Overview of Collaborative Tools</a></h3>
-<ul>
-<li><a href="https://github.com/rust-lang/mdBook">mdBook</a>: Generating digital books</li>
-<li><a href="https://www.eventstorming.com/">EventStorming</a>: Collaborative documentation modeling</li>
-<li><a href="https://github.com/zalando/tech-radar">Tech Radar</a>: Tracking technology choices</li>
-</ul>
-<hr />
-<h2 id="llm-and-ai-for-documentation"><a class="header" href="#llm-and-ai-for-documentation">LLM and AI for Documentation</a></h2>
-<h3 id="ai-assisted-writing-and-automatic-generation"><a class="header" href="#ai-assisted-writing-and-automatic-generation">AI-Assisted Writing and Automatic Generation</a></h3>
-<ul>
-<li><a href="https://github.com/sigoden/aichat">AIChat</a>: Command-line AI assistant</li>
-<li><a href="https://docs.mermaidchart.com/plugins/mermaid-chart-gpt">Mermaid Chart GPT</a>: Automatically generating diagrams</li>
-</ul>
+<h2 id="putting-it-all-together"><a class="header" href="#putting-it-all-together">Putting It All Together</a></h2>
+<p>A well-documented repository in 2026 looks like this:</p>
+<pre><code>my-project/
+├── AGENTS.md                  # AI agent instructions
+├── CLAUDE.md -&gt; AGENTS.md     # Symlink for Claude Code
+├── CONTRIBUTING.md            # Human contributor guide
+├── CODE_OF_CONDUCT.md         # Behavioural expectations
+├── CHANGELOG.md               # Release history
+├── LICENSE                    # Legal terms
+├── SECURITY.md                # Vulnerability reporting
+├── README.md                  # Project overview
+├── .claude/
+│   └── settings.json          # MCP server configuration
+├── .github/
+│   ├── ISSUE_TEMPLATE/        # Structured issue templates
+│   └── PULL_REQUEST_TEMPLATE.md
+├── docs/
+│   ├── adr/                   # Architectural Decision Records
+│   │   ├── 001-use-mdbook.md
+│   │   └── 002-use-nix.md
+│   ├── tutorials/             # Diátaxis: learning by doing
+│   ├── how-to/                # Diátaxis: working guides
+│   ├── reference/             # Diátaxis: factual lookup
+│   └── explanation/           # Diátaxis: understanding
+└── src/                       # Source code with inline docs
+</code></pre>
+<p>The key insight: <strong>documentation is not a single thing</strong>. It is a system of interconnected documents, each serving a specific audience and purpose. Diátaxis gives you the framework, community standard files give you the structure, and AI tools (AGENTS.md, MCP, skills) ensure that both humans and machines can navigate and contribute to the project effectively.</p>
 <hr />
 
                     </main>
@@ -292,7 +907,7 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../RADAR.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../monitoring/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -306,7 +921,7 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../RADAR.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../monitoring/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

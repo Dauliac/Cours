@@ -1,0 +1,2105 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>TP 5: Local Kubernetes with k3d - Cours &quot;opensource&quot;</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content=".">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Course</li><li class="chapter-item expanded "><a href="../../../sdlc/index.html"><strong aria-hidden="true">1.</strong> Introduction to SDLC</a></li><li class="chapter-item expanded "><a href="../../../system/index.html"><strong aria-hidden="true">2.</strong> OS</a></li><li class="chapter-item expanded "><a href="../../../licences/index.html"><strong aria-hidden="true">3.</strong> Licences</a></li><li class="chapter-item expanded "><a href="../../../documentation/index.html"><strong aria-hidden="true">4.</strong> Technical documentation</a></li><li class="chapter-item expanded "><a href="../../../monitoring/index.html"><strong aria-hidden="true">5.</strong> Monitoring & Observability</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">References</li><li class="chapter-item expanded "><a href="../../../RADAR.html"><strong aria-hidden="true">6.</strong> tech radar</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">Practicals</li><li class="chapter-item expanded "><a href="../../../sdlc/tps/packaging-with-nix/index.html"><strong aria-hidden="true">7.</strong> TP 1: Packaging with Nix</a></li><li class="chapter-item expanded "><a href="../../../sdlc/tps/perfect-container-with/index.html"><strong aria-hidden="true">8.</strong> TP 2: Building Containers - The Traditional Way</a></li><li class="chapter-item expanded "><a href="../../../sdlc/tps/perfect-container-with-nix/index.html"><strong aria-hidden="true">9.</strong> TP 3: Perfect Containers with Nix</a></li><li class="chapter-item expanded "><a href="../../../sdlc/tps/sdlc-tooling-workshop/index.html"><strong aria-hidden="true">10.</strong> TP 4: SDLC Tooling Workshop</a></li><li class="chapter-item expanded "><a href="../../../sdlc/tps/local-kubernetes-with-k3d/index.html" class="active"><strong aria-hidden="true">11.</strong> TP 5: Local Kubernetes with k3d</a></li><li class="chapter-item expanded affix "><li class="spacer"></li><li class="chapter-item expanded affix "><li class="part-title">How-To Guides</li><li class="chapter-item expanded "><a href="../../../nix/INSTALL.html"><strong aria-hidden="true">12.</strong> Install nix</a></li><li class="chapter-item expanded "><a href="../../../nix/COMMA.html"><strong aria-hidden="true">13.</strong> Install comma</a></li><li class="chapter-item expanded "><a href="../../../GET.html"><strong aria-hidden="true">14.</strong> Get courses</a></li><li class="chapter-item expanded "><a href="../../../nix/TEMPLATE.html"><strong aria-hidden="true">15.</strong> Get template</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cours &quot;opensource&quot;</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="tp-5-local-kubernetes-with-k3d"><a class="header" href="#tp-5-local-kubernetes-with-k3d">TP 5: Local Kubernetes with k3d</a></h1>
+<h2 id="learning-objectives"><a class="header" href="#learning-objectives">Learning Objectives</a></h2>
+<p>By the end of this practical, you will be able to:</p>
+<ol>
+<li><strong>Create</strong> a local Kubernetes cluster with k3d that runs inside Docker</li>
+<li><strong>Understand</strong> core Kubernetes concepts: Pods, Deployments, Services, Namespaces, Ingress</li>
+<li><strong>Navigate</strong> the cluster visually with k9s</li>
+<li><strong>Deploy</strong> applications using raw YAML manifests and <code>kubectl</code></li>
+<li><strong>Package</strong> and deploy applications using Helm charts</li>
+<li><strong>Manage</strong> environment-specific configurations with Kustomize overlays</li>
+<li><strong>Install</strong> Argo CD and manage it through its web UI and CLI</li>
+<li><strong>Implement</strong> a GitOps workflow where Git is the single source of truth for deployments</li>
+<li><strong>Set up</strong> a fast local development loop with Skaffold that live-syncs code into the cluster</li>
+</ol>
+<h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
+<ul>
+<li>Completed <a href="../perfect-container-with/README.html">TP 2: Building Containers</a> (you need to understand container basics)</li>
+<li>Docker installed and running (Docker Desktop on WSL/macOS, Docker Engine on Linux)</li>
+<li>Nix installed (from TP 1) with flakes enabled</li>
+<li>Git installed</li>
+<li>A GitHub account (for the GitOps section)</li>
+</ul>
+<blockquote>
+<p><strong>WSL users</strong>: all commands in this TP run inside your WSL terminal. Docker Desktop must have WSL integration enabled (Settings &gt; Resources &gt; WSL Integration).</p>
+</blockquote>
+<hr />
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p>This workshop takes you from zero Kubernetes knowledge to a full local GitOps workflow.
+You will progress through increasingly sophisticated deployment methods:</p>
+<pre class="mermaid">graph LR
+    A[&quot;Raw Manifests&lt;br/&gt;&lt;i&gt;manual kubectl apply&lt;/i&gt;&quot;] --&gt; B[&quot;Helm&lt;br/&gt;&lt;i&gt;templated packages&lt;/i&gt;&quot;]
+    B --&gt; B2[&quot;Kustomize&lt;br/&gt;&lt;i&gt;environment overlays&lt;/i&gt;&quot;]
+    B2 --&gt; C[&quot;Argo CD&lt;br/&gt;&lt;i&gt;declarative sync&lt;/i&gt;&quot;]
+    C --&gt; D[&quot;GitOps&lt;br/&gt;&lt;i&gt;Git-driven deploys&lt;/i&gt;&quot;]
+    D --&gt; E[&quot;Skaffold&lt;br/&gt;&lt;i&gt;live dev loop&lt;/i&gt;&quot;]
+
+    style A fill:#f9f,stroke:#333
+    style B fill:#bbf,stroke:#333
+    style B2 fill:#adf,stroke:#333
+    style C fill:#bfb,stroke:#333
+    style D fill:#fbb,stroke:#333
+    style E fill:#ff9,stroke:#333
+</pre>
+<p>Each step builds on the previous one. By the end, you will have a local cluster
+where pushing to Git automatically deploys your application, and editing code locally
+instantly reflects in the cluster.</p>
+<h3 id="what-is-kubernetes"><a class="header" href="#what-is-kubernetes">What is Kubernetes?</a></h3>
+<p>Before we dive in, let's understand <strong>why Kubernetes exists</strong>. Imagine you have a web application running in a container. That works fine on one machine. But what happens when:</p>
+<ul>
+<li>The container crashes? Nobody restarts it.</li>
+<li>You need 10 copies to handle traffic? You manage them manually.</li>
+<li>You want to update without downtime? You have to orchestrate it yourself.</li>
+</ul>
+<p><strong>Kubernetes solves all of this.</strong> It is a <strong>container orchestrator</strong> -- you tell it <em>what you want</em> (e.g. "run 3 copies of my app"), and it figures out <em>how to make it happen</em> (scheduling containers, restarting crashed ones, rolling out updates).</p>
+<pre class="mermaid">graph TB
+    subgraph &quot;Without Kubernetes&quot;
+        U1[You] --&gt;|&quot;manually start&quot;| C1[Container 1]
+        U1 --&gt;|&quot;manually start&quot;| C2[Container 2]
+        U1 --&gt;|&quot;manually restart&lt;br/&gt;if it crashes&quot;| C1
+    end
+
+    subgraph &quot;With Kubernetes&quot;
+        U2[You] --&gt;|&quot;declare: I want 3 replicas&quot;| K[Kubernetes]
+        K --&gt;|&quot;schedules &amp; manages&quot;| P1[Container 1]
+        K --&gt;|&quot;schedules &amp; manages&quot;| P2[Container 2]
+        K --&gt;|&quot;schedules &amp; manages&quot;| P3[Container 3]
+        K --&gt;|&quot;auto-restarts if crash&quot;| P1
+    end
+</pre>
+<p>Think of Kubernetes as a <strong>declarative system</strong>: you describe the desired state, and Kubernetes continuously works to make reality match that description.</p>
+<hr />
+<h2 id="part-1-setting-up-k3d-20-min"><a class="header" href="#part-1-setting-up-k3d-20-min">Part 1: Setting Up k3d (20 min)</a></h2>
+<h3 id="what-is-k3d"><a class="header" href="#what-is-k3d">What is k3d?</a></h3>
+<p><a href="https://k3d.io/">k3d</a> runs <a href="https://k3s.io/">k3s</a> (a lightweight Kubernetes distribution) inside Docker containers.
+This means you get a fully functional Kubernetes cluster without needing a VM or cloud provider.</p>
+<p>In production, Kubernetes runs on real servers (physical or virtual machines). Each server is a <strong>node</strong>. But for learning and development, we don't need real servers -- k3d <strong>simulates</strong> a multi-node cluster by running each node as a Docker container on your laptop:</p>
+<pre class="mermaid">graph TB
+    subgraph &quot;Production Cluster&quot;
+        direction TB
+        PM1[Physical Server 1&lt;br/&gt;Control Plane Node]
+        PM2[Physical Server 2&lt;br/&gt;Worker Node]
+        PM3[Physical Server 3&lt;br/&gt;Worker Node]
+    end
+
+    subgraph &quot;k3d on your laptop&quot;
+        direction TB
+        D[Docker Engine]
+        D --&gt; DC1[&quot;Container: k3d-server-0&lt;br/&gt;(simulates Control Plane)&quot;]
+        D --&gt; DC2[&quot;Container: k3d-agent-0&lt;br/&gt;(simulates Worker Node)&quot;]
+        D --&gt; DC3[&quot;Container: k3d-agent-1&lt;br/&gt;(simulates Worker Node)&quot;]
+        D --&gt; DC4[&quot;Container: k3d-serverlb&lt;br/&gt;(Load Balancer)&quot;]
+    end
+
+    style PM1 fill:#f9f,stroke:#333
+    style PM2 fill:#bbf,stroke:#333
+    style PM3 fill:#bbf,stroke:#333
+    style DC1 fill:#f9f,stroke:#333
+    style DC2 fill:#bbf,stroke:#333
+    style DC3 fill:#bbf,stroke:#333
+    style DC4 fill:#ff9,stroke:#333
+</pre>
+<p><strong>Key insight</strong>: it's containers all the way down. Your application containers run <em>inside</em> the k3d node containers. This is "Docker-in-Docker" -- and it works perfectly for local development.</p>
+<p>Why k3d over alternatives?</p>
+<div class="table-wrapper"><table><thead><tr><th>Tool</th><th>How it works</th><th>Pros</th><th>Cons</th></tr></thead><tbody>
+<tr><td><strong>k3d</strong></td><td>k3s in Docker containers</td><td>Fast startup, multi-node, works in WSL</td><td>Needs Docker</td></tr>
+<tr><td>minikube</td><td>VM or Docker</td><td>Many addons</td><td>Heavier, slower</td></tr>
+<tr><td>kind</td><td>Kubernetes in Docker</td><td>Official K8s conformance</td><td>Slower than k3d</td></tr>
+<tr><td>Docker Desktop K8s</td><td>Built-in</td><td>Zero setup</td><td>Single node, not configurable</td></tr>
+</tbody></table>
+</div>
+<p>k3d starts a cluster in seconds and works everywhere Docker runs -- including WSL 2.</p>
+<h3 id="step-1-set-up-your-environment-with-nix"><a class="header" href="#step-1-set-up-your-environment-with-nix">Step 1: Set up your environment with Nix</a></h3>
+<p>All the tools for this workshop are packaged in a Nix flake template. This gives you a <strong>reproducible, declarative</strong> development environment -- no manual installation of individual tools.</p>
+<pre><code class="language-bash">mkdir -p k8s-workshop
+cd k8s-workshop
+nix flake init -t github:Dauliac/Cours#tp5-k8s
+</code></pre>
+<p>This creates a <code>flake.nix</code> and Nix modules that declare all the tools you need. Enter the development shell:</p>
+<pre><code class="language-bash"># If you have direnv installed (recommended):
+direnv allow
+
+# Otherwise, enter the shell manually:
+nix develop
+</code></pre>
+<p>Verify that all tools are available:</p>
+<pre><code class="language-bash">k3d version
+kubectl version --client
+helm version
+k9s version
+argocd version --client
+kustomize version
+skaffold version
+</code></pre>
+<blockquote>
+<p><strong>What just happened?</strong> The Nix flake declared all workshop dependencies (<code>k3d</code>, <code>kubectl</code>, <code>helm</code>, <code>k9s</code>, <code>argocd</code>, <code>kustomize</code>, <code>skaffold</code>) in a single file. <code>nix develop</code> downloads and makes them available in an isolated shell -- nothing is installed globally, and everyone gets the exact same versions. This is the same reproducibility approach from TP 1, applied to infrastructure tooling.</p>
+</blockquote>
+<h3 id="step-2-create-your-first-cluster"><a class="header" href="#step-2-create-your-first-cluster">Step 2: Create your first cluster</a></h3>
+<blockquote>
+<p><strong>Before creating</strong>: if you have an existing k3d cluster using ports 8080 or 8443, the creation will hang silently. Check with <code>k3d cluster list</code> and delete stale clusters with <code>k3d cluster delete &lt;name&gt;</code> first.</p>
+</blockquote>
+<pre><code class="language-bash">k3d cluster create my-cluster \
+  --image rancher/k3s:v1.31.6-k3s1 \
+  --port "8080:80@loadbalancer" \
+  --port "8443:443@loadbalancer" \
+  --agents 2
+</code></pre>
+<blockquote>
+<p><strong>Why <code>--image</code>?</strong> The default k3s version bundled with k3d can be very old. Pinning a recent k3s release avoids compatibility issues with newer Kubernetes APIs and ensures images pull correctly.</p>
+</blockquote>
+<p>Let's break down what each flag does:</p>
+<div class="table-wrapper"><table><thead><tr><th>Flag</th><th>What it does</th></tr></thead><tbody>
+<tr><td><code>my-cluster</code></td><td>The name of your cluster (you can choose any name)</td></tr>
+<tr><td><code>--image rancher/k3s:v1.31.6-k3s1</code></td><td>Pin a specific Kubernetes version (avoids surprises)</td></tr>
+<tr><td><code>--port "8080:80@loadbalancer"</code></td><td>Map your machine's port 8080 to the cluster's port 80</td></tr>
+<tr><td><code>--port "8443:443@loadbalancer"</code></td><td>Map your machine's port 8443 to the cluster's port 443</td></tr>
+<tr><td><code>--agents 2</code></td><td>Create 2 worker nodes (in addition to 1 control plane node)</td></tr>
+</tbody></table>
+</div>
+<p>This creates:</p>
+<ul>
+<li><strong>1 server node</strong> (control plane): runs the Kubernetes API server, scheduler, and etcd</li>
+<li><strong>2 agent nodes</strong> (workers): run your workloads</li>
+<li><strong>1 load balancer</strong>: forwards ports 8080 and 8443 from your machine into the cluster</li>
+</ul>
+<pre class="mermaid">graph LR
+    subgraph &quot;Your Machine&quot;
+        Browser[&quot;Browser / curl&quot;]
+    end
+
+    subgraph &quot;Docker Network&quot;
+        LB[&quot;k3d-my-cluster-serverlb&lt;br/&gt;Load Balancer&lt;br/&gt;:8080 → :80&lt;br/&gt;:8443 → :443&quot;]
+
+        subgraph &quot;Control Plane&quot;
+            S0[&quot;k3d-my-cluster-server-0&lt;br/&gt;API Server + Scheduler + etcd&quot;]
+        end
+
+        subgraph &quot;Workers&quot;
+            A0[&quot;k3d-my-cluster-agent-0&lt;br/&gt;Runs your Pods&quot;]
+            A1[&quot;k3d-my-cluster-agent-1&lt;br/&gt;Runs your Pods&quot;]
+        end
+    end
+
+    Browser --&gt;|&quot;:8080&quot;| LB
+    LB --&gt;|&quot;:80&quot;| S0
+    S0 --&gt; A0
+    S0 --&gt; A1
+
+    style LB fill:#ff9,stroke:#333
+    style S0 fill:#f9f,stroke:#333
+    style A0 fill:#bbf,stroke:#333
+    style A1 fill:#bbf,stroke:#333
+</pre>
+<p><strong>What happens behind the scenes</strong> when you run this command:</p>
+<ol>
+<li>k3d pulls the <code>rancher/k3s</code> Docker image</li>
+<li>It creates a Docker network so all nodes can communicate</li>
+<li>It starts 4 Docker containers (1 server + 2 agents + 1 load balancer)</li>
+<li>The server node bootstraps Kubernetes (starts the API server, etcd database, scheduler)</li>
+<li>The agent nodes register themselves with the server</li>
+<li>k3d writes a <strong>kubeconfig</strong> file so <code>kubectl</code> knows how to connect to the cluster</li>
+<li>The load balancer starts forwarding your ports into the cluster</li>
+</ol>
+<p>All of this happens in a few seconds.</p>
+<h3 id="step-3-verify-the-cluster"><a class="header" href="#step-3-verify-the-cluster">Step 3: Verify the cluster</a></h3>
+<pre><code class="language-bash"># k3d automatically configures kubectl to point at your cluster
+kubectl cluster-info
+
+# List the nodes
+kubectl get nodes
+</code></pre>
+<p>You should see three nodes with status <code>Ready</code>. Your cluster is running.</p>
+<blockquote>
+<p><strong>What is a kubeconfig?</strong> When k3d creates a cluster, it writes connection details (server address, certificates) to a file called <code>~/.kube/config</code>. This file can contain configurations for <em>multiple</em> clusters. A <strong>context</strong> is a named entry in this file that points to a specific cluster. <code>kubectl</code> always talks to whichever context is currently selected.</p>
+</blockquote>
+<blockquote>
+<p><strong>Important</strong>: if you have other Kubernetes clusters configured (e.g. from work), make sure your context points at k3d:</p>
+<pre><code class="language-bash">kubectl config current-context    # Should show: k3d-my-cluster
+kubectl config use-context k3d-my-cluster   # Switch if needed
+</code></pre>
+</blockquote>
+<h3 id="step-4-explore-cluster-management"><a class="header" href="#step-4-explore-cluster-management">Step 4: Explore cluster management</a></h3>
+<pre><code class="language-bash"># List all clusters
+k3d cluster list
+
+# Stop the cluster (preserves state)
+k3d cluster stop my-cluster
+
+# Start it again
+k3d cluster start my-cluster
+
+# Delete the cluster entirely
+# k3d cluster delete my-cluster    # Don't run this yet!
+</code></pre>
+<h3 id="checkpoint"><a class="header" href="#checkpoint">Checkpoint</a></h3>
+<p>Run these commands and verify they work:</p>
+<pre><code class="language-bash">kubectl get nodes          # 3 nodes, all Ready
+kubectl get namespaces     # default, kube-system, kube-public, kube-node-lease
+docker ps                  # 4 containers (server, 2 agents, loadbalancer)
+</code></pre>
+<h3 id="step-5-meet-k9s----your-visual-cluster-explorer"><a class="header" href="#step-5-meet-k9s----your-visual-cluster-explorer">Step 5: Meet k9s -- your visual cluster explorer</a></h3>
+<p><a href="https://k9scli.io/">k9s</a> is a terminal UI that makes it much easier to understand what is happening in your cluster. Instead of typing <code>kubectl get</code> commands repeatedly, k9s gives you a live, interactive view.</p>
+<pre><code class="language-bash">k9s
+</code></pre>
+<p>You will see a full-screen terminal interface showing your cluster resources. Key navigation:</p>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Action</th></tr></thead><tbody>
+<tr><td><code>:pods</code></td><td>View all pods (type any resource name)</td></tr>
+<tr><td><code>:deploy</code></td><td>View deployments</td></tr>
+<tr><td><code>:svc</code></td><td>View services</td></tr>
+<tr><td><code>:ns</code></td><td>View namespaces</td></tr>
+<tr><td><code>/</code></td><td>Filter/search</td></tr>
+<tr><td><code>d</code></td><td>Describe selected resource</td></tr>
+<tr><td><code>l</code></td><td>View logs of selected pod</td></tr>
+<tr><td><code>s</code></td><td>Shell into selected pod</td></tr>
+<tr><td><code>Ctrl+C</code> or <code>:q</code></td><td>Quit k9s</td></tr>
+</tbody></table>
+</div>
+<blockquote>
+<p><strong>Tip</strong>: keep k9s running in a separate terminal throughout this workshop. It updates in real time, so you can watch pods being created, scaled, and deleted as you run commands in another terminal. This is much more intuitive than repeatedly running <code>kubectl get pods</code>.</p>
+</blockquote>
+<hr />
+<h2 id="part-2-kubernetes-fundamentals-with-raw-manifests-40-min"><a class="header" href="#part-2-kubernetes-fundamentals-with-raw-manifests-40-min">Part 2: Kubernetes Fundamentals with Raw Manifests (40 min)</a></h2>
+<h3 id="core-concepts"><a class="header" href="#core-concepts">Core Concepts</a></h3>
+<p>Before deploying anything, understand the building blocks. Kubernetes has many resource types, but you only need a handful to get started. Here is how they relate to each other:</p>
+<pre class="mermaid">graph TB
+    subgraph &quot;What you define&quot;
+        NS[Namespace&lt;br/&gt;&lt;i&gt;Isolation boundary&lt;/i&gt;]
+        CM[ConfigMap&lt;br/&gt;&lt;i&gt;Configuration data&lt;/i&gt;]
+        SEC[Secret&lt;br/&gt;&lt;i&gt;Sensitive data&lt;/i&gt;]
+        DEP[Deployment&lt;br/&gt;&lt;i&gt;Desired state: 3 replicas&lt;/i&gt;]
+        SVC[Service&lt;br/&gt;&lt;i&gt;Stable network endpoint&lt;/i&gt;]
+        ING[Ingress&lt;br/&gt;&lt;i&gt;External HTTP routing&lt;/i&gt;]
+    end
+
+    subgraph &quot;What Kubernetes creates&quot;
+        RS[ReplicaSet&lt;br/&gt;&lt;i&gt;Maintains Pod count&lt;/i&gt;]
+        P1[Pod 1]
+        P2[Pod 2]
+        P3[Pod 3]
+    end
+
+    subgraph &quot;External&quot;
+        USER[User / Browser]
+    end
+
+    DEP --&gt;|&quot;creates &amp; manages&quot;| RS
+    RS --&gt;|&quot;creates&quot;| P1
+    RS --&gt;|&quot;creates&quot;| P2
+    RS --&gt;|&quot;creates&quot;| P3
+    CM -.-&gt;|&quot;injects config&quot;| P1
+    CM -.-&gt;|&quot;injects config&quot;| P2
+    CM -.-&gt;|&quot;injects config&quot;| P3
+    SEC -.-&gt;|&quot;injects secrets&quot;| P1
+    SVC --&gt;|&quot;load-balances to&quot;| P1
+    SVC --&gt;|&quot;load-balances to&quot;| P2
+    SVC --&gt;|&quot;load-balances to&quot;| P3
+    ING --&gt;|&quot;routes to&quot;| SVC
+    USER --&gt;|&quot;HTTP request&quot;| ING
+
+    style DEP fill:#f9f,stroke:#333
+    style RS fill:#fdf,stroke:#333
+    style P1 fill:#bbf,stroke:#333
+    style P2 fill:#bbf,stroke:#333
+    style P3 fill:#bbf,stroke:#333
+    style SVC fill:#bfb,stroke:#333
+    style ING fill:#ff9,stroke:#333
+</pre>
+<div class="table-wrapper"><table><thead><tr><th>Concept</th><th>What it is</th><th>Analogy</th></tr></thead><tbody>
+<tr><td><strong>Pod</strong></td><td>Smallest deployable unit. One or more containers.</td><td>A single process</td></tr>
+<tr><td><strong>Deployment</strong></td><td>Manages Pods. Handles scaling, rolling updates, rollbacks.</td><td>A process supervisor</td></tr>
+<tr><td><strong>ReplicaSet</strong></td><td>Created by Deployment. Ensures N pods are always running.</td><td>The supervisor's checklist</td></tr>
+<tr><td><strong>Service</strong></td><td>Stable network endpoint for a set of Pods.</td><td>A DNS entry + load balancer</td></tr>
+<tr><td><strong>Namespace</strong></td><td>Virtual cluster within a cluster. Isolates resources.</td><td>A folder</td></tr>
+<tr><td><strong>Ingress</strong></td><td>Routes external HTTP traffic to Services.</td><td>A reverse proxy rule</td></tr>
+<tr><td><strong>ConfigMap</strong></td><td>Key-value configuration injected into Pods.</td><td>Environment variables file</td></tr>
+<tr><td><strong>Secret</strong></td><td>Like ConfigMap, but for sensitive data (base64-encoded).</td><td>An encrypted env file</td></tr>
+</tbody></table>
+</div>
+<p><strong>The declarative model</strong>: notice that you never say "start a container". You say "I want a Deployment with 3 replicas". Kubernetes then figures out what needs to happen -- creating Pods, scheduling them on nodes, restarting crashed ones. This is the fundamental difference from Docker Compose where you describe <em>how</em> to run things.</p>
+<h3 id="step-5-create-a-namespace"><a class="header" href="#step-5-create-a-namespace">Step 5: Create a namespace</a></h3>
+<p>Create a working directory for this TP:</p>
+<pre><code class="language-bash">mkdir -p k8s-workshop
+cd k8s-workshop
+</code></pre>
+<p>Create <code>namespace.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Namespace
+metadata:
+  name: workshop
+</code></pre>
+<p>Apply it:</p>
+<pre><code class="language-bash">kubectl apply -f namespace.yaml
+kubectl get namespaces
+</code></pre>
+<p>You should see <code>workshop</code> in the list. From now on, we will deploy everything into this namespace.</p>
+<blockquote>
+<p><strong>What just happened?</strong> You sent a YAML file to the Kubernetes API server using <code>kubectl apply</code>. The API server validated it, stored the desired state in etcd (its database), and created the namespace. This is the pattern for <em>everything</em> in Kubernetes: write YAML, apply it, Kubernetes makes it real.</p>
+</blockquote>
+<h3 id="step-6-deploy-a-pod-directly"><a class="header" href="#step-6-deploy-a-pod-directly">Step 6: Deploy a Pod directly</a></h3>
+<p>Create <code>pod.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-pod
+  namespace: workshop
+  labels:
+    app: hello
+spec:
+  containers:
+    - name: hello
+      image: traefik/whoami:v1.10
+      ports:
+        - containerPort: 80
+</code></pre>
+<pre><code class="language-bash">kubectl apply -f pod.yaml
+kubectl get pods -n workshop
+</code></pre>
+<p>Wait until <code>STATUS</code> shows <code>Running</code>. Then test it:</p>
+<pre><code class="language-bash"># Forward the pod's port to your machine
+kubectl port-forward -n workshop pod/hello-pod 9090:80 &amp;
+
+# Test it
+curl http://localhost:9090
+
+# Stop the port-forward
+kill %1
+</code></pre>
+<p>You should see a response showing the hostname, IP address, and request headers. <a href="https://github.com/traefik/whoami">traefik/whoami</a> is a tiny Go server (Apache 2.0 license) that echoes back request information -- perfect for testing.</p>
+<blockquote>
+<p><strong>What is port-forwarding?</strong> Your Pod runs <em>inside</em> the cluster, on the cluster's internal network. Your laptop cannot reach it directly. <code>kubectl port-forward</code> creates a tunnel from your machine (port 9090) into the Pod (port 8080):</p>
+<pre><code>Your laptop:9090 ──tunnel──→ Pod hello-pod:80
+</code></pre>
+<p>This is useful for debugging but not how you'd expose services in production.</p>
+</blockquote>
+<p>Now delete the Pod:</p>
+<pre><code class="language-bash">kubectl delete -f pod.yaml
+kubectl get pods -n workshop
+</code></pre>
+<p>The Pod is gone. <strong>Nobody recreates it.</strong> This is the problem -- raw Pods have no self-healing. That is what Deployments solve.</p>
+<pre class="mermaid">graph LR
+    subgraph &quot;Raw Pod (no self-healing)&quot;
+        P[&quot;Pod: hello-pod&quot;]
+        X[&quot;💀 Deleted&quot;]
+        P --&gt;|&quot;kubectl delete&quot;| X
+        X --&gt;|&quot;nothing happens&quot;| GONE[&quot;Gone forever&quot;]
+    end
+</pre>
+<h3 id="step-7-deploy-with-a-deployment"><a class="header" href="#step-7-deploy-with-a-deployment">Step 7: Deploy with a Deployment</a></h3>
+<p>Create <code>deployment.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+  namespace: workshop
+  labels:
+    app: hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+        - name: hello
+          image: traefik/whoami:v1.10
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
+</code></pre>
+<p>Let's understand the YAML structure before applying it:</p>
+<pre class="mermaid">graph TB
+    subgraph &quot;deployment.yaml structure&quot;
+        META[&quot;metadata:&lt;br/&gt;name: hello&lt;br/&gt;namespace: workshop&quot;]
+        SPEC[&quot;spec.replicas: 3&lt;br/&gt;&lt;i&gt;How many Pods to run&lt;/i&gt;&quot;]
+        SEL[&quot;spec.selector:&lt;br/&gt;matchLabels: app=hello&lt;br/&gt;&lt;i&gt;Which Pods belong to this Deployment&lt;/i&gt;&quot;]
+        TPL[&quot;spec.template:&lt;br/&gt;&lt;i&gt;The Pod blueprint&lt;/i&gt;&quot;]
+        CONT[&quot;containers:&lt;br/&gt;- name: hello&lt;br/&gt;  image: traefik/whoami&lt;br/&gt;&lt;i&gt;What container to run&lt;/i&gt;&quot;]
+        RES[&quot;resources:&lt;br/&gt;requests: cpu=50m, mem=32Mi&lt;br/&gt;limits: cpu=100m, mem=64Mi&lt;br/&gt;&lt;i&gt;How much CPU/RAM to allocate&lt;/i&gt;&quot;]
+    end
+
+    META --&gt; SPEC
+    SPEC --&gt; SEL
+    SEL --&gt; TPL
+    TPL --&gt; CONT
+    CONT --&gt; RES
+</pre>
+<blockquote>
+<p><strong>What are resource requests and limits?</strong></p>
+<ul>
+<li><strong>Requests</strong> = the minimum resources guaranteed to your container. Kubernetes uses this to decide which node has enough room.</li>
+<li><strong>Limits</strong> = the maximum resources your container can use. If it exceeds memory limits, Kubernetes kills it (OOMKilled).</li>
+<li><code>50m</code> CPU = 0.05 CPU cores (1000m = 1 full core). <code>32Mi</code> memory = 32 mebibytes.</li>
+</ul>
+</blockquote>
+<pre><code class="language-bash">kubectl apply -f deployment.yaml
+kubectl get deployments -n workshop
+kubectl get pods -n workshop
+</code></pre>
+<p>You should see 3 Pods running. Notice that each Pod has a unique name like <code>hello-7d4b8c6f9-x2k4m</code> -- Kubernetes generates these names automatically.</p>
+<p>Now try killing one:</p>
+<pre><code class="language-bash"># Delete one pod (replace with an actual pod name from `kubectl get pods`)
+kubectl delete pod -n workshop -l app=hello --field-selector=status.phase=Running --wait=false | head -1
+
+# Watch what happens
+kubectl get pods -n workshop -w
+</code></pre>
+<p>The Deployment automatically creates a new Pod to maintain 3 replicas. Press <code>Ctrl+C</code> to stop watching.</p>
+<pre class="mermaid">sequenceDiagram
+    participant You
+    participant Deployment
+    participant ReplicaSet
+    participant Pods
+
+    You-&gt;&gt;Deployment: kubectl apply (replicas: 3)
+    Deployment-&gt;&gt;ReplicaSet: Create ReplicaSet
+    ReplicaSet-&gt;&gt;Pods: Create Pod 1, Pod 2, Pod 3
+    Note over Pods: 3 Pods running ✓
+
+    You-&gt;&gt;Pods: kubectl delete Pod 2
+    Note over Pods: Only 2 Pods running!
+    ReplicaSet-&gt;&gt;ReplicaSet: Detects: 2/3 Pods running
+    ReplicaSet-&gt;&gt;Pods: Create Pod 4 (replacement)
+    Note over Pods: 3 Pods running again ✓
+</pre>
+<p><strong>This is self-healing in action.</strong> The Deployment's ReplicaSet continuously watches the actual state (how many Pods are running) and compares it to the desired state (3 replicas). When they differ, it takes action to reconcile. This is called the <strong>reconciliation loop</strong> -- the core pattern of Kubernetes.</p>
+<h3 id="step-8-expose-with-a-service"><a class="header" href="#step-8-expose-with-a-service">Step 8: Expose with a Service</a></h3>
+<p>Create <code>service.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: hello
+  namespace: workshop
+spec:
+  selector:
+    app: hello
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
+</code></pre>
+<pre><code class="language-bash">kubectl apply -f service.yaml
+kubectl get services -n workshop
+</code></pre>
+<p><strong>Why do we need a Service?</strong> Pods are ephemeral -- they can be killed, rescheduled, and get new IP addresses at any time. If your frontend tried to talk to a Pod's IP directly, it would break whenever the Pod restarts. A Service provides a <strong>stable address</strong> that never changes, and automatically load-balances traffic across all matching Pods:</p>
+<pre class="mermaid">graph LR
+    subgraph &quot;The Problem: Pod IPs change&quot;
+        Client1[Client] --&gt;|&quot;10.42.1.5?&quot;| PodA[&quot;Pod (IP: 10.42.1.5)&quot;]
+        PodA --&gt;|&quot;Pod restarts&quot;| PodB[&quot;New Pod (IP: 10.42.2.8)&quot;]
+        Client1 -.-&gt;|&quot;❌ Connection lost!&quot;| PodB
+    end
+</pre>
+<pre class="mermaid">graph LR
+    subgraph &quot;The Solution: Service&quot;
+        Client2[Client] --&gt;|&quot;hello:80&quot;| SVC[&quot;Service: hello&lt;br/&gt;ClusterIP: 10.43.0.42&lt;br/&gt;&lt;i&gt;stable address&lt;/i&gt;&quot;]
+        SVC --&gt;|&quot;routes to&quot;| Pod1[&quot;Pod 1&lt;br/&gt;10.42.1.5&quot;]
+        SVC --&gt;|&quot;routes to&quot;| Pod2[&quot;Pod 2&lt;br/&gt;10.42.1.6&quot;]
+        SVC --&gt;|&quot;routes to&quot;| Pod3[&quot;Pod 3&lt;br/&gt;10.42.2.3&quot;]
+    end
+</pre>
+<p>The Service creates a stable DNS name (<code>hello.workshop.svc.cluster.local</code>) that load-balances across all 3 Pods.</p>
+<blockquote>
+<p><strong>How does the Service find the right Pods?</strong> Through <strong>labels</strong>. The Service has <code>selector: app: hello</code> and the Pods have <code>labels: app: hello</code>. Kubernetes matches them automatically. If a Pod doesn't have the right label, the Service ignores it. If a new Pod appears with the right label, the Service starts sending traffic to it.</p>
+</blockquote>
+<p>Test it from inside the cluster:</p>
+<pre><code class="language-bash">kubectl run curl --rm -i --tty --image=curlimages/curl -n workshop -- \
+  curl -s http://hello.workshop.svc.cluster.local
+</code></pre>
+<blockquote>
+<p><strong>Why "from inside the cluster"?</strong> A <code>ClusterIP</code> Service is only reachable from within the cluster's network. That's why we launch a temporary <code>curl</code> Pod inside the cluster to test it. To make it reachable from your laptop, you need either port-forwarding or an Ingress (next step).</p>
+</blockquote>
+<h3 id="step-9-expose-externally-with-ingress"><a class="header" href="#step-9-expose-externally-with-ingress">Step 9: Expose externally with Ingress</a></h3>
+<p><strong>What is an Ingress?</strong> While a Service makes your app reachable inside the cluster, an Ingress makes it reachable from outside -- it acts like a reverse proxy (think nginx) that routes HTTP traffic based on hostnames and paths.</p>
+<p>An Ingress needs an <strong>Ingress Controller</strong> to work -- a program that reads Ingress resources and configures the actual routing. k3d ships with <strong>Traefik</strong> as its Ingress controller, pre-installed and ready to use.</p>
+<pre class="mermaid">graph LR
+    subgraph &quot;Outside the cluster&quot;
+        User[&quot;Your browser&lt;br/&gt;localhost:8080&quot;]
+    end
+
+    subgraph &quot;Inside the cluster&quot;
+        LB[&quot;k3d Load Balancer&lt;br/&gt;:8080 → :80&quot;]
+        IC[&quot;Traefik&lt;br/&gt;(Ingress Controller)&lt;br/&gt;Reads Ingress rules&quot;]
+        ING[&quot;Ingress: hello&lt;br/&gt;path: / → service: hello&quot;]
+        SVC[&quot;Service: hello&lt;br/&gt;:80 → :8080&quot;]
+        P1[Pod 1]
+        P2[Pod 2]
+        P3[Pod 3]
+    end
+
+    User --&gt; LB
+    LB --&gt; IC
+    IC --&gt;|&quot;matches rule&quot;| ING
+    ING --&gt; SVC
+    SVC --&gt; P1
+    SVC --&gt; P2
+    SVC --&gt; P3
+
+    style IC fill:#ff9,stroke:#333
+    style ING fill:#bfb,stroke:#333
+</pre>
+<p>Create <code>ingress.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello
+  namespace: workshop
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hello
+                port:
+                  number: 80
+</code></pre>
+<pre><code class="language-bash">kubectl apply -f ingress.yaml
+</code></pre>
+<p>Now access it through the k3d load balancer:</p>
+<pre><code class="language-bash">curl http://localhost:8080
+</code></pre>
+<p>You should see a response with the pod's hostname, IP, and request headers.</p>
+<p><strong>Trace the full request path</strong> to understand what happened:</p>
+<pre class="mermaid">sequenceDiagram
+    participant Browser as Your Browser
+    participant LB as k3d Load Balancer
+    participant Traefik as Traefik (Ingress Controller)
+    participant Service as Service: hello
+    participant Pod as Pod (one of 3)
+
+    Browser-&gt;&gt;LB: GET http://localhost:8080/
+    LB-&gt;&gt;Traefik: Forward to port 80
+    Traefik-&gt;&gt;Traefik: Match Ingress rule (path: /)
+    Traefik-&gt;&gt;Service: Route to service &quot;hello&quot; port 80
+    Service-&gt;&gt;Pod: Load-balance to one Pod, port 80
+    Pod--&gt;&gt;Browser: Hostname, IP, request headers
+</pre>
+<p>Every layer adds a capability: the load balancer maps external ports, Traefik routes by URL path, the Service load-balances across Pods, and the Pod runs your container.</p>
+<h3 id="step-10-use-configmaps-for-configuration"><a class="header" href="#step-10-use-configmaps-for-configuration">Step 10: Use ConfigMaps for configuration</a></h3>
+<p><strong>The problem</strong>: you don't want to hardcode configuration (database URLs, feature flags, API keys) inside your container image. That would mean rebuilding the image every time you change a setting. Instead, Kubernetes lets you inject configuration at deploy time using <strong>ConfigMaps</strong> (for non-sensitive data) and <strong>Secrets</strong> (for passwords, tokens, etc.).</p>
+<pre class="mermaid">graph LR
+    subgraph &quot;Without ConfigMap&quot;
+        IMG1[&quot;Image v1&lt;br/&gt;GREETING=Hello&quot;]
+        IMG2[&quot;Image v2&lt;br/&gt;GREETING=Bonjour&quot;]
+        Note1[&quot;❌ Must rebuild image&lt;br/&gt;to change config&quot;]
+    end
+
+    subgraph &quot;With ConfigMap&quot;
+        IMG3[&quot;Same image&lt;br/&gt;(reads from env vars)&quot;]
+        CM1[&quot;ConfigMap dev&lt;br/&gt;GREETING=Hello&quot;]
+        CM2[&quot;ConfigMap prod&lt;br/&gt;GREETING=Bonjour&quot;]
+        CM1 -.-&gt;|&quot;inject&quot;| IMG3
+        CM2 -.-&gt;|&quot;inject&quot;| IMG3
+        Note2[&quot;✅ Same image,&lt;br/&gt;different config&quot;]
+    end
+</pre>
+<p>Create <code>configmap.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hello-config
+  namespace: workshop
+data:
+  GREETING: "Hello from ConfigMap!"
+</code></pre>
+<p>Update the Deployment to use an image that reads environment variables. Replace the deployment with <code>deployment-v2.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+  namespace: workshop
+  labels:
+    app: hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+        - name: hello
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: hello-config
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
+</code></pre>
+<pre><code class="language-bash">kubectl apply -f configmap.yaml
+kubectl apply -f deployment-v2.yaml
+
+# Verify the env var is injected
+kubectl exec -n workshop deploy/hello -- env | grep GREETING
+</code></pre>
+<h3 id="checkpoint-1"><a class="header" href="#checkpoint-1">Checkpoint</a></h3>
+<p>At this point you have deployed:</p>
+<pre><code class="language-bash">kubectl get all -n workshop
+</code></pre>
+<p>You should see: 1 Deployment, 1 Service, 3 Pods, 1 ReplicaSet.</p>
+<h3 id="what-you-have-built-so-far"><a class="header" href="#what-you-have-built-so-far">What you have built so far</a></h3>
+<p>Let's take a moment to review the full architecture you've created with raw manifests:</p>
+<pre class="mermaid">graph TB
+    subgraph &quot;Namespace: workshop&quot;
+        ING[&quot;Ingress: hello&lt;br/&gt;path: / → service hello&quot;]
+        SVC[&quot;Service: hello&lt;br/&gt;ClusterIP, port 80→8080&quot;]
+        DEP[&quot;Deployment: hello&lt;br/&gt;replicas: 3&quot;]
+        CM[&quot;ConfigMap: hello-config&lt;br/&gt;GREETING=Hello from ConfigMap!&quot;]
+        RS[&quot;ReplicaSet&quot;]
+        P1[&quot;Pod 1&lt;br/&gt;nginx:1.27-alpine&quot;]
+        P2[&quot;Pod 2&lt;br/&gt;nginx:1.27-alpine&quot;]
+        P3[&quot;Pod 3&lt;br/&gt;nginx:1.27-alpine&quot;]
+    end
+
+    ING --&gt; SVC
+    SVC --&gt; P1
+    SVC --&gt; P2
+    SVC --&gt; P3
+    DEP --&gt; RS
+    RS --&gt; P1
+    RS --&gt; P2
+    RS --&gt; P3
+    CM -.-&gt;|&quot;env vars&quot;| P1
+    CM -.-&gt;|&quot;env vars&quot;| P2
+    CM -.-&gt;|&quot;env vars&quot;| P3
+</pre>
+<p>You created <strong>6 YAML files</strong> and applied them one by one. This works for learning, but imagine managing 50 services with 3 environments each -- that's 900 YAML files! The next section introduces <strong>Helm</strong> to solve this.</p>
+<h3 id="step-11-clean-up-raw-manifests"><a class="header" href="#step-11-clean-up-raw-manifests">Step 11: Clean up raw manifests</a></h3>
+<pre><code class="language-bash">kubectl delete namespace workshop
+</code></pre>
+<p>This deletes everything in the namespace. A clean slate for the next section.</p>
+<blockquote>
+<p><strong>Why does deleting the namespace delete everything inside it?</strong> Namespaces are an ownership boundary. Every resource belongs to a namespace, and when the namespace is deleted, Kubernetes garbage-collects all resources inside it. This is similar to deleting a directory and all its files.</p>
+</blockquote>
+<hr />
+<h2 id="part-3-deploying-with-helm-30-min"><a class="header" href="#part-3-deploying-with-helm-30-min">Part 3: Deploying with Helm (30 min)</a></h2>
+<h3 id="why-helm"><a class="header" href="#why-helm">Why Helm?</a></h3>
+<p>Raw manifests work, but they have problems:</p>
+<ul>
+<li><strong>No templating</strong>: you copy-paste for each environment (dev, staging, prod)</li>
+<li><strong>No versioning</strong>: you cannot roll back to a previous set of manifests</li>
+<li><strong>No dependency management</strong>: complex apps need many manifests in the right order</li>
+</ul>
+<p><a href="https://helm.sh/">Helm</a> solves these. It is the package manager for Kubernetes -- think <code>apt</code> for Ubuntu or <code>npm</code> for Node.js, but for Kubernetes applications.</p>
+<pre class="mermaid">graph LR
+    subgraph &quot;Without Helm&quot;
+        M1[&quot;deployment-dev.yaml&quot;]
+        M2[&quot;deployment-staging.yaml&quot;]
+        M3[&quot;deployment-prod.yaml&quot;]
+        M4[&quot;service-dev.yaml&quot;]
+        M5[&quot;service-staging.yaml&quot;]
+        M6[&quot;service-prod.yaml&quot;]
+    end
+
+    subgraph &quot;With Helm&quot;
+        CH[&quot;Chart&lt;br/&gt;(templates)&quot;]
+        V1[&quot;values-dev.yaml&lt;br/&gt;replicas: 1&quot;]
+        V2[&quot;values-staging.yaml&lt;br/&gt;replicas: 2&quot;]
+        V3[&quot;values-prod.yaml&lt;br/&gt;replicas: 5&quot;]
+        CH --&gt; |&quot;+| V1&quot;| R1[&quot;Dev deployment&quot;]
+        CH --&gt; |&quot;+| V2&quot;| R2[&quot;Staging deployment&quot;]
+        CH --&gt; |&quot;+| V3&quot;| R3[&quot;Prod deployment&quot;]
+    end
+
+    style CH fill:#f9f,stroke:#333
+    style V1 fill:#bbf,stroke:#333
+    style V2 fill:#bfb,stroke:#333
+    style V3 fill:#fbb,stroke:#333
+</pre>
+<p><strong>One chart, many configurations.</strong> You write your Kubernetes manifests once as templates, then provide different <code>values.yaml</code> files for each environment.</p>
+<div class="table-wrapper"><table><thead><tr><th>Concept</th><th>What it is</th><th>Analogy</th></tr></thead><tbody>
+<tr><td><strong>Chart</strong></td><td>A package of Kubernetes manifests with templating</td><td>A package (like an npm package)</td></tr>
+<tr><td><strong>Release</strong></td><td>A deployed instance of a chart</td><td>An installed package</td></tr>
+<tr><td><strong>Values</strong></td><td>Configuration that customises a chart</td><td>Package configuration</td></tr>
+<tr><td><strong>Repository</strong></td><td>A collection of charts (like a package registry)</td><td>npm registry</td></tr>
+</tbody></table>
+</div>
+<h3 id="step-12-use-an-existing-helm-chart"><a class="header" href="#step-12-use-an-existing-helm-chart">Step 12: Use an existing Helm chart</a></h3>
+<p>Deploy nginx using the official Bitnami chart:</p>
+<pre><code class="language-bash"># Add the Bitnami repository
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+
+# Install nginx
+helm install my-nginx bitnami/nginx \
+  --create-namespace \
+  --namespace helm-demo \
+  --set service.type=ClusterIP
+
+# Watch the deployment
+kubectl get pods -n helm-demo -w
+</code></pre>
+<p>Press <code>Ctrl+C</code> when the Pod is <code>Running</code>. Inspect what Helm created:</p>
+<pre><code class="language-bash"># List releases
+helm list -n helm-demo
+
+# See all resources created by the chart
+kubectl get all -n helm-demo
+
+# See the values used
+helm get values my-nginx -n helm-demo --all
+</code></pre>
+<h3 id="step-13-create-your-own-helm-chart"><a class="header" href="#step-13-create-your-own-helm-chart">Step 13: Create your own Helm chart</a></h3>
+<pre><code class="language-bash">helm create hello-chart
+</code></pre>
+<p>This generates a chart skeleton. Let's explore and customise it:</p>
+<pre><code class="language-bash">tree hello-chart/
+</code></pre>
+<pre><code>hello-chart/
+├── Chart.yaml          # Chart metadata (name, version, description)
+├── values.yaml         # Default configuration values
+├── templates/          # Kubernetes manifest templates
+│   ├── deployment.yaml
+│   ├── service.yaml
+│   ├── ingress.yaml
+│   ├── hpa.yaml
+│   ├── serviceaccount.yaml
+│   ├── _helpers.tpl    # Template helpers
+│   ├── NOTES.txt       # Post-install message
+│   └── tests/
+│       └── test-connection.yaml
+└── charts/             # Sub-chart dependencies
+</code></pre>
+<p><strong>How Helm templating works</strong>: templates contain Go template placeholders like <code>{{ .Values.replicaCount }}</code> that get replaced with actual values at install time:</p>
+<pre class="mermaid">graph LR
+    subgraph &quot;Input&quot;
+        T[&quot;templates/deployment.yaml&lt;br/&gt;&lt;code&gt;replicas: {{ .Values.replicaCount }}&lt;/code&gt;&quot;]
+        V[&quot;values.yaml&lt;br/&gt;&lt;code&gt;replicaCount: 3&lt;/code&gt;&quot;]
+    end
+
+    H[&quot;helm install&quot;]
+
+    subgraph &quot;Output&quot;
+        O[&quot;Generated deployment.yaml&lt;br/&gt;&lt;code&gt;replicas: 3&lt;/code&gt;&quot;]
+    end
+
+    T --&gt; H
+    V --&gt; H
+    H --&gt; O
+
+    style H fill:#f9f,stroke:#333
+</pre>
+<p>Edit <code>hello-chart/values.yaml</code> to configure our app:</p>
+<pre><code class="language-yaml">replicaCount: 3
+
+image:
+  repository: traefik/whoami
+  pullPolicy: IfNotPresent
+  tag: "v1.10"
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: ""
+  hosts:
+    - host: hello.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+whoamiName: "hello-from-helm"
+</code></pre>
+<p>Edit <code>hello-chart/templates/deployment.yaml</code> to pass the <code>whoamiName</code> value as an environment variable. Find the <code>containers</code> section and add after <code>ports</code>:</p>
+<pre><code class="language-yaml">          env:
+            - name: WHOAMI_NAME
+              value: {{ .Values.whoamiName | default "hello-chart" | quote }}
+</code></pre>
+<h3 id="step-14-install-your-chart"><a class="header" href="#step-14-install-your-chart">Step 14: Install your chart</a></h3>
+<pre><code class="language-bash"># Preview what will be deployed (dry run — renders templates without applying)
+helm template hello ./hello-chart --namespace helm-demo
+</code></pre>
+<blockquote>
+<p><strong>Always preview first.</strong> <code>helm template</code> renders your templates with the values and prints the resulting YAML -- without sending anything to the cluster. Read the output carefully: this is exactly what Helm will send to Kubernetes. This is like a "what would happen if..." check.</p>
+</blockquote>
+<pre><code class="language-bash"># Install it (upgrade --install creates the release if it doesn't exist, or upgrades it)
+helm upgrade --install hello ./hello-chart \
+  --create-namespace \
+  --namespace helm-demo
+
+# Check the deployment
+kubectl get all -n helm-demo -l app.kubernetes.io/name=hello-chart
+</code></pre>
+<h3 id="step-15-override-values"><a class="header" href="#step-15-override-values">Step 15: Override values</a></h3>
+<p>Helm charts are designed to be customised. Create <code>values-staging.yaml</code>:</p>
+<pre><code class="language-yaml">replicaCount: 1
+
+whoamiName: "hello-from-staging"
+</code></pre>
+<pre><code class="language-bash">helm upgrade --install hello-staging ./hello-chart \
+  --create-namespace \
+  --namespace staging \
+  -f values-staging.yaml
+</code></pre>
+<p>Now you have two environments running different configurations from the same chart:</p>
+<pre><code class="language-bash">helm list --all-namespaces
+</code></pre>
+<h3 id="step-16-manage-releases"><a class="header" href="#step-16-manage-releases">Step 16: Manage releases</a></h3>
+<pre><code class="language-bash"># See release history
+helm history hello -n helm-demo
+
+# Rollback to a previous version
+# helm rollback hello 1 -n helm-demo
+
+# Uninstall a release
+helm uninstall hello-staging -n staging
+kubectl delete namespace staging
+</code></pre>
+<h3 id="checkpoint-2"><a class="header" href="#checkpoint-2">Checkpoint</a></h3>
+<pre><code class="language-bash">helm list --all-namespaces
+kubectl get pods -n helm-demo
+</code></pre>
+<p>Clean up before the next section:</p>
+<pre><code class="language-bash">helm uninstall my-nginx -n helm-demo
+helm uninstall hello -n helm-demo
+kubectl delete namespace helm-demo
+</code></pre>
+<hr />
+<h2 id="part-4-managing-environments-with-kustomize-30-min"><a class="header" href="#part-4-managing-environments-with-kustomize-30-min">Part 4: Managing Environments with Kustomize (30 min)</a></h2>
+<h3 id="what-is-kustomize"><a class="header" href="#what-is-kustomize">What is Kustomize?</a></h3>
+<p><a href="https://kustomize.io/">Kustomize</a> is a configuration management tool built into <code>kubectl</code>. It lets you customise Kubernetes manifests <strong>without templates</strong>. Instead of injecting variables into YAML (like Helm), you write plain YAML and layer modifications on top.</p>
+<pre><code>Helm approach:          Kustomize approach:
+  template + values       base manifests + overlays (patches)
+  → rendered YAML         → merged YAML
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Feature</th><th>Helm</th><th>Kustomize</th></tr></thead><tbody>
+<tr><td>Templating</td><td>Go templates (<code>{{ .Values.x }}</code>)</td><td>None -- plain YAML</td></tr>
+<tr><td>Customisation</td><td>Values files</td><td>Overlays and patches</td></tr>
+<tr><td>Packaging</td><td>Charts with dependencies</td><td>Directories with <code>kustomization.yaml</code></td></tr>
+<tr><td>Built into kubectl</td><td>No (separate binary)</td><td>Yes (<code>kubectl apply -k</code>)</td></tr>
+<tr><td>Best for</td><td>Reusable packages, third-party apps</td><td>Environment-specific config, in-house apps</td></tr>
+</tbody></table>
+</div>
+<p>In practice, teams often use <strong>both</strong>: Helm for third-party charts and Kustomize for their own services.</p>
+<h3 id="step-17-create-a-kustomize-base"><a class="header" href="#step-17-create-a-kustomize-base">Step 17: Create a Kustomize base</a></h3>
+<p>A Kustomize project has a <strong>base</strong> (shared resources) and <strong>overlays</strong> (environment-specific patches).</p>
+<pre><code class="language-bash">mkdir -p kustomize-demo/base
+mkdir -p kustomize-demo/overlays/dev
+mkdir -p kustomize-demo/overlays/staging
+</code></pre>
+<p>Create <code>kustomize-demo/base/deployment.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+  labels:
+    app: hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+        - name: hello
+          image: traefik/whoami:v1.10
+          args:
+            - "--name=hello-base"
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
+</code></pre>
+<p>Create <code>kustomize-demo/base/service.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: hello
+spec:
+  selector:
+    app: hello
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
+</code></pre>
+<p>Create <code>kustomize-demo/base/kustomization.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - deployment.yaml
+  - service.yaml
+</code></pre>
+<p>Test the base renders correctly:</p>
+<pre><code class="language-bash">kubectl kustomize kustomize-demo/base
+</code></pre>
+<p>This outputs the merged YAML. No templating -- just plain Kubernetes manifests.</p>
+<h3 id="step-18-create-environment-overlays"><a class="header" href="#step-18-create-environment-overlays">Step 18: Create environment overlays</a></h3>
+<p><strong>Dev overlay</strong> -- 1 replica, dev-specific name:</p>
+<p>Create <code>kustomize-demo/overlays/dev/kustomization.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+namePrefix: dev-
+namespace: dev
+patches:
+  - target:
+      kind: Deployment
+      name: hello
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 1
+      - op: replace
+        path: /spec/template/spec/containers/0/args
+        value: ["--name=hello-dev"]
+</code></pre>
+<p><strong>Staging overlay</strong> -- 3 replicas, staging-specific name:</p>
+<p>Create <code>kustomize-demo/overlays/staging/kustomization.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+namePrefix: staging-
+namespace: staging
+patches:
+  - target:
+      kind: Deployment
+      name: hello
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 3
+      - op: replace
+        path: /spec/template/spec/containers/0/args
+        value: ["--name=hello-staging"]
+</code></pre>
+<h3 id="step-19-deploy-with-kustomize"><a class="header" href="#step-19-deploy-with-kustomize">Step 19: Deploy with Kustomize</a></h3>
+<pre><code class="language-bash"># Preview what each environment produces
+kubectl kustomize kustomize-demo/overlays/dev
+kubectl kustomize kustomize-demo/overlays/staging
+</code></pre>
+<p>Notice how each overlay adds a namespace, a name prefix, and different replica counts -- all <strong>without modifying the base</strong> files.</p>
+<p>Deploy the dev overlay:</p>
+<pre><code class="language-bash">kubectl create namespace dev
+kubectl apply -k kustomize-demo/overlays/dev
+
+kubectl get all -n dev
+</code></pre>
+<p>Deploy the staging overlay:</p>
+<pre><code class="language-bash">kubectl create namespace staging
+kubectl apply -k kustomize-demo/overlays/staging
+
+kubectl get all -n staging
+</code></pre>
+<blockquote>
+<p><strong><code>-k</code> vs <code>-f</code></strong>: <code>kubectl apply -f</code> applies a single file. <code>kubectl apply -k</code> applies a Kustomize directory -- it reads the <code>kustomization.yaml</code>, merges the base with the overlay, and applies the result.</p>
+</blockquote>
+<h3 id="step-20-verify-the-environments"><a class="header" href="#step-20-verify-the-environments">Step 20: Verify the environments</a></h3>
+<pre><code class="language-bash"># Dev: 1 replica
+kubectl get pods -n dev
+
+# Staging: 3 replicas
+kubectl get pods -n staging
+</code></pre>
+<blockquote>
+<p><strong>Tip</strong>: if you have k9s running, press <code>:ns</code> to see all namespaces, then select <code>dev</code> or <code>staging</code> to see the pods. Much faster than typing kubectl commands!</p>
+</blockquote>
+<h3 id="checkpoint-3"><a class="header" href="#checkpoint-3">Checkpoint</a></h3>
+<pre><code class="language-bash">kubectl get all -n dev
+kubectl get all -n staging
+</code></pre>
+<p>You should see different replica counts and name prefixes for each environment, all from the same base manifests.</p>
+<p>Clean up:</p>
+<pre><code class="language-bash">kubectl delete namespace dev staging
+</code></pre>
+<hr />
+<h2 id="part-5-installing-argo-cd-30-min"><a class="header" href="#part-5-installing-argo-cd-30-min">Part 5: Installing Argo CD (30 min)</a></h2>
+<h3 id="what-is-argo-cd"><a class="header" href="#what-is-argo-cd">What is Argo CD?</a></h3>
+<p><a href="https://argo-cd.readthedocs.io/">Argo CD</a> is a declarative GitOps continuous delivery tool for Kubernetes.</p>
+<p>The key idea: <strong>Git is the single source of truth.</strong> You describe what should run in Git, and Argo CD continuously ensures the cluster matches.</p>
+<pre class="mermaid">graph TB
+    subgraph &quot;Traditional deployment (push-based)&quot;
+        Dev1[Developer] --&gt;|&quot;1. git push&quot;| CI1[CI Pipeline]
+        CI1 --&gt;|&quot;2. kubectl apply&quot;| Cluster1[Kubernetes Cluster]
+        Note1[&quot;❌ Who deployed what? When?&lt;br/&gt;❌ CI has cluster credentials&lt;br/&gt;❌ No drift detection&quot;]
+    end
+</pre>
+<pre class="mermaid">graph TB
+    subgraph &quot;GitOps with Argo CD (pull-based)&quot;
+        Dev2[Developer] --&gt;|&quot;1. git push&quot;| Git[Git Repository&lt;br/&gt;&lt;i&gt;Single source of truth&lt;/i&gt;]
+        ArgoCD[Argo CD&lt;br/&gt;&lt;i&gt;Runs inside cluster&lt;/i&gt;] --&gt;|&quot;2. polls for changes&quot;| Git
+        ArgoCD --&gt;|&quot;3. syncs&quot;| Cluster2[Kubernetes Cluster]
+        Cluster2 --&gt;|&quot;4. reports status&quot;| ArgoCD
+        Note2[&quot;✅ Git log = audit trail&lt;br/&gt;✅ No external cluster access needed&lt;br/&gt;✅ Drift detection + self-healing&quot;]
+    end
+
+    style Git fill:#bfb,stroke:#333
+    style ArgoCD fill:#f9f,stroke:#333
+</pre>
+<p><strong>Why is GitOps better?</strong> Three key advantages:</p>
+<ol>
+<li><strong>Audit trail</strong>: every change is a Git commit -- you know who changed what, when, and why</li>
+<li><strong>Security</strong>: no one needs <code>kubectl</code> access to production -- only Argo CD (running inside the cluster) applies changes</li>
+<li><strong>Self-healing</strong>: if someone manually changes the cluster, Argo CD detects the drift and reverts it to match Git</li>
+</ol>
+<h3 id="step-17-install-argo-cd-with-helm"><a class="header" href="#step-17-install-argo-cd-with-helm">Step 17: Install Argo CD with Helm</a></h3>
+<pre><code class="language-bash"># Add the Argo Helm repository
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+
+# Install Argo CD
+helm install argocd argo/argo-cd \
+  --create-namespace \
+  --namespace argocd \
+  --set 'configs.params.server\.insecure=true' \
+  --set server.service.type=ClusterIP \
+  --wait
+</code></pre>
+<p>Wait for all pods to be ready:</p>
+<pre><code class="language-bash">kubectl get pods -n argocd -w
+</code></pre>
+<p>Press <code>Ctrl+C</code> when all pods show <code>Running</code> and <code>READY</code> is <code>1/1</code>.</p>
+<h3 id="step-18-access-the-argo-cd-ui"><a class="header" href="#step-18-access-the-argo-cd-ui">Step 18: Access the Argo CD UI</a></h3>
+<p>Expose Argo CD through an Ingress so both the browser and CLI can access it reliably:</p>
+<pre><code class="language-bash">kubectl apply -f - &lt;&lt;'EOF'
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server
+  namespace: argocd
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+    - host: argocd.localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80
+EOF
+</code></pre>
+<blockquote>
+<p><strong>Why an Ingress instead of port-forward?</strong> The <code>argocd</code> CLI uses gRPC (HTTP/2), which causes <code>kubectl port-forward</code> to crash. An Ingress avoids this problem entirely and is closer to how you would access Argo CD in production.</p>
+</blockquote>
+<p>Get the initial admin password:</p>
+<pre><code class="language-bash">kubectl get secret argocd-initial-admin-secret -n argocd \
+  -o jsonpath="{.data.password}" | base64 -d; echo
+</code></pre>
+<p>Open <a href="http://argocd.localhost:8080">http://argocd.localhost:8080</a> in your browser.</p>
+<ul>
+<li><strong>Username</strong>: <code>admin</code></li>
+<li><strong>Password</strong>: the output of the command above</li>
+</ul>
+<blockquote>
+<p><strong>Note</strong>: <code>argocd.localhost</code> resolves to <code>127.0.0.1</code> on most systems. If it does not work, add <code>127.0.0.1 argocd.localhost</code> to your <code>/etc/hosts</code> file.</p>
+</blockquote>
+<p>You should see the Argo CD dashboard. It is empty for now -- we have not configured any applications yet.</p>
+<h3 id="step-19-install-the-argo-cd-cli"><a class="header" href="#step-19-install-the-argo-cd-cli">Step 19: Install the Argo CD CLI</a></h3>
+<pre><code class="language-bash"># Using nix
+nix profile install 'nixpkgs#argocd'
+
+# Or download directly
+# curl -sSL -o argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+# chmod +x argocd &amp;&amp; sudo mv argocd /usr/local/bin/
+</code></pre>
+<p>Log in:</p>
+<pre><code class="language-bash">argocd login argocd.localhost:8080 --plaintext --grpc-web --insecure --username admin \
+  --password "$(kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath='{.data.password}' | base64 -d)"
+</code></pre>
+<blockquote>
+<p><strong>Flags explained</strong>: <code>--plaintext</code> disables TLS (we are on localhost), <code>--grpc-web</code> uses HTTP/1.1 for gRPC which works through the Traefik Ingress, <code>--insecure</code> skips the TLS certificate verification prompt caused by Traefik's self-signed certificate.</p>
+</blockquote>
+<hr />
+<h2 id="part-6-gitops-with-argo-cd-40-min"><a class="header" href="#part-6-gitops-with-argo-cd-40-min">Part 6: GitOps with Argo CD (40 min)</a></h2>
+<h3 id="the-gitops-workflow"><a class="header" href="#the-gitops-workflow">The GitOps Workflow</a></h3>
+<p>In GitOps, deployments work like this:</p>
+<pre class="mermaid">sequenceDiagram
+    participant Dev as Developer
+    participant Git as Git Repository
+    participant Argo as Argo CD
+    participant K8s as Kubernetes Cluster
+
+    Dev-&gt;&gt;Git: 1. Push manifest changes
+    Note over Git: Desired state updated
+
+    loop Every 3 minutes (or webhook)
+        Argo-&gt;&gt;Git: 2. Poll for changes
+        Argo-&gt;&gt;Argo: Compare Git state vs Cluster state
+    end
+
+    alt Drift detected
+        Argo-&gt;&gt;K8s: 3. Sync: apply changes
+        K8s--&gt;&gt;Argo: 4. Report status
+        Note over Argo: Status: Synced ✓
+    end
+
+    Note over Dev,K8s: Someone manually scales to 5 replicas...
+
+    Argo-&gt;&gt;K8s: 5. Detect drift (5 ≠ 3 in Git)
+    Argo-&gt;&gt;K8s: 6. Self-heal: revert to 3 replicas
+</pre>
+<ol>
+<li>You define your desired state in a <strong>Git repository</strong></li>
+<li>Argo CD <strong>watches</strong> the repository (polls every 3 minutes by default)</li>
+<li>When Git changes, Argo CD <strong>syncs</strong> the cluster to match</li>
+<li>If someone manually changes the cluster, Argo CD <strong>detects the drift</strong> and auto-corrects</li>
+</ol>
+<p>No more <code>kubectl apply</code> from your laptop. No more "who deployed what and when?" -- Git log is your audit trail.</p>
+<h3 id="step-20-create-a-gitops-repository"><a class="header" href="#step-20-create-a-gitops-repository">Step 20: Create a GitOps repository</a></h3>
+<p>Create a new Git repository to hold your Kubernetes manifests. This is separate from your application code -- it is your <strong>deployment configuration</strong> repository.</p>
+<blockquote>
+<p><strong>Why a separate repository?</strong> In GitOps, you typically have two repositories:</p>
+<ul>
+<li><strong>Application repo</strong>: your source code (Go, Python, Java...). CI builds and pushes container images from this.</li>
+<li><strong>GitOps repo</strong>: your Kubernetes manifests. Argo CD watches this and deploys whatever is defined here.</li>
+</ul>
+<p>This separation means application developers don't need cluster access, and infrastructure changes go through their own review process.</p>
+</blockquote>
+<pre class="mermaid">graph LR
+    subgraph &quot;App Repo&quot;
+        CODE[Source Code] --&gt;|&quot;CI builds&quot;| IMG[&quot;Container Image&lt;br/&gt;registry/app:v2&quot;]
+    end
+
+    subgraph &quot;GitOps Repo&quot;
+        MANIFESTS[&quot;Kubernetes Manifests&lt;br/&gt;image: registry/app:v2&quot;]
+    end
+
+    subgraph &quot;Cluster&quot;
+        ARGO[Argo CD] --&gt;|&quot;watches&quot;| MANIFESTS
+        ARGO --&gt;|&quot;deploys&quot;| PODS[Running Pods]
+        PODS --&gt;|&quot;pulls&quot;| IMG
+    end
+
+    IMG -.-&gt;|&quot;update image tag&quot;| MANIFESTS
+
+    style ARGO fill:#f9f,stroke:#333
+    style MANIFESTS fill:#bfb,stroke:#333
+</pre>
+<pre><code class="language-bash">cd ~
+mkdir -p gitops-demo
+cd gitops-demo
+git init
+</code></pre>
+<p>Create the directory structure:</p>
+<pre><code class="language-bash">mkdir -p apps/hello
+</code></pre>
+<p>Create <code>apps/hello/deployment.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+  labels:
+    app: hello
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+        - name: hello
+          image: traefik/whoami:v1.10
+          args:
+            - "--name=GitOps v1"
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
+</code></pre>
+<p>Create <code>apps/hello/service.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: hello
+spec:
+  selector:
+    app: hello
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
+</code></pre>
+<p>Commit and push to GitHub:</p>
+<pre><code class="language-bash">git add .
+git commit -m "feat: initial hello deployment"
+
+# Create a repository on GitHub and push
+# Replace &lt;your-username&gt; with your GitHub username
+gh repo create gitops-demo --public --source=. --push
+# Or: git remote add origin git@github.com:&lt;your-username&gt;/gitops-demo.git
+#     git push -u origin main
+</code></pre>
+<blockquote>
+<p><strong>If you do not have <code>gh</code> installed</strong>: create the repository manually on GitHub, add the remote, and push.</p>
+</blockquote>
+<h3 id="step-21-create-an-argo-cd-application"><a class="header" href="#step-21-create-an-argo-cd-application">Step 21: Create an Argo CD Application</a></h3>
+<p>An Argo CD "Application" is the central concept -- it connects a <strong>Git repository path</strong> to a <strong>Kubernetes namespace</strong>. Think of it as a rule: "whatever YAML is in <em>this directory</em> of <em>this repo</em>, deploy it to <em>this namespace</em>."</p>
+<pre class="mermaid">graph LR
+    subgraph &quot;Argo CD Application&quot;
+        SOURCE[&quot;Source&lt;br/&gt;repo: github.com/.../gitops-demo&lt;br/&gt;path: apps/hello&lt;br/&gt;branch: main&quot;]
+        DEST[&quot;Destination&lt;br/&gt;server: local cluster&lt;br/&gt;namespace: gitops&quot;]
+        POLICY[&quot;Sync Policy&lt;br/&gt;automated + self-heal + auto-prune&quot;]
+    end
+
+    SOURCE --&gt;|&quot;reads manifests&quot;| DEST
+    POLICY --&gt;|&quot;controls behavior&quot;| DEST
+
+    style SOURCE fill:#bfb,stroke:#333
+    style DEST fill:#bbf,stroke:#333
+    style POLICY fill:#ff9,stroke:#333
+</pre>
+<pre><code class="language-bash">argocd app create hello \
+  --plaintext --grpc-web --insecure \
+  --repo https://github.com/&lt;your-username&gt;/gitops-demo.git \
+  --path apps/hello \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace gitops \
+  --sync-policy automated \
+  --auto-prune \
+  --self-heal \
+  --sync-option CreateNamespace=true
+</code></pre>
+<p>Replace <code>&lt;your-username&gt;</code> with your GitHub username.</p>
+<blockquote>
+<p><strong>Note</strong>: all <code>argocd</code> CLI commands need <code>--plaintext --grpc-web --insecure</code> when using the Ingress setup. You can set these permanently with:</p>
+<pre><code class="language-bash">export ARGOCD_OPTS="--plaintext --grpc-web --insecure"
+</code></pre>
+</blockquote>
+<p>Flags explained:</p>
+<div class="table-wrapper"><table><thead><tr><th>Flag</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>--repo</code></td><td>The Git repository to watch</td></tr>
+<tr><td><code>--path</code></td><td>The directory within the repo containing manifests</td></tr>
+<tr><td><code>--dest-server</code></td><td>The Kubernetes cluster (here: the local cluster)</td></tr>
+<tr><td><code>--dest-namespace</code></td><td>The target namespace</td></tr>
+<tr><td><code>--sync-policy automated</code></td><td>Automatically sync when Git changes</td></tr>
+<tr><td><code>--auto-prune</code></td><td>Delete resources that were removed from Git</td></tr>
+<tr><td><code>--self-heal</code></td><td>Revert manual changes made directly to the cluster</td></tr>
+</tbody></table>
+</div>
+<p>Alternatively, you can define the Application as YAML. Create <code>apps/hello-app.yaml</code> in the gitops-demo repo:</p>
+<pre><code class="language-yaml">apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hello
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/&lt;your-username&gt;/gitops-demo.git
+    targetRevision: main
+    path: apps/hello
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitops
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+</code></pre>
+<pre><code class="language-bash">kubectl apply -f apps/hello-app.yaml
+</code></pre>
+<h3 id="step-22-watch-argo-cd-sync"><a class="header" href="#step-22-watch-argo-cd-sync">Step 22: Watch Argo CD sync</a></h3>
+<pre><code class="language-bash"># Check the application status
+argocd app get hello
+
+# Watch the sync in real time
+argocd app wait hello --sync
+</code></pre>
+<p>Open the Argo CD UI at <a href="http://argocd.localhost:8080">http://argocd.localhost:8080</a>. You should see the <code>hello</code> application with a green "Synced" status. Click on it to see the resource tree.</p>
+<p>Verify the deployment:</p>
+<pre><code class="language-bash">kubectl get all -n gitops
+</code></pre>
+<h3 id="step-23-deploy-by-pushing-to-git"><a class="header" href="#step-23-deploy-by-pushing-to-git">Step 23: Deploy by pushing to Git</a></h3>
+<p>This is the GitOps magic. Change the deployment in Git and watch Argo CD deploy it automatically.</p>
+<pre><code class="language-bash">cd ~/gitops-demo
+</code></pre>
+<p>Edit <code>apps/hello/deployment.yaml</code> -- change the message:</p>
+<pre><code class="language-yaml">          args:
+            - "--name=GitOps v2 - Updated via Git push!"
+</code></pre>
+<p>Commit and push:</p>
+<pre><code class="language-bash">git add .
+git commit -m "feat: update greeting to v2"
+git push
+</code></pre>
+<p>Watch Argo CD detect and deploy the change:</p>
+<pre><code class="language-bash"># Watch the sync (Argo CD polls every 3 minutes by default, or you can force it)
+argocd app sync hello
+
+# Verify the new version
+kubectl port-forward svc/hello -n gitops 9091:80 &amp;
+curl http://localhost:9091
+kill %2  # or whatever job number
+</code></pre>
+<p>You should see the updated message.</p>
+<h3 id="step-24-test-self-healing"><a class="header" href="#step-24-test-self-healing">Step 24: Test self-healing</a></h3>
+<p>Argo CD with <code>--self-heal</code> reverts unauthorised changes. Try it:</p>
+<pre><code class="language-bash"># Manually scale the deployment (bypassing Git)
+kubectl scale deployment hello -n gitops --replicas=5
+
+# Watch Argo CD revert it back to 2 replicas
+kubectl get pods -n gitops -w
+</code></pre>
+<p>Within seconds, Argo CD detects the drift and scales back to 2 replicas (as defined in Git). Press <code>Ctrl+C</code>.</p>
+<h3 id="step-25-deploy-a-helm-chart-with-argo-cd"><a class="header" href="#step-25-deploy-a-helm-chart-with-argo-cd">Step 25: Deploy a Helm chart with Argo CD</a></h3>
+<p>Argo CD can also deploy Helm charts from Git. Create a Helm-based app in your gitops repo:</p>
+<pre><code class="language-bash">cd ~/gitops-demo
+mkdir -p apps/nginx-helm
+</code></pre>
+<p>Create <code>apps/nginx-helm/Chart.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: v2
+name: nginx-helm
+version: 1.0.0
+dependencies:
+  - name: nginx
+    version: "18.3.1"
+    repository: https://charts.bitnami.com/bitnami
+</code></pre>
+<p>Create <code>apps/nginx-helm/values.yaml</code>:</p>
+<pre><code class="language-yaml">nginx:
+  service:
+    type: ClusterIP
+  replicaCount: 1
+</code></pre>
+<p>Commit and push:</p>
+<pre><code class="language-bash">git add .
+git commit -m "feat: add nginx helm chart"
+git push
+</code></pre>
+<p>Create the Argo CD application:</p>
+<pre><code class="language-bash">argocd app create nginx-helm \
+  --plaintext --grpc-web --insecure \
+  --repo https://github.com/&lt;your-username&gt;/gitops-demo.git \
+  --path apps/nginx-helm \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace nginx-helm \
+  --sync-policy automated \
+  --auto-prune \
+  --self-heal \
+  --sync-option CreateNamespace=true
+</code></pre>
+<p>Watch it deploy in the Argo CD UI.</p>
+<h3 id="step-26-deploy-a-kustomize-app-with-argo-cd"><a class="header" href="#step-26-deploy-a-kustomize-app-with-argo-cd">Step 26: Deploy a Kustomize app with Argo CD</a></h3>
+<p>Argo CD natively supports Kustomize -- it detects the <code>kustomization.yaml</code> file and applies the overlay automatically.</p>
+<p>Add a Kustomize-based app to your gitops repo:</p>
+<pre><code class="language-bash">cd ~/gitops-demo
+mkdir -p apps/hello-kustomize/base
+mkdir -p apps/hello-kustomize/overlays/dev
+</code></pre>
+<p>Create <code>apps/hello-kustomize/base/deployment.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-kustomize
+  labels:
+    app: hello-kustomize
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-kustomize
+  template:
+    metadata:
+      labels:
+        app: hello-kustomize
+    spec:
+      containers:
+        - name: hello
+          image: traefik/whoami:v1.10
+          args:
+            - "--name=hello-kustomize"
+          ports:
+            - containerPort: 80
+</code></pre>
+<p>Create <code>apps/hello-kustomize/base/service.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: hello-kustomize
+spec:
+  selector:
+    app: hello-kustomize
+  ports:
+    - port: 80
+      targetPort: 80
+</code></pre>
+<p>Create <code>apps/hello-kustomize/base/kustomization.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - deployment.yaml
+  - service.yaml
+</code></pre>
+<p>Create <code>apps/hello-kustomize/overlays/dev/kustomization.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+patches:
+  - target:
+      kind: Deployment
+      name: hello-kustomize
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+      - op: replace
+        path: /spec/template/spec/containers/0/args
+        value: ["--name=hello-kustomize-dev"]
+</code></pre>
+<p>Commit and push:</p>
+<pre><code class="language-bash">git add .
+git commit -m "feat: add kustomize-based hello app"
+git push
+</code></pre>
+<p>Create the Argo CD application pointing at the <strong>overlay</strong> directory:</p>
+<pre><code class="language-bash">argocd app create hello-kustomize \
+  --plaintext --grpc-web --insecure \
+  --repo https://github.com/&lt;your-username&gt;/gitops-demo.git \
+  --path apps/hello-kustomize/overlays/dev \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace kustomize-demo \
+  --sync-policy automated \
+  --auto-prune \
+  --self-heal \
+  --sync-option CreateNamespace=true
+</code></pre>
+<p>Argo CD detects the <code>kustomization.yaml</code>, applies the overlay on top of the base, and deploys the result. Check it in the UI -- you should see 2 replicas running.</p>
+<pre><code class="language-bash">kubectl get all -n kustomize-demo
+</code></pre>
+<blockquote>
+<p><strong>Key insight</strong>: Argo CD supports raw manifests, Helm charts, <strong>and</strong> Kustomize out of the box. Choose the tool that fits your use case:</p>
+<ul>
+<li><strong>Raw manifests</strong>: simple apps, learning</li>
+<li><strong>Helm</strong>: third-party charts, heavily templated configs</li>
+<li><strong>Kustomize</strong>: environment-specific patches for your own services</li>
+</ul>
+</blockquote>
+<h3 id="checkpoint-4"><a class="header" href="#checkpoint-4">Checkpoint</a></h3>
+<p>At this point:</p>
+<ul>
+<li>Argo CD is running and managing deployments</li>
+<li>Pushing to Git triggers automatic deployments</li>
+<li>Manual cluster changes are reverted (self-heal)</li>
+<li>Raw manifests, Helm charts, <strong>and</strong> Kustomize overlays all work with Argo CD</li>
+</ul>
+<pre><code class="language-bash">argocd app list
+</code></pre>
+<hr />
+<h2 id="part-7-local-development-with-skaffold-40-min"><a class="header" href="#part-7-local-development-with-skaffold-40-min">Part 7: Local Development with Skaffold (40 min)</a></h2>
+<h3 id="the-inner-loop-problem"><a class="header" href="#the-inner-loop-problem">The Inner Loop Problem</a></h3>
+<p>In software development, there are two loops:</p>
+<pre class="mermaid">graph TB
+    subgraph &quot;Outer Loop (CI/CD — minutes to hours)&quot;
+        OL1[Push code] --&gt; OL2[CI builds &amp; tests]
+        OL2 --&gt; OL3[Push image to registry]
+        OL3 --&gt; OL4[Update GitOps repo]
+        OL4 --&gt; OL5[Argo CD deploys]
+        OL5 --&gt; OL6[Production running]
+    end
+
+    subgraph &quot;Inner Loop (local dev — seconds)&quot;
+        IL1[Edit code] --&gt; IL2[Skaffold detects change]
+        IL2 --&gt; IL3[Rebuild container]
+        IL3 --&gt; IL4[Redeploy to local cluster]
+        IL4 --&gt; IL5[Test locally]
+        IL5 --&gt; IL1
+    end
+
+    style IL1 fill:#bfb,stroke:#333
+    style IL2 fill:#bfb,stroke:#333
+    style IL3 fill:#bfb,stroke:#333
+    style IL4 fill:#bfb,stroke:#333
+    style IL5 fill:#bfb,stroke:#333
+</pre>
+<p>So far, every change requires: edit code &gt; build image &gt; push &gt; update manifest &gt; wait for sync.
+For local development, this is too slow. You want to edit a file and see the change in seconds.</p>
+<p><a href="https://skaffold.dev/">Skaffold</a> solves this. It watches your source code, rebuilds the container, and redeploys -- all automatically. <strong>The inner loop should feel as fast as saving a file.</strong></p>
+<blockquote>
+<p><strong>Why not just use <code>docker compose</code>?</strong> Docker Compose doesn't run Kubernetes. If your production uses Kubernetes, testing locally with Docker Compose means you're testing a different system. Skaffold lets you develop against a real Kubernetes cluster (k3d), so what works locally will work in production.</p>
+</blockquote>
+<h3 id="step-26-install-skaffold"><a class="header" href="#step-26-install-skaffold">Step 26: Install Skaffold</a></h3>
+<pre><code class="language-bash"># Using nix
+nix profile install 'nixpkgs#skaffold'
+
+# Or download directly
+# curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+# chmod +x skaffold &amp;&amp; sudo mv skaffold /usr/local/bin/
+</code></pre>
+<pre><code class="language-bash">skaffold version
+</code></pre>
+<h3 id="step-27-create-a-sample-application"><a class="header" href="#step-27-create-a-sample-application">Step 27: Create a sample application</a></h3>
+<p>Create a new project directory:</p>
+<pre><code class="language-bash">cd ~
+mkdir -p skaffold-demo
+cd skaffold-demo
+</code></pre>
+<p>Create a simple Go application. Create <code>main.go</code>:</p>
+<pre><code class="language-go">package main
+
+import (
+	"fmt"
+	"net/http"
+	"os"
+)
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	hostname, _ := os.Hostname()
+	fmt.Fprintf(w, "Hello from Skaffold! Hostname: %s\n", hostname)
+}
+
+func main() {
+	http.HandleFunc("/", handler)
+	fmt.Println("Server starting on :8080...")
+	http.ListenAndServe(":8080", nil)
+}
+</code></pre>
+<p>Create <code>go.mod</code>:</p>
+<pre><code>module skaffold-demo
+
+go 1.22
+</code></pre>
+<p>Create a <code>Dockerfile</code>:</p>
+<pre><code class="language-dockerfile">FROM golang:1.22 AS builder
+WORKDIR /app
+COPY go.mod .
+COPY main.go .
+RUN CGO_ENABLED=0 go build -o server .
+
+FROM scratch
+COPY --from=builder /app/server /server
+EXPOSE 8080
+CMD ["/server"]
+</code></pre>
+<h3 id="step-28-create-kubernetes-manifests-for-skaffold"><a class="header" href="#step-28-create-kubernetes-manifests-for-skaffold">Step 28: Create Kubernetes manifests for Skaffold</a></h3>
+<p>Create <code>k8s/deployment.yaml</code>:</p>
+<pre><code class="language-bash">mkdir -p k8s
+</code></pre>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: skaffold-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: skaffold-demo
+  template:
+    metadata:
+      labels:
+        app: skaffold-demo
+    spec:
+      containers:
+        - name: skaffold-demo
+          image: skaffold-demo
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
+</code></pre>
+<p>Create <code>k8s/service.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: skaffold-demo
+spec:
+  selector:
+    app: skaffold-demo
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: ClusterIP
+</code></pre>
+<h3 id="step-29-configure-skaffold"><a class="header" href="#step-29-configure-skaffold">Step 29: Configure Skaffold</a></h3>
+<p>Create <code>skaffold.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: skaffold/v4beta11
+kind: Config
+metadata:
+  name: skaffold-demo
+build:
+  artifacts:
+    - image: skaffold-demo
+      docker:
+        dockerfile: Dockerfile
+  local:
+    push: false
+manifests:
+  rawYaml:
+    - k8s/*.yaml
+deploy:
+  kubectl: {}
+portForward:
+  - resourceType: service
+    resourceName: skaffold-demo
+    port: 80
+    localPort: 9092
+</code></pre>
+<blockquote>
+<p><strong>No registry needed.</strong> Skaffold automatically detects k3d and uses <code>k3d image import</code> to load images directly into the cluster nodes. This avoids the complexity of setting up a local container registry.</p>
+</blockquote>
+<h3 id="step-30-run-skaffold-in-dev-mode"><a class="header" href="#step-30-run-skaffold-in-dev-mode">Step 30: Run Skaffold in dev mode</a></h3>
+<pre><code class="language-bash">skaffold dev
+</code></pre>
+<p>Skaffold will:</p>
+<ol>
+<li>Build the Docker image locally</li>
+<li>Import it directly into the k3d cluster nodes (no registry needed!)</li>
+<li>Deploy the manifests to the cluster</li>
+<li>Set up port-forwarding</li>
+<li><strong>Watch for file changes</strong> and re-do everything automatically</li>
+</ol>
+<pre class="mermaid">sequenceDiagram
+    participant You as Your Editor
+    participant Skaffold as Skaffold (watching)
+    participant Docker as Docker (build)
+    participant k3d as k3d Cluster
+
+    Note over Skaffold: skaffold dev starts
+
+    Skaffold-&gt;&gt;Docker: 1. Build image from Dockerfile
+    Docker--&gt;&gt;Skaffold: Image built: skaffold-demo:abc123
+    Skaffold-&gt;&gt;k3d: 2. k3d image import (no push!)
+    Skaffold-&gt;&gt;k3d: 3. kubectl apply k8s/*.yaml
+    Skaffold-&gt;&gt;Skaffold: 4. Port-forward localhost:9092 → service:80
+    Note over Skaffold: Watching for file changes...
+
+    You-&gt;&gt;You: Edit main.go, save
+
+    Skaffold-&gt;&gt;Skaffold: 5. Detects file change!
+    Skaffold-&gt;&gt;Docker: 6. Rebuild image
+    Docker--&gt;&gt;Skaffold: New image: skaffold-demo:def456
+    Skaffold-&gt;&gt;k3d: 7. Import + redeploy
+    Note over k3d: New version running in seconds
+</pre>
+<p>In another terminal:</p>
+<pre><code class="language-bash">curl http://localhost:9092
+</code></pre>
+<p>You should see <code>Hello from Skaffold!</code>.</p>
+<h3 id="step-31-experience-the-live-reload"><a class="header" href="#step-31-experience-the-live-reload">Step 31: Experience the live reload</a></h3>
+<p>Edit <code>main.go</code> -- change the greeting:</p>
+<pre><code class="language-go">fmt.Fprintf(w, "Hello from Skaffold -- LIVE UPDATED! Hostname: %s\n", hostname)
+</code></pre>
+<p>Save the file. Watch the Skaffold terminal -- it detects the change, rebuilds, and redeploys. After a few seconds:</p>
+<pre><code class="language-bash">curl http://localhost:9092
+</code></pre>
+<p>You should see the updated message. <strong>This is the inner loop.</strong> Edit, save, see results in seconds.</p>
+<p>Press <code>Ctrl+C</code> in the Skaffold terminal to stop. Skaffold cleans up all deployed resources.</p>
+<h3 id="step-32-combine-skaffold-with-argo-cd-bonus"><a class="header" href="#step-32-combine-skaffold-with-argo-cd-bonus">Step 32: Combine Skaffold with Argo CD (bonus)</a></h3>
+<p>For a complete workflow, use Skaffold for <strong>local development</strong> and Argo CD for <strong>deployment to shared environments</strong>:</p>
+<pre class="mermaid">graph TB
+    subgraph &quot;Local Development (Inner Loop)&quot;
+        DEV[Developer] --&gt;|&quot;edits code&quot;| CODE[Source Code]
+        CODE --&gt;|&quot;watches&quot;| SKAFFOLD[Skaffold]
+        SKAFFOLD --&gt;|&quot;build + deploy&quot;| LOCAL[k3d Local Cluster]
+        LOCAL --&gt;|&quot;test&quot;| DEV
+    end
+
+    subgraph &quot;Production Deployment (Outer Loop)&quot;
+        DEV --&gt;|&quot;git push&quot;| APPREPO[App Repository]
+        APPREPO --&gt;|&quot;triggers&quot;| CI[CI Pipeline]
+        CI --&gt;|&quot;build &amp; push&quot;| REGISTRY[Container Registry]
+        CI --&gt;|&quot;update image tag&quot;| GITOPSREPO[GitOps Repository]
+        GITOPSREPO --&gt;|&quot;watched by&quot;| ARGOCD[Argo CD]
+        ARGOCD --&gt;|&quot;sync&quot;| PROD[Production Cluster]
+    end
+
+    style SKAFFOLD fill:#bfb,stroke:#333
+    style ARGOCD fill:#f9f,stroke:#333
+    style LOCAL fill:#bbf,stroke:#333
+    style PROD fill:#fbb,stroke:#333
+</pre>
+<ol>
+<li>Develop locally with <code>skaffold dev</code> (fast inner loop)</li>
+<li>When ready, push code to the app repo (CI builds and pushes the image)</li>
+<li>Update the image tag in the gitops repo</li>
+<li>Argo CD deploys to staging/production</li>
+</ol>
+<p>This separation means developers get fast feedback locally while production deployments go through a controlled GitOps pipeline.</p>
+<hr />
+<h2 id="exercises"><a class="header" href="#exercises">Exercises</a></h2>
+<h3 id="exercise-1-add-resource-limits-and-health-checks"><a class="header" href="#exercise-1-add-resource-limits-and-health-checks">Exercise 1: Add resource limits and health checks</a></h3>
+<p>Add <code>livenessProbe</code> and <code>readinessProbe</code> to your Deployment. What happens when the health check fails? Experiment with different <code>initialDelaySeconds</code> and <code>failureThreshold</code> values.</p>
+<h3 id="exercise-2-rolling-updates"><a class="header" href="#exercise-2-rolling-updates">Exercise 2: Rolling updates</a></h3>
+<p>Change the container image version in your Deployment and observe how Kubernetes performs a rolling update. Use <code>kubectl rollout status</code> and <code>kubectl rollout history</code> to monitor it.</p>
+<h3 id="exercise-3-argo-cd-app-of-apps"><a class="header" href="#exercise-3-argo-cd-app-of-apps">Exercise 3: Argo CD App of Apps</a></h3>
+<p>Create an "App of Apps" pattern: a single Argo CD Application that manages other Applications. This is how real teams manage dozens of services.</p>
+<h3 id="exercise-4-skaffold-with-helm"><a class="header" href="#exercise-4-skaffold-with-helm">Exercise 4: Skaffold with Helm</a></h3>
+<p>Modify your Skaffold configuration to deploy using Helm instead of raw manifests. Use the <code>deploy.helm</code> section in <code>skaffold.yaml</code>.</p>
+<h3 id="exercise-5-multi-environment-gitops"><a class="header" href="#exercise-5-multi-environment-gitops">Exercise 5: Multi-environment GitOps</a></h3>
+<p>Extend your Kustomize setup from Part 4 and Part 6 by adding a <code>production</code> overlay with stricter resource limits and more replicas. Deploy <code>dev</code>, <code>staging</code>, and <code>production</code> as three separate Argo CD Applications from the same gitops repo. Verify that each environment has different configuration while sharing the same base.</p>
+<hr />
+<h2 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h2>
+<h3 id="common-issues"><a class="header" href="#common-issues">Common issues</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Problem</th><th>Solution</th></tr></thead><tbody>
+<tr><td><code>k3d cluster create</code> fails</td><td>Ensure Docker is running: <code>docker ps</code></td></tr>
+<tr><td><code>k3d cluster create</code> hangs</td><td>Another cluster may be using the same ports. Run <code>k3d cluster list</code> and delete stale clusters.</td></tr>
+<tr><td><code>kubectl</code> cannot connect</td><td>Run <code>k3d kubeconfig merge my-cluster --kubeconfig-switch-context</code></td></tr>
+<tr><td>Pods stuck in <code>Pending</code></td><td>Check node resources: <code>kubectl describe pod &lt;name&gt; -n &lt;ns&gt;</code></td></tr>
+<tr><td>Pods stuck in <code>ImagePullBackOff</code></td><td>Check image name/tag. For local images use k3d registry.</td></tr>
+<tr><td>Argo CD UI not loading</td><td>Check Ingress: <code>kubectl get ingress -n argocd</code>. Ensure <code>argocd.localhost</code> resolves to 127.0.0.1.</td></tr>
+<tr><td><code>argocd</code> CLI connection refused</td><td>Set <code>export ARGOCD_OPTS="--plaintext --grpc-web --insecure"</code> and use <code>argocd.localhost:8080</code></td></tr>
+<tr><td>Skaffold: image can't be pulled</td><td>Ensure <code>push: false</code> in skaffold.yaml. Skaffold auto-imports to k3d.</td></tr>
+<tr><td>WSL: Docker not found</td><td>Enable WSL integration in Docker Desktop settings</td></tr>
+<tr><td>Port already in use</td><td>Find and kill: <code>lsof -i :8080</code> or change the port</td></tr>
+</tbody></table>
+</div>
+<h3 id="useful-debug-commands"><a class="header" href="#useful-debug-commands">Useful debug commands</a></h3>
+<pre><code class="language-bash"># Describe a resource (shows events and conditions)
+kubectl describe pod &lt;pod-name&gt; -n &lt;namespace&gt;
+
+# View container logs
+kubectl logs &lt;pod-name&gt; -n &lt;namespace&gt;
+
+# Follow logs in real time
+kubectl logs -f &lt;pod-name&gt; -n &lt;namespace&gt;
+
+# Open a shell in a running container
+kubectl exec -it &lt;pod-name&gt; -n &lt;namespace&gt; -- /bin/sh
+
+# View all events in a namespace
+kubectl get events -n &lt;namespace&gt; --sort-by='.lastTimestamp'
+
+# Check Argo CD application details
+argocd app get &lt;app-name&gt; --show-operation
+</code></pre>
+<hr />
+<h2 id="grading-criteria"><a class="header" href="#grading-criteria">Grading Criteria</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Criterion</th><th>Weight</th></tr></thead><tbody>
+<tr><td>Nix flake provides all tools via <code>nix develop</code></td><td>High</td></tr>
+<tr><td>k3d cluster is <strong>running</strong> with multiple nodes</td><td>High</td></tr>
+<tr><td>Raw manifests deploy correctly (Deployment + Service + Ingress)</td><td>High</td></tr>
+<tr><td>Helm chart installs and can be customised with values</td><td>High</td></tr>
+<tr><td>Kustomize base/overlay deploys multiple environments</td><td>High</td></tr>
+<tr><td>Argo CD is installed and accessible</td><td>High</td></tr>
+<tr><td>At least one app is deployed via <strong>GitOps</strong> (push to Git triggers deploy)</td><td>High</td></tr>
+<tr><td>Kustomize app deployed via <strong>Argo CD</strong></td><td>Medium</td></tr>
+<tr><td><strong>Self-healing</strong> is demonstrated (manual change is reverted)</td><td>Medium</td></tr>
+<tr><td>Skaffold dev mode works with <strong>live reload</strong></td><td>Medium</td></tr>
+<tr><td>k9s used to explore cluster state</td><td>Medium</td></tr>
+<tr><td>Clean namespace separation between environments</td><td>Medium</td></tr>
+<tr><td>Health checks and resource limits are configured</td><td>Medium</td></tr>
+<tr><td><strong>App of Apps</strong> or multi-environment GitOps</td><td>Bonus</td></tr>
+<tr><td>Skaffold + Helm integration</td><td>Bonus</td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>What you learned</th><th>Key takeaway</th></tr></thead><tbody>
+<tr><td>Nix dev environment</td><td>All tools declared in a flake, reproducible across machines</td></tr>
+<tr><td>k3d cluster management</td><td>Full Kubernetes in Docker, starts in seconds, works on WSL</td></tr>
+<tr><td>Kubernetes fundamentals</td><td>Pods, Deployments, Services, Ingress, ConfigMaps, Namespaces</td></tr>
+<tr><td>k9s cluster exploration</td><td>Terminal UI for navigating and debugging Kubernetes in real time</td></tr>
+<tr><td>Raw manifest deployment</td><td><code>kubectl apply</code> for direct, imperative control</td></tr>
+<tr><td>Helm charts</td><td>Templated, versioned, reusable Kubernetes packages</td></tr>
+<tr><td>Kustomize overlays</td><td>Environment-specific config without templates, built into kubectl</td></tr>
+<tr><td>Argo CD</td><td>Declarative GitOps -- Git as the single source of truth</td></tr>
+<tr><td>GitOps workflow</td><td>Push to Git = deploy to cluster, with self-healing and audit trail</td></tr>
+<tr><td>Skaffold</td><td>Fast inner-loop development with live code reload in the cluster</td></tr>
+</tbody></table>
+</div>
+<h3 id="the-big-picture"><a class="header" href="#the-big-picture">The Big Picture</a></h3>
+<p>This TP ties into the rest of the course:</p>
+<pre class="mermaid">graph LR
+    TP1[&quot;TP 1&lt;br/&gt;Nix&lt;br/&gt;&lt;i&gt;Reproducible builds&lt;/i&gt;&quot;] --&gt; TP2[&quot;TP 2&lt;br/&gt;Containers&lt;br/&gt;&lt;i&gt;Package apps&lt;/i&gt;&quot;]
+    TP2 --&gt; TP3[&quot;TP 3&lt;br/&gt;Nix + Containers&lt;br/&gt;&lt;i&gt;Minimal images&lt;/i&gt;&quot;]
+    TP3 --&gt; TP4[&quot;TP 4&lt;br/&gt;CI Pipeline&lt;br/&gt;&lt;i&gt;Automated testing&lt;/i&gt;&quot;]
+    TP4 --&gt; TP5[&quot;TP 5&lt;br/&gt;Kubernetes + GitOps&lt;br/&gt;&lt;i&gt;Automated deployment&lt;/i&gt;&quot;]
+
+    style TP5 fill:#bfb,stroke:#333,stroke-width:3px
+</pre>
+<p>The full chain is now: <strong>build reproducibly &gt; package in a minimal container &gt; deploy via GitOps &gt; develop with fast feedback</strong>. This is how modern software delivery works.</p>
+<h3 id="key-commands-reference"><a class="header" href="#key-commands-reference">Key Commands Reference</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Command</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><code>nix develop</code></td><td>Enter the Nix shell with all workshop tools</td></tr>
+<tr><td><code>k3d cluster create</code></td><td>Create a local Kubernetes cluster</td></tr>
+<tr><td><code>k3d cluster list</code></td><td>List clusters</td></tr>
+<tr><td><code>kubectl apply -f file.yaml</code></td><td>Deploy a manifest</td></tr>
+<tr><td><code>kubectl apply -k dir/</code></td><td>Deploy a Kustomize directory</td></tr>
+<tr><td><code>kubectl get pods -n &lt;ns&gt;</code></td><td>List pods in a namespace</td></tr>
+<tr><td><code>kubectl logs &lt;pod&gt;</code></td><td>View pod logs</td></tr>
+<tr><td><code>kubectl port-forward</code></td><td>Forward a port from cluster to localhost</td></tr>
+<tr><td><code>k9s</code></td><td>Launch the terminal cluster UI</td></tr>
+<tr><td><code>helm install &lt;name&gt; &lt;chart&gt;</code></td><td>Install a Helm release</td></tr>
+<tr><td><code>helm upgrade --install</code></td><td>Install or upgrade a Helm release</td></tr>
+<tr><td><code>helm list</code></td><td>List installed releases</td></tr>
+<tr><td><code>kustomize build dir/</code></td><td>Render a Kustomize overlay to YAML</td></tr>
+<tr><td><code>argocd app create</code></td><td>Create an Argo CD application</td></tr>
+<tr><td><code>argocd app sync</code></td><td>Force-sync an application</td></tr>
+<tr><td><code>argocd app list</code></td><td>List all applications</td></tr>
+<tr><td><code>skaffold dev</code></td><td>Start live development mode</td></tr>
+<tr><td><code>skaffold run</code></td><td>Build and deploy once</td></tr>
+</tbody></table>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../sdlc/tps/sdlc-tooling-workshop/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../nix/INSTALL.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../sdlc/tps/sdlc-tooling-workshop/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../nix/INSTALL.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../.mermaid/mermaid.min.js"></script>
+        <script src="../../../.mermaid/mermaid-init.js"></script>
+
+
+    </div>
+    </body>
+</html>
